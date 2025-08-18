@@ -1,0 +1,108 @@
+{
+  "welcome": "Witamy w Prompt Forge!",
+  "description": "Witaj w Prompt Forge! Wybierz rodzaj promptu, który chcesz utworzyć: tekstowy, wideo, audio lub obrazkowy. Każdy typ pozwala na szybkie generowanie treści dopasowanych do Twoich potrzeb.",
+  "home": {
+    "title": "Prompt Forge",
+    "hero": "Twórz, zarządzaj i inspiruj się promptami dla AI! Wybierz typ promptu, który chcesz utworzyć i rozpocznij kreatywną przygodę z tekstem, obrazem, dźwiękiem lub wideo. Prompt Forge to narzędzie dla twórców, programistów i pasjonatów AI.",
+    "features": {
+      "speed": "Szybkość",
+      "multitopic": "Wielotematyczność",
+      "intuitive": "Intuicyjność",
+      "aiReady": "AI Ready"
+    },
+    "chooseType": "Wybierz poniżej typ promptu, aby rozpocząć!",
+    "textBtnDesc": "Twórz kreatywne polecenia tekstowe dla AI",
+    "videoBtnDesc": "Generuj scenariusze i opisy do wideo",
+    "audioBtnDesc": "Twórz polecenia do generowania dźwięku",
+    "imageBtnDesc": "Inspiruj się i generuj obrazy AI",
+    "footer": "Prompt Forge to otwarte narzędzie do eksperymentowania z promptami dla różnych modeli AI. Rozwijaj swoje pomysły, dziel się inspiracjami i korzystaj z mocy sztucznej inteligencji!",
+    "badges": {
+      "openSource": "Open Source",
+      "vueDaisy": "Vue 3 + DaisyUI",
+      "year": "2025"
+    }
+  },
+  "prompts": {
+    "title": "Dostępne prompty",
+    "types": {
+      "text": "Prompty tekstowe",
+      "video": "Prompty wideo",
+      "audio": "Prompty audio",
+      "image": "Prompty obrazkowe"
+    },
+    "template": "Szablon",
+    "placeholders": "Placeholdery",
+    "tags": "Tagi",
+    "empty": "Brak dostępnych promptów.",
+    "tagsClear": "Wyczyść tag",
+    "showPlaceholders": "Pokaż wszystkie placeholdery",
+    "allPlaceholders": "Wszystkie placeholdery",
+    "showTemplate": "Pokaż szablon",
+    "templatePreview": "Podgląd szablonu",
+    "create": "Utwórz prompt"
+  },
+  "createPrompt": {
+    "title": "Utwórz Nowy Prompt",
+    "promptType": "Typ promptu",
+    "text": "Tekst",
+    "video": "Wideo",
+    "audio": "Audio",
+    "image": "Obraz",
+    "promptContent": "Treść promptu",
+    "submit": "Zatwierdź",
+    "videoDescription": "Tworzenie promptu wideo.",
+    "textDescription": "Tworzenie promptu tekstowego.",
+    "audioDescription": "Tworzenie promptu audio.",
+    "imageDescription": "Tworzenie promptu obrazkowego.",
+    "unknownType": "Nieznany typ promptu."
+  },
+  "about": {
+    "title": "O Prompt Forge",
+    "description": "Prompt Forge to nowoczesna aplikacja, która umożliwia szybkie tworzenie, zarządzanie i inspirowanie się promptami dla AI. Celem jest uproszczenie pracy z modelami sztucznej inteligencji i umożliwienie każdemu szybkiego startu w świecie AI. Odkryj możliwości, jakie daje Prompt Forge!",
+    "features": {
+      "title": "Najważniejsze funkcje",
+      "promptCreation": "Tworzenie promptów tekstowych, wideo, audio i obrazów",
+      "languageSupport": "Obsługa wielu języków (PL/EN)",
+      "userFriendly": "Intuicyjny i przyjazny interfejs",
+      "fastAndModern": "Szybkość działania i nowoczesny design"
+    },
+    "technologies": {
+      "title": "Technologie"
+    },
+    "contact": {
+      "title": "Kontakt",
+      "info": "Masz pytania lub sugestie? Napisz do nas: {email}",
+      "button": "Napisz do nas"
+    },
+    "footer": "Prompt Forge to projekt open source rozwijany przez społeczność. Dołącz do nas i rozwijaj narzędzie razem z nami!"
+  },
+  "notFound": {
+    "title": "404 Nie znaleziono",
+    "message": "Ups! Strona, której szukasz, nie istnieje."
+  },
+  "language": {
+    "switch": "Zmień język"
+  },
+  "toast": {
+    "success": "Prompt został utworzony pomyślnie!",
+    "error": "Wystąpił błąd podczas tworzenia promptu."
+  },
+  "selectPrompt": "Wybierz prompt",
+  "breadcrumbs": {
+    "home": "Strona główna",
+    "prompts": "Prompty",
+    "about": "O aplikacji",
+    "create-prompt": "Nowy prompt",
+    "createPrompt": "Nowy prompt",
+    "types": {
+      "text": "Tekst",
+      "video": "Wideo",
+      "audio": "Audio",
+      "image": "Obraz"
+    }
+  },
+  "close": "Zamknij",
+  "copy": "Kopiuj",
+  "edit": "Edytuj prompt",
+  "copied": "Skopiowano!"
+}
