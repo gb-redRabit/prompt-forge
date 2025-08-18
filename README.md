@@ -1,84 +1,99 @@
 # Prompt Forge
 
-Prompt Forge is a Vue 3 application designed for creating, generating, and managing various types of prompts, including video, text, audio, and images. The application supports both Polish and English languages, allowing users to switch between them easily.
+Prompt Forge to nowoczesna aplikacja webowa oparta o Vue 3, służąca do tworzenia, generowania i zarządzania promptami dla AI (tekst, wideo, audio, obrazy). Projekt wspiera język polski i angielski, umożliwia wygodne filtrowanie, edycję oraz podgląd szablonów z dynamicznymi placeholderami.
 
-## Features
+---
 
-- **Multi-language Support**: Automatically detects the user's language or allows manual switching between Polish and English.
-- **Prompt Creation**: Users can create prompts of different types through a user-friendly interface.
-- **Prompt Browsing**: A dedicated page for browsing available prompts.
-- **Responsive Design**: Built with Tailwind CSS and DaisyUI for a modern and responsive user experience.
-- **Toast Notifications**: Provides feedback to users through toast notifications using vue3-toastify.
+## Funkcje
 
-## Project Structure
+- **Tworzenie promptów**: tekstowych, wideo, audio i obrazów.
+- **Dynamiczne szablony**: placeholdery zamieniane na wartości z listy, możliwość interaktywnej edycji.
+- **Filtrowanie i tagowanie**: szybkie wyszukiwanie promptów po typie i tagach.
+- **Podgląd i kopiowanie**: wygodny modal z podglądem szablonu i kopiowaniem do schowka.
+- **Wielojęzyczność**: pełne wsparcie PL/EN, szybkie przełączanie języka.
+- **Responsywny design**: Tailwind CSS + DaisyUI.
+- **Powiadomienia toast**: stylowe komunikaty dzięki vue3-toastify.
+- **Przyjazny interfejs**: nowoczesny wygląd, breadcrumbs, nawigacja boczna.
 
-The project is organized as follows:
+---
+
+## Struktura projektu
 
 ```
 prompt-forge
 ├── src
-│   ├── main.js                # Entry point of the application
-│   ├── App.vue                # Root component
-│   ├── router
-│   │   └── index.js           # Application routing
-│   ├── store
-│   │   └── index.js           # State management with Pinia
-│   ├── i18n
-│   │   ├── index.js           # Internationalization setup
-│   │   ├── pl.json            # Polish translations
-│   │   └── en.json            # English translations
-│   ├── assets
-│   │   ├── tailwind.css       # Tailwind CSS styles
-│   │   └── vue.svg            # SVG asset
-│   ├── components
-│   │   ├── Navbar.vue         # Navigation bar component
-│   │   ├── Footer.vue         # Footer component
-│   │   ├── LanguageSwitcher.vue# Language switcher component
-│   │   ├── PromptCard.vue      # Individual prompt card component
-│   │   └── ToastContainer.vue  # Toast notifications component
-│   ├── pages
-│   │   ├── Home.vue           # Homepage
-│   │   ├── Prompts.vue        # Prompts listing page
-│   │   ├── CreatePrompt.vue   # Prompt creation page
-│   │   ├── About.vue          # About page
-│   │   └── NotFound.vue       # 404 page
-├── public
-│   └── vite.svg               # Public SVG asset
-├── package.json               # Project metadata and dependencies
-├── tailwind.config.js         # Tailwind CSS configuration
-├── vite.config.js             # Vite configuration
-└── README.md                  # Project documentation
+│   ├── assets/                # Style (Tailwind), grafiki
+│   ├── components/            # Komponenty UI (Navbar, PromptCard, Tags, Breadcrumbs, LanguageSwitcher)
+│   ├── i18n/                  # Tłumaczenia PL/EN
+│   ├── pages/                 # Widoki (Home, Prompts, CreatePrompt, About, NotFound)
+│   ├── prompts/               # Dane promptów i opcje placeholderów (JSON)
+│   ├── router/                # Routing Vue Router
+│   ├── store/                 # Pinia store
+│   ├── App.vue                # Główny komponent
+│   ├── main.js                # Punkt wejścia
+├── public/                    # Publiczne zasoby (vite.svg)
+├── package.json               # Zależności i skrypty
+├── tailwind.config.js         # Konfiguracja Tailwind CSS
+├── vite.config.js             # Konfiguracja Vite
+├── README.md                  # Dokumentacja
 ```
 
-## Getting Started
+---
 
-To get started with the project, follow these steps:
+## Szybki start
 
-1. Clone the repository:
+1. **Klonowanie repozytorium**
 
-   ```
-   git clone <repository-url>
+   ```bash
+   git clone <adres-repo>
    cd prompt-forge
    ```
 
-2. Install dependencies:
+2. **Instalacja zależności**
 
-   ```
+   ```bash
    npm install
    ```
 
-3. Run the development server:
-
-   ```
+3. **Uruchomienie serwera developerskiego**
+   ```bash
    npm run dev
    ```
+   Domyślnie aplikacja dostępna jest pod adresem: [http://localhost:3000](http://localhost:3000)
 
-4. Open your browser and navigate to `http://localhost:3000` to view the application.
+---
 
-## Contributing
+## Najważniejsze technologie
 
-Contributions are welcome! Please feel free to submit a pull request or open an issue for any suggestions or improvements.
+- **Vue 3** – główny framework
+- **Pinia** – zarządzanie stanem
+- **Vue Router** – routing
+- **Vue I18n** – tłumaczenia
+- **Tailwind CSS + DaisyUI** – stylowanie i motywy
+- **vue3-toastify** – powiadomienia toast
+- **oh-vue-icons** – ikony SVG
 
-## License
+---
 
-This project is licensed under the MIT License. See the LICENSE file for more details.
+## Najważniejsze pliki
+
+- `src/pages/CreatePrompt.vue` – edycja promptu z interaktywnymi placeholderami
+- `src/pages/PromptList.vue` – lista promptów z filtrowaniem i tagami
+- `src/components/PromptCard.vue` – karta promptu z podglądem i kopiowaniem
+- `src/prompts/selector_options.json` – opcje dla placeholderów
+- `src/i18n/pl.json`, `src/i18n/en.json` – tłumaczenia
+
+---
+
+## Kontrybucja
+
+Chętnie przyjmujemy pull requesty i zgłoszenia błędów!  
+Zgłoś problem lub propozycję na GitHubie.
+
+---
+
+## Licencja
+
+MIT
+
+---
