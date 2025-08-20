@@ -31,6 +31,10 @@ import {
   FaLanguage,
   FaUsers,
   FaBolt,
+  FaRegularEye,
+  FaTimes,
+  FaEye,
+  FaEyeSlash,
 } from "oh-vue-icons/icons";
 
 addIcons(
@@ -56,7 +60,11 @@ addIcons(
   CoText,
   FaLanguage,
   FaUsers,
-  FaBolt
+  FaBolt,
+  FaRegularEye,
+  FaTimes,
+  FaEye,
+  FaEyeSlash
 );
 const pinia = createPinia();
 

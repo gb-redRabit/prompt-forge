@@ -1,23 +1,45 @@
-// filepath: d:\git nowe\prompt-forge\src\store\index.js
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
+import promptsText from "../prompts/promptsText.json";
+import promptsVideo from "../prompts/promptsVideo.json";
+import promptsAudio from "../prompts/promptsAudio.json";
+import promptsImage from "../prompts/promptsImage.json";
 
-export const usePromptStore = defineStore('prompt', {
+export const usePromptsStore = defineStore("prompts", {
   state: () => ({
-    prompts: [],
-    userPreferences: {
-      language: 'en',
+    promptsByType: {
+      text: promptsText,
+      video: promptsVideo,
+      audio: promptsAudio,
+      image: promptsImage,
     },
   }),
-  actions: {
-    addPrompt(prompt) {
-      this.prompts.push(prompt);
-    },
-    setLanguage(language) {
-      this.userPreferences.language = language;
-    },
-  },
   getters: {
-    getPrompts: (state) => state.prompts,
-    getLanguage: (state) => state.userPreferences.language,
+    allPrompts(state) {
+      return [
+        ...state.promptsByType.text,
+        ...state.promptsByType.video,
+        ...state.promptsByType.audio,
+        ...state.promptsByType.image,
+      ];
+    },
+    getPromptsByType: (state) => (type) => state.promptsByType[type] || [],
+    allTags(state) {
+      const tags = new Set();
+      Object.values(state.promptsByType)
+        .flat()
+        .forEach((p) => {
+          (p.tags_ids || []).forEach((tag) => tags.add(tag));
+        });
+      return Array.from(tags).sort();
+    },
+    allPlaceholderKeys(state) {
+      const keys = new Set();
+      Object.values(state.promptsByType)
+        .flat()
+        .forEach((p) => {
+          (p.placeholder_keys || []).forEach((k) => keys.add(k));
+        });
+      return Array.from(keys).sort();
+    },
   },
 });

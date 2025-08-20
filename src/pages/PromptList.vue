@@ -11,6 +11,7 @@
           () => {
             selectedType = type.key;
             selectedTags = [];
+            searchQuery = '';
           }
         "
       >
@@ -25,10 +26,20 @@
     </div>
     <!-- Prawy panel: lista promptów -->
     <div class="flex-1">
-      <div class="flex justify-end mb-4">
-        <button class="btn btn-info" @click="showPlaceholders = true">
-          {{ $t("prompts.showPlaceholders") }}
-        </button>
+      <!-- Nowy komponent wyszukiwania -->
+      <div class="mb-4 flex justify-between items-center">
+        <input
+          v-model="searchQuery"
+          type="search"
+          class="input input-bordered w-full max-w-xs"
+          :placeholder="$t('prompts.searchPlaceholder')"
+        />
+
+        <div class="flex justify-end mb-4">
+          <button class="btn btn-info" @click="showPlaceholders = true">
+            {{ $t("prompts.showPlaceholders") }}
+          </button>
+        </div>
       </div>
       <h2 class="text-2xl font-bold mb-4">
         {{ $t(types.find((t) => t.key === selectedType).label) }}
@@ -75,12 +86,9 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
-
-import promptsText from "../prompts/promptsText.json";
-import promptsVideo from "../prompts/promptsVideo.json";
-import promptsAudio from "../prompts/promptsAudio.json";
-import promptsImage from "../prompts/promptsImage.json";
+import { ref, computed, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { usePromptsStore } from "../store/index";
 import PromptTags from "../components/PromptTags.vue";
 import PromptCard from "../components/PromptCard.vue";
 
@@ -91,20 +99,30 @@ const types = [
   { key: "image", label: "prompts.types.image" },
 ];
 
-const promptsByType = {
-  text: promptsText,
-  video: promptsVideo,
-  audio: promptsAudio,
-  image: promptsImage,
-};
+const promptsStore = usePromptsStore();
+const route = useRoute();
+const router = useRouter();
 
 const selectedType = ref("text");
 const selectedTags = ref([]);
 const showPlaceholders = ref(false);
+const searchQuery = ref(route.query.search || "");
+
+// Synchronizuj searchQuery z query w URL
+watch(
+  () => route.query.search,
+  (val) => {
+    searchQuery.value = val || "";
+  }
+);
+
+watch(searchQuery, (val) => {
+  router.replace({ query: { ...route.query, search: val } });
+});
 
 // Dynamicznie wyliczaj dostępne tagi na podstawie już wybranych tagów
 const sortedTags = computed(() => {
-  const prompts = promptsByType[selectedType.value] || [];
+  const prompts = promptsStore.getPromptsByType(selectedType.value) || [];
   let filteredPrompts = prompts;
   if (selectedTags.value.length) {
     filteredPrompts = prompts.filter((p) =>
@@ -121,13 +139,31 @@ const sortedTags = computed(() => {
   return Array.from(tags).sort();
 });
 
-// Filtrowanie promptów po wybranych tagach (wszystkie muszą być obecne)
+// Filtrowanie promptów po wybranych tagach i wyszukiwaniu
 const filteredPrompts = computed(() => {
-  const prompts = promptsByType[selectedType.value] || [];
-  if (!selectedTags.value.length) return prompts;
-  return prompts.filter((p) =>
-    selectedTags.value.every((tag) => (p.tags_ids || []).includes(tag))
-  );
+  const prompts = promptsStore.getPromptsByType(selectedType.value) || [];
+  let result = prompts;
+  if (selectedTags.value.length) {
+    result = result.filter((p) =>
+      selectedTags.value.every((tag) => (p.tags_ids || []).includes(tag))
+    );
+  }
+  if (searchQuery.value.trim()) {
+    const q = searchQuery.value.trim().toLowerCase();
+    result = result.filter((p) => {
+      const name =
+        typeof p.name === "object" ? Object.values(p.name).join(" ") : p.name;
+      const desc =
+        typeof p.description === "object"
+          ? Object.values(p.description).join(" ")
+          : p.description;
+      return (
+        (name && name.toLowerCase().includes(q)) ||
+        (desc && desc.toLowerCase().includes(q))
+      );
+    });
+  }
+  return result;
 });
 
 function toggleTag(tag) {
@@ -139,23 +175,9 @@ function toggleTag(tag) {
 }
 function clearTag() {
   selectedTags.value = [];
+  searchQuery.value = "";
 }
-// --- NOWOŚĆ: placeholdery ze wszystkich plików prompts ---
-const allPrompts = [
-  ...promptsText,
-  ...promptsVideo,
-  ...promptsAudio,
-  ...promptsImage,
-];
 
-// Zbierz wszystkie unikalne placeholder_keys
-const allPlaceholderKeys = computed(() => {
-  const keys = new Set();
-  allPrompts.forEach((p) => {
-    if (Array.isArray(p.placeholder_keys)) {
-      p.placeholder_keys.forEach((k) => keys.add(k));
-    }
-  });
-  return Array.from(keys).sort();
-});
+// Placeholdery ze wszystkich plików prompts przez store
+const allPlaceholderKeys = computed(() => promptsStore.allPlaceholderKeys);
 </script>

@@ -11,20 +11,7 @@
         @click="showModal = true"
         :title="$t('prompts.showTemplate')"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-4 w-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M9 5l7 7-7 7"
-          />
-        </svg>
+        <oh-icon name="fa-regular-eye" scale="1.2" />
       </button>
     </div>
     <div class="text-xs text-base-content/60 mt-1">
@@ -81,9 +68,6 @@
           </button>
         </div>
       </div>
-      <form method="dialog" class="modal-backdrop">
-        <button @click="showModal = false">close</button>
-      </form>
     </dialog>
   </div>
 </template>
@@ -93,10 +77,11 @@ import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { toast } from "vue3-toastify";
-import selectorOptions from "../prompts/selector_options.json";
+import { useSelectorOptionsStore } from "../store/selectorOptions";
 
 const { locale, t } = useI18n();
 const router = useRouter();
+const selectorOptionsStore = useSelectorOptionsStore();
 const props = defineProps({
   prompt: Object,
 });
@@ -114,7 +99,7 @@ const filledTemplate = computed(() => {
 
   // Zamień wszystkie [placeholder] na wartość z selector_options
   return template.replace(/\[([^\]]+)\]/g, (match, key) => {
-    const options = selectorOptions[key];
+    const options = selectorOptionsStore.getByKey(key);
     if (!options || !options[0]) return match;
     return options[0].label?.[locale.value] || options[0].value || match;
   });

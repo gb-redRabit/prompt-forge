@@ -20,7 +20,11 @@
       "openSource": "Open Source",
       "vueDaisy": "Vue 3 + DaisyUI",
       "year": "2025"
-    }
+    },
+    "quickSearchBtn": "Szukaj",
+    "popularPrompts": "Popularne prompty",
+    "themeDark": "Tryb ciemny",
+    "themeLight": "Tryb jasny"
   },
   "prompts": {
     "title": "Dostępne prompty",
@@ -39,7 +43,8 @@
     "allPlaceholders": "Wszystkie placeholdery",
     "showTemplate": "Pokaż szablon",
     "templatePreview": "Podgląd szablonu",
-    "create": "Utwórz prompt"
+    "create": "Utwórz prompt",
+    "searchPlaceholder": "Szukaj po nazwie lub opisie..."
   },
   "createPrompt": {
     "title": "Utwórz Nowy Prompt",

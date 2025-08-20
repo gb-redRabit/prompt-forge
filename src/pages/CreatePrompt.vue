@@ -57,6 +57,24 @@
       </div>
     </div>
   </div>
+  <div>
+    <textarea
+      v-model="userPrompt"
+      class="textarea textarea-bordered w-full"
+      placeholder="Wpisz prompt..."
+    ></textarea>
+    <button
+      class="btn btn-primary mt-2"
+      @click="sendToOpenAI"
+      :disabled="loading"
+    >
+      Wyślij do ChatGPT
+    </button>
+    <div v-if="aiResponse" class="mt-4 bg-base-200 p-2 rounded">
+      <b>Odpowiedź AI:</b>
+      <pre>{{ aiResponse }}</pre>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -64,7 +82,10 @@ import { useRoute } from "vue-router";
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import selectorOptions from "../prompts/selector_options.json";
+import { useSelectorOptionsStore } from "../store/selectorOptions";
+import { askOpenAI } from "../api/openai";
 
+const selectorOptionsStore = useSelectorOptionsStore();
 const { locale } = useI18n();
 const route = useRoute();
 const promptType = computed(() => route.params.type);
@@ -100,7 +121,7 @@ watch(
     const obj = { ...placeholderValues.value };
     parts.forEach((part) => {
       if (part.type === "placeholder" && !obj[part.key]) {
-        const opts = selectorOptions[part.key];
+        const opts = selectorOptionsStore.getByKey(part.key);
         obj[part.key] =
           opts && opts[0]
             ? opts[0].label?.[locale.value] || opts[0].value
@@ -149,4 +170,19 @@ function onEdit() {
 watch([parsedTemplate, placeholderValues, locale], updateEditor, {
   immediate: true,
 });
+
+const openaiKey = ref(localStorage.getItem("openaiKey") || "");
+const userPrompt = ref("");
+const aiResponse = ref("");
+const loading = ref(false);
+
+async function sendToOpenAI() {
+  loading.value = true;
+  try {
+    aiResponse.value = await askOpenAI(userPrompt.value, openaiKey.value);
+  } catch (e) {
+    aiResponse.value = "Błąd: " + e.message;
+  }
+  loading.value = false;
+}
 </script>
