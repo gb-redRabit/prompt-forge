@@ -4,9 +4,9 @@ import { createPinia } from "pinia";
 import router from "./router/index.js";
 import { createI18n } from "vue-i18n";
 import messages from "./i18n/index.js";
-import "./assets/tailwind.css";
 import Vue3Toastify from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
+import "./assets/tailwind.css";
 import { OhVueIcon, addIcons } from "oh-vue-icons";
 import { FaFlagUsa, FaFlag } from "oh-vue-icons/icons";
 import { MdLanguage } from "oh-vue-icons/icons"; // Dodaj ten import
@@ -36,7 +36,10 @@ import {
   FaEye,
   FaEyeSlash,
 } from "oh-vue-icons/icons";
+import { defineRule } from "vee-validate";
+import { required } from "@vee-validate/rules";
 
+defineRule("required", required);
 addIcons(
   FaFlagUsa,
   FaFlag,
@@ -82,6 +85,7 @@ app
   .use(router)
   .use(i18n)
   .use(Vue3Toastify, {
-    autoClose: 3000,
+    autoClose: 1000,
+    transition: "flip",
   })
   .mount("#app");

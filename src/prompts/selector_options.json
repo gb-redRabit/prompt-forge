@@ -83,8 +83,7 @@
     { "value": "prey", "label": { "en": "prey", "pl": "ofiara" } },
     { "value": "endemic", "label": { "en": "endemic", "pl": "endemiczny" } },
     { "value": "invasive", "label": { "en": "invasive", "pl": "inwazyjny" } },
-    { "value": "feral", "label": { "en": "feral", "pl": "dziki" } },
-    { "value": "bird", "label": { "en": "bird", "pl": "ptak" } }
+    { "value": "feral", "label": { "en": "feral", "pl": "dziki" } }
   ],
   "architecture_style": [
     { "value": "gothic", "label": { "en": "gothic", "pl": "gotycki" } },
@@ -2737,14 +2736,6 @@
     },
     { "value": "adventure", "label": { "en": "adventure", "pl": "przygoda" } },
     { "value": "mystery", "label": { "en": "mystery", "pl": "tajemnica" } },
-    { "value": "love", "label": { "en": "love", "pl": "miłość" } },
-    { "value": "betrayal", "label": { "en": "betrayal", "pl": "zdrada" } },
-    { "value": "courage", "label": { "en": "courage", "pl": "odwaga" } },
-    { "value": "loss", "label": { "en": "loss", "pl": "strata" } },
-    {
-      "value": "redemption",
-      "label": { "en": "redemption", "pl": "odkupienie" }
-    },
     { "value": "love", "label": { "en": "love", "pl": "miłość" } },
     { "value": "betrayal", "label": { "en": "betrayal", "pl": "zdrada" } },
     { "value": "courage", "label": { "en": "courage", "pl": "odwaga" } },

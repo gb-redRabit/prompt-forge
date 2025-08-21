@@ -23,6 +23,11 @@ const routes = [
     component: () => import("../pages/AboutView.vue"),
   },
   {
+    path: "/ai-tools",
+    name: "AiTools",
+    component: () => import("../pages/AiToolsView.vue"),
+  },
+  {
     path: "/:catchAll(.*)",
     name: "NotFound",
     component: () => import("../pages/NotFound.vue"),

@@ -28,6 +28,8 @@
   },
   "prompts": {
     "title": "Dostępne prompty",
+    "optimizeAi": "Optymalizuj prompt AI",
+    "copyAiResponse": "Kopiuj odpowiedź",
     "types": {
       "text": "Prompty tekstowe",
       "video": "Prompty wideo",
@@ -44,7 +46,10 @@
     "showTemplate": "Pokaż szablon",
     "templatePreview": "Podgląd szablonu",
     "create": "Utwórz prompt",
-    "searchPlaceholder": "Szukaj po nazwie lub opisie..."
+    "searchPlaceholder": "Szukaj po nazwie lub opisie...",
+    "choosePrompt": "Wybierz prompt",
+    "customValue": "Własna wartość...",
+    "enterCustomValue": "Wpisz własną wartość..."
   },
   "createPrompt": {
     "title": "Utwórz Nowy Prompt",
@@ -55,11 +60,11 @@
     "image": "Obraz",
     "promptContent": "Treść promptu",
     "submit": "Zatwierdź",
-    "videoDescription": "Tworzenie promptu wideo.",
-    "textDescription": "Tworzenie promptu tekstowego.",
-    "audioDescription": "Tworzenie promptu audio.",
-    "imageDescription": "Tworzenie promptu obrazkowego.",
-    "unknownType": "Nieznany typ promptu."
+    "unknownType": "Nieznany typ promptu.",
+    "textDescription": "Twórz i optymalizuj prompty tekstowe dla AI.",
+    "audioDescription": "Twórz i optymalizuj prompty do generowania dźwięku.",
+    "videoDescription": "Twórz i optymalizuj prompty do generowania wideo.",
+    "imageDescription": "Twórz i optymalizuj prompty do generowania obrazów."
   },
   "about": {
     "title": "O Prompt Forge",
@@ -104,10 +109,37 @@
       "video": "Wideo",
       "audio": "Audio",
       "image": "Obraz"
-    }
+    },
+    "ai-tools": "Narzędzia AI"
   },
   "close": "Zamknij",
   "copy": "Kopiuj",
   "edit": "Edytuj prompt",
-  "copied": "Skopiowano!"
+  "copied": "Skopiowano!",
+  "openaiStatus": {
+    "connected": "AI: połączono",
+    "notConnected": "AI: brak połączenia",
+    "checking": "AI: sprawdzanie...",
+    "connectionTitle": "Połączenie z AI",
+    "source": "Źródło AI",
+    "openaiCloud": "OpenAI (chmura)",
+    "localServer": "Lokalny serwer",
+    "apiKey": "Klucz OpenAI API",
+    "apiKeyPlaceholder": "OpenAI API Key",
+    "localAddress": "Adres lokalnego serwera",
+    "localAddressPlaceholder": "http://localhost:5000",
+    "save": "Zapisz",
+    "cancel": "Anuluj",
+    "checkingConnection": "Sprawdzanie połączenia...",
+    "noApiKey": "Brak klucza OpenAI",
+    "noLocalAddress": "Brak adresu serwera",
+    "connectedOpenAI": "Połączono z OpenAI",
+    "connectedLocal": "Połączono z lokalnym serwerem",
+    "connectionError": "Błąd połączenia"
+  },
+  "aiTools": {
+    "title": "Narzędzia AI",
+    "description": "Lista przydatnych narzędzi AI wraz z opisami i linkami.",
+    "visit": "Odwiedź"
+  }
 }

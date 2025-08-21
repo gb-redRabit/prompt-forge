@@ -49,8 +49,8 @@
 
     <!-- Modal -->
     <dialog v-if="showModal" class="modal modal-open">
-      <div class="modal-box max-w-2xl">
-        <h3 class="font-bold text-2xl mb-4">
+      <div class="modal-box max-w-4xl">
+        <h3 class="font-bold mb-4">
           {{ $t("prompts.templatePreview") }}
         </h3>
         <pre class="bg-base-200 rounded p-2 text-md whitespace-pre-wrap mb-4"
@@ -108,9 +108,7 @@ const filledTemplate = computed(() => {
 function copyTemplate() {
   navigator.clipboard.writeText(filledTemplate.value);
   toast.success(t("copied"), {
-    theme: "dark",
     position: "top-right",
-
     type: "default",
   });
 }
@@ -122,7 +120,7 @@ function editPrompt() {
       type: props.prompt.type, // wymagany parametr!
     },
     query: {
-      template: props.prompt.template[locale.value] || props.prompt.template.en,
+      id: props.prompt.id,
     },
   });
   showModal.value = false;

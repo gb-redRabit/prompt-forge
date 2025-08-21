@@ -3,15 +3,17 @@
     "id": 1,
     "type": "audio",
     "name": {
-      "en": "Generate Audio Ad Script",
-      "pl": "Generuj Skrypt Reklamy Audio"
+      "pl": "Generuj Skrypt Reklamy Audio",
+      "en": "Generate Audio Ad Script"
     },
     "description": {
-      "en": "Create a script for a radio advertisement promoting a healthy lifestyle.",
-      "pl": "Zaproponuj tekst do reklamy radiowej promującej zdrowy styl życia."
+      "pl": "Zaproponuj tekst do reklamy radiowej promującej zdrowy styl życia.",
+      "en": "Suggest a radio ad script promoting a healthy lifestyle."
     },
-    "template": "Write a radio ad script for [product] targeting [audience].",
-    "placeholder_keys": ["product", "audience"],
-    "tags_ids": [1, 3]
+    "template": {
+      "pl": "Napisz skrypt reklamy radiowej dla [product] skierowanej do [audience].",
+      "en": "Write a radio ad script for [product] targeting [audience]."
+    },
+    "tags_ids": ["advertising", "audio", "script"]
   }
 ]

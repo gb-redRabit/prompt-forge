@@ -29,7 +29,6 @@ import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
-
 const route = useRoute();
 
 const breadcrumbs = computed(() => {
@@ -37,10 +36,7 @@ const breadcrumbs = computed(() => {
   const crumbs = [];
   // Obsługa /create-prompt/:type
   if (pathArray[0] === "create-prompt") {
-    crumbs.push({
-      label: t("breadcrumbs.createPrompt"),
-      to: "/create-prompt",
-    });
+    // NIE dodawaj create-prompt do breadcrumbs
     if (pathArray[1]) {
       // Próbujemy tłumaczyć typ promptu
       const typeKey = pathArray[1].toLowerCase();

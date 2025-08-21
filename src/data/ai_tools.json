@@ -1,0 +1,52 @@
+[
+  {
+    "name": "OpenAI ChatGPT",
+    "description": {
+      "pl": "Zaawansowany chatbot AI do generowania tekstu.",
+      "en": "Advanced AI chatbot for text generation."
+    },
+    "url": "https://chat.openai.com/",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg",
+    "tags": ["free (ograniczone)", "płatne", "konto wymagane", "trial"]
+  },
+  {
+    "name": "Midjourney",
+    "description": {
+      "pl": "AI do generowania obrazów na podstawie promptów tekstowych.",
+      "en": "AI for generating images from text prompts."
+    },
+    "url": "https://www.midjourney.com/",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/0/06/Midjourney_logo.svg/1200px-Midjourney_logo.svg.png",
+    "tags": ["płatne", "trial", "konto Discord wymagane"]
+  },
+  {
+    "name": "Hugging Face Spaces",
+    "description": {
+      "pl": "Platforma do testowania i wdrażania modeli AI.",
+      "en": "Platform for testing and deploying AI models."
+    },
+    "url": "https://huggingface.co/spaces",
+    "logo": "https://huggingface.co/front/assets/huggingface_logo-noborder.svg",
+    "tags": ["free", "open source", "konto opcjonalne"]
+  },
+  {
+    "name": "You.com",
+    "description": {
+      "pl": "Wielomodalna wyszukiwarka i asystent AI z generowaniem tekstu, obrazów i kodu.",
+      "en": "Multimodal search engine and AI assistant for text, images, and code generation."
+    },
+    "url": "https://you.com/home",
+    "logo": "https://you.com/favicon_ydc/favicon-32x32.png?v=3",
+    "tags": ["free", "płatne", "konto opcjonalne"]
+  },
+  {
+    "name": "Gamma.app",
+    "description": {
+      "pl": "Tworzenie prezentacji i dokumentów za pomocą AI.",
+      "en": "Create presentations and documents with AI."
+    },
+    "url": "https://gamma.app/",
+    "logo": "https://gamma.app/favicon.ico",
+    "tags": ["free (ograniczone)", "trial", "płatne", "konto wymagane"]
+  }
+]

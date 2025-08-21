@@ -35,24 +35,16 @@
           >
             <router-link
               :to="item.to"
-              custom
-              v-slot="{ isActive, navigate, href }"
+              class="flex items-center w-full px-0 justify-center"
+              @click="showMenu = false"
+              :class="{ 'text-primary': isNavActive(item.to) }"
             >
-              <a
-                :href="href"
-                @click="
-                  () => {
-                    navigate();
-                    showMenu = false;
-                  }
+              <oh-icon
+                :name="item.icon"
+                :fill="
+                  isNavActive(item.to) ? 'var(--color-primary)' : 'currentColor'
                 "
-                class="flex items-center w-full px-0 justify-center"
-              >
-                <oh-icon
-                  :name="item.icon"
-                  :fill="isActive ? 'var(--color-primary)' : 'currentColor'"
-                />
-              </a>
+              />
             </router-link>
           </div>
         </li>
@@ -64,26 +56,20 @@
             class="tooltip tooltip-right w-full flex justify-center"
             :data-tip="$t(item.label)"
           >
-            <router-link :to="item.to" custom v-slot="{ navigate, href }">
-              <a
-                :href="href"
-                @click="
-                  () => {
-                    navigate();
-                    showMenu = false;
-                  }
-                "
-                class="flex items-center w-full px-0 justify-center"
-              >
-                <oh-icon
-                  :name="item.icon"
-                  :style="{
-                    color: isNavActive(item.to)
-                      ? 'var(--color-primary)'
-                      : 'currentColor',
-                  }"
-                />
-              </a>
+            <router-link
+              :to="item.to"
+              class="flex items-center w-full px-0 justify-center"
+              @click="showMenu = false"
+              :class="{ 'text-primary': isNavActive(item.to) }"
+            >
+              <oh-icon
+                :name="item.icon"
+                :style="{
+                  color: isNavActive(item.to)
+                    ? 'var(--color-primary)'
+                    : 'currentColor',
+                }"
+              />
             </router-link>
           </div>
         </li>
@@ -112,6 +98,7 @@ const navItems = [
   { to: "/", icon: "fa-home", label: "home.title" },
   { to: "/prompts", icon: "fa-th-list", label: "prompts.title" },
   { to: "/about", icon: "fa-info-circle", label: "about.title" },
+  { to: "/ai-tools", icon: "fa-bolt", label: "aiTools.title" },
 ];
 const navItemsPrompts = [
   {
