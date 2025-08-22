@@ -26,6 +26,9 @@
     "themeDark": "Tryb ciemny",
     "themeLight": "Tryb jasny"
   },
+  "create": {
+    "title": "Zaawansowany kreator promptów do generowania obrazów AI"
+  },
   "prompts": {
     "title": "Dostępne prompty",
     "optimizeAi": "Optymalizuj prompt AI",
@@ -74,7 +77,11 @@
       "promptCreation": "Tworzenie promptów tekstowych, wideo, audio i obrazów",
       "languageSupport": "Obsługa wielu języków (PL/EN)",
       "userFriendly": "Intuicyjny i przyjazny interfejs",
-      "fastAndModern": "Szybkość działania i nowoczesny design"
+      "fastAndModern": "Szybkość działania i nowoczesny design",
+      "aiToolsDirectory": "Katalog narzędzi AI",
+      "advancedFiltering": "Zaawansowane filtrowanie i wyszukiwanie",
+      "promptPreview": "Podgląd i kopiowanie promptów",
+      "localModelsSupport": "Wsparcie dla modeli lokalnych i open source"
     },
     "technologies": {
       "title": "Technologie"
@@ -104,6 +111,7 @@
     "about": "O aplikacji",
     "create-prompt": "Nowy prompt",
     "createPrompt": "Nowy prompt",
+    "create-image-prompt": "Zaawansowany kreator promptów do generowania obrazów AI",
     "types": {
       "text": "Tekst",
       "video": "Wideo",
@@ -140,6 +148,7 @@
   "aiTools": {
     "title": "Narzędzia AI",
     "description": "Lista przydatnych narzędzi AI wraz z opisami i linkami.",
-    "visit": "Odwiedź"
+    "visit": "Odwiedź",
+    "all": "Wszystkie"
   }
 }

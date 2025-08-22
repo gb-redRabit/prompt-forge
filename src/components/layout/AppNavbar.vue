@@ -27,7 +27,7 @@
       </div>
       <div class="divider mb-3 w-full"></div>
       <!-- Menu -->
-      <ul class="menu menu-vertical gap-2 flex-1 w-full items-center">
+      <ul class="menu menu-vertical gap-1 flex-1 w-full items-center">
         <li v-for="item in navItems" :key="item.to" class="w-full flex">
           <div
             class="tooltip tooltip-right w-full flex justify-center"
@@ -48,8 +48,31 @@
             </router-link>
           </div>
         </li>
+        <div class="divider my-0 w-full"></div>
 
-        <div class="divider my-3 w-full"></div>
+        <li v-for="item in navItemsImage" :key="item.to" class="w-full flex">
+          <div
+            class="tooltip tooltip-right w-full flex justify-center"
+            :data-tip="$t(item.label)"
+          >
+            <router-link
+              :to="item.to"
+              class="flex items-center w-full px-0 justify-center"
+              @click="showMenu = false"
+              :class="{ 'text-primary': isNavActive(item.to) }"
+            >
+              <oh-icon
+                :name="item.icon"
+                :style="{
+                  color: isNavActive(item.to)
+                    ? 'var(--color-primary)'
+                    : 'currentColor',
+                }"
+              />
+            </router-link>
+          </div>
+        </li>
+        <div class="divider my-0 w-full"></div>
 
         <li v-for="item in navItemsPrompts" :key="item.to" class="w-full flex">
           <div
@@ -99,6 +122,9 @@ const navItems = [
   { to: "/prompts", icon: "fa-th-list", label: "prompts.title" },
   { to: "/about", icon: "fa-info-circle", label: "about.title" },
   { to: "/ai-tools", icon: "fa-bolt", label: "aiTools.title" },
+];
+const navItemsImage = [
+  { to: "/create-image-prompt", icon: "fa-robot", label: "create.title" },
 ];
 const navItemsPrompts = [
   {

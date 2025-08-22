@@ -7,13 +7,17 @@ Prompt Forge to nowoczesna aplikacja webowa oparta o Vue 3, służąca do tworze
 ## Funkcje
 
 - **Tworzenie promptów**: tekstowych, wideo, audio i obrazów.
-- **Dynamiczne szablony**: placeholdery zamieniane na wartości z listy, możliwość interaktywnej edycji.
-- **Filtrowanie i tagowanie**: szybkie wyszukiwanie promptów po typie i tagach.
-- **Podgląd i kopiowanie**: wygodny modal z podglądem szablonu i kopiowaniem do schowka.
+- **Dynamiczne szablony**: placeholdery zamieniane na wartości z listy, możliwość interaktywnej edycji lub wpisania własnej wartości.
+- **Filtrowanie i tagowanie**: szybkie wyszukiwanie promptów po typie i tagach, zaawansowane filtrowanie narzędzi AI po kategoriach.
+- **Podgląd i kopiowanie**: wygodny modal z podglądem szablonu i kopiowaniem do schowka (możliwość kopiowania tylko zoptymalizowanego promptu).
 - **Wielojęzyczność**: pełne wsparcie PL/EN, szybkie przełączanie języka.
 - **Responsywny design**: Tailwind CSS + DaisyUI.
 - **Powiadomienia toast**: stylowe komunikaty dzięki vue3-toastify.
 - **Przyjazny interfejs**: nowoczesny wygląd, breadcrumbs, nawigacja boczna.
+- **Katalog narzędzi AI**: interaktywna lista narzędzi AI z kategoriami, tagami i opisami, szybkie filtrowanie po zastosowaniu.
+- **Wsparcie dla modeli lokalnych**: lista i opisy narzędzi do uruchamiania modeli AI lokalnie (np. LM Studio, Ollama, KoboldAI, ComfyUI).
+- **Zaawansowane filtrowanie i wyszukiwanie**: zarówno dla promptów, jak i narzędzi AI.
+- **Podgląd i kopiowanie promptów**: możliwość podglądu szablonu z dynamicznymi wartościami oraz kopiowania zoptymalizowanego promptu jednym kliknięciem.
 
 ---
 
@@ -25,8 +29,9 @@ prompt-forge
 │   ├── assets/                # Style (Tailwind), grafiki
 │   ├── components/            # Komponenty UI (Navbar, PromptCard, Tags, Breadcrumbs, LanguageSwitcher)
 │   ├── i18n/                  # Tłumaczenia PL/EN
-│   ├── pages/                 # Widoki (Home, Prompts, CreatePrompt, About, NotFound)
+│   ├── pages/                 # Widoki (Home, Prompts, CreatePrompt, About, NotFound, AiToolsView)
 │   ├── prompts/               # Dane promptów i opcje placeholderów (JSON)
+│   ├── data/                  # Dane narzędzi AI (ai_tools.json)
 │   ├── router/                # Routing Vue Router
 │   ├── store/                 # Pinia store
 │   ├── App.vue                # Główny komponent
@@ -63,6 +68,13 @@ prompt-forge
 
 ---
 
+## Wersja online
+
+Aplikacja jest dostępna online pod adresem:  
+[https://prompt-forge-pink.vercel.app](https://prompt-forge-pink.vercel.app)
+
+---
+
 ## Najważniejsze technologie
 
 - **Vue 3** – główny framework
@@ -79,8 +91,10 @@ prompt-forge
 
 - `src/pages/CreatePrompt.vue` – edycja promptu z interaktywnymi placeholderami
 - `src/pages/PromptList.vue` – lista promptów z filtrowaniem i tagami
+- `src/pages/AiToolsView.vue` – katalog narzędzi AI z filtrowaniem po kategoriach
 - `src/components/PromptCard.vue` – karta promptu z podglądem i kopiowaniem
 - `src/prompts/selector_options.json` – opcje dla placeholderów
+- `src/data/ai_tools.json` – dane narzędzi AI
 - `src/i18n/pl.json`, `src/i18n/en.json` – tłumaczenia
 
 ---
@@ -97,3 +111,7 @@ Zgłoś problem lub propozycję na GitHubie.
 MIT
 
 ---
+
+```
+
+```

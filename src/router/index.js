@@ -18,6 +18,11 @@ const routes = [
     component: () => import("../pages/CreatePrompt.vue"),
   },
   {
+    path: "/create-image-prompt",
+    name: "CreatePromptImage",
+    component: () => import("../pages/CreatePromptImage.vue"),
+  },
+  {
     path: "/about",
     name: "About",
     component: () => import("../pages/AboutView.vue"),

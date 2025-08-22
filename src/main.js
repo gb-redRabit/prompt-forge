@@ -35,6 +35,10 @@ import {
   FaTimes,
   FaEye,
   FaEyeSlash,
+  FaRobot,
+  FaFilter,
+  FaCopy,
+  FaDatabase,
 } from "oh-vue-icons/icons";
 import { defineRule } from "vee-validate";
 import { required } from "@vee-validate/rules";
@@ -67,7 +71,11 @@ addIcons(
   FaRegularEye,
   FaTimes,
   FaEye,
-  FaEyeSlash
+  FaEyeSlash,
+  FaRobot,
+  FaFilter,
+  FaCopy,
+  FaDatabase
 );
 const pinia = createPinia();
 

@@ -7,7 +7,8 @@
     },
     "url": "https://chat.openai.com/",
     "logo": "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg",
-    "tags": ["free (ograniczone)", "płatne", "konto wymagane", "trial"]
+    "tags": ["free (ograniczone)", "płatne", "konto wymagane", "trial"],
+    "category": ["text", "chat"]
   },
   {
     "name": "Midjourney",
@@ -17,7 +18,8 @@
     },
     "url": "https://www.midjourney.com/",
     "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/0/06/Midjourney_logo.svg/1200px-Midjourney_logo.svg.png",
-    "tags": ["płatne", "trial", "konto Discord wymagane"]
+    "tags": ["płatne", "trial", "konto Discord wymagane"],
+    "category": ["image", "art"]
   },
   {
     "name": "Hugging Face Spaces",
@@ -27,7 +29,8 @@
     },
     "url": "https://huggingface.co/spaces",
     "logo": "https://huggingface.co/front/assets/huggingface_logo-noborder.svg",
-    "tags": ["free", "open source", "konto opcjonalne"]
+    "tags": ["free", "open source", "konto opcjonalne"],
+    "category": ["platform", "models", "community"]
   },
   {
     "name": "You.com",
@@ -37,7 +40,8 @@
     },
     "url": "https://you.com/home",
     "logo": "https://you.com/favicon_ydc/favicon-32x32.png?v=3",
-    "tags": ["free", "płatne", "konto opcjonalne"]
+    "tags": ["free", "płatne", "konto opcjonalne"],
+    "category": ["search", "text", "image", "code"]
   },
   {
     "name": "Gamma.app",
@@ -47,6 +51,117 @@
     },
     "url": "https://gamma.app/",
     "logo": "https://gamma.app/favicon.ico",
-    "tags": ["free (ograniczone)", "trial", "płatne", "konto wymagane"]
+    "tags": ["free (ograniczone)", "trial", "płatne", "konto wymagane"],
+    "category": ["presentation", "document"]
+  },
+  {
+    "name": "LM Studio",
+    "description": {
+      "pl": "Aplikacja desktopowa do uruchamiania i testowania modeli językowych LLM lokalnie.",
+      "en": "Desktop app for running and testing LLM models locally."
+    },
+    "url": "https://lmstudio.ai/",
+    "logo": "https://lmstudio.ai/favicon.ico",
+    "tags": ["free", "open source", "local"],
+    "category": ["llm", "desktop", "local"]
+  },
+  {
+    "name": "Pinokio",
+    "description": {
+      "pl": "Automatyczne uruchamianie i zarządzanie aplikacjami AI oraz narzędziami open source.",
+      "en": "Automatic launching and management of AI apps and open source tools."
+    },
+    "url": "https://pinokio.computer/",
+    "logo": "https://pinokio.computer/favicon.ico",
+    "tags": ["free", "open source", "automation"],
+    "category": ["local", "desktop"]
+  },
+  {
+    "name": "Ollama",
+    "description": {
+      "pl": "Uruchamianie modeli językowych LLM lokalnie na komputerze.",
+      "en": "Run LLM models locally on your computer."
+    },
+    "url": "https://ollama.com/",
+    "logo": "https://ollama.com/public/icon-32x32.png",
+    "tags": ["free", "local", "open source"],
+    "category": ["llm", "local", "desktop"]
+  },
+  {
+    "name": "Stability Matrix",
+    "description": {
+      "pl": "Platforma do zarządzania i monitorowania instancji Stable Diffusion oraz innych modeli generatywnych.",
+      "en": "Platform for managing and monitoring Stable Diffusion and other generative model instances."
+    },
+    "url": "https://lykos.ai/",
+    "logo": "https://lykos.ai/favicon.ico",
+    "tags": ["płatne", "monitoring", "image"],
+    "category": ["image", "local", "desktop"]
+  },
+  {
+    "name": "Perplexity AI",
+    "description": {
+      "pl": "Wyszukiwarka AI z natychmiastowymi odpowiedziami i cytowaniami źródeł.",
+      "en": "AI search engine with instant answers and source citations."
+    },
+    "url": "https://www.perplexity.ai/",
+    "logo": "https://www.perplexity.ai/favicon.ico",
+    "tags": ["free", "search", "chat"],
+    "category": ["search", "chat", "text"]
+  },
+  {
+    "name": "Leonardo AI",
+    "description": {
+      "pl": "Generowanie obrazów i assetów do gier za pomocą AI.",
+      "en": "Generate images and game assets with AI."
+    },
+    "url": "https://leonardo.ai/",
+    "logo": "https://leonardo.ai/favicon.ico",
+    "tags": ["free (ograniczone)", "płatne", "konto wymagane", "image"],
+    "category": ["image", "art"]
+  },
+  {
+    "name": "KoboldAI",
+    "description": {
+      "pl": "Interfejs webowy do uruchamiania lokalnych i zdalnych modeli językowych (LLM), popularny w społeczności open source.",
+      "en": "Web interface for running local and remote LLMs, popular in the open source community."
+    },
+    "url": "https://github.com/KoboldAI/KoboldAI-Client",
+    "logo": "https://raw.githubusercontent.com/KoboldAI/KoboldAI-Client/main/static/favicon.ico",
+    "tags": ["free", "open source", "local"],
+    "category": ["llm", "desktop", "local"]
+  },
+  {
+    "name": "Text Generation WebUI",
+    "description": {
+      "pl": "Wszechstronny interfejs webowy do uruchamiania i testowania modeli tekstowych (LLM) lokalnie, obsługuje wiele backendów.",
+      "en": "Versatile web UI for running and testing LLMs locally, supports many backends."
+    },
+    "url": "https://github.com/oobabooga/text-generation-webui",
+    "logo": "https://avatars.githubusercontent.com/u/130668008?s=200&v=4",
+    "tags": ["free", "open source", "local"],
+    "category": ["llm", "desktop", "local"]
+  },
+  {
+    "name": "ComfyUI",
+    "description": {
+      "pl": "Zaawansowany graficzny interfejs do budowania i uruchamiania workflow dla Stable Diffusion i innych modeli generatywnych.",
+      "en": "Advanced graphical UI for building and running workflows for Stable Diffusion and other generative models."
+    },
+    "url": "https://github.com/comfyanonymous/ComfyUI",
+    "logo": "https://github.com/comfyanonymous/ComfyUI/raw/master/web/extensions/comfyui_logo.png",
+    "tags": ["free", "open source", "image"],
+    "category": ["image", "workflow", "local"]
+  },
+  {
+    "name": "InvokeAI",
+    "description": {
+      "pl": "Narzędzie do uruchamiania i zarządzania Stable Diffusion lokalnie z rozbudowanym interfejsem webowym.",
+      "en": "Tool for running and managing Stable Diffusion locally with an advanced web interface."
+    },
+    "url": "https://github.com/invoke-ai/InvokeAI",
+    "logo": "https://invoke-ai.github.io/InvokeAI/assets/invokeai-logo.svg",
+    "tags": ["free", "open source", "image"],
+    "category": ["image", "local", "desktop"]
   }
 ]

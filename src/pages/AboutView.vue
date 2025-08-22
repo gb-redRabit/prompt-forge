@@ -47,6 +47,38 @@
             /></span>
             <span>{{ $t("about.features.fastAndModern") }}</span>
           </li>
+          <li
+            class="flex items-center gap-3 bg-base-200 rounded-lg p-3 shadow hover:scale-105 transition"
+          >
+            <span class="badge badge-warning badge-lg"
+              ><oh-icon name="fa-robot" scale="1"
+            /></span>
+            <span>{{ $t("about.features.aiToolsDirectory") }}</span>
+          </li>
+          <li
+            class="flex items-center gap-3 bg-base-200 rounded-lg p-3 shadow hover:scale-105 transition"
+          >
+            <span class="badge badge-secondary badge-lg"
+              ><oh-icon name="fa-filter" scale="1"
+            /></span>
+            <span>{{ $t("about.features.advancedFiltering") }}</span>
+          </li>
+          <li
+            class="flex items-center gap-3 bg-base-200 rounded-lg p-3 shadow hover:scale-105 transition"
+          >
+            <span class="badge badge-error badge-lg"
+              ><oh-icon name="fa-copy" scale="1"
+            /></span>
+            <span>{{ $t("about.features.promptPreview") }}</span>
+          </li>
+          <li
+            class="flex items-center gap-3 bg-base-200 rounded-lg p-3 shadow hover:scale-105 transition"
+          >
+            <span class="badge badge-info badge-lg"
+              ><oh-icon name="fa-database" scale="1"
+            /></span>
+            <span>{{ $t("about.features.localModelsSupport") }}</span>
+          </li>
         </ul>
         <div class="divider">{{ $t("about.technologies.title") }}</div>
         <div class="flex flex-wrap gap-2 justify-center">

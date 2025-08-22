@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center items-center min-h-[94vh]">
+  <div class="flex justify-center items-start min-h-[94vh]">
     <div class="w-full max-w-7xl px-2">
       <h1 class="text-3xl font-bold mb-4 text-primary text-center">
         {{ $t("aiTools.title") }}
@@ -7,48 +7,67 @@
       <p class="mb-8 text-base-content/80 text-center">
         {{ $t("aiTools.description") }}
       </p>
+      <!-- Wybór kategorii -->
+      <div class="flex flex-wrap justify-center gap-2 mb-8">
+        <button
+          v-for="cat in allCategories"
+          :key="cat"
+          class="btn btn-xs"
+          :class="selectedCategory === cat ? 'btn-primary' : 'btn-outline'"
+          @click="selectedCategory = cat"
+        >
+          {{ cat === "all" ? $t("aiTools.all") : cat }}
+        </button>
+      </div>
       <div
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
       >
         <div
-          v-for="tool in tools"
+          v-for="tool in filteredTools"
           :key="tool.name"
-          class="card bg-base-200 shadow-xl border border-base-300 hover:scale-[1.025] transition"
+          class="card bg-base-200 shadow-xl border border-base-300 hover:scale-[1.025] transition cursor-pointer"
         >
-          <figure class="px-6 pt-6">
-            <img
-              :src="tool.logo"
-              :alt="tool.name + ' logo'"
-              class="rounded-xl h-16 w-16 object-contain mx-auto"
-              loading="lazy"
-            />
-          </figure>
-          <div class="card-body items-center text-center">
-            <h2 class="card-title text-primary mb-2">{{ tool.name }}</h2>
-            <p class="text-base-content/80 text-sm mb-4">
-              {{ tool.description[locale] || tool.description.en }}
-            </p>
-            <div class="flex flex-wrap justify-center gap-2 mb-4">
-              <span
-                v-for="tag in tool.tags"
-                :key="tag"
-                class="badge px-3 py-1 text-xs font-semibold"
-                :class="tagClass(tag)"
-              >
-                {{ tag }}
-              </span>
+          <a
+            :href="tool.url"
+            target="_blank"
+            rel="noopener"
+            class="block h-full w-full"
+            style="text-decoration: none; color: inherit"
+          >
+            <figure class="px-6 pt-6">
+              <img
+                :src="tool.logo"
+                :alt="tool.name + ' logo'"
+                class="rounded-xl h-16 w-16 object-contain mx-auto"
+                loading="lazy"
+              />
+            </figure>
+            <div class="card-body items-center text-center">
+              <h2 class="card-title text-primary mb-2">{{ tool.name }}</h2>
+              <div class="flex flex-wrap justify-center gap-2 mb-2">
+                <span
+                  v-for="cat in tool.category"
+                  :key="cat"
+                  class="badge badge-outline badge-info px-3 py-1 text-xs font-semibold"
+                >
+                  {{ cat }}
+                </span>
+              </div>
+              <p class="text-base-content/80 text-sm mb-4">
+                {{ tool.description[locale] || tool.description.en }}
+              </p>
+              <div class="flex flex-wrap justify-center gap-2 mb-4">
+                <span
+                  v-for="tag in tool.tags"
+                  :key="tag"
+                  class="badge px-3 py-1 text-xs font-semibold"
+                  :class="tagClass(tag)"
+                >
+                  {{ tag }}
+                </span>
+              </div>
             </div>
-            <div class="card-actions">
-              <a
-                :href="tool.url"
-                target="_blank"
-                rel="noopener"
-                class="btn btn-accent btn-sm"
-              >
-                {{ $t("aiTools.visit") }}
-              </a>
-            </div>
-          </div>
+          </a>
         </div>
       </div>
     </div>
@@ -56,11 +75,31 @@
 </template>
 
 <script setup>
+import { computed, ref } from "vue";
 import { useAiToolsStore } from "../store/aiToolsStore";
 import { useI18n } from "vue-i18n";
 
 const { tools } = useAiToolsStore();
 const { locale } = useI18n();
+
+const selectedCategory = ref("all");
+
+// Zbierz wszystkie unikalne kategorie z narzędzi
+const allCategories = computed(() => {
+  const cats = new Set();
+  tools.value.forEach((tool) => {
+    (tool.category || []).forEach((cat) => cats.add(cat));
+  });
+  return ["all", ...Array.from(cats)];
+});
+
+// Filtrowanie narzędzi po kategorii
+const filteredTools = computed(() => {
+  if (selectedCategory.value === "all") return tools.value;
+  return tools.value.filter((tool) =>
+    (tool.category || []).includes(selectedCategory.value)
+  );
+});
 
 // Funkcja doboru koloru badge na podstawie tagu
 function tagClass(tag) {
