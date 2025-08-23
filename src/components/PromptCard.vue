@@ -27,7 +27,7 @@
         }}
       </pre>
     </div>
-    <div
+    <!-- <div
       v-if="prompt.placeholder_keys && prompt.placeholder_keys.length"
       class="mt-2"
     >
@@ -37,12 +37,22 @@
           {{ ph }}
         </li>
       </ul>
-    </div>
-    <div v-if="prompt.tags_ids && prompt.tags_ids.length" class="mt-2">
+    </div> -->
+    <div v-if="prompt.tags && prompt.tags.length" class="mt-2">
       <span class="font-bold">{{ $t("prompts.tags") }}:</span>
       <ul class="flex flex-wrap gap-1 mt-1">
-        <li v-for="tag in prompt.tags_ids" :key="tag">
+        <li v-for="tag in prompt.tags" :key="tag">
           <span class="badge badge-outline badge-sm">{{ tag }}</span>
+        </li>
+      </ul>
+    </div>
+    <div v-if="prompt.categories && prompt.categories.length" class="">
+      <span class="font-bold"
+        >{{ $t("prompts.categories") || "Kategorie" }}:</span
+      >
+      <ul class="flex flex-wrap gap-1 mt-1">
+        <li v-for="cat in prompt.categories" :key="cat">
+          <span class="badge badge-info badge-sm">{{ cat }}</span>
         </li>
       </ul>
     </div>

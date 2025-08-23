@@ -14,6 +14,8 @@
       "pl": "Napisz skrypt reklamy radiowej dla [product] skierowanej do [audience].",
       "en": "Write a radio ad script for [product] targeting [audience]."
     },
-    "tags_ids": ["advertising", "audio", "script"]
+    "placeholder_keys": ["product", "audience"],
+    "tags": ["advertising", "audio", "script"],
+    "categories": ["audio", "marketing", "ad"]
   }
 ]

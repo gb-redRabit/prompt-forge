@@ -20,7 +20,8 @@
       "story_mood",
       "word_count"
     ],
-    "tags_ids": ["storytelling", "creative-writing", "narrative"]
+    "tags": ["storytelling", "creative-writing", "narrative"],
+    "categories": ["story", "creative", "text"]
   },
   {
     "id": 2,
@@ -38,7 +39,8 @@
       "pl": "Napisz wiersz w stylu [poem_style] o temacie [theme]. Wiersz powinien wywoływać [emotion] i mieć około [line_count] linii."
     },
     "placeholder_keys": ["poem_style", "theme", "emotion", "line_count"],
-    "tags_ids": ["poetry", "creative-writing", "artistic-expression"]
+    "tags": ["poetry", "creative-writing", "artistic-expression"],
+    "categories": ["poetry", "creative", "text"]
   },
   {
     "id": 3,
@@ -56,7 +58,8 @@
       "pl": "Zarysuj posta na bloga o temacie [blog_topic]. Uwzględnij sekcje dla [intro_section], [main_points_count] głównych punktów i zakończenia."
     },
     "placeholder_keys": ["blog_topic", "intro_section", "main_points_count"],
-    "tags_ids": ["blogging", "content-creation", "writing"]
+    "tags": ["blogging", "content-creation", "writing"],
+    "categories": ["blog", "content", "text"]
   },
   {
     "id": 4,
@@ -74,7 +77,8 @@
       "pl": "Szkicuj propozycję biznesową dla [project_name], która zawiera wprowadzenie, cele, metodologię i oczekiwane wyniki."
     },
     "placeholder_keys": ["project_name"],
-    "tags_ids": ["business", "proposal", "planning"]
+    "tags": ["business", "proposal", "planning"],
+    "categories": ["business", "proposal", "text"]
   },
   {
     "id": 5,
@@ -92,7 +96,8 @@
       "pl": "Szkicuj plan marketingowy dla [product_name], który zawiera analizę rynku, grupę docelową, strategie marketingowe i uwzględnienie budżetu."
     },
     "placeholder_keys": ["product_name"],
-    "tags_ids": ["marketing", "business", "planning"]
+    "tags": ["marketing", "business", "planning"],
+    "categories": ["marketing", "business", "text"]
   },
   {
     "id": 6,
@@ -110,7 +115,8 @@
       "pl": "Szkicuj dokumentację techniczną dla [software_project], która zawiera instrukcje instalacji, wytyczne dotyczące użytkowania i wskazówki dotyczące rozwiązywania problemów."
     },
     "placeholder_keys": ["software_project"],
-    "tags_ids": ["technical-writing", "documentation", "software"]
+    "tags": ["technical-writing", "documentation", "software"],
+    "categories": ["documentation", "software", "text"]
   },
   {
     "id": 7,
@@ -128,7 +134,8 @@
       "pl": "Stwórz przepis używając [ingredients], który należy do kuchni [cuisine_type]. Przepis powinien zawierać czas przygotowania, czas gotowania i sugestie dotyczące podawania."
     },
     "placeholder_keys": ["ingredients", "cuisine_type"],
-    "tags_ids": ["cooking", "recipes", "food"]
+    "tags": ["cooking", "recipes", "food"],
+    "categories": ["cooking", "food", "text"]
   },
   {
     "id": 8,
@@ -146,7 +153,8 @@
       "pl": "Szkicuj plan podróży dla [destination], który zawiera atrakcje do zobaczenia, rekomendacje lokalnej kuchni i wskazówki dotyczące podróży."
     },
     "placeholder_keys": ["destination"],
-    "tags_ids": ["travel", "itinerary", "planning"]
+    "tags": ["travel", "itinerary", "planning"],
+    "categories": ["travel", "planning", "text"]
   },
   {
     "id": 9,
@@ -164,6 +172,7 @@
       "pl": "Napisz recenzję [product_name], która obejmuje jego cechy, zalety i wady oraz ogólne wrażenia."
     },
     "placeholder_keys": ["product_name"],
-    "tags_ids": ["reviews", "consumer-feedback", "writing"]
+    "tags": ["reviews", "consumer-feedback", "writing"],
+    "categories": ["review", "product", "text"]
   }
 ]

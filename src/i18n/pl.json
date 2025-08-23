@@ -30,6 +30,7 @@
     "title": "Zaawansowany kreator promptów do generowania obrazów AI"
   },
   "prompts": {
+    "categories": "Kategorie",
     "title": "Dostępne prompty",
     "optimizeAi": "Optymalizuj prompt AI",
     "copyAiResponse": "Kopiuj odpowiedź",

@@ -1,13 +1,13 @@
 <template>
   <div class="mt-6 flex flex-wrap gap-2">
     <span
-      v-for="tag in tags"
-      :key="tag"
+      v-for="t in tags"
+      :key="t.tag"
       class="badge badge-outline cursor-pointer"
-      :class="{ 'badge-primary': selectedTags.includes(tag) }"
-      @click="toggleTag(tag)"
+      :class="{ 'badge-primary': selectedTags.includes(t.tag) }"
+      @click="toggleTag(t.tag)"
     >
-      {{ tag }}
+      {{ t.tag }}<span class="opacity-60 ml-1">({{ t.count }})</span>
     </span>
     <span
       v-if="selectedTags.length"
@@ -21,7 +21,7 @@
 
 <script setup>
 defineProps({
-  tags: Array,
+  tags: Array, // [{ tag, count }]
   selectedTags: Array,
 });
 const emit = defineEmits(["toggle", "clear"]);

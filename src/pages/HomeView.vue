@@ -1,5 +1,7 @@
 <template>
-  <section class="flex flex-col items-center justify-center min-h-full w-full">
+  <section
+    class="flex flex-col items-center justify-center min-h-[90vh] w-full"
+  >
     <HomeHero />
     <HomeQuickSearch />
 

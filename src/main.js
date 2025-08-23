@@ -7,6 +7,7 @@ import messages from "./i18n/index.js";
 import Vue3Toastify from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 import "./assets/tailwind.css";
+import MasonryWall from "@yeger/vue-masonry-wall";
 import { OhVueIcon, addIcons } from "oh-vue-icons";
 import { FaFlagUsa, FaFlag } from "oh-vue-icons/icons";
 import { MdLanguage } from "oh-vue-icons/icons"; // Dodaj ten import
@@ -89,6 +90,7 @@ const i18n = createI18n({
 const app = createApp(App);
 app.component("oh-icon", OhVueIcon);
 app
+  .use(MasonryWall)
   .use(pinia)
   .use(router)
   .use(i18n)

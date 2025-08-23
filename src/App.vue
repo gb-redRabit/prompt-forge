@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row min-h-screen" data-theme="cyberpunk">
+  <div class="flex flex-row min-h-screen" data-theme="synthwave">
     <AppNavbar />
     <OpenAIStatus />
     <main

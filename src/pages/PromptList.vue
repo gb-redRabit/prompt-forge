@@ -1,7 +1,7 @@
 <template>
-  <div class="container mx-auto p-4 flex flex-col md:flex-row gap-8">
+  <div class="container mx-auto p-4 flex flex-row gap-8">
     <!-- Lewy panel: przyciski -->
-    <div class="flex flex-row md:flex-col gap-4 md:w-1/6">
+    <div class="flex flex-col gap-4 md:w-1/6">
       <button
         v-for="type in types"
         :key="type.key"
@@ -18,7 +18,7 @@
         {{ $t(type.label) }}
       </button>
       <PromptTags
-        :tags="sortedTags"
+        :tags="sortedTagsWithCount"
         :selectedTags="selectedTags"
         @toggle="toggleTag"
         @clear="clearTag"
@@ -26,7 +26,6 @@
     </div>
     <!-- Prawy panel: lista promptów -->
     <div class="flex-1">
-      <!-- Nowy komponent wyszukiwania -->
       <div class="mb-4 flex justify-between items-center">
         <input
           v-model="searchQuery"
@@ -34,7 +33,6 @@
           class="input input-bordered w-full max-w-xs"
           :placeholder="$t('prompts.searchPlaceholder')"
         />
-
         <div class="flex justify-end mb-4">
           <button class="btn btn-info" @click="showPlaceholders = true">
             {{ $t("prompts.showPlaceholders") }}
@@ -44,19 +42,22 @@
       <h2 class="text-2xl font-bold mb-4">
         {{ $t(types.find((t) => t.key === selectedType).label) }}
       </h2>
-      <ul
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6"
+      <MasonryWall
+        :items="filteredPrompts"
+        :column-width="330"
+        :gap="24"
+        v-slot="{ item }"
+        class="w-full"
       >
-        <li v-for="prompt in filteredPrompts" :key="prompt.id" class="w-full">
-          <PromptCard :prompt="prompt" />
-        </li>
-        <li
-          v-if="filteredPrompts.length === 0"
-          class="col-span-full text-center text-base-content/60"
-        >
-          {{ $t("prompts.empty") }}
-        </li>
-      </ul>
+        <PromptCard :prompt="item" />
+      </MasonryWall>
+      <div
+        v-if="filteredPrompts.length === 0"
+        class="text-center text-base-content/60 mt-8"
+        style="width: 100%"
+      >
+        {{ $t("prompts.empty") }}
+      </div>
     </div>
 
     <!-- Modal z placeholderami -->
@@ -91,6 +92,7 @@ import { useRoute, useRouter } from "vue-router";
 import { usePromptsStore } from "../store/index";
 import PromptTags from "../components/PromptTags.vue";
 import PromptCard from "../components/PromptCard.vue";
+import MasonryWall from "@yeger/vue-masonry-wall";
 
 const types = [
   { key: "text", label: "prompts.types.text" },
@@ -120,32 +122,48 @@ watch(searchQuery, (val) => {
   router.replace({ query: { ...route.query, search: val } });
 });
 
-// Dynamicznie wyliczaj dostępne tagi na podstawie już wybranych tagów
-const sortedTags = computed(() => {
-  const prompts = promptsStore.getPromptsByType(selectedType.value) || [];
+// Dynamicznie wyliczaj dostępne tagi na podstawie już wybranych tagów ORAZ liczność promptów dla każdego tagu
+const sortedTagsWithCount = computed(() => {
+  const prompts = Array.isArray(
+    promptsStore.getPromptsByType(selectedType.value)
+  )
+    ? promptsStore.getPromptsByType(selectedType.value)
+    : [];
   let filteredPrompts = prompts;
   if (selectedTags.value.length) {
     filteredPrompts = prompts.filter((p) =>
-      selectedTags.value.every((tag) => (p.tags_ids || []).includes(tag))
+      selectedTags.value.every((tag) => (p.tags || []).includes(tag))
     );
   }
-  // Zbierz tagi z przefiltrowanych promptów
-  const tags = new Set();
+  // Zlicz wystąpienia tagów
+  const tagCounts = {};
   filteredPrompts.forEach((p) => {
-    (p.tags_ids || []).forEach((tag) => tags.add(tag));
+    (p.tags || []).forEach((tag) => {
+      tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+    });
   });
   // Dodaj zawsze wybrane tagi (nawet jeśli nie ma ich już w przefiltrowanych)
-  selectedTags.value.forEach((tag) => tags.add(tag));
-  return Array.from(tags).sort();
+  selectedTags.value.forEach((tag) => {
+    if (!(tag in tagCounts)) tagCounts[tag] = 0;
+  });
+  // Zwróć tablicę obiektów { tag, count }
+  return Object.entries(tagCounts)
+    .map(([tag, count]) => ({ tag, count }))
+    .sort((a, b) => a.tag.localeCompare(b.tag));
 });
 
 // Filtrowanie promptów po wybranych tagach i wyszukiwaniu
 const filteredPrompts = computed(() => {
-  const prompts = promptsStore.getPromptsByType(selectedType.value) || [];
+  // Zawsze wymuszaj tablicę!
+  const prompts = Array.isArray(
+    promptsStore.getPromptsByType(selectedType.value)
+  )
+    ? promptsStore.getPromptsByType(selectedType.value)
+    : [];
   let result = prompts;
   if (selectedTags.value.length) {
     result = result.filter((p) =>
-      selectedTags.value.every((tag) => (p.tags_ids || []).includes(tag))
+      selectedTags.value.every((tag) => (p.tags || []).includes(tag))
     );
   }
   if (searchQuery.value.trim()) {
