@@ -21,7 +21,8 @@
       "lighting",
       "camera_angle"
     ],
-    "tags_ids": ["creative", "animals", "visuals"]
+    "tags": ["creative", "animals", "visuals"],
+    "categories": ["image", "art", "animals"]
   },
   {
     "id": 2,
@@ -44,7 +45,8 @@
       "season",
       "foreground_elements"
     ],
-    "tags_ids": ["nature", "landscape", "visuals"]
+    "tags": ["nature", "landscape", "visuals"],
+    "categories": ["image", "nature", "landscape"]
   },
   {
     "id": 3,
@@ -62,7 +64,8 @@
       "pl": "Stwórz obraz [legendary_creature] z [features] w [habitat]. Nastrój powinien być [mood]."
     },
     "placeholder_keys": ["legendary_creature", "features", "habitat", "mood"],
-    "tags_ids": ["fantasy", "creativity", "visuals"]
+    "tags": ["fantasy", "creativity", "visuals"],
+    "categories": ["image", "fantasy", "creature"]
   },
   {
     "id": 4,
@@ -84,7 +87,8 @@
       "clothing_style",
       "architecture_style"
     ],
-    "tags_ids": ["history", "illustration", "cultural"]
+    "tags": ["history", "illustration", "cultural"],
+    "categories": ["image", "history", "culture"]
   },
   {
     "id": 5,
@@ -102,7 +106,8 @@
       "pl": "Zaprojektuj surrealistyczne dzieło sztuki z [dreamlike_elements] w palecie kolorów [color_palette]. Kompozycja powinna wywoływać [emotion]."
     },
     "placeholder_keys": ["dreamlike_elements", "color_palette", "emotion"],
-    "tags_ids": ["surrealism", "art", "creativity"]
+    "tags": ["surrealism", "art", "creativity"],
+    "categories": ["image", "art", "surrealism"]
   },
   {
     "id": 6,
@@ -125,7 +130,8 @@
       "expression",
       "background_style"
     ],
-    "tags_ids": ["portrait", "art", "visuals"]
+    "tags": ["portrait", "art", "visuals"],
+    "categories": ["image", "portrait", "art"]
   },
   {
     "id": 7,
@@ -147,7 +153,8 @@
       "atmosphere",
       "technology_type"
     ],
-    "tags_ids": ["sci-fi", "visuals", "imagination"]
+    "tags": ["sci-fi", "visuals", "imagination"],
+    "categories": ["image", "sci-fi", "technology"]
   },
   {
     "id": 8,
@@ -169,7 +176,8 @@
       "legendary_creature",
       "environment_type"
     ],
-    "tags_ids": ["fantasy", "landscape", "creativity"]
+    "tags": ["fantasy", "landscape", "creativity"],
+    "categories": ["image", "fantasy", "landscape"]
   },
   {
     "id": 9,
@@ -187,7 +195,8 @@
       "pl": "Stwórz ilustrację sceny mitologicznej z [deity] i [legendary_creature] w [ancient_setting]."
     },
     "placeholder_keys": ["deity", "legendary_creature", "ancient_setting"],
-    "tags_ids": ["mythology", "illustration", "cultural"]
+    "tags": ["mythology", "illustration", "cultural"],
+    "categories": ["image", "mythology", "culture"]
   },
   {
     "id": 10,
@@ -205,6 +214,7 @@
       "pl": "Zaprojektuj koncept sztuki z [design_elements], który przekazuje motyw [theme]. Narracja wizualna powinna być w stylu [storytelling_style]."
     },
     "placeholder_keys": ["design_elements", "theme", "storytelling_style"],
-    "tags_ids": ["concept_art", "design", "visuals"]
+    "tags": ["concept_art", "design", "visuals"],
+    "categories": ["image", "concept_art", "design"]
   }
 ]

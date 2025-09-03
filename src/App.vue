@@ -15,6 +15,10 @@
 import AppNavbar from "./components/layout/AppNavbar.vue";
 import AppBreadcrumbs from "./components/layout/AppBreadcrumbs.vue";
 import OpenAIStatus from "./components/layout/OpenAIStatus.vue";
+
+// Dodaj import i wywołanie funkcji sprawdzającej tłumaczenia
+import { checkMissingTranslations } from "./i18n/index.js";
+checkMissingTranslations();
 </script>
 
 <style scoped></style>

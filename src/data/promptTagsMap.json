@@ -1,0 +1,5518 @@
+{
+  "Subject": {
+    "pl": [
+      {
+        "positive": "portret kobiety",
+        "negative": "portret mężczyzny",
+        "nsfw": false
+      },
+      {
+        "positive": "portret mężczyzny",
+        "negative": "portret kobiety",
+        "nsfw": false
+      },
+      {
+        "positive": "pojedyncza postać",
+        "negative": "wielu bohaterów",
+        "nsfw": false
+      },
+      {
+        "positive": "dwie postacie",
+        "negative": "pojedyncza postać",
+        "nsfw": false
+      },
+      {
+        "positive": "grupa bohaterów",
+        "negative": "pojedyncza postać",
+        "nsfw": false
+      },
+      {
+        "positive": "bohater fantasy",
+        "negative": "bohater sci-fi",
+        "nsfw": false
+      },
+      {
+        "positive": "bohater sci-fi",
+        "negative": "bohater fantasy",
+        "nsfw": false
+      },
+      { "positive": "robot", "negative": "człowiek", "nsfw": false },
+      { "positive": "cyborg", "negative": "organiczna postać", "nsfw": false },
+      { "positive": "smok", "negative": "brak smoka", "nsfw": false },
+      { "positive": "mag", "negative": "wojownik", "nsfw": false },
+      { "positive": "wojownik", "negative": "uczony", "nsfw": false },
+      { "positive": "uczony", "negative": "wojownik", "nsfw": false },
+      { "positive": "architektura", "negative": "postać", "nsfw": false },
+      { "positive": "statek kosmiczny", "negative": "samolot", "nsfw": false },
+      {
+        "positive": "pojazd futurystyczny",
+        "negative": "pojazd retro",
+        "nsfw": false
+      },
+      { "positive": "zwierzę", "negative": "człowiek", "nsfw": false },
+      {
+        "positive": "mityczne stworzenie",
+        "negative": "zwykłe zwierzę",
+        "nsfw": false
+      },
+      { "positive": "krajobraz", "negative": "wnętrze", "nsfw": false },
+      { "positive": "martwa natura", "negative": "scena akcji", "nsfw": false },
+      {
+        "positive": "scena bitewna",
+        "negative": "scena spokojna",
+        "nsfw": false
+      },
+      {
+        "positive": "podwodny motyw",
+        "negative": "lądowy motyw",
+        "nsfw": false
+      },
+      {
+        "positive": "miasto nocą",
+        "negative": "miasto za dnia",
+        "nsfw": false
+      },
+      {
+        "positive": "postać w akcji",
+        "negative": "postać statyczna",
+        "nsfw": false
+      }
+    ],
+    "en": [
+      {
+        "positive": "female portrait",
+        "negative": "male portrait",
+        "nsfw": false
+      },
+      {
+        "positive": "male portrait",
+        "negative": "female portrait",
+        "nsfw": false
+      },
+      {
+        "positive": "single character",
+        "negative": "multiple characters",
+        "nsfw": false
+      },
+      {
+        "positive": "two characters",
+        "negative": "single character",
+        "nsfw": false
+      },
+      {
+        "positive": "group of characters",
+        "negative": "single character",
+        "nsfw": false
+      },
+      { "positive": "fantasy hero", "negative": "sci-fi hero", "nsfw": false },
+      { "positive": "sci-fi hero", "negative": "fantasy hero", "nsfw": false },
+      { "positive": "robot", "negative": "human", "nsfw": false },
+      { "positive": "cyborg", "negative": "organic character", "nsfw": false },
+      { "positive": "dragon", "negative": "no dragon", "nsfw": false },
+      { "positive": "mage", "negative": "warrior", "nsfw": false },
+      { "positive": "warrior", "negative": "scholar", "nsfw": false },
+      { "positive": "scholar", "negative": "warrior", "nsfw": false },
+      {
+        "positive": "architecture focus",
+        "negative": "character focus",
+        "nsfw": false
+      },
+      { "positive": "spaceship", "negative": "airplane", "nsfw": false },
+      {
+        "positive": "futuristic vehicle",
+        "negative": "retro vehicle",
+        "nsfw": false
+      },
+      { "positive": "animal", "negative": "human", "nsfw": false },
+      {
+        "positive": "mythical creature",
+        "negative": "ordinary animal",
+        "nsfw": false
+      },
+      { "positive": "landscape", "negative": "interior", "nsfw": false },
+      { "positive": "still life", "negative": "action scene", "nsfw": false },
+      {
+        "positive": "battle scene",
+        "negative": "peaceful scene",
+        "nsfw": false
+      },
+      {
+        "positive": "underwater theme",
+        "negative": "land theme",
+        "nsfw": false
+      },
+      { "positive": "city at night", "negative": "city at day", "nsfw": false },
+      {
+        "positive": "dynamic character",
+        "negative": "static character",
+        "nsfw": false
+      }
+    ]
+  },
+  "Character Traits": {
+    "pl": [
+      { "positive": "odważna", "negative": "tchórzliwa", "nsfw": false },
+      { "positive": "ciekawska", "negative": "obojętna", "nsfw": false },
+      { "positive": "przebiegła", "negative": "szczera", "nsfw": false },
+      { "positive": "stoicka", "negative": "emocjonalna", "nsfw": false },
+      { "positive": "wesoła", "negative": "ponura", "nsfw": false },
+      { "positive": "melancholijna", "negative": "pogodna", "nsfw": false },
+      { "positive": "tajemnicza", "negative": "otwarta", "nsfw": false },
+      { "positive": "arogancka", "negative": "pokorna", "nsfw": false },
+      { "positive": "pokorna", "negative": "arogancka", "nsfw": false },
+      { "positive": "rycerska", "negative": "egoistyczna", "nsfw": false },
+      { "positive": "buntownicza", "negative": "posłuszna", "nsfw": false },
+      { "positive": "opiekuńcza", "negative": "obojętna", "nsfw": false },
+      {
+        "positive": "zdeterminowana",
+        "negative": "niezdecydowana",
+        "nsfw": false
+      },
+      { "positive": "ambitna", "negative": "bez ambicji", "nsfw": false },
+      { "positive": "lojalna", "negative": "zdradliwa", "nsfw": false },
+      { "positive": "zdradliwa", "negative": "lojalna", "nsfw": false },
+      { "positive": "empatyczna", "negative": "bezduszna", "nsfw": false },
+      { "positive": "pogodna", "negative": "ponura", "nsfw": false },
+      { "positive": "sarkastyczna", "negative": "dosłowna", "nsfw": false },
+      { "positive": "wizjonerska", "negative": "krótkowzroczna", "nsfw": false }
+    ],
+    "en": [
+      { "positive": "brave", "negative": "cowardly", "nsfw": false },
+      { "positive": "curious", "negative": "indifferent", "nsfw": false },
+      { "positive": "cunning", "negative": "honest", "nsfw": false },
+      { "positive": "stoic", "negative": "emotional", "nsfw": false },
+      { "positive": "cheerful", "negative": "gloomy", "nsfw": false },
+      { "positive": "melancholic", "negative": "upbeat", "nsfw": false },
+      { "positive": "mysterious", "negative": "open", "nsfw": false },
+      { "positive": "arrogant", "negative": "humble", "nsfw": false },
+      { "positive": "humble", "negative": "arrogant", "nsfw": false },
+      { "positive": "chivalrous", "negative": "selfish", "nsfw": false },
+      { "positive": "rebellious", "negative": "obedient", "nsfw": false },
+      { "positive": "caring", "negative": "indifferent", "nsfw": false },
+      { "positive": "determined", "negative": "hesitant", "nsfw": false },
+      { "positive": "ambitious", "negative": "unambitious", "nsfw": false },
+      { "positive": "loyal", "negative": "treacherous", "nsfw": false },
+      { "positive": "treacherous", "negative": "loyal", "nsfw": false },
+      { "positive": "empathetic", "negative": "callous", "nsfw": false },
+      { "positive": "optimistic", "negative": "pessimistic", "nsfw": false },
+      { "positive": "sarcastic", "negative": "literal", "nsfw": false },
+      { "positive": "visionary", "negative": "short-sighted", "nsfw": false }
+    ]
+  },
+  "Hair": {
+    "pl": [
+      {
+        "positive": "długie falowane włosy",
+        "negative": "krótkie włosy",
+        "nsfw": false
+      },
+      {
+        "positive": "krótkie pixie włosy",
+        "negative": "długie włosy",
+        "nsfw": false
+      },
+      {
+        "positive": "kręcone włosy",
+        "negative": "proste włosy",
+        "nsfw": false
+      },
+      {
+        "positive": "ombre włosy",
+        "negative": "jednolity kolor włosów",
+        "nsfw": false
+      },
+      {
+        "positive": "włosy z pasemkami",
+        "negative": "jednolite włosy",
+        "nsfw": false
+      },
+      {
+        "positive": "błękitne włosy",
+        "negative": "zielone włosy",
+        "nsfw": false
+      },
+      { "positive": "rude włosy", "negative": "ciemne włosy", "nsfw": false },
+      {
+        "positive": "srebrne włosy",
+        "negative": "brązowe włosy",
+        "nsfw": false
+      },
+      {
+        "positive": "asymetryczna fryzura",
+        "negative": "symetryczna fryzura",
+        "nsfw": false
+      },
+      {
+        "positive": "ostrzyżenie undercut",
+        "negative": "zwykła fryzura",
+        "nsfw": false
+      },
+      {
+        "positive": "włosy spięte w kok",
+        "negative": "rozpuszczone włosy",
+        "nsfw": false
+      },
+      { "positive": "wysoki kucyk", "negative": "niski kucyk", "nsfw": false },
+      {
+        "positive": "dwa kucyki",
+        "negative": "pojedynczy kucyk",
+        "nsfw": false
+      },
+      {
+        "positive": "potargane włosy",
+        "negative": "gładko ułożone włosy",
+        "nsfw": false
+      },
+      {
+        "positive": "grzywka prosta",
+        "negative": "brak grzywki",
+        "nsfw": false
+      },
+      {
+        "positive": "boczna grzywka",
+        "negative": "grzywka prosta",
+        "nsfw": false
+      },
+      {
+        "positive": "włosy upięte w warkocz",
+        "negative": "włosy rozpuszczone",
+        "nsfw": false
+      },
+      {
+        "positive": "tęczowe włosy",
+        "negative": "monokolor włosów",
+        "nsfw": false
+      },
+      {
+        "positive": "pastelowe włosy",
+        "negative": "jaskrawe włosy",
+        "nsfw": false
+      },
+      {
+        "positive": "włosy z kwiatami",
+        "negative": "włosy bez ozdób",
+        "nsfw": false
+      }
+    ],
+    "en": [
+      { "positive": "long wavy hair", "negative": "short hair", "nsfw": false },
+      {
+        "positive": "short pixie hair",
+        "negative": "long hair",
+        "nsfw": false
+      },
+      { "positive": "curly hair", "negative": "straight hair", "nsfw": false },
+      {
+        "positive": "ombre hair",
+        "negative": "solid color hair",
+        "nsfw": false
+      },
+      {
+        "positive": "highlighted hair",
+        "negative": "uniform hair",
+        "nsfw": false
+      },
+      { "positive": "blue hair", "negative": "green hair", "nsfw": false },
+      { "positive": "red hair", "negative": "dark hair", "nsfw": false },
+      { "positive": "silver hair", "negative": "brown hair", "nsfw": false },
+      {
+        "positive": "asymmetrical haircut",
+        "negative": "symmetrical haircut",
+        "nsfw": false
+      },
+      {
+        "positive": "undercut style",
+        "negative": "regular haircut",
+        "nsfw": false
+      },
+      { "positive": "hair in a bun", "negative": "loose hair", "nsfw": false },
+      {
+        "positive": "high ponytail",
+        "negative": "low ponytail",
+        "nsfw": false
+      },
+      {
+        "positive": "twin tails",
+        "negative": "single ponytail",
+        "nsfw": false
+      },
+      { "positive": "messy hair", "negative": "sleek hair", "nsfw": false },
+      { "positive": "straight bangs", "negative": "no bangs", "nsfw": false },
+      { "positive": "side bangs", "negative": "straight bangs", "nsfw": false },
+      { "positive": "braided hair", "negative": "loose hair", "nsfw": false },
+      {
+        "positive": "rainbow hair",
+        "negative": "monochrome hair",
+        "nsfw": false
+      },
+      { "positive": "pastel hair", "negative": "vibrant hair", "nsfw": false },
+      {
+        "positive": "flower-adorned hair",
+        "negative": "plain hair",
+        "nsfw": false
+      }
+    ]
+  },
+  "Eyes": {
+    "pl": [
+      {
+        "positive": "heterochromia",
+        "negative": "jednolity kolor oczu",
+        "nsfw": false
+      },
+      {
+        "positive": "złote oczy",
+        "negative": "niebieskie oczy",
+        "nsfw": false
+      },
+      {
+        "positive": "szmaragdowe oczy",
+        "negative": "brązowe oczy",
+        "nsfw": false
+      },
+      {
+        "positive": "lodowe niebieskie oczy",
+        "negative": "ciepłe piwne oczy",
+        "nsfw": false
+      },
+      {
+        "positive": "czerwone oczy",
+        "negative": "zielone oczy",
+        "nsfw": false
+      },
+      {
+        "positive": "jasnofioletowe oczy",
+        "negative": "ciemne oczy",
+        "nsfw": false
+      },
+      { "positive": "oczy świecące", "negative": "oczy matowe", "nsfw": false },
+      {
+        "positive": "oczy mechaniczne",
+        "negative": "oczy organiczne",
+        "nsfw": false
+      },
+      {
+        "positive": "źrenice w kształcie gwiazdy",
+        "negative": "okrągłe źrenice",
+        "nsfw": false
+      },
+      {
+        "positive": "kocie źrenice",
+        "negative": "okrągłe źrenice",
+        "nsfw": false
+      },
+      {
+        "positive": "szeroko otwarte oczy",
+        "negative": "wąskie oczy",
+        "nsfw": false
+      },
+      {
+        "positive": "półprzymknięte oczy",
+        "negative": "szeroko otwarte oczy",
+        "nsfw": false
+      },
+      { "positive": "łza w oku", "negative": "suche oko", "nsfw": false },
+      {
+        "positive": "błyszczące oczy",
+        "negative": "matowe oczy",
+        "nsfw": false
+      },
+      {
+        "positive": "oczy z makijażem smoky",
+        "negative": "oczy bez makijażu",
+        "nsfw": false
+      }
+    ],
+    "en": [
+      {
+        "positive": "heterochromia",
+        "negative": "uniform eye color",
+        "nsfw": false
+      },
+      { "positive": "golden eyes", "negative": "blue eyes", "nsfw": false },
+      { "positive": "emerald eyes", "negative": "brown eyes", "nsfw": false },
+      {
+        "positive": "icy blue eyes",
+        "negative": "warm hazel eyes",
+        "nsfw": false
+      },
+      { "positive": "red eyes", "negative": "green eyes", "nsfw": false },
+      {
+        "positive": "light violet eyes",
+        "negative": "dark eyes",
+        "nsfw": false
+      },
+      { "positive": "glowing eyes", "negative": "dull eyes", "nsfw": false },
+      {
+        "positive": "mechanical eyes",
+        "negative": "organic eyes",
+        "nsfw": false
+      },
+      {
+        "positive": "star-shaped pupils",
+        "negative": "round pupils",
+        "nsfw": false
+      },
+      {
+        "positive": "cat slit pupils",
+        "negative": "round pupils",
+        "nsfw": false
+      },
+      {
+        "positive": "wide open eyes",
+        "negative": "narrowed eyes",
+        "nsfw": false
+      },
+      {
+        "positive": "half-closed eyes",
+        "negative": "wide open eyes",
+        "nsfw": false
+      },
+      { "positive": "tearful eye", "negative": "dry eye", "nsfw": false },
+      { "positive": "shiny eyes", "negative": "matte eyes", "nsfw": false },
+      {
+        "positive": "smoky makeup eyes",
+        "negative": "no eye makeup",
+        "nsfw": false
+      }
+    ]
+  },
+  "Clothing": {
+    "pl": [
+      {
+        "positive": "zbroja płytowa",
+        "negative": "ubranie codzienne",
+        "nsfw": false
+      },
+      {
+        "positive": "lekka zbroja skórzana",
+        "negative": "ciężka zbroja",
+        "nsfw": false
+      },
+      {
+        "positive": "futrzany płaszcz",
+        "negative": "lekka kurtka",
+        "nsfw": false
+      },
+      {
+        "positive": "płaszcz z kapturem",
+        "negative": "płaszcz bez kaptura",
+        "nsfw": false
+      },
+      {
+        "positive": "suknia wieczorowa",
+        "negative": "luźny strój",
+        "nsfw": false
+      },
+      {
+        "positive": "casual streetwear",
+        "negative": "formalny strój",
+        "nsfw": false
+      },
+      { "positive": "kimono", "negative": "sukienka", "nsfw": false },
+      { "positive": "garnitur", "negative": "casualowy strój", "nsfw": false },
+      {
+        "positive": "strój steampunk",
+        "negative": "strój futurystyczny",
+        "nsfw": false
+      },
+      {
+        "positive": "strój cyberpunk",
+        "negative": "strój klasyczny",
+        "nsfw": false
+      },
+      { "positive": "szata maga", "negative": "zwykłe ubranie", "nsfw": false },
+      {
+        "positive": "kombinezon kosmiczny",
+        "negative": "zwykłe ubranie",
+        "nsfw": false
+      },
+      {
+        "positive": "ubranie taktyczne",
+        "negative": "ubranie rekreacyjne",
+        "nsfw": false
+      },
+      {
+        "positive": "sweter oversize",
+        "negative": "dopasowany sweter",
+        "nsfw": false
+      },
+      {
+        "positive": "płaszcz trench",
+        "negative": "krótka kurtka",
+        "nsfw": false
+      },
+      {
+        "positive": "kurtka skórzana",
+        "negative": "kurtka materiałowa",
+        "nsfw": false
+      },
+      {
+        "positive": "sukienka gotycka",
+        "negative": "sukienka jasna",
+        "nsfw": false
+      },
+      {
+        "positive": "sukienka wiktoriańska",
+        "negative": "sukienka nowoczesna",
+        "nsfw": false
+      },
+      {
+        "positive": "minimalistyczny strój",
+        "negative": "ozdobny strój",
+        "nsfw": false
+      },
+      {
+        "positive": "ubranie zimowe",
+        "negative": "ubranie letnie",
+        "nsfw": false
+      }
+    ],
+    "en": [
+      {
+        "positive": "plate armor",
+        "negative": "casual clothing",
+        "nsfw": false
+      },
+      {
+        "positive": "light leather armor",
+        "negative": "heavy armor",
+        "nsfw": false
+      },
+      { "positive": "fur coat", "negative": "light jacket", "nsfw": false },
+      {
+        "positive": "hooded cloak",
+        "negative": "cloak without hood",
+        "nsfw": false
+      },
+      { "positive": "evening gown", "negative": "loose outfit", "nsfw": false },
+      {
+        "positive": "casual streetwear",
+        "negative": "formal outfit",
+        "nsfw": false
+      },
+      { "positive": "kimono", "negative": "dress", "nsfw": false },
+      { "positive": "suit", "negative": "casual wear", "nsfw": false },
+      {
+        "positive": "steampunk attire",
+        "negative": "futuristic attire",
+        "nsfw": false
+      },
+      {
+        "positive": "cyberpunk outfit",
+        "negative": "classic outfit",
+        "nsfw": false
+      },
+      {
+        "positive": "wizard robe",
+        "negative": "ordinary clothing",
+        "nsfw": false
+      },
+      {
+        "positive": "space suit",
+        "negative": "ordinary clothing",
+        "nsfw": false
+      },
+      {
+        "positive": "tactical gear",
+        "negative": "leisure wear",
+        "nsfw": false
+      },
+      {
+        "positive": "oversized sweater",
+        "negative": "fitted sweater",
+        "nsfw": false
+      },
+      { "positive": "trench coat", "negative": "short jacket", "nsfw": false },
+      {
+        "positive": "leather jacket",
+        "negative": "fabric jacket",
+        "nsfw": false
+      },
+      { "positive": "gothic dress", "negative": "bright dress", "nsfw": false },
+      {
+        "positive": "Victorian dress",
+        "negative": "modern dress",
+        "nsfw": false
+      },
+      {
+        "positive": "minimalist outfit",
+        "negative": "ornate outfit",
+        "nsfw": false
+      },
+      {
+        "positive": "winter clothing",
+        "negative": "summer clothing",
+        "nsfw": false
+      }
+    ]
+  },
+  "Accessories": {
+    "pl": [
+      {
+        "positive": "naszyjnik z kryształem",
+        "negative": "brak naszyjnika",
+        "nsfw": false
+      },
+      {
+        "positive": "złoty pierścień",
+        "negative": "srebrny pierścień",
+        "nsfw": false
+      },
+      { "positive": "skórzany pas", "negative": "brak pasa", "nsfw": false },
+      {
+        "positive": "rękawice bez palców",
+        "negative": "pełne rękawice",
+        "nsfw": false
+      },
+      {
+        "positive": "okulary przeciwsłoneczne",
+        "negative": "brak okularów",
+        "nsfw": false
+      },
+      { "positive": "monokl", "negative": "okulary zwykłe", "nsfw": false },
+      {
+        "positive": "gogle na głowie",
+        "negative": "brak gogli",
+        "nsfw": false
+      },
+      {
+        "positive": "futurystyczny wizjer",
+        "negative": "zwykłe okulary",
+        "nsfw": false
+      },
+      { "positive": "plecak", "negative": "brak plecaka", "nsfw": false },
+      { "positive": "sakiewka", "negative": "brak sakiewki", "nsfw": false },
+      { "positive": "tarcza", "negative": "brak tarczy", "nsfw": false },
+      {
+        "positive": "pochwa na miecz",
+        "negative": "brak pochwy",
+        "nsfw": false
+      },
+      { "positive": "księga zaklęć", "negative": "brak księgi", "nsfw": false },
+      {
+        "positive": "metalowa opaska",
+        "negative": "brak opaski",
+        "nsfw": false
+      },
+      { "positive": "choker", "negative": "brak chokera", "nsfw": false },
+      { "positive": "apaszka", "negative": "brak apaszki", "nsfw": false },
+      {
+        "positive": "wisiorek runiczny",
+        "negative": "wisiorek prosty",
+        "nsfw": false
+      },
+      {
+        "positive": "ozdobna spinka do włosów",
+        "negative": "brak spinki",
+        "nsfw": false
+      },
+      {
+        "positive": "kolczyki długie",
+        "negative": "kolczyki krótkie",
+        "nsfw": false
+      },
+      {
+        "positive": "rękawica technologiczna",
+        "negative": "rękawica zwykła",
+        "nsfw": false
+      }
+    ],
+    "en": [
+      {
+        "positive": "crystal necklace",
+        "negative": "no necklace",
+        "nsfw": false
+      },
+      { "positive": "gold ring", "negative": "silver ring", "nsfw": false },
+      { "positive": "leather belt", "negative": "no belt", "nsfw": false },
+      {
+        "positive": "fingerless gloves",
+        "negative": "full gloves",
+        "nsfw": false
+      },
+      { "positive": "sunglasses", "negative": "no sunglasses", "nsfw": false },
+      { "positive": "monocle", "negative": "regular glasses", "nsfw": false },
+      {
+        "positive": "goggles on head",
+        "negative": "no goggles",
+        "nsfw": false
+      },
+      {
+        "positive": "futuristic visor",
+        "negative": "regular glasses",
+        "nsfw": false
+      },
+      { "positive": "backpack", "negative": "no backpack", "nsfw": false },
+      { "positive": "pouch", "negative": "no pouch", "nsfw": false },
+      { "positive": "shield", "negative": "no shield", "nsfw": false },
+      { "positive": "sword sheath", "negative": "no sheath", "nsfw": false },
+      { "positive": "spellbook", "negative": "no book", "nsfw": false },
+      {
+        "positive": "metal headband",
+        "negative": "no headband",
+        "nsfw": false
+      },
+      { "positive": "choker", "negative": "no choker", "nsfw": false },
+      { "positive": "scarf", "negative": "no scarf", "nsfw": false },
+      {
+        "positive": "runic pendant",
+        "negative": "plain pendant",
+        "nsfw": false
+      },
+      {
+        "positive": "ornamental hairpin",
+        "negative": "no hairpin",
+        "nsfw": false
+      },
+      {
+        "positive": "long earrings",
+        "negative": "short earrings",
+        "nsfw": false
+      },
+      { "positive": "tech glove", "negative": "ordinary glove", "nsfw": false }
+    ]
+  },
+  "Quality": {
+    "pl": [
+      {
+        "positive": "wysoka rozdzielczość",
+        "negative": "niska rozdzielczość",
+        "nsfw": false
+      },
+      {
+        "positive": "ultra szczegółowe",
+        "negative": "mało szczegółowe",
+        "nsfw": false
+      },
+      {
+        "positive": "fotorealistyczne",
+        "negative": "stylizowane",
+        "nsfw": false
+      },
+      {
+        "positive": "styl ilustracyjny",
+        "negative": "fotorealistyczny styl",
+        "nsfw": false
+      },
+      { "positive": "render 8k", "negative": "render 1k", "nsfw": false },
+      {
+        "positive": "ostre detale",
+        "negative": "rozmyte detale",
+        "nsfw": false
+      },
+      {
+        "positive": "wysoki kontrast",
+        "negative": "niski kontrast",
+        "nsfw": false
+      },
+      {
+        "positive": "czyste linie",
+        "negative": "chaotyczne linie",
+        "nsfw": false
+      },
+      {
+        "positive": "gładkie cieniowanie",
+        "negative": "szorstkie cieniowanie",
+        "nsfw": false
+      },
+      {
+        "positive": "perfekcyjna kompozycja",
+        "negative": "niezrównoważona kompozycja",
+        "nsfw": false
+      }
+    ],
+    "en": [
+      {
+        "positive": "high resolution",
+        "negative": "low resolution",
+        "nsfw": false
+      },
+      { "positive": "ultra detailed", "negative": "low detail", "nsfw": false },
+      { "positive": "photorealistic", "negative": "stylized", "nsfw": false },
+      {
+        "positive": "illustrative style",
+        "negative": "photorealistic style",
+        "nsfw": false
+      },
+      { "positive": "8k render", "negative": "1k render", "nsfw": false },
+      {
+        "positive": "sharp details",
+        "negative": "blurry details",
+        "nsfw": false
+      },
+      {
+        "positive": "high contrast",
+        "negative": "low contrast",
+        "nsfw": false
+      },
+      {
+        "positive": "clean linework",
+        "negative": "messy linework",
+        "nsfw": false
+      },
+      {
+        "positive": "smooth shading",
+        "negative": "rough shading",
+        "nsfw": false
+      },
+      {
+        "positive": "perfect composition",
+        "negative": "unbalanced composition",
+        "nsfw": false
+      }
+    ]
+  },
+  "Scene": {
+    "pl": [
+      { "positive": "pustynia", "negative": "ocean", "nsfw": false },
+      { "positive": "ocean", "negative": "pustynia", "nsfw": false },
+      { "positive": "bujny las", "negative": "pustynia", "nsfw": false },
+      { "positive": "plaża", "negative": "góry kanadyjskie", "nsfw": false },
+      { "positive": "las jesienią", "negative": "las latem", "nsfw": false },
+      { "positive": "rafa koralowa", "negative": "pustynia", "nsfw": false },
+      { "positive": "klif", "negative": "równina", "nsfw": false },
+      { "positive": "park", "negative": "pustynia", "nsfw": false },
+      {
+        "positive": "krystaliczne jezioro",
+        "negative": "bagna",
+        "nsfw": false
+      },
+      { "positive": "obca planeta", "negative": "Ziemia", "nsfw": false },
+      {
+        "positive": "plaża z wrakiem wieloryba",
+        "negative": "plaża bez wraku",
+        "nsfw": false
+      },
+      { "positive": "góry kanadyjskie", "negative": "plaża", "nsfw": false },
+      {
+        "positive": "rozświetlony księżycem ocean",
+        "negative": "ocean za dnia",
+        "nsfw": false
+      },
+      { "positive": "zoo", "negative": "pustynia", "nsfw": false },
+      {
+        "positive": "ocean z żaglówką",
+        "negative": "ocean bez żaglówki",
+        "nsfw": false
+      },
+      {
+        "positive": "bujny las jesienią",
+        "negative": "suchy las",
+        "nsfw": false
+      },
+      { "positive": "wiosna", "negative": "jesień", "nsfw": false },
+      {
+        "positive": "krater w pustyni",
+        "negative": "gładka pustynia",
+        "nsfw": false
+      },
+      {
+        "positive": "drzewo magnolii",
+        "negative": "drzewo iglaste",
+        "nsfw": false
+      },
+      {
+        "positive": "pustynia ze skalistymi szczytami",
+        "negative": "płaska pustynia",
+        "nsfw": false
+      },
+      {
+        "positive": "płytka rzeka",
+        "negative": "głęboka rzeka",
+        "nsfw": false
+      },
+      {
+        "positive": "ocean z wielorybem",
+        "negative": "ocean bez wieloryba",
+        "nsfw": false
+      },
+      {
+        "positive": "palmy na pustynnej wyspie",
+        "negative": "śnieżna wyspa",
+        "nsfw": false
+      },
+      { "positive": "pole kwiatów", "negative": "pole śniegu", "nsfw": false },
+      {
+        "positive": "górzysty teren",
+        "negative": "równinny teren",
+        "nsfw": false
+      },
+      { "positive": "wulkan", "negative": "lodowiec", "nsfw": false },
+      { "positive": "tundra", "negative": "dżungla", "nsfw": false },
+      { "positive": "dżungla", "negative": "tundra", "nsfw": false },
+      { "positive": "wodospad", "negative": "sucha ziemia", "nsfw": false },
+      {
+        "positive": "jaskinia",
+        "negative": "otwarta przestrzeń",
+        "nsfw": false
+      },
+      { "positive": "sawanna", "negative": "las", "nsfw": false },
+      { "positive": "lodowiec", "negative": "wulkan", "nsfw": false },
+      { "positive": "bagna", "negative": "sucha ziemia", "nsfw": false },
+      { "positive": "kanion", "negative": "wzgórze", "nsfw": false },
+      { "positive": "gejzer", "negative": "spokojna woda", "nsfw": false },
+      { "positive": "miejski kort", "negative": "wiejski kort", "nsfw": false },
+      {
+        "positive": "dystopijny pejzaż miejski",
+        "negative": "utopijny pejzaż miejski",
+        "nsfw": false
+      },
+      {
+        "positive": "cyberpunkowe miasto",
+        "negative": "średniowieczne miasto",
+        "nsfw": false
+      },
+      {
+        "positive": "miasto nocą",
+        "negative": "miasto za dnia",
+        "nsfw": false
+      },
+      { "positive": "ulica", "negative": "las", "nsfw": false },
+      {
+        "positive": "rozświetlony neonami kwadrat",
+        "negative": "ciemny kwadrat",
+        "nsfw": false
+      },
+      {
+        "positive": "miejski pejzaż",
+        "negative": "wiejski pejzaż",
+        "nsfw": false
+      },
+      {
+        "positive": "autostrada nocą",
+        "negative": "autostrada za dnia",
+        "nsfw": false
+      },
+      {
+        "positive": "miejski kort wieczorem",
+        "negative": "miejski kort za dnia",
+        "nsfw": false
+      },
+      {
+        "positive": "rozmyty pejzaż miejski",
+        "negative": "ostry pejzaż miejski",
+        "nsfw": false
+      },
+      {
+        "positive": "ulica z deszczem",
+        "negative": "ulica ze słońcem",
+        "nsfw": false
+      },
+      {
+        "positive": "budynek w mieście",
+        "negative": "budynek na wsi",
+        "nsfw": false
+      },
+      {
+        "positive": "opuszczona fabryka",
+        "negative": "działająca fabryka",
+        "nsfw": false
+      },
+      { "positive": "targowisko", "negative": "pusta ulica", "nsfw": false },
+      { "positive": "dach wieżowca", "negative": "piwnica", "nsfw": false },
+      {
+        "positive": "podziemny tunel",
+        "negative": "otwarta droga",
+        "nsfw": false
+      },
+      { "positive": "most nocą", "negative": "most za dnia", "nsfw": false },
+      { "positive": "nocne niebo", "negative": "dzienne niebo", "nsfw": false },
+      {
+        "positive": "futurystyczna scena",
+        "negative": "historyczna scena",
+        "nsfw": false
+      },
+      { "positive": "kosmos", "negative": "ziemski krajobraz", "nsfw": false },
+      {
+        "positive": "stacja kosmiczna",
+        "negative": "ziemska stacja",
+        "nsfw": false
+      },
+      { "positive": "krater", "negative": "góra", "nsfw": false },
+      {
+        "positive": "przestrzeń kosmiczna",
+        "negative": "ziemska przestrzeń",
+        "nsfw": false
+      },
+      {
+        "positive": "krater w płomieniach",
+        "negative": "spokojny krater",
+        "nsfw": false
+      },
+      {
+        "positive": "statek kosmiczny w kształcie X",
+        "negative": "zwykły statek kosmiczny",
+        "nsfw": false
+      },
+      {
+        "positive": "jezioro krystaliczne z kodem Matrix",
+        "negative": "zwykłe jezioro",
+        "nsfw": false
+      },
+      {
+        "positive": "futurystyczne miasto z cyborgiem",
+        "negative": "tradycyjne miasto",
+        "nsfw": false
+      },
+      {
+        "positive": "tło z toksycznymi oparami",
+        "negative": "czyste tło",
+        "nsfw": false
+      },
+      { "positive": "mroczny zamek", "negative": "jasny zamek", "nsfw": false },
+      {
+        "positive": "plaża z tajemniczym obiektem",
+        "negative": "zwykła plaża",
+        "nsfw": false
+      },
+      {
+        "positive": "ocean z rekinem",
+        "negative": "ocean bez rekina",
+        "nsfw": false
+      },
+      {
+        "positive": "rafy koralowe z fauną",
+        "negative": "puste rafy koralowe",
+        "nsfw": false
+      },
+      {
+        "positive": "portal międzywymiarowy",
+        "negative": "zwykła brama",
+        "nsfw": false
+      },
+      {
+        "positive": "unoszący się kontynent",
+        "negative": "stały kontynent",
+        "nsfw": false
+      },
+      {
+        "positive": "postapokaliptyczna ruina",
+        "negative": "nowy budynek",
+        "nsfw": false
+      },
+      {
+        "positive": "kosmiczny port",
+        "negative": "ziemski port",
+        "nsfw": false
+      },
+      {
+        "positive": "toksyczna pustynia",
+        "negative": "żyzna pustynia",
+        "nsfw": false
+      },
+      {
+        "positive": "nasłoneczniony salon",
+        "negative": "ciemny salon",
+        "nsfw": false
+      },
+      { "positive": "klub", "negative": "biblioteka", "nsfw": false },
+      {
+        "positive": "pustynna wyspa",
+        "negative": "zielona wyspa",
+        "nsfw": false
+      },
+      { "positive": "studio", "negative": "ulica", "nsfw": false },
+      { "positive": "klub nocny", "negative": "klub dzienny", "nsfw": false },
+      { "positive": "tawerna", "negative": "pałac", "nsfw": false },
+      { "positive": "biblioteka", "negative": "klub", "nsfw": false },
+      { "positive": "zamek", "negative": "chata", "nsfw": false },
+      { "positive": "sala tronowa", "negative": "zwykła sala", "nsfw": false },
+      {
+        "positive": "luksusowa rezydencja",
+        "negative": "skromna rezydencja",
+        "nsfw": false
+      },
+      {
+        "positive": "antyczne meble",
+        "negative": "nowoczesne meble",
+        "nsfw": false
+      },
+      {
+        "positive": "biblioteka bez końca",
+        "negative": "mała biblioteka",
+        "nsfw": false
+      },
+      { "positive": "przestrzeń kopiowania", "negative": null, "nsfw": false },
+      {
+        "positive": "tło z gwiazdami",
+        "negative": "tło bez gwiazd",
+        "nsfw": false
+      },
+      { "positive": "białe tło", "negative": "czarne tło", "nsfw": false },
+      {
+        "positive": "pasiasta tapeta",
+        "negative": "gładka tapeta",
+        "nsfw": false
+      },
+      {
+        "positive": "kremowe tło papier mache",
+        "negative": "szorstkie tło",
+        "nsfw": false
+      },
+      {
+        "positive": "paryski wybieg",
+        "negative": "zwykła ulica",
+        "nsfw": false
+      },
+      {
+        "positive": "tło z winoroślą",
+        "negative": "tło bez winorośli",
+        "nsfw": false
+      },
+      { "positive": "strych", "negative": "piwnica", "nsfw": false },
+      { "positive": "piwnica", "negative": "strych", "nsfw": false },
+      { "positive": "sala balowa", "negative": "mały pokój", "nsfw": false },
+      { "positive": "warsztat artysty", "negative": "biuro", "nsfw": false },
+      {
+        "positive": "futurystyczne laboratorium",
+        "negative": "starożytne laboratorium",
+        "nsfw": false
+      },
+      { "positive": "las deszczowy", "negative": "pustynia", "nsfw": false },
+      { "positive": "góra lodowa", "negative": "wulkan", "nsfw": false },
+      { "positive": "step", "negative": "las", "nsfw": false },
+      { "positive": "łąka", "negative": "miasto", "nsfw": false },
+      {
+        "positive": "ruiny starożytne",
+        "negative": "nowoczesne miasto",
+        "nsfw": false
+      },
+      { "positive": "wioska", "negative": "metropolia", "nsfw": false },
+      { "positive": "farma", "negative": "fabryka", "nsfw": false },
+      { "positive": "las iglasty", "negative": "las liściasty", "nsfw": false },
+      {
+        "positive": "rzeka górska",
+        "negative": "rzeka nizinna",
+        "nsfw": false
+      },
+      {
+        "positive": "jezioro alpejskie",
+        "negative": "jezioro pustynne",
+        "nsfw": false
+      },
+      {
+        "positive": "wyspa tropikalna",
+        "negative": "wyspa arktyczna",
+        "nsfw": false
+      },
+      {
+        "positive": "pustynia saharyjska",
+        "negative": "pustynia gobi",
+        "nsfw": false
+      },
+      {
+        "positive": "ocean arktyczny",
+        "negative": "ocean tropikalny",
+        "nsfw": false
+      },
+      { "positive": "las bambusowy", "negative": "las dębowy", "nsfw": false },
+      {
+        "positive": "wulkaniczne wyspy",
+        "negative": "wyspy koralowe",
+        "nsfw": false
+      },
+      { "positive": "kanion wielki", "negative": "mały kanion", "nsfw": false },
+      {
+        "positive": "pustynia lodowa",
+        "negative": "pustynia piaskowa",
+        "nsfw": false
+      },
+      { "positive": "las mgieł", "negative": "las słoneczny", "nsfw": false },
+      {
+        "positive": "góra himalajska",
+        "negative": "góra andyjska",
+        "nsfw": false
+      },
+      {
+        "positive": "równina afrykańska",
+        "negative": "równina azjatycka",
+        "nsfw": false
+      },
+      { "positive": "delta rzeki", "negative": "źródło rzeki", "nsfw": false },
+      { "positive": "fiord", "negative": "zatoka", "nsfw": false },
+      {
+        "positive": "pustynia solna",
+        "negative": "pustynia piaskowa",
+        "nsfw": false
+      },
+      {
+        "positive": "las deszczowy amazoński",
+        "negative": "las tajski",
+        "nsfw": false
+      },
+      {
+        "positive": "stepy syberyjskie",
+        "negative": "stepy mongolskie",
+        "nsfw": false
+      },
+      {
+        "positive": "wyspa hawajska",
+        "negative": "wyspa fiordowa",
+        "nsfw": false
+      },
+      {
+        "positive": "pustynia australijska",
+        "negative": "pustynia afrykańska",
+        "nsfw": false
+      },
+      {
+        "positive": "ocean indyjski",
+        "negative": "ocean atlantycki",
+        "nsfw": false
+      },
+      {
+        "positive": "las borealny",
+        "negative": "las tropikalny",
+        "nsfw": false
+      },
+      { "positive": "wulkan etna", "negative": "wulkan fuji", "nsfw": false },
+      {
+        "positive": "sawanna afrykańska",
+        "negative": "sawanna australijska",
+        "nsfw": false
+      },
+      {
+        "positive": "tundra arktyczna",
+        "negative": "tundra antarktyczna",
+        "nsfw": false
+      },
+      {
+        "positive": "dżungla kongijska",
+        "negative": "dżungla amazońska",
+        "nsfw": false
+      },
+      {
+        "positive": "wodospad niagara",
+        "negative": "wodospad angel",
+        "nsfw": false
+      },
+      {
+        "positive": "jaskinia mamucia",
+        "negative": "jaskinia zwykła",
+        "nsfw": false
+      },
+      {
+        "positive": "lodowiec grenlandzki",
+        "negative": "lodowiec antarktyczny",
+        "nsfw": false
+      },
+      {
+        "positive": "bagna everglades",
+        "negative": "bagna europejskie",
+        "nsfw": false
+      },
+      {
+        "positive": "kanion colorado",
+        "negative": "kanion brytyjski",
+        "nsfw": false
+      },
+      {
+        "positive": "gejzer yellowstone",
+        "negative": "gejzer islandzki",
+        "nsfw": false
+      },
+      { "positive": "miejski park", "negative": "las narodowy", "nsfw": false },
+      {
+        "positive": "dystopia miejska",
+        "negative": "utopia miejska",
+        "nsfw": false
+      },
+      {
+        "positive": "cyberpunk nocą",
+        "negative": "cyberpunk dniem",
+        "nsfw": false
+      },
+      {
+        "positive": "ulica handlowa",
+        "negative": "ulica mieszkalna",
+        "nsfw": false
+      },
+      { "positive": "plac miejski", "negative": "park miejski", "nsfw": false },
+      {
+        "positive": "autostrada miejska",
+        "negative": "droga wiejska",
+        "nsfw": false
+      },
+      {
+        "positive": "kort tenisowy",
+        "negative": "boisko piłkarskie",
+        "nsfw": false
+      },
+      {
+        "positive": "rozmyty miejski",
+        "negative": "ostry miejski",
+        "nsfw": false
+      },
+      {
+        "positive": "ulica deszczowa",
+        "negative": "ulica słoneczna",
+        "nsfw": false
+      },
+      {
+        "positive": "budynek biurowy",
+        "negative": "budynek mieszkalny",
+        "nsfw": false
+      },
+      {
+        "positive": "fabryka opuszczona",
+        "negative": "fabryka czynna",
+        "nsfw": false
+      },
+      { "positive": "rynek lokalny", "negative": "supermarket", "nsfw": false },
+      {
+        "positive": "dach budynku",
+        "negative": "parter budynku",
+        "nsfw": false
+      },
+      {
+        "positive": "tunel metra",
+        "negative": "droga naziemna",
+        "nsfw": false
+      },
+      { "positive": "most wiszący", "negative": "most stały", "nsfw": false },
+      {
+        "positive": "niebo gwiaździste",
+        "negative": "niebo pochmurne",
+        "nsfw": false
+      },
+      {
+        "positive": "scena futurystyczna",
+        "negative": "scena historyczna",
+        "nsfw": false
+      },
+      { "positive": "galaktyka", "negative": "układ słoneczny", "nsfw": false },
+      {
+        "positive": "stacja orbitalna",
+        "negative": "stacja naziemna",
+        "nsfw": false
+      },
+      {
+        "positive": "krater księżycowy",
+        "negative": "krater ziemski",
+        "nsfw": false
+      },
+      {
+        "positive": "przestrzeń międzygwiazdowa",
+        "negative": "przestrzeń planetarna",
+        "nsfw": false
+      },
+      {
+        "positive": "krater aktywny",
+        "negative": "krater nieaktywny",
+        "nsfw": false
+      },
+      {
+        "positive": "statek kosmiczny delta",
+        "negative": "statek kosmiczny alfa",
+        "nsfw": false
+      },
+      {
+        "positive": "jezioro holograficzne",
+        "negative": "jezioro rzeczywiste",
+        "nsfw": false
+      },
+      {
+        "positive": "miasto cyberpunkowe",
+        "negative": "miasto wiktoriańskie",
+        "nsfw": false
+      },
+      {
+        "positive": "tło toksyczne",
+        "negative": "tło ekologiczne",
+        "nsfw": false
+      },
+      {
+        "positive": "zamek gotycki",
+        "negative": "zamek renesansowy",
+        "nsfw": false
+      },
+      {
+        "positive": "plaża tajna",
+        "negative": "plaża publiczna",
+        "nsfw": false
+      },
+      {
+        "positive": "ocean z delfinem",
+        "negative": "ocean z rekinem",
+        "nsfw": false
+      },
+      {
+        "positive": "rafy koralowe zdrowe",
+        "negative": "rafy koralowe zniszczone",
+        "nsfw": false
+      },
+      {
+        "positive": "portal czasowy",
+        "negative": "portal przestrzenny",
+        "nsfw": false
+      },
+      {
+        "positive": "kontynent dryfujący",
+        "negative": "kontynent stały",
+        "nsfw": false
+      },
+      {
+        "positive": "ruina postapokaliptyczna",
+        "negative": "ruina historyczna",
+        "nsfw": false
+      },
+      {
+        "positive": "port kosmiczny",
+        "negative": "port morski",
+        "nsfw": false
+      },
+      {
+        "positive": "pustynia radioaktywna",
+        "negative": "pustynia naturalna",
+        "nsfw": false
+      },
+      {
+        "positive": "salon słoneczny",
+        "negative": "salon ciemny",
+        "nsfw": false
+      },
+      { "positive": "bar", "negative": "restauracja", "nsfw": false },
+      {
+        "positive": "wyspa pustynna",
+        "negative": "wyspa leśna",
+        "nsfw": false
+      },
+      { "positive": "pracownia", "negative": "fabryka", "nsfw": false },
+      { "positive": "karczma", "negative": "hotel", "nsfw": false },
+      {
+        "positive": "biblioteka publiczna",
+        "negative": "biblioteka prywatna",
+        "nsfw": false
+      },
+      {
+        "positive": "zamek królewski",
+        "negative": "zamek ruiny",
+        "nsfw": false
+      },
+      {
+        "positive": "sala audiencyjna",
+        "negative": "sala konferencyjna",
+        "nsfw": false
+      },
+      {
+        "positive": "willa luksusowa",
+        "negative": "dom jednorodzinny",
+        "nsfw": false
+      },
+      {
+        "positive": "meble vintage",
+        "negative": "meble nowoczesne",
+        "nsfw": false
+      },
+      {
+        "positive": "biblioteka nieskończona",
+        "negative": "biblioteka skończona",
+        "nsfw": false
+      },
+      {
+        "positive": "przestrzeń kreatywna",
+        "negative": "przestrzeń monotonna",
+        "nsfw": false
+      },
+      {
+        "positive": "tło gwiaździste",
+        "negative": "tło jednolite",
+        "nsfw": false
+      },
+      { "positive": "tło białe", "negative": "tło kolorowe", "nsfw": false },
+      {
+        "positive": "tapeta geometryczna",
+        "negative": "tapeta organiczna",
+        "nsfw": false
+      },
+      { "positive": "tło papierowe", "negative": "tło cyfrowe", "nsfw": false },
+      {
+        "positive": "wybieg paryski",
+        "negative": "wybieg lokalny",
+        "nsfw": false
+      },
+      {
+        "positive": "tło roślinne",
+        "negative": "tło mineralne",
+        "nsfw": false
+      },
+      {
+        "positive": "sala koncertowa",
+        "negative": "sala lekcyjna",
+        "nsfw": false
+      },
+      {
+        "positive": "warsztat rzemieślnika",
+        "negative": "warsztat maszynowy",
+        "nsfw": false
+      },
+      {
+        "positive": "laboratorium naukowe",
+        "negative": "laboratorium magiczne",
+        "nsfw": false
+      }
+    ],
+    "en": [
+      { "positive": "desert", "negative": "ocean", "nsfw": false },
+      { "positive": "ocean", "negative": "desert", "nsfw": false },
+      { "positive": "lush forest", "negative": "desert", "nsfw": false },
+      { "positive": "beach", "negative": "Canadian mountains", "nsfw": false },
+      {
+        "positive": "autumn forest",
+        "negative": "summer forest",
+        "nsfw": false
+      },
+      { "positive": "coral reef", "negative": "desert", "nsfw": false },
+      { "positive": "cliff", "negative": "plain", "nsfw": false },
+      { "positive": "park", "negative": "desert", "nsfw": false },
+      { "positive": "crystalline lake", "negative": "swamp", "nsfw": false },
+      { "positive": "alien planet", "negative": "Earth", "nsfw": false },
+      {
+        "positive": "beach with whale carcass",
+        "negative": "beach without carcass",
+        "nsfw": false
+      },
+      { "positive": "Canadian mountains", "negative": "beach", "nsfw": false },
+      { "positive": "moonlit ocean", "negative": "day ocean", "nsfw": false },
+      { "positive": "zoo", "negative": "desert", "nsfw": false },
+      {
+        "positive": "ocean with sailboat",
+        "negative": "ocean without sailboat",
+        "nsfw": false
+      },
+      {
+        "positive": "lush autumn forest",
+        "negative": "dry forest",
+        "nsfw": false
+      },
+      { "positive": "spring", "negative": "autumn", "nsfw": false },
+      {
+        "positive": "desert crater",
+        "negative": "smooth desert",
+        "nsfw": false
+      },
+      {
+        "positive": "magnolia tree",
+        "negative": "coniferous tree",
+        "nsfw": false
+      },
+      {
+        "positive": "desert with rocky peaks",
+        "negative": "flat desert",
+        "nsfw": false
+      },
+      { "positive": "shallow river", "negative": "deep river", "nsfw": false },
+      {
+        "positive": "ocean with whale",
+        "negative": "ocean without whale",
+        "nsfw": false
+      },
+      {
+        "positive": "palms on desert island",
+        "negative": "snowy island",
+        "nsfw": false
+      },
+      {
+        "positive": "field of flowers",
+        "negative": "field of snow",
+        "nsfw": false
+      },
+      {
+        "positive": "mountainous terrain",
+        "negative": "flat terrain",
+        "nsfw": false
+      },
+      { "positive": "volcano", "negative": "glacier", "nsfw": false },
+      { "positive": "tundra", "negative": "jungle", "nsfw": false },
+      { "positive": "jungle", "negative": "tundra", "nsfw": false },
+      { "positive": "waterfall", "negative": "dry land", "nsfw": false },
+      { "positive": "cave", "negative": "open space", "nsfw": false },
+      { "positive": "savanna", "negative": "forest", "nsfw": false },
+      { "positive": "glacier", "negative": "volcano", "nsfw": false },
+      { "positive": "swamp", "negative": "dry land", "nsfw": false },
+      { "positive": "canyon", "negative": "hill", "nsfw": false },
+      { "positive": "geyser", "negative": "calm water", "nsfw": false },
+      { "positive": "urban court", "negative": "rural court", "nsfw": false },
+      {
+        "positive": "dystopian urban landscape",
+        "negative": "utopian urban landscape",
+        "nsfw": false
+      },
+      {
+        "positive": "cyberpunk city",
+        "negative": "medieval city",
+        "nsfw": false
+      },
+      { "positive": "city at night", "negative": "city at day", "nsfw": false },
+      { "positive": "street", "negative": "forest", "nsfw": false },
+      {
+        "positive": "neon-lit square",
+        "negative": "dark square",
+        "nsfw": false
+      },
+      {
+        "positive": "urban landscape",
+        "negative": "rural landscape",
+        "nsfw": false
+      },
+      {
+        "positive": "highway at night",
+        "negative": "highway at day",
+        "nsfw": false
+      },
+      {
+        "positive": "urban court at evening",
+        "negative": "urban court at day",
+        "nsfw": false
+      },
+      {
+        "positive": "blurred urban landscape",
+        "negative": "sharp urban landscape",
+        "nsfw": false
+      },
+      { "positive": "rainy street", "negative": "sunny street", "nsfw": false },
+      {
+        "positive": "city building",
+        "negative": "rural building",
+        "nsfw": false
+      },
+      {
+        "positive": "abandoned factory",
+        "negative": "active factory",
+        "nsfw": false
+      },
+      { "positive": "marketplace", "negative": "empty street", "nsfw": false },
+      {
+        "positive": "skyscraper rooftop",
+        "negative": "basement",
+        "nsfw": false
+      },
+      {
+        "positive": "underground tunnel",
+        "negative": "open road",
+        "nsfw": false
+      },
+      {
+        "positive": "bridge at night",
+        "negative": "bridge at day",
+        "nsfw": false
+      },
+      { "positive": "night sky", "negative": "day sky", "nsfw": false },
+      {
+        "positive": "futuristic scene",
+        "negative": "historical scene",
+        "nsfw": false
+      },
+      { "positive": "space", "negative": "earth landscape", "nsfw": false },
+      {
+        "positive": "space station",
+        "negative": "earth station",
+        "nsfw": false
+      },
+      { "positive": "crater", "negative": "mountain", "nsfw": false },
+      { "positive": "outer space", "negative": "inner space", "nsfw": false },
+      {
+        "positive": "burning crater",
+        "negative": "calm crater",
+        "nsfw": false
+      },
+      {
+        "positive": "X-shaped spaceship",
+        "negative": "round spaceship",
+        "nsfw": false
+      },
+      {
+        "positive": "crystalline lake with Matrix code",
+        "negative": "ordinary lake",
+        "nsfw": false
+      },
+      {
+        "positive": "futuristic city with cyborg",
+        "negative": "traditional city",
+        "nsfw": false
+      },
+      {
+        "positive": "toxic fumes background",
+        "negative": "clean background",
+        "nsfw": false
+      },
+      { "positive": "dark castle", "negative": "bright castle", "nsfw": false },
+      {
+        "positive": "beach with mysterious object",
+        "negative": "ordinary beach",
+        "nsfw": false
+      },
+      {
+        "positive": "ocean with shark",
+        "negative": "ocean without shark",
+        "nsfw": false
+      },
+      {
+        "positive": "coral reefs with fauna",
+        "negative": "empty coral reefs",
+        "nsfw": false
+      },
+      {
+        "positive": "interdimensional portal",
+        "negative": "ordinary gate",
+        "nsfw": false
+      },
+      {
+        "positive": "floating continent",
+        "negative": "grounded continent",
+        "nsfw": false
+      },
+      {
+        "positive": "post-apocalyptic ruin",
+        "negative": "new building",
+        "nsfw": false
+      },
+      { "positive": "spaceport", "negative": "earth port", "nsfw": false },
+      {
+        "positive": "toxic wasteland",
+        "negative": "fertile wasteland",
+        "nsfw": false
+      },
+      {
+        "positive": "sunlit living room",
+        "negative": "dark living room",
+        "nsfw": false
+      },
+      { "positive": "club", "negative": "library", "nsfw": false },
+      {
+        "positive": "desert island",
+        "negative": "green island",
+        "nsfw": false
+      },
+      { "positive": "studio", "negative": "street", "nsfw": false },
+      { "positive": "nightclub", "negative": "day club", "nsfw": false },
+      { "positive": "tavern", "negative": "palace", "nsfw": false },
+      { "positive": "library", "negative": "club", "nsfw": false },
+      { "positive": "castle", "negative": "hut", "nsfw": false },
+      { "positive": "throne room", "negative": "ordinary room", "nsfw": false },
+      {
+        "positive": "luxurious mansion",
+        "negative": "modest mansion",
+        "nsfw": false
+      },
+      {
+        "positive": "antique furniture",
+        "negative": "modern furniture",
+        "nsfw": false
+      },
+      {
+        "positive": "endless library",
+        "negative": "small library",
+        "nsfw": false
+      },
+      { "positive": "open copy space", "negative": null, "nsfw": false },
+      {
+        "positive": "starry background",
+        "negative": "blank background",
+        "nsfw": false
+      },
+      {
+        "positive": "white background",
+        "negative": "black background",
+        "nsfw": false
+      },
+      {
+        "positive": "striped wallpaper",
+        "negative": "plain wallpaper",
+        "nsfw": false
+      },
+      {
+        "positive": "creamy paper mache background",
+        "negative": "rough background",
+        "nsfw": false
+      },
+      {
+        "positive": "Paris catwalk",
+        "negative": "ordinary street",
+        "nsfw": false
+      },
+      {
+        "positive": "vine-covered background",
+        "negative": "bare background",
+        "nsfw": false
+      },
+      { "positive": "attic", "negative": "basement", "nsfw": false },
+      { "positive": "basement", "negative": "attic", "nsfw": false },
+      { "positive": "ballroom", "negative": "small room", "nsfw": false },
+      { "positive": "artist’s workshop", "negative": "office", "nsfw": false },
+      {
+        "positive": "futuristic laboratory",
+        "negative": "ancient laboratory",
+        "nsfw": false
+      },
+      { "positive": "rainforest", "negative": "desert", "nsfw": false },
+      { "positive": "iceberg", "negative": "volcano", "nsfw": false },
+      { "positive": "steppe", "negative": "forest", "nsfw": false },
+      { "positive": "meadow", "negative": "city", "nsfw": false },
+      { "positive": "ancient ruins", "negative": "modern city", "nsfw": false },
+      { "positive": "village", "negative": "metropolis", "nsfw": false },
+      { "positive": "farm", "negative": "factory", "nsfw": false },
+      {
+        "positive": "coniferous forest",
+        "negative": "deciduous forest",
+        "nsfw": false
+      },
+      {
+        "positive": "mountain river",
+        "negative": "lowland river",
+        "nsfw": false
+      },
+      { "positive": "alpine lake", "negative": "desert lake", "nsfw": false },
+      {
+        "positive": "tropical island",
+        "negative": "arctic island",
+        "nsfw": false
+      },
+      { "positive": "Sahara desert", "negative": "Gobi desert", "nsfw": false },
+      {
+        "positive": "Arctic ocean",
+        "negative": "tropical ocean",
+        "nsfw": false
+      },
+      { "positive": "bamboo forest", "negative": "oak forest", "nsfw": false },
+      {
+        "positive": "volcanic islands",
+        "negative": "coral islands",
+        "nsfw": false
+      },
+      { "positive": "grand canyon", "negative": "small canyon", "nsfw": false },
+      { "positive": "ice desert", "negative": "sand desert", "nsfw": false },
+      { "positive": "misty forest", "negative": "sunny forest", "nsfw": false },
+      {
+        "positive": "Himalayan mountain",
+        "negative": "Andean mountain",
+        "nsfw": false
+      },
+      { "positive": "African plain", "negative": "Asian plain", "nsfw": false },
+      { "positive": "river delta", "negative": "river source", "nsfw": false },
+      { "positive": "fjord", "negative": "bay", "nsfw": false },
+      { "positive": "salt desert", "negative": "sand desert", "nsfw": false },
+      {
+        "positive": "Amazon rainforest",
+        "negative": "Thai forest",
+        "nsfw": false
+      },
+      {
+        "positive": "Siberian steppes",
+        "negative": "Mongolian steppes",
+        "nsfw": false
+      },
+      {
+        "positive": "Hawaiian island",
+        "negative": "fjord island",
+        "nsfw": false
+      },
+      {
+        "positive": "Australian desert",
+        "negative": "African desert",
+        "nsfw": false
+      },
+      {
+        "positive": "Indian ocean",
+        "negative": "Atlantic ocean",
+        "nsfw": false
+      },
+      {
+        "positive": "boreal forest",
+        "negative": "tropical forest",
+        "nsfw": false
+      },
+      { "positive": "Etna volcano", "negative": "Fuji volcano", "nsfw": false },
+      {
+        "positive": "African savanna",
+        "negative": "Australian savanna",
+        "nsfw": false
+      },
+      {
+        "positive": "Arctic tundra",
+        "negative": "Antarctic tundra",
+        "nsfw": false
+      },
+      {
+        "positive": "Congo jungle",
+        "negative": "Amazon jungle",
+        "nsfw": false
+      },
+      { "positive": "Niagara falls", "negative": "Angel falls", "nsfw": false },
+      {
+        "positive": "Mammoth cave",
+        "negative": "ordinary cave",
+        "nsfw": false
+      },
+      {
+        "positive": "Greenland glacier",
+        "negative": "Antarctic glacier",
+        "nsfw": false
+      },
+      {
+        "positive": "Everglades swamp",
+        "negative": "European swamp",
+        "nsfw": false
+      },
+      {
+        "positive": "Colorado canyon",
+        "negative": "British canyon",
+        "nsfw": false
+      },
+      {
+        "positive": "Yellowstone geyser",
+        "negative": "Icelandic geyser",
+        "nsfw": false
+      },
+      {
+        "positive": "urban park",
+        "negative": "national forest",
+        "nsfw": false
+      },
+      {
+        "positive": "urban dystopia",
+        "negative": "urban utopia",
+        "nsfw": false
+      },
+      {
+        "positive": "cyberpunk at night",
+        "negative": "cyberpunk at day",
+        "nsfw": false
+      },
+      {
+        "positive": "shopping street",
+        "negative": "residential street",
+        "nsfw": false
+      },
+      { "positive": "city square", "negative": "city park", "nsfw": false },
+      { "positive": "urban highway", "negative": "rural road", "nsfw": false },
+      { "positive": "tennis court", "negative": "soccer field", "nsfw": false },
+      { "positive": "blurred urban", "negative": "sharp urban", "nsfw": false },
+      { "positive": "rainy street", "negative": "sunny street", "nsfw": false },
+      {
+        "positive": "office building",
+        "negative": "residential building",
+        "nsfw": false
+      },
+      {
+        "positive": "abandoned factory",
+        "negative": "active factory",
+        "nsfw": false
+      },
+      { "positive": "local market", "negative": "supermarket", "nsfw": false },
+      {
+        "positive": "building rooftop",
+        "negative": "building ground floor",
+        "nsfw": false
+      },
+      { "positive": "subway tunnel", "negative": "ground road", "nsfw": false },
+      {
+        "positive": "suspension bridge",
+        "negative": "fixed bridge",
+        "nsfw": false
+      },
+      { "positive": "starry sky", "negative": "cloudy sky", "nsfw": false },
+      {
+        "positive": "futuristic scene",
+        "negative": "historical scene",
+        "nsfw": false
+      },
+      { "positive": "galaxy", "negative": "solar system", "nsfw": false },
+      {
+        "positive": "orbital station",
+        "negative": "ground station",
+        "nsfw": false
+      },
+      { "positive": "lunar crater", "negative": "earth crater", "nsfw": false },
+      {
+        "positive": "interstellar space",
+        "negative": "planetary space",
+        "nsfw": false
+      },
+      {
+        "positive": "active crater",
+        "negative": "inactive crater",
+        "nsfw": false
+      },
+      {
+        "positive": "delta spaceship",
+        "negative": "alpha spaceship",
+        "nsfw": false
+      },
+      {
+        "positive": "holographic lake",
+        "negative": "realistic lake",
+        "nsfw": false
+      },
+      {
+        "positive": "cyberpunk city",
+        "negative": "Victorian city",
+        "nsfw": false
+      },
+      {
+        "positive": "toxic background",
+        "negative": "eco-friendly background",
+        "nsfw": false
+      },
+      {
+        "positive": "Gothic castle",
+        "negative": "Renaissance castle",
+        "nsfw": false
+      },
+      { "positive": "secret beach", "negative": "public beach", "nsfw": false },
+      {
+        "positive": "ocean with dolphin",
+        "negative": "ocean with shark",
+        "nsfw": false
+      },
+      {
+        "positive": "healthy coral reefs",
+        "negative": "damaged coral reefs",
+        "nsfw": false
+      },
+      { "positive": "time portal", "negative": "space portal", "nsfw": false },
+      {
+        "positive": "drifting continent",
+        "negative": "fixed continent",
+        "nsfw": false
+      },
+      {
+        "positive": "post-apocalyptic ruin",
+        "negative": "historical ruin",
+        "nsfw": false
+      },
+      { "positive": "spaceport", "negative": "seaport", "nsfw": false },
+      {
+        "positive": "radioactive desert",
+        "negative": "natural desert",
+        "nsfw": false
+      },
+      {
+        "positive": "sunny living room",
+        "negative": "dark living room",
+        "nsfw": false
+      },
+      { "positive": "bar", "negative": "restaurant", "nsfw": false },
+      {
+        "positive": "desert island",
+        "negative": "forest island",
+        "nsfw": false
+      },
+      { "positive": "workshop", "negative": "factory", "nsfw": false },
+      { "positive": "inn", "negative": "hotel", "nsfw": false },
+      {
+        "positive": "public library",
+        "negative": "private library",
+        "nsfw": false
+      },
+      {
+        "positive": "royal castle",
+        "negative": "ruined castle",
+        "nsfw": false
+      },
+      {
+        "positive": "audience hall",
+        "negative": "conference hall",
+        "nsfw": false
+      },
+      {
+        "positive": "luxury villa",
+        "negative": "single-family house",
+        "nsfw": false
+      },
+      {
+        "positive": "vintage furniture",
+        "negative": "modern furniture",
+        "nsfw": false
+      },
+      {
+        "positive": "infinite library",
+        "negative": "finite library",
+        "nsfw": false
+      },
+      {
+        "positive": "creative space",
+        "negative": "monotonous space",
+        "nsfw": false
+      },
+      {
+        "positive": "starry background",
+        "negative": "plain background",
+        "nsfw": false
+      },
+      {
+        "positive": "white background",
+        "negative": "colorful background",
+        "nsfw": false
+      },
+      {
+        "positive": "geometric wallpaper",
+        "negative": "organic wallpaper",
+        "nsfw": false
+      },
+      {
+        "positive": "paper background",
+        "negative": "digital background",
+        "nsfw": false
+      },
+      { "positive": "Paris runway", "negative": "local runway", "nsfw": false },
+      {
+        "positive": "plant background",
+        "negative": "mineral background",
+        "nsfw": false
+      },
+      { "positive": "concert hall", "negative": "classroom", "nsfw": false },
+      {
+        "positive": "craftsman workshop",
+        "negative": "machine workshop",
+        "nsfw": false
+      },
+      {
+        "positive": "scientific laboratory",
+        "negative": "magical laboratory",
+        "nsfw": false
+      }
+    ]
+  },
+  "Body Parts": {
+    "pl": [
+      { "positive": "oczy", "negative": null, "nsfw": false },
+      { "positive": "twarz", "negative": "tył głowy", "nsfw": false },
+      { "positive": "rzęsy", "negative": null, "nsfw": false },
+      {
+        "positive": "długie rzęsy",
+        "negative": "krótkie rzęsy",
+        "nsfw": false
+      },
+      { "positive": "pieprzyki", "negative": "gładka skóra", "nsfw": false },
+      {
+        "positive": "dołeczki na policzkach",
+        "negative": "gładkie policzki",
+        "nsfw": false
+      },
+      {
+        "positive": "brązowe oczy",
+        "negative": "niebieskie oczy",
+        "nsfw": false
+      },
+      {
+        "positive": "fioletowe oczy",
+        "negative": "zielone oczy",
+        "nsfw": false
+      },
+      { "positive": "duże usta", "negative": "małe usta", "nsfw": false },
+      { "positive": "pełne usta", "negative": "cienkie usta", "nsfw": false },
+      {
+        "positive": "błyszczące usta",
+        "negative": "matowe usta",
+        "nsfw": false
+      },
+      { "positive": "nawilżone usta", "negative": "suche usta", "nsfw": false },
+      { "positive": "duże brwi", "negative": "małe brwi", "nsfw": false },
+      { "positive": "duże oczy", "negative": "małe oczy", "nsfw": false },
+      {
+        "positive": "jasne błękitne oczy",
+        "negative": "ciemne brązowe oczy",
+        "nsfw": false
+      },
+      {
+        "positive": "delikatne rysy twarzy",
+        "negative": "ostre rysy twarzy",
+        "nsfw": false
+      },
+      {
+        "positive": "duże błyszczące oczy",
+        "negative": "małe matowe oczy",
+        "nsfw": false
+      },
+      {
+        "positive": "delikatne rumieńce",
+        "negative": "blada skóra",
+        "nsfw": false
+      },
+      { "positive": "kocie oczy", "negative": "okrągłe oczy", "nsfw": false },
+      { "positive": "sercowate usta", "negative": null, "nsfw": false },
+      { "positive": "piegi", "negative": "bez piegów", "nsfw": false },
+      {
+        "positive": "blizny na twarzy",
+        "negative": "gładka twarz",
+        "nsfw": false
+      },
+      {
+        "positive": "wysokie kości policzkowe",
+        "negative": "niskie kości policzkowe",
+        "nsfw": false
+      },
+      { "positive": "zadarty nos", "negative": "prosty nos", "nsfw": false },
+      {
+        "positive": "głęboko osadzone oczy",
+        "negative": "wystające oczy",
+        "nsfw": false
+      },
+      { "positive": "włosy", "negative": "łysina", "nsfw": false },
+      {
+        "positive": "włosy zakrywające czoło",
+        "negative": "włosy odsłaniające czoło",
+        "nsfw": false
+      },
+      { "positive": "wysoki kucyk", "negative": "niski kucyk", "nsfw": false },
+      {
+        "positive": "włosy między oczami",
+        "negative": "włosy z boku",
+        "nsfw": false
+      },
+      {
+        "positive": "przerzucone włosy",
+        "negative": "uporządkowane włosy",
+        "nsfw": false
+      },
+      {
+        "positive": "włosy w nieładzie",
+        "negative": "ułożone włosy",
+        "nsfw": false
+      },
+      {
+        "positive": "włosy splecione w warkocz",
+        "negative": "rozpuszczone włosy",
+        "nsfw": false
+      },
+      {
+        "positive": "krótkie włosy",
+        "negative": "długie włosy",
+        "nsfw": false
+      },
+      {
+        "positive": "fale we włosach",
+        "negative": "proste włosy",
+        "nsfw": false
+      },
+      {
+        "positive": "długie włosy",
+        "negative": "krótkie włosy",
+        "nsfw": false
+      },
+      { "positive": "czarne włosy", "negative": "białe włosy", "nsfw": false },
+      { "positive": "blond włosy", "negative": "czarne włosy", "nsfw": false },
+      {
+        "positive": "różowe włosy",
+        "negative": "zielone włosy",
+        "nsfw": false
+      },
+      {
+        "positive": "fioletowe włosy",
+        "negative": "żółte włosy",
+        "nsfw": false
+      },
+      { "positive": "białe włosy", "negative": "czarne włosy", "nsfw": false },
+      {
+        "positive": "kręcone włosy",
+        "negative": "proste włosy",
+        "nsfw": false
+      },
+      {
+        "positive": "proste włosy",
+        "negative": "kręcone włosy",
+        "nsfw": false
+      },
+      {
+        "positive": "pastelowe włosy",
+        "negative": "jaskrawe włosy",
+        "nsfw": false
+      },
+      {
+        "positive": "bliźniacze kucyki",
+        "negative": "pojedynczy kucyk",
+        "nsfw": false
+      },
+      {
+        "positive": "grzywka z boku",
+        "negative": "grzywka prosta",
+        "nsfw": false
+      },
+      {
+        "positive": "tęczowe włosy",
+        "negative": "jednobarwne włosy",
+        "nsfw": false
+      },
+      {
+        "positive": "kok z wstążką",
+        "negative": "rozpuszczone włosy",
+        "nsfw": false
+      },
+      {
+        "positive": "włosy w stylu hime",
+        "negative": "włosy w stylu bob",
+        "nsfw": false
+      },
+      {
+        "positive": "włosy w stylu afro",
+        "negative": "proste włosy",
+        "nsfw": false
+      },
+      {
+        "positive": "włosy w nieładzie",
+        "negative": "ułożone włosy",
+        "nsfw": false
+      },
+      {
+        "positive": "włosy z pasemkami",
+        "negative": "jednolite włosy",
+        "nsfw": false
+      },
+      {
+        "positive": "włosy w stylu bob",
+        "negative": "długie włosy",
+        "nsfw": false
+      },
+      {
+        "positive": "włosy z warkoczykami",
+        "negative": "rozpuszczone włosy",
+        "nsfw": false
+      },
+      { "positive": "piersi", "negative": "klatka piersiowa", "nsfw": false },
+      { "positive": "nogi", "negative": "ramiona", "nsfw": false },
+      { "positive": "biodra", "negative": "ramiona", "nsfw": false },
+      { "positive": "ramiona", "negative": "nogi", "nsfw": false },
+      { "positive": "brzuch", "negative": "plecy", "nsfw": false },
+      { "positive": "stopy", "negative": "dłonie", "nsfw": false },
+      { "positive": "palce", "negative": null, "nsfw": false },
+      { "positive": "pośladki", "negative": "piersi", "nsfw": false },
+      { "positive": "skóra", "negative": null, "nsfw": false },
+      { "positive": "mięśnie", "negative": "tłuszcz", "nsfw": false },
+      {
+        "positive": "smukła sylwetka",
+        "negative": "muskularna sylwetka",
+        "nsfw": false
+      },
+      { "positive": "smukłe nogi", "negative": "grube nogi", "nsfw": false },
+      {
+        "positive": "szerokie ramiona",
+        "negative": "wąskie ramiona",
+        "nsfw": false
+      },
+      {
+        "positive": "widoczne żyły",
+        "negative": "gładka skóra",
+        "nsfw": false
+      },
+      {
+        "positive": "blizny na ciele",
+        "negative": "gładkie ciało",
+        "nsfw": false
+      },
+      {
+        "positive": "proporcjonalna sylwetka",
+        "negative": "nieproporcjonalna sylwetka",
+        "nsfw": false
+      },
+      { "positive": "tatuaże", "negative": "brak tatuaży", "nsfw": false },
+      { "positive": "kolczyki", "negative": "brak kolczyków", "nsfw": false },
+      { "positive": "rogi smoka", "negative": "brak rogów", "nsfw": false },
+      { "positive": "elfie uszy", "negative": "ludzkie uszy", "nsfw": false },
+      {
+        "positive": "kolczyk w pępku",
+        "negative": "brak kolczyka",
+        "nsfw": false
+      },
+      {
+        "positive": "piercing powiek",
+        "negative": "brak piercingu",
+        "nsfw": false
+      },
+      {
+        "positive": "kolczyki w uszach",
+        "negative": "brak kolczyków",
+        "nsfw": false
+      },
+      {
+        "positive": "kokardka we włosach",
+        "negative": "brak kokardki",
+        "nsfw": false
+      },
+      { "positive": "kocie uszy", "negative": "ludzkie uszy", "nsfw": false },
+      {
+        "positive": "opaska z uszami królika",
+        "negative": "brak opaski",
+        "nsfw": false
+      },
+      {
+        "positive": "naszyjnik z dzwoneczkiem",
+        "negative": "brak naszyjnika",
+        "nsfw": false
+      },
+      {
+        "positive": "bransoletka z charmsami",
+        "negative": "brak bransoletki",
+        "nsfw": false
+      },
+      {
+        "positive": "okulary przeciwsłoneczne",
+        "negative": "brak okularów",
+        "nsfw": false
+      },
+      { "positive": "pasek z klamrą", "negative": "brak paska", "nsfw": false },
+      { "positive": "torba na ramię", "negative": "brak torby", "nsfw": false },
+      {
+        "positive": "rękawice bojowe",
+        "negative": "brak rękawic",
+        "nsfw": false
+      },
+      { "positive": "opaska na oczy", "negative": "brak opaski", "nsfw": false }
+    ],
+    "en": [
+      { "positive": "eyes", "negative": null, "nsfw": false },
+      { "positive": "face", "negative": "back of head", "nsfw": false },
+      { "positive": "eyelashes", "negative": null, "nsfw": false },
+      {
+        "positive": "long eyelashes",
+        "negative": "short eyelashes",
+        "nsfw": false
+      },
+      { "positive": "moles", "negative": "smooth skin", "nsfw": false },
+      {
+        "positive": "dimples on cheeks",
+        "negative": "smooth cheeks",
+        "nsfw": false
+      },
+      { "positive": "brown eyes", "negative": "blue eyes", "nsfw": false },
+      { "positive": "purple eyes", "negative": "green eyes", "nsfw": false },
+      { "positive": "large lips", "negative": "small lips", "nsfw": false },
+      { "positive": "full lips", "negative": "thin lips", "nsfw": false },
+      { "positive": "glossy lips", "negative": "matte lips", "nsfw": false },
+      { "positive": "hydrated lips", "negative": "dry lips", "nsfw": false },
+      {
+        "positive": "thick eyebrows",
+        "negative": "thin eyebrows",
+        "nsfw": false
+      },
+      { "positive": "big eyes", "negative": "small eyes", "nsfw": false },
+      {
+        "positive": "bright light blue eyes",
+        "negative": "dark brown eyes",
+        "nsfw": false
+      },
+      {
+        "positive": "delicate facial features",
+        "negative": "harsh facial features",
+        "nsfw": false
+      },
+      {
+        "positive": "large shiny eyes",
+        "negative": "small dull eyes",
+        "nsfw": false
+      },
+      { "positive": "soft blush", "negative": "pale skin", "nsfw": false },
+      { "positive": "cat-like eyes", "negative": "round eyes", "nsfw": false },
+      { "positive": "heart-shaped lips", "negative": null, "nsfw": false },
+      { "positive": "freckles", "negative": "no freckles", "nsfw": false },
+      { "positive": "facial scars", "negative": "smooth face", "nsfw": false },
+      {
+        "positive": "high cheekbones",
+        "negative": "low cheekbones",
+        "nsfw": false
+      },
+      {
+        "positive": "upturned nose",
+        "negative": "straight nose",
+        "nsfw": false
+      },
+      {
+        "positive": "deep-set eyes",
+        "negative": "protruding eyes",
+        "nsfw": false
+      },
+      { "positive": "hair", "negative": "bald", "nsfw": false },
+      {
+        "positive": "hair covering forehead",
+        "negative": "hair exposing forehead",
+        "nsfw": false
+      },
+      {
+        "positive": "high ponytail",
+        "negative": "low ponytail",
+        "nsfw": false
+      },
+      {
+        "positive": "hair between eyes",
+        "negative": "hair to the side",
+        "nsfw": false
+      },
+      {
+        "positive": "flipped hair",
+        "negative": "straight hair",
+        "nsfw": false
+      },
+      { "positive": "messy hair", "negative": "neat hair", "nsfw": false },
+      { "positive": "braided hair", "negative": "loose hair", "nsfw": false },
+      { "positive": "short hair", "negative": "long hair", "nsfw": false },
+      { "positive": "wavy hair", "negative": "straight hair", "nsfw": false },
+      { "positive": "long hair", "negative": "short hair", "nsfw": false },
+      { "positive": "black hair", "negative": "white hair", "nsfw": false },
+      { "positive": "blonde hair", "negative": "black hair", "nsfw": false },
+      { "positive": "pink hair", "negative": "green hair", "nsfw": false },
+      { "positive": "purple hair", "negative": "yellow hair", "nsfw": false },
+      { "positive": "white hair", "negative": "black hair", "nsfw": false },
+      { "positive": "curly hair", "negative": "straight hair", "nsfw": false },
+      { "positive": "straight hair", "negative": "curly hair", "nsfw": false },
+      { "positive": "pastel hair", "negative": "vibrant hair", "nsfw": false },
+      { "positive": "twin tails", "negative": "single tail", "nsfw": false },
+      { "positive": "side bangs", "negative": "straight bangs", "nsfw": false },
+      {
+        "positive": "rainbow hair",
+        "negative": "monochrome hair",
+        "nsfw": false
+      },
+      {
+        "positive": "bun with ribbon",
+        "negative": "loose hair",
+        "nsfw": false
+      },
+      {
+        "positive": "hime cut hair",
+        "negative": "bob cut hair",
+        "nsfw": false
+      },
+      { "positive": "afro hair", "negative": "straight hair", "nsfw": false },
+      { "positive": "disheveled hair", "negative": "neat hair", "nsfw": false },
+      {
+        "positive": "highlighted hair",
+        "negative": "uniform hair",
+        "nsfw": false
+      },
+      { "positive": "bob cut hair", "negative": "long hair", "nsfw": false },
+      { "positive": "cornrows", "negative": "loose hair", "nsfw": false },
+      { "positive": "breasts", "negative": "flat chest", "nsfw": false },
+      { "positive": "legs", "negative": "arms", "nsfw": false },
+      { "positive": "hips", "negative": "shoulders", "nsfw": false },
+      { "positive": "arms", "negative": "legs", "nsfw": false },
+      { "positive": "stomach", "negative": "back", "nsfw": false },
+      { "positive": "feet", "negative": "hands", "nsfw": false },
+      { "positive": "fingers", "negative": null, "nsfw": false },
+      { "positive": "buttocks", "negative": "breasts", "nsfw": false },
+      { "positive": "skin", "negative": null, "nsfw": false },
+      { "positive": "muscles", "negative": "fat", "nsfw": false },
+      {
+        "positive": "slender figure",
+        "negative": "muscular figure",
+        "nsfw": false
+      },
+      { "positive": "slender legs", "negative": "thick legs", "nsfw": false },
+      {
+        "positive": "broad shoulders",
+        "negative": "narrow shoulders",
+        "nsfw": false
+      },
+      { "positive": "visible veins", "negative": "smooth skin", "nsfw": false },
+      { "positive": "body scars", "negative": "smooth body", "nsfw": false },
+      {
+        "positive": "proportionate figure",
+        "negative": "disproportionate figure",
+        "nsfw": false
+      },
+      { "positive": "tattoos", "negative": "no tattoos", "nsfw": false },
+      { "positive": "earrings", "negative": "no earrings", "nsfw": false },
+      { "positive": "dragon horns", "negative": "no horns", "nsfw": false },
+      { "positive": "elf ears", "negative": "human ears", "nsfw": false },
+      {
+        "positive": "belly button piercing",
+        "negative": "no piercing",
+        "nsfw": false
+      },
+      {
+        "positive": "eyelid piercing",
+        "negative": "no piercing",
+        "nsfw": false
+      },
+      {
+        "positive": "ear piercings",
+        "negative": "no piercings",
+        "nsfw": false
+      },
+      { "positive": "hair bow", "negative": "no bow", "nsfw": false },
+      { "positive": "cat ears", "negative": "human ears", "nsfw": false },
+      {
+        "positive": "bunny ear headband",
+        "negative": "no headband",
+        "nsfw": false
+      },
+      { "positive": "bell necklace", "negative": "no necklace", "nsfw": false },
+      {
+        "positive": "charm bracelet",
+        "negative": "no bracelet",
+        "nsfw": false
+      },
+      { "positive": "sunglasses", "negative": "no sunglasses", "nsfw": false },
+      { "positive": "belt with buckle", "negative": "no belt", "nsfw": false },
+      { "positive": "shoulder bag", "negative": "no bag", "nsfw": false },
+      { "positive": "combat gloves", "negative": "no gloves", "nsfw": false },
+      { "positive": "eye patch", "negative": "no eye patch", "nsfw": false }
+    ]
+  },
+  "Body Features": {
+    "pl": [
+      {
+        "positive": "smukła sylwetka",
+        "negative": "krępa sylwetka",
+        "nsfw": false
+      },
+      {
+        "positive": "atletyczna sylwetka",
+        "negative": "drobna sylwetka",
+        "nsfw": false
+      },
+      {
+        "positive": "muskularna sylwetka",
+        "negative": "smukła sylwetka",
+        "nsfw": false
+      },
+      {
+        "positive": "wysoka postura",
+        "negative": "niska postura",
+        "nsfw": false
+      },
+      {
+        "positive": "niska postura",
+        "negative": "wysoka postura",
+        "nsfw": false
+      },
+      {
+        "positive": "blizny bojowe",
+        "negative": "gładkie ciało",
+        "nsfw": false
+      },
+      {
+        "positive": "tatuaże runiczne",
+        "negative": "brak tatuaży",
+        "nsfw": false
+      },
+      {
+        "positive": "cybernetyczne ramię",
+        "negative": "organiczne ramię",
+        "nsfw": false
+      },
+      {
+        "positive": "cybernetyczne oko",
+        "negative": "organiczne oko",
+        "nsfw": false
+      },
+      { "positive": "skrzydła", "negative": "brak skrzydeł", "nsfw": false },
+      { "positive": "ogon", "negative": "brak ogona", "nsfw": false },
+      { "positive": "rogi", "negative": "brak rogów", "nsfw": false },
+      {
+        "positive": "spiczaste uszy",
+        "negative": "okrągłe uszy",
+        "nsfw": false
+      },
+      {
+        "positive": "świetliste znaki na skórze",
+        "negative": "brak znaków",
+        "nsfw": false
+      },
+      {
+        "positive": "łuski na przedramionach",
+        "negative": "gładkie przedramiona",
+        "nsfw": false
+      },
+      {
+        "positive": "futrzane akcenty",
+        "negative": "gładka skóra",
+        "nsfw": false
+      },
+      {
+        "positive": "protezowana noga",
+        "negative": "naturalna noga",
+        "nsfw": false
+      },
+      {
+        "positive": "mechaniczna dłoń",
+        "negative": "organiczna dłoń",
+        "nsfw": false
+      },
+      {
+        "positive": "bioluminescencyjna skóra",
+        "negative": "zwykła skóra",
+        "nsfw": false
+      }
+    ],
+    "en": [
+      {
+        "positive": "slender build",
+        "negative": "stocky build",
+        "nsfw": false
+      },
+      {
+        "positive": "athletic build",
+        "negative": "petite build",
+        "nsfw": false
+      },
+      {
+        "positive": "muscular build",
+        "negative": "slender build",
+        "nsfw": false
+      },
+      {
+        "positive": "tall stature",
+        "negative": "short stature",
+        "nsfw": false
+      },
+      {
+        "positive": "short stature",
+        "negative": "tall stature",
+        "nsfw": false
+      },
+      { "positive": "battle scars", "negative": "smooth body", "nsfw": false },
+      { "positive": "runic tattoos", "negative": "no tattoos", "nsfw": false },
+      {
+        "positive": "cybernetic arm",
+        "negative": "organic arm",
+        "nsfw": false
+      },
+      {
+        "positive": "cybernetic eye",
+        "negative": "organic eye",
+        "nsfw": false
+      },
+      { "positive": "wings", "negative": "no wings", "nsfw": false },
+      { "positive": "tail", "negative": "no tail", "nsfw": false },
+      { "positive": "horns", "negative": "no horns", "nsfw": false },
+      { "positive": "pointed ears", "negative": "round ears", "nsfw": false },
+      {
+        "positive": "glowing skin markings",
+        "negative": "no markings",
+        "nsfw": false
+      },
+      {
+        "positive": "forearm scales",
+        "negative": "smooth forearms",
+        "nsfw": false
+      },
+      { "positive": "fur accents", "negative": "smooth skin", "nsfw": false },
+      {
+        "positive": "prosthetic leg",
+        "negative": "natural leg",
+        "nsfw": false
+      },
+      {
+        "positive": "mechanical hand",
+        "negative": "organic hand",
+        "nsfw": false
+      },
+      {
+        "positive": "bioluminescent skin",
+        "negative": "ordinary skin",
+        "nsfw": false
+      }
+    ]
+  },
+  "Behavior": {
+    "pl": [
+      { "positive": "taniec", "negative": "bezruch", "nsfw": false },
+      { "positive": "wspinaczka", "negative": "zstępowanie", "nsfw": false },
+      { "positive": "pływanie", "negative": "chodzenie", "nsfw": false },
+      { "positive": "płacz", "negative": "śmiech", "nsfw": false },
+      {
+        "positive": "strzelanie do koszykówki",
+        "negative": "kopanie piłki",
+        "nsfw": false
+      },
+      {
+        "positive": "trzymanie balonów",
+        "negative": "puszczanie balonów",
+        "nsfw": false
+      },
+      {
+        "positive": "pisanie wiadomości",
+        "negative": "czytanie wiadomości",
+        "nsfw": false
+      },
+      {
+        "positive": "naprawa nadajnika",
+        "negative": "niszczenie nadajnika",
+        "nsfw": false
+      },
+      {
+        "positive": "pływanie pod wodą",
+        "negative": "pływanie na powierzchni",
+        "nsfw": false
+      },
+      {
+        "positive": "wspinaczka po klifie",
+        "negative": "schodzenie z klifu",
+        "nsfw": false
+      },
+      {
+        "positive": "występ rapera",
+        "negative": "cichy występ",
+        "nsfw": false
+      },
+      {
+        "positive": "walcznie z przeciwnikiem",
+        "negative": "pokój z przeciwnikiem",
+        "nsfw": false
+      },
+      {
+        "positive": "prowadzenie podcastu",
+        "negative": "słuchanie podcastu",
+        "nsfw": false
+      },
+      {
+        "positive": "zbliżanie się do obiektu",
+        "negative": "oddalanie się od obiektu",
+        "nsfw": false
+      },
+      {
+        "positive": "dotykanie obiektu",
+        "negative": "unikanie obiektu",
+        "nsfw": false
+      },
+      {
+        "positive": "poruszanie głową",
+        "negative": "nieruchoma głowa",
+        "nsfw": false
+      },
+      {
+        "positive": "przechodzenie przez zasłonę winorośli",
+        "negative": "unikanie zasłony winorośli",
+        "nsfw": false
+      },
+      {
+        "positive": "trzymanie mikrofonu",
+        "negative": "puszczanie mikrofonu",
+        "nsfw": false
+      },
+      {
+        "positive": "jazda na cyborgu koniu",
+        "negative": "jazda na zwykłym koniu",
+        "nsfw": false
+      },
+      { "positive": "jogging", "negative": "spacer", "nsfw": false },
+      {
+        "positive": "wykonywanie sztuczek na deskorolce",
+        "negative": "spokojna jazda na deskorolce",
+        "nsfw": false
+      },
+      {
+        "positive": "medytacja",
+        "negative": "aktywność fizyczna",
+        "nsfw": false
+      },
+      {
+        "positive": "bieganie w deszczu",
+        "negative": "bieganie w słońcu",
+        "nsfw": false
+      },
+      {
+        "positive": "gra na gitarze",
+        "negative": "słuchanie gitary",
+        "nsfw": false
+      },
+      {
+        "positive": "taniec na ulicy",
+        "negative": "stanie na ulicy",
+        "nsfw": false
+      },
+      {
+        "positive": "malowanie obrazu",
+        "negative": "niszczenie obrazu",
+        "nsfw": false
+      },
+      {
+        "positive": "patrzenie na widza",
+        "negative": "odwracanie wzroku",
+        "nsfw": false
+      },
+      {
+        "positive": "dynamiczna poza",
+        "negative": "statyczna poza",
+        "nsfw": false
+      },
+      { "positive": "zgięta poza", "negative": "prosta poza", "nsfw": false },
+      {
+        "positive": "stanie z rozłożonymi nogami",
+        "negative": "stanie z złączonymi nogami",
+        "nsfw": false
+      },
+      {
+        "positive": "pochylanie się",
+        "negative": "stanie prosto",
+        "nsfw": false
+      },
+      {
+        "positive": "siedzenie na biurku",
+        "negative": "stanie przy biurku",
+        "nsfw": false
+      },
+      {
+        "positive": "stanie na jednej nodze",
+        "negative": "stanie na dwóch nogach",
+        "nsfw": false
+      },
+      {
+        "positive": "ręce za plecami",
+        "negative": "ręce z przodu",
+        "nsfw": false
+      },
+      {
+        "positive": "ręce nad głową",
+        "negative": "ręce przy boku",
+        "nsfw": false
+      },
+      {
+        "positive": "pochylanie się nad ladą",
+        "negative": "stanie z dala od lady",
+        "nsfw": false
+      },
+      {
+        "positive": "poza z sercem z rąk",
+        "negative": "poza z krzyżem z rąk",
+        "nsfw": false
+      },
+      {
+        "positive": "poza z ukłonem",
+        "negative": "poza z uniesieniem",
+        "nsfw": false
+      },
+      {
+        "positive": "poza z palcem na ustach",
+        "negative": "poza z otwartymi ustami",
+        "nsfw": false
+      },
+      {
+        "positive": "skacząca poza",
+        "negative": "stojąca poza",
+        "nsfw": false
+      },
+      {
+        "positive": "poza z ręką na sercu",
+        "negative": "poza z ręką na głowie",
+        "nsfw": false
+      },
+      {
+        "positive": "poza w ruchu",
+        "negative": "poza w spoczynku",
+        "nsfw": false
+      },
+      {
+        "positive": "poza z uniesioną głową",
+        "negative": "poza z opuszczoną głową",
+        "nsfw": false
+      },
+      {
+        "positive": "poza z ręką na twarzy",
+        "negative": "poza z rękami z dala od twarzy",
+        "nsfw": false
+      },
+      {
+        "positive": "poza z nogami w górze",
+        "negative": "poza z nogami na ziemi",
+        "nsfw": false
+      },
+      { "positive": "uśmiech", "negative": "smutek", "nsfw": false },
+      { "positive": "wstyd", "negative": "pewność siebie", "nsfw": false },
+      { "positive": "pewność siebie", "negative": "wstyd", "nsfw": false },
+      { "positive": "złość", "negative": "spokój", "nsfw": false },
+      { "positive": "smutek", "negative": "radość", "nsfw": false },
+      { "positive": "przerażenie", "negative": "odwaga", "nsfw": false },
+      { "positive": "zmęczenie", "negative": "energia", "nsfw": false },
+      { "positive": "melancholijny", "negative": "radosny", "nsfw": false },
+      {
+        "positive": "poważna ekspresja",
+        "negative": "żartobliwa ekspresja",
+        "nsfw": false
+      },
+      { "positive": "zwycięska euforia", "negative": "porażka", "nsfw": false },
+      {
+        "positive": "cyniczny uśmiech",
+        "negative": "szczery uśmiech",
+        "nsfw": false
+      },
+      {
+        "positive": "przestraszona panika",
+        "negative": "spokojna pewność",
+        "nsfw": false
+      },
+      {
+        "positive": "spokojny wzrok",
+        "negative": "nerwowy wzrok",
+        "nsfw": false
+      },
+      {
+        "positive": "złowrogi uśmiech",
+        "negative": "przyjazny uśmiech",
+        "nsfw": false
+      },
+      {
+        "positive": "znudzona ekspresja",
+        "negative": "zainteresowana ekspresja",
+        "nsfw": false
+      },
+      {
+        "positive": "uwodzicielskie spojrzenie",
+        "negative": "obojętne spojrzenie",
+        "nsfw": false
+      },
+      {
+        "positive": "zawstydzone spojrzenie",
+        "negative": "odważne spojrzenie",
+        "nsfw": false
+      },
+      {
+        "positive": "intensywna koncentracja",
+        "negative": "rozproszona koncentracja",
+        "nsfw": false
+      },
+      {
+        "positive": "chłodne spojrzenie",
+        "negative": "ciepłe spojrzenie",
+        "nsfw": false
+      },
+      {
+        "positive": "flirciarskie spojrzenie",
+        "negative": "poważne spojrzenie",
+        "nsfw": false
+      },
+      { "positive": "zszokowana", "negative": "spokojna", "nsfw": false },
+      {
+        "positive": "skoncentrowana",
+        "negative": "rozproszona",
+        "nsfw": false
+      },
+      { "positive": "uwodzicielska", "negative": "obojętna", "nsfw": false },
+      {
+        "positive": "zdeterminowana",
+        "negative": "wahająca się",
+        "nsfw": false
+      },
+      { "positive": "radosna", "negative": "smutna", "nsfw": false },
+      { "positive": "zmęczona", "negative": "energetyczna", "nsfw": false },
+      { "positive": "w ekstazie", "negative": "w nudzie", "nsfw": false },
+      { "positive": "nieśmiała", "negative": "odważna", "nsfw": false },
+      { "positive": "buntownicza", "negative": "posłuszna", "nsfw": false },
+      { "positive": "zwycięska", "negative": "przegrana", "nsfw": false },
+      { "positive": "groźna", "negative": "przyjazna", "nsfw": false },
+      { "positive": "zrozpaczona", "negative": "pełna nadziei", "nsfw": false },
+      { "positive": "zaskoczona", "negative": "spodziewana", "nsfw": false },
+      { "positive": "władcza", "negative": "uległa", "nsfw": false },
+      { "positive": "kawaii", "negative": "straszna", "nsfw": false },
+      { "positive": "moe", "negative": null, "nsfw": false },
+      {
+        "positive": "nieśmiały uśmiech",
+        "negative": "pewny uśmiech",
+        "nsfw": false
+      },
+      {
+        "positive": "figlarne mrugnięcie",
+        "negative": "poważne spojrzenie",
+        "nsfw": false
+      },
+      {
+        "positive": "zadziorny uśmiech",
+        "negative": "łagodny uśmiech",
+        "nsfw": false
+      },
+      {
+        "positive": "płaczliwe oczy",
+        "negative": "radosne oczy",
+        "nsfw": false
+      },
+      {
+        "positive": "tajemniczy uśmiech",
+        "negative": "otwarty uśmiech",
+        "nsfw": false
+      },
+      {
+        "positive": "zamyślony wyraz",
+        "negative": "beztroski wyraz",
+        "nsfw": false
+      },
+      {
+        "positive": "radosne uniesienie",
+        "negative": "smutne opuszczenie",
+        "nsfw": false
+      },
+      {
+        "positive": "ironiczny uśmiech",
+        "negative": "szczery uśmiech",
+        "nsfw": false
+      }
+    ],
+    "en": [
+      { "positive": "dance", "negative": "stillness", "nsfw": false },
+      { "positive": "climbing", "negative": "descending", "nsfw": false },
+      { "positive": "swimming", "negative": "walking", "nsfw": false },
+      { "positive": "crying", "negative": "laughing", "nsfw": false },
+      {
+        "positive": "shooting basketball",
+        "negative": "kicking ball",
+        "nsfw": false
+      },
+      {
+        "positive": "holding balloons",
+        "negative": "releasing balloons",
+        "nsfw": false
+      },
+      { "positive": "texting", "negative": "reading", "nsfw": false },
+      {
+        "positive": "repairing transmitter",
+        "negative": "destroying transmitter",
+        "nsfw": false
+      },
+      {
+        "positive": "swimming underwater",
+        "negative": "swimming on surface",
+        "nsfw": false
+      },
+      {
+        "positive": "cliff climbing",
+        "negative": "cliff descending",
+        "nsfw": false
+      },
+      {
+        "positive": "rapper performance",
+        "negative": "silent performance",
+        "nsfw": false
+      },
+      {
+        "positive": "fighting opponent",
+        "negative": "peace with opponent",
+        "nsfw": false
+      },
+      {
+        "positive": "hosting podcast",
+        "negative": "listening to podcast",
+        "nsfw": false
+      },
+      {
+        "positive": "approaching object",
+        "negative": "retreating from object",
+        "nsfw": false
+      },
+      {
+        "positive": "touching object",
+        "negative": "avoiding object",
+        "nsfw": false
+      },
+      { "positive": "moving head", "negative": "still head", "nsfw": false },
+      {
+        "positive": "pushing through vine curtain",
+        "negative": "avoiding vine curtain",
+        "nsfw": false
+      },
+      {
+        "positive": "holding microphone",
+        "negative": "releasing microphone",
+        "nsfw": false
+      },
+      {
+        "positive": "riding cyborg horse",
+        "negative": "riding normal horse",
+        "nsfw": false
+      },
+      { "positive": "jogging", "negative": "walking", "nsfw": false },
+      {
+        "positive": "performing skateboard tricks",
+        "negative": "calm skateboard ride",
+        "nsfw": false
+      },
+      {
+        "positive": "meditation",
+        "negative": "physical activity",
+        "nsfw": false
+      },
+      {
+        "positive": "running in the rain",
+        "negative": "running in sun",
+        "nsfw": false
+      },
+      {
+        "positive": "playing guitar",
+        "negative": "listening to guitar",
+        "nsfw": false
+      },
+      {
+        "positive": "street dancing",
+        "negative": "standing on street",
+        "nsfw": false
+      },
+      {
+        "positive": "painting a picture",
+        "negative": "destroying a picture",
+        "nsfw": false
+      },
+      {
+        "positive": "looking at viewer",
+        "negative": "looking away",
+        "nsfw": false
+      },
+      { "positive": "dynamic pose", "negative": "static pose", "nsfw": false },
+      {
+        "positive": "bent over pose",
+        "negative": "straight pose",
+        "nsfw": false
+      },
+      {
+        "positive": "standing with legs apart",
+        "negative": "standing with legs together",
+        "nsfw": false
+      },
+      {
+        "positive": "leaning forward",
+        "negative": "standing straight",
+        "nsfw": false
+      },
+      {
+        "positive": "sitting on desk",
+        "negative": "standing by desk",
+        "nsfw": false
+      },
+      {
+        "positive": "standing on one leg",
+        "negative": "standing on two legs",
+        "nsfw": false
+      },
+      {
+        "positive": "hands behind back",
+        "negative": "hands in front",
+        "nsfw": false
+      },
+      {
+        "positive": "arms above head",
+        "negative": "arms at side",
+        "nsfw": false
+      },
+      {
+        "positive": "leaning over counter",
+        "negative": "standing away from counter",
+        "nsfw": false
+      },
+      {
+        "positive": "heart hands pose",
+        "negative": "cross hands pose",
+        "nsfw": false
+      },
+      { "positive": "bowing pose", "negative": "rising pose", "nsfw": false },
+      {
+        "positive": "finger on lips pose",
+        "negative": "open mouth pose",
+        "nsfw": false
+      },
+      {
+        "positive": "jumping pose",
+        "negative": "standing pose",
+        "nsfw": false
+      },
+      {
+        "positive": "hand on heart pose",
+        "negative": "hand on head pose",
+        "nsfw": false
+      },
+      { "positive": "motion pose", "negative": "rest pose", "nsfw": false },
+      {
+        "positive": "head tilted up pose",
+        "negative": "head tilted down pose",
+        "nsfw": false
+      },
+      {
+        "positive": "hand on face pose",
+        "negative": "hands away from face pose",
+        "nsfw": false
+      },
+      {
+        "positive": "legs up in the air pose",
+        "negative": "legs on ground pose",
+        "nsfw": false
+      },
+      { "positive": "smile", "negative": "frown", "nsfw": false },
+      { "positive": "embarrassment", "negative": "confidence", "nsfw": false },
+      { "positive": "confidence", "negative": "embarrassment", "nsfw": false },
+      { "positive": "anger", "negative": "calm", "nsfw": false },
+      { "positive": "sadness", "negative": "joy", "nsfw": false },
+      { "positive": "fear", "negative": "bravery", "nsfw": false },
+      { "positive": "fatigue", "negative": "energy", "nsfw": false },
+      { "positive": "melancholic", "negative": "cheerful", "nsfw": false },
+      {
+        "positive": "serious expression",
+        "negative": "playful expression",
+        "nsfw": false
+      },
+      { "positive": "victorious elation", "negative": "defeat", "nsfw": false },
+      {
+        "positive": "cynical smile",
+        "negative": "sincere smile",
+        "nsfw": false
+      },
+      {
+        "positive": "fearful panic",
+        "negative": "calm confidence",
+        "nsfw": false
+      },
+      { "positive": "calm gaze", "negative": "nervous gaze", "nsfw": false },
+      {
+        "positive": "maniacal expression",
+        "negative": "calm expression",
+        "nsfw": false
+      },
+      {
+        "positive": "bored expression",
+        "negative": "interested expression",
+        "nsfw": false
+      },
+      {
+        "positive": "seductive look",
+        "negative": "indifferent look",
+        "nsfw": false
+      },
+      {
+        "positive": "embarrassed look",
+        "negative": "bold look",
+        "nsfw": false
+      },
+      {
+        "positive": "intense focus",
+        "negative": "distracted focus",
+        "nsfw": false
+      },
+      { "positive": "cold stare", "negative": "warm stare", "nsfw": false },
+      { "positive": "flirty look", "negative": "serious look", "nsfw": false },
+      { "positive": "shocked", "negative": "calm", "nsfw": false },
+      { "positive": "focused", "negative": "distracted", "nsfw": false },
+      { "positive": "seductive", "negative": "indifferent", "nsfw": false },
+      { "positive": "determined", "negative": "hesitant", "nsfw": false },
+      { "positive": "joyful", "negative": "sad", "nsfw": false },
+      { "positive": "tired", "negative": "energetic", "nsfw": false },
+      { "positive": "in ecstasy", "negative": "in boredom", "nsfw": false },
+      { "positive": "shy", "negative": "bold", "nsfw": false },
+      { "positive": "rebellious", "negative": "obedient", "nsfw": false },
+      { "positive": "victorious", "negative": "defeated", "nsfw": false },
+      { "positive": "menacing", "negative": "friendly", "nsfw": false },
+      { "positive": "desperate", "negative": "hopeful", "nsfw": false },
+      { "positive": "surprised", "negative": "expected", "nsfw": false },
+      { "positive": "commanding", "negative": "submissive", "nsfw": false },
+      { "positive": "cute", "negative": "scary", "nsfw": false },
+      { "positive": "moe", "negative": null, "nsfw": false },
+      { "positive": "shy smile", "negative": "confident smile", "nsfw": false },
+      { "positive": "playful wink", "negative": "serious look", "nsfw": false },
+      { "positive": "cheeky grin", "negative": "gentle smile", "nsfw": false },
+      { "positive": "teary eyes", "negative": "happy eyes", "nsfw": false },
+      {
+        "positive": "mysterious smile",
+        "negative": "open smile",
+        "nsfw": false
+      },
+      {
+        "positive": "thoughtful expression",
+        "negative": "carefree expression",
+        "nsfw": false
+      },
+      {
+        "positive": "joyful elation",
+        "negative": "sad depression",
+        "nsfw": false
+      },
+      {
+        "positive": "sarcastic grin",
+        "negative": "sincere smile",
+        "nsfw": false
+      }
+    ]
+  },
+  "NSFW": {
+    "pl": [
+      { "positive": "nagość", "negative": "ubranie", "nsfw": true },
+      { "positive": "NSFW", "negative": " ", "nsfw": true },
+      { "positive": "bielizna", "negative": "pełne ubranie", "nsfw": true },
+      {
+        "positive": "przezroczysta koszula",
+        "negative": "nieprzezroczysta koszula",
+        "nsfw": true
+      },
+      { "positive": "stringi", "negative": "spodnie", "nsfw": true },
+      {
+        "positive": "przezroczysta bielizna",
+        "negative": "nieprzezroczysta bielizna",
+        "nsfw": true
+      },
+      { "positive": "topless", "negative": "w topie", "nsfw": true },
+      {
+        "positive": "erotyczny strój",
+        "negative": "zwykły strój",
+        "nsfw": true
+      },
+      {
+        "positive": "strój pokojówki",
+        "negative": "zwykły strój",
+        "nsfw": true
+      },
+      {
+        "positive": "prześwitujące rajstopy",
+        "negative": "nieprześwitujące rajstopy",
+        "nsfw": true
+      },
+      {
+        "positive": "bielizna z koronki",
+        "negative": "zwykła bielizna",
+        "nsfw": true
+      },
+      {
+        "positive": "przezroczysty top",
+        "negative": "nieprzezroczysty top",
+        "nsfw": true
+      },
+      {
+        "positive": "prześwitująca spódnica",
+        "negative": "nieprześwitująca spódnica",
+        "nsfw": true
+      },
+      {
+        "positive": "czarne pończochy z nylonu",
+        "negative": "białe pończochy",
+        "nsfw": true
+      },
+      {
+        "positive": "bikini z koronki",
+        "negative": "zwykłe bikini",
+        "nsfw": true
+      },
+      {
+        "positive": "obcisła sukienka",
+        "negative": "luźna sukienka",
+        "nsfw": true
+      },
+      {
+        "positive": "kostium shinobi z dekoltem",
+        "negative": "kostium shinobi bez dekoltu",
+        "nsfw": true
+      },
+      {
+        "positive": "siatka rybacka",
+        "negative": "zwykła siatka",
+        "nsfw": true
+      },
+      {
+        "positive": "spódnica z prezerwatyw",
+        "negative": "zwykła spódnica",
+        "nsfw": true
+      },
+      {
+        "positive": "przeźroczysty podkoszulek",
+        "negative": "nieprzeźroczysty podkoszulek",
+        "nsfw": true
+      },
+      {
+        "positive": "mokra koszulka",
+        "negative": "sucha koszulka",
+        "nsfw": true
+      },
+      {
+        "positive": "biała koszulka z dekoltem",
+        "negative": "biała koszulka bez dekoltu",
+        "nsfw": true
+      },
+      {
+        "positive": "czarne legginsy",
+        "negative": "białe legginsy",
+        "nsfw": true
+      },
+      {
+        "positive": "biały biustonosz",
+        "negative": "czarny biustonosz",
+        "nsfw": true
+      },
+      {
+        "positive": "siateczkowe pończochy",
+        "negative": "zwykłe pończochy",
+        "nsfw": true
+      },
+      {
+        "positive": "przeźroczysta suknia",
+        "negative": "nieprzeźroczysta suknia",
+        "nsfw": true
+      },
+      {
+        "positive": "skórzany gorset",
+        "negative": "bawełniany gorset",
+        "nsfw": true
+      },
+      { "positive": "mikro stringi", "negative": "duże stringi", "nsfw": true },
+      {
+        "positive": "erotyczny kostium kąpielowy",
+        "negative": "zwykły kostium kąpielowy",
+        "nsfw": true
+      },
+      { "positive": "mikro bikini", "negative": "duże bikini", "nsfw": true },
+      {
+        "positive": "przeźroczysty strój kąpielowy",
+        "negative": "nieprzeźroczysty strój kąpielowy",
+        "nsfw": true
+      },
+      {
+        "positive": "sukienka z głębokim dekoltem",
+        "negative": "sukienka bez dekoltu",
+        "nsfw": true
+      },
+      {
+        "positive": "siateczkowe body",
+        "negative": "zwykłe body",
+        "nsfw": true
+      },
+      {
+        "positive": "skórzany strój",
+        "negative": "bawełniany strój",
+        "nsfw": true
+      },
+      {
+        "positive": "króciutka spódniczka",
+        "negative": "długa spódnica",
+        "nsfw": true
+      },
+      {
+        "positive": "przeźroczyste pończochy",
+        "negative": "nieprzeźroczyste pończochy",
+        "nsfw": true
+      },
+      {
+        "positive": "strój bunny girl",
+        "negative": "zwykły strój",
+        "nsfw": true
+      },
+      {
+        "positive": "gorset lateksowy",
+        "negative": "gorset bawełniany",
+        "nsfw": true
+      },
+      {
+        "positive": "stringi z koronki",
+        "negative": "zwykłe stringi",
+        "nsfw": true
+      },
+      { "positive": "seksowne pozy", "negative": "zwykłe pozy", "nsfw": true },
+      {
+        "positive": "seksualna poza",
+        "negative": "nieseksualna poza",
+        "nsfw": true
+      },
+      { "positive": "ahegao", "negative": "normalna twarz", "nsfw": true },
+      { "positive": "orgazm", "negative": "spokój", "nsfw": true },
+      {
+        "positive": "głęboki dekolt",
+        "negative": "płytki dekolt",
+        "nsfw": true
+      },
+      {
+        "positive": "poza z rozłożonymi nogami",
+        "negative": "poza z złączonymi nogami",
+        "nsfw": true
+      },
+      {
+        "positive": "pochylanie się do tyłu",
+        "negative": "pochylanie się do przodu",
+        "nsfw": true
+      },
+      {
+        "positive": "patrzenie wstecz",
+        "negative": "patrzenie do przodu",
+        "nsfw": true
+      },
+      {
+        "positive": "uwodzicielskie spojrzenie",
+        "negative": "obojętne spojrzenie",
+        "nsfw": true
+      },
+      {
+        "positive": "poza z ręką na udzie",
+        "negative": "poza z ręką z dala od uda",
+        "nsfw": true
+      },
+      {
+        "positive": "poza z uniesionym biodrem",
+        "negative": "poza z opuszczonym biodrem",
+        "nsfw": true
+      },
+      {
+        "positive": "uwodzicielski uśmiech",
+        "negative": "zwykły uśmiech",
+        "nsfw": true
+      },
+      {
+        "positive": "wyraz ekstazy",
+        "negative": "wyraz spokoju",
+        "nsfw": true
+      },
+      {
+        "positive": "poza z pochyleniem do tyłu",
+        "negative": "poza z pochyleniem do przodu",
+        "nsfw": true
+      },
+      {
+        "positive": "uwodzicielska poza na łóżku",
+        "negative": "zwykła poza na łóżku",
+        "nsfw": true
+      },
+      {
+        "positive": "poza z uniesioną spódnicą",
+        "negative": "poza z opuszczoną spódnicą",
+        "nsfw": true
+      },
+      {
+        "positive": "odsłonięte majtki",
+        "negative": "zakryte majtki",
+        "nsfw": true
+      },
+      {
+        "positive": "poza na kolanach",
+        "negative": "poza stojąca",
+        "nsfw": true
+      },
+      {
+        "positive": "poza z rozchylonymi ustami",
+        "negative": "poza z zamkniętymi ustami",
+        "nsfw": true
+      },
+      {
+        "positive": "poza z ręką na biodrze",
+        "negative": "poza z ręką z dala od biodra",
+        "nsfw": true
+      },
+      {
+        "positive": "poza z wyciągniętym językiem",
+        "negative": "poza z schowanym językiem",
+        "nsfw": true
+      },
+      {
+        "positive": "leżąca na plecach",
+        "negative": "leżąca na brzuchu",
+        "nsfw": true
+      },
+      {
+        "positive": "poza z pochyleniem do przodu",
+        "negative": "poza z pochyleniem do tyłu",
+        "nsfw": true
+      },
+      {
+        "positive": "poza z uniesionymi nogami",
+        "negative": "poza z opuszczonymi nogami",
+        "nsfw": true
+      },
+      { "positive": "duże piersi", "negative": "małe piersi", "nsfw": true },
+      { "positive": "seks", "negative": "brak seksu", "nsfw": true },
+      {
+        "positive": "odsłonięte sutki",
+        "negative": "zakryte sutki",
+        "nsfw": true
+      },
+      {
+        "positive": "piercing sutków",
+        "negative": "brak piercingu sutków",
+        "nsfw": true
+      },
+      {
+        "positive": "metalowe kajdanki",
+        "negative": "brak kajdanek",
+        "nsfw": true
+      },
+      {
+        "positive": "kołnierz i smycz",
+        "negative": "brak kołnierza",
+        "nsfw": true
+      },
+      { "positive": "gangbang", "negative": "samotny", "nsfw": true },
+      { "positive": "fellatio", "negative": "brak fellatio", "nsfw": true },
+      { "positive": "penetracja", "negative": "brak penetracji", "nsfw": true },
+      {
+        "positive": "włosy łonowe",
+        "negative": "brak włosów łonowych",
+        "nsfw": true
+      },
+      { "positive": "wilgotna skóra", "negative": "sucha skóra", "nsfw": true },
+      {
+        "positive": "eksponowane pośladki",
+        "negative": "zakryte pośladki",
+        "nsfw": true
+      },
+      {
+        "positive": "wilgotna bielizna",
+        "negative": "sucha bielizna",
+        "nsfw": true
+      },
+      {
+        "positive": "delikatna nagość",
+        "negative": "gruba nagość",
+        "nsfw": true
+      },
+      {
+        "positive": "zmysłowy dotyk",
+        "negative": "zwykły dotyk",
+        "nsfw": true
+      },
+      {
+        "positive": "intymna scena",
+        "negative": "publiczna scena",
+        "nsfw": true
+      },
+      {
+        "positive": "bez włosów łonowych",
+        "negative": "z włosami łonowymi",
+        "nsfw": true
+      },
+      { "positive": "cipa", "negative": "penis", "nsfw": true },
+      { "positive": "słodka cipka", "negative": "zwykła cipka", "nsfw": true },
+      { "positive": "dziewica", "negative": "doświadczona", "nsfw": true },
+      { "positive": "soczysta cipka", "negative": "sucha cipka", "nsfw": true },
+      { "positive": "mokra cipa", "negative": "sucha cipa", "nsfw": true },
+      { "positive": "seksowna dupa", "negative": "zwykła dupa", "nsfw": true },
+      {
+        "positive": "seks oralny",
+        "negative": "brak seksu oralnego",
+        "nsfw": true
+      },
+      { "positive": "bondage", "negative": "wolność", "nsfw": true },
+      { "positive": "sperma", "negative": "brak spermy", "nsfw": true },
+      { "positive": "erotyczna poza", "negative": "zwykła poza", "nsfw": true },
+      {
+        "positive": "podwójna penetracja",
+        "negative": "pojedyncza penetracja",
+        "nsfw": true
+      },
+      { "positive": "bukkake", "negative": "brak bukkake", "nsfw": true },
+      { "positive": "mokre ciało", "negative": "suche ciało", "nsfw": true },
+      {
+        "positive": "eksponowane genitalia",
+        "negative": "zakryte genitalia",
+        "nsfw": true
+      }
+    ],
+    "en": [
+      { "positive": "nude", "negative": "clothed", "nsfw": true },
+      { "positive": "lingerie", "negative": "full clothing", "nsfw": true },
+      {
+        "positive": "see-through shirt",
+        "negative": "opaque shirt",
+        "nsfw": true
+      },
+      { "positive": "thong", "negative": "pants", "nsfw": true },
+      {
+        "positive": "transparent lingerie",
+        "negative": "opaque lingerie",
+        "nsfw": true
+      },
+      { "positive": "topless", "negative": "with top", "nsfw": true },
+      {
+        "positive": "erotic outfit",
+        "negative": "ordinary outfit",
+        "nsfw": true
+      },
+      { "positive": "nudity", "negative": "clothed", "nsfw": true },
+      {
+        "positive": "maid outfit",
+        "negative": "ordinary outfit",
+        "nsfw": true
+      },
+      {
+        "positive": "see-through tights",
+        "negative": "opaque tights",
+        "nsfw": true
+      },
+      {
+        "positive": "lace lingerie",
+        "negative": "plain lingerie",
+        "nsfw": true
+      },
+      { "positive": "transparent top", "negative": "opaque top", "nsfw": true },
+      {
+        "positive": "see-through skirt",
+        "negative": "opaque skirt",
+        "nsfw": true
+      },
+      {
+        "positive": "black nylon stockings",
+        "negative": "white stockings",
+        "nsfw": true
+      },
+      { "positive": "lace bikini", "negative": "plain bikini", "nsfw": true },
+      { "positive": "tight dress", "negative": "loose dress", "nsfw": true },
+      {
+        "positive": "plunging neckline shinobi outfit",
+        "negative": "high neckline shinobi outfit",
+        "nsfw": true
+      },
+      { "positive": "fishnets", "negative": "plain nets", "nsfw": true },
+      {
+        "positive": "condom skirt",
+        "negative": "ordinary skirt",
+        "nsfw": true
+      },
+      {
+        "positive": "transparent t-shirt",
+        "negative": "opaque t-shirt",
+        "nsfw": true
+      },
+      { "positive": "wet t-shirt", "negative": "dry t-shirt", "nsfw": true },
+      {
+        "positive": "white t-shirt with cleavage",
+        "negative": "white t-shirt without cleavage",
+        "nsfw": true
+      },
+      {
+        "positive": "black leggings",
+        "negative": "white leggings",
+        "nsfw": true
+      },
+      { "positive": "white bra", "negative": "black bra", "nsfw": true },
+      {
+        "positive": "fishnet stockings",
+        "negative": "plain stockings",
+        "nsfw": true
+      },
+      {
+        "positive": "transparent gown",
+        "negative": "opaque gown",
+        "nsfw": true
+      },
+      {
+        "positive": "leather corset",
+        "negative": "cotton corset",
+        "nsfw": true
+      },
+      { "positive": "micro thong", "negative": "large thong", "nsfw": true },
+      {
+        "positive": "erotic swimsuit",
+        "negative": "ordinary swimsuit",
+        "nsfw": true
+      },
+      { "positive": "micro bikini", "negative": "large bikini", "nsfw": true },
+      {
+        "positive": "transparent swimsuit",
+        "negative": "opaque swimsuit",
+        "nsfw": true
+      },
+      {
+        "positive": "deep neckline dress",
+        "negative": "high neckline dress",
+        "nsfw": true
+      },
+      {
+        "positive": "fishnet bodysuit",
+        "negative": "plain bodysuit",
+        "nsfw": true
+      },
+      {
+        "positive": "leather outfit",
+        "negative": "cotton outfit",
+        "nsfw": true
+      },
+      {
+        "positive": "super short skirt",
+        "negative": "long skirt",
+        "nsfw": true
+      },
+      {
+        "positive": "sheer stockings",
+        "negative": "opaque stockings",
+        "nsfw": true
+      },
+      {
+        "positive": "bunny girl outfit",
+        "negative": "ordinary outfit",
+        "nsfw": true
+      },
+      { "positive": "latex corset", "negative": "cotton corset", "nsfw": true },
+      { "positive": "lace panties", "negative": "plain panties", "nsfw": true },
+      { "positive": "sexy poses", "negative": "ordinary poses", "nsfw": true },
+      {
+        "positive": "sexual pose",
+        "negative": "non-sexual pose",
+        "nsfw": true
+      },
+      { "positive": "ahegao", "negative": "normal face", "nsfw": true },
+      { "positive": "orgasm", "negative": "calm", "nsfw": true },
+      {
+        "positive": "deep cleavage",
+        "negative": "shallow cleavage",
+        "nsfw": true
+      },
+      {
+        "positive": "legs spread pose",
+        "negative": "legs together pose",
+        "nsfw": true
+      },
+      { "positive": "arched back", "negative": "straight back", "nsfw": true },
+      {
+        "positive": "looking back",
+        "negative": "looking forward",
+        "nsfw": true
+      },
+      {
+        "positive": "seductive look",
+        "negative": "indifferent look",
+        "nsfw": true
+      },
+      {
+        "positive": "hand on thigh pose",
+        "negative": "hand away from thigh pose",
+        "nsfw": true
+      },
+      {
+        "positive": "raised hip pose",
+        "negative": "lowered hip pose",
+        "nsfw": true
+      },
+      {
+        "positive": "seductive smile",
+        "negative": "ordinary smile",
+        "nsfw": true
+      },
+      {
+        "positive": "ecstatic expression",
+        "negative": "calm expression",
+        "nsfw": true
+      },
+      {
+        "positive": "leaning back pose",
+        "negative": "leaning forward pose",
+        "nsfw": true
+      },
+      {
+        "positive": "seductive bed pose",
+        "negative": "ordinary bed pose",
+        "nsfw": true
+      },
+      {
+        "positive": "skirt lift pose",
+        "negative": "skirt down pose",
+        "nsfw": true
+      },
+      { "positive": "panty flash", "negative": "no panty flash", "nsfw": true },
+      {
+        "positive": "kneeling pose",
+        "negative": "standing pose",
+        "nsfw": true
+      },
+      {
+        "positive": "parted lips pose",
+        "negative": "closed lips pose",
+        "nsfw": true
+      },
+      {
+        "positive": "hand on hip pose",
+        "negative": "hand away from hip pose",
+        "nsfw": true
+      },
+      {
+        "positive": "tongue out pose",
+        "negative": "tongue in pose",
+        "nsfw": true
+      },
+      {
+        "positive": "lying on back",
+        "negative": "lying on stomach",
+        "nsfw": true
+      },
+      {
+        "positive": "forward lean pose",
+        "negative": "backward lean pose",
+        "nsfw": true
+      },
+      {
+        "positive": "legs up pose",
+        "negative": "legs down pose",
+        "nsfw": true
+      },
+      {
+        "positive": "large breasts",
+        "negative": "small breasts",
+        "nsfw": true
+      },
+      { "positive": "sex", "negative": "no sex", "nsfw": true },
+      {
+        "positive": "exposed nipples",
+        "negative": "covered nipples",
+        "nsfw": true
+      },
+      {
+        "positive": "nipple piercing",
+        "negative": "no nipple piercing",
+        "nsfw": true
+      },
+      {
+        "positive": "metal handcuffs",
+        "negative": "no handcuffs",
+        "nsfw": true
+      },
+      { "positive": "collar and leash", "negative": "no collar", "nsfw": true },
+      { "positive": "gangbang", "negative": "solo", "nsfw": true },
+      { "positive": "blowjob", "negative": "no blowjob", "nsfw": true },
+      { "positive": "penetration", "negative": "no penetration", "nsfw": true },
+      { "positive": "pubic hair", "negative": "no pubic hair", "nsfw": true },
+      { "positive": "wet skin", "negative": "dry skin", "nsfw": true },
+      {
+        "positive": "exposed buttocks",
+        "negative": "covered buttocks",
+        "nsfw": true
+      },
+      { "positive": "wet lingerie", "negative": "dry lingerie", "nsfw": true },
+      { "positive": "soft nudity", "negative": "hard nudity", "nsfw": true },
+      {
+        "positive": "sensual touch",
+        "negative": "ordinary touch",
+        "nsfw": true
+      },
+      {
+        "positive": "intimate scene",
+        "negative": "public scene",
+        "nsfw": true
+      },
+      {
+        "positive": "hairless pubic area",
+        "negative": "hairy pubic area",
+        "nsfw": true
+      },
+      { "positive": "pussy", "negative": "dick", "nsfw": true },
+      { "positive": "sweet pussy", "negative": "ordinary pussy", "nsfw": true },
+      { "positive": "virgin", "negative": "experienced", "nsfw": true },
+      { "positive": "juicy pussy", "negative": "dry pussy", "nsfw": true },
+      { "positive": "wet pussy", "negative": "dry pussy", "nsfw": true },
+      { "positive": "sexy ass", "negative": "ordinary ass", "nsfw": true },
+      { "positive": "oral sex", "negative": "no oral sex", "nsfw": true },
+      { "positive": "bondage", "negative": "freedom", "nsfw": true },
+      { "positive": "cum", "negative": "no cum", "nsfw": true },
+      { "positive": "erotic pose", "negative": "ordinary pose", "nsfw": true },
+      {
+        "positive": "double penetration",
+        "negative": "single penetration",
+        "nsfw": true
+      },
+      { "positive": "bukkake", "negative": "no bukkake", "nsfw": true },
+      { "positive": "wet body", "negative": "dry body", "nsfw": true },
+      {
+        "positive": "exposed genitals",
+        "negative": "covered genitals",
+        "nsfw": true
+      }
+    ]
+  },
+  "Lighting/Effects": {
+    "pl": [
+      {
+        "positive": "kinowe oświetlenie",
+        "negative": "amatorskie oświetlenie",
+        "nsfw": false
+      },
+      {
+        "positive": "miękkie światło dzienne",
+        "negative": "ostre światło nocne",
+        "nsfw": false
+      },
+      {
+        "positive": "neonowe światła",
+        "negative": "naturalne światło",
+        "nsfw": false
+      },
+      {
+        "positive": "miękkie cienie",
+        "negative": "ostre cienie",
+        "nsfw": false
+      },
+      {
+        "positive": "efekt pryzmatu",
+        "negative": "brak efektu pryzmatu",
+        "nsfw": false
+      },
+      {
+        "positive": "odblaski neonów",
+        "negative": "brak odblasków",
+        "nsfw": false
+      },
+      {
+        "positive": "ciepłe złote światło",
+        "negative": "zimne niebieskie światło",
+        "nsfw": false
+      },
+      {
+        "positive": "miękkie nasycenie",
+        "negative": "mocne nasycenie",
+        "nsfw": false
+      },
+      {
+        "positive": "dramatyczne oświetlenie",
+        "negative": "zwykłe oświetlenie",
+        "nsfw": false
+      },
+      {
+        "positive": "oświetlenie studyjne",
+        "negative": "oświetlenie naturalne",
+        "nsfw": false
+      },
+      {
+        "positive": "światło księżyca",
+        "negative": "światło słońca",
+        "nsfw": false
+      },
+      {
+        "positive": "delikatne cienie",
+        "negative": "mocne cienie",
+        "nsfw": false
+      },
+      {
+        "positive": "odblaski na wodzie",
+        "negative": "brak odblasków",
+        "nsfw": false
+      },
+      {
+        "positive": "efekt zniekształcenia cieplnego",
+        "negative": "brak zniekształcenia",
+        "nsfw": false
+      },
+      {
+        "positive": "świetliste drobinki",
+        "negative": "brak drobinek",
+        "nsfw": false
+      },
+      {
+        "positive": "płytka głębia ostrości",
+        "negative": "głęboka głębia ostrości",
+        "nsfw": false
+      },
+      {
+        "positive": "oświetlenie wolumetryczne",
+        "negative": "zwykłe oświetlenie",
+        "nsfw": false
+      },
+      {
+        "positive": "realistyczne cienie",
+        "negative": "nierealistyczne cienie",
+        "nsfw": false
+      },
+      {
+        "positive": "efekt rybiego oka",
+        "negative": "normalny efekt",
+        "nsfw": false
+      },
+      {
+        "positive": "miękkie złote światło o zachodzie",
+        "negative": "ostre światło o wschodzie",
+        "nsfw": false
+      },
+      {
+        "positive": "naturalne światło",
+        "negative": "sztuczne światło",
+        "nsfw": false
+      },
+      {
+        "positive": "ostre kontrasty",
+        "negative": "miękkie kontrasty",
+        "nsfw": false
+      },
+      {
+        "positive": "oświetlenie z odbiciem",
+        "negative": "oświetlenie bez odbicia",
+        "nsfw": false
+      },
+      {
+        "positive": "promienie świetlne",
+        "negative": "brak promieni",
+        "nsfw": false
+      },
+      {
+        "positive": "oświetlenie ambientowe",
+        "negative": "oświetlenie bezpośrednie",
+        "nsfw": false
+      },
+      {
+        "positive": "efekt rozmycia ruchu",
+        "negative": "ostry obraz",
+        "nsfw": false
+      },
+      {
+        "positive": "rozbłyski soczewkowe",
+        "negative": "brak rozbłysków",
+        "nsfw": false
+      },
+      { "positive": "świetlne smugi", "negative": "brak smug", "nsfw": false },
+      {
+        "positive": "holograficzny efekt",
+        "negative": "realistyczny efekt",
+        "nsfw": false
+      },
+      {
+        "positive": "odblaski świetlne",
+        "negative": "brak odblasków",
+        "nsfw": false
+      },
+      {
+        "positive": "miękkie oświetlenie zachodu słońca",
+        "negative": "ostre oświetlenie wschodu słońca",
+        "nsfw": false
+      },
+      {
+        "positive": "dynamiczne cienie",
+        "negative": "statyczne cienie",
+        "nsfw": false
+      },
+      {
+        "positive": "oświetlenie z tyłu",
+        "negative": "oświetlenie z przodu",
+        "nsfw": false
+      },
+      { "positive": "efekt mgły", "negative": "jasny efekt", "nsfw": false }
+    ],
+    "en": [
+      {
+        "positive": "cinematic lighting",
+        "negative": "amateur lighting",
+        "nsfw": false
+      },
+      {
+        "positive": "soft daylight",
+        "negative": "harsh night light",
+        "nsfw": false
+      },
+      { "positive": "neon lights", "negative": "natural light", "nsfw": false },
+      {
+        "positive": "soft shadows",
+        "negative": "harsh shadows",
+        "nsfw": false
+      },
+      {
+        "positive": "prism effect",
+        "negative": "no prism effect",
+        "nsfw": false
+      },
+      {
+        "positive": "neon reflections",
+        "negative": "no reflections",
+        "nsfw": false
+      },
+      {
+        "positive": "warm golden light",
+        "negative": "cool blue light",
+        "nsfw": false
+      },
+      {
+        "positive": "soft saturation",
+        "negative": "high saturation",
+        "nsfw": false
+      },
+      {
+        "positive": "dramatic lighting",
+        "negative": "ordinary lighting",
+        "nsfw": false
+      },
+      {
+        "positive": "studio lighting",
+        "negative": "natural lighting",
+        "nsfw": false
+      },
+      { "positive": "moonlight", "negative": "sunlight", "nsfw": false },
+      {
+        "positive": "subtle shadows",
+        "negative": "strong shadows",
+        "nsfw": false
+      },
+      {
+        "positive": "water reflections",
+        "negative": "no reflections",
+        "nsfw": false
+      },
+      {
+        "positive": "heat distortion effect",
+        "negative": "no distortion",
+        "nsfw": false
+      },
+      {
+        "positive": "luminous particles",
+        "negative": "no particles",
+        "nsfw": false
+      },
+      {
+        "positive": "shallow depth of field",
+        "negative": "deep depth of field",
+        "nsfw": false
+      },
+      {
+        "positive": "volumetric lighting",
+        "negative": "ordinary lighting",
+        "nsfw": false
+      },
+      {
+        "positive": "realistic shadows",
+        "negative": "unrealistic shadows",
+        "nsfw": false
+      },
+      {
+        "positive": "fish-eye lens effect",
+        "negative": "normal lens effect",
+        "nsfw": false
+      },
+      {
+        "positive": "soft golden-hour glow",
+        "negative": "harsh midday light",
+        "nsfw": false
+      },
+      {
+        "positive": "natural light",
+        "negative": "artificial light",
+        "nsfw": false
+      },
+      {
+        "positive": "sharp contrasts",
+        "negative": "soft contrasts",
+        "nsfw": false
+      },
+      {
+        "positive": "reflection mapping",
+        "negative": "no reflection",
+        "nsfw": false
+      },
+      {
+        "positive": "ray-traced lighting",
+        "negative": "basic lighting",
+        "nsfw": false
+      },
+      {
+        "positive": "ambient lighting",
+        "negative": "direct lighting",
+        "nsfw": false
+      },
+      {
+        "positive": "motion blur effect",
+        "negative": "sharp image",
+        "nsfw": false
+      },
+      { "positive": "lens flare", "negative": "no lens flare", "nsfw": false },
+      { "positive": "light streaks", "negative": "no streaks", "nsfw": false },
+      {
+        "positive": "holographic effect",
+        "negative": "realistic effect",
+        "nsfw": false
+      },
+      {
+        "positive": "light reflections",
+        "negative": "no reflections",
+        "nsfw": false
+      },
+      {
+        "positive": "soft sunset lighting",
+        "negative": "harsh sunrise lighting",
+        "nsfw": false
+      },
+      {
+        "positive": "dynamic shadows",
+        "negative": "static shadows",
+        "nsfw": false
+      },
+      {
+        "positive": "backlighting",
+        "negative": "front lighting",
+        "nsfw": false
+      },
+      { "positive": "fog effect", "negative": "clear effect", "nsfw": false }
+    ]
+  },
+  "Characters": {
+    "pl": [
+      { "positive": "Momo Ayase", "negative": null, "nsfw": false },
+      { "positive": "Yoruichi", "negative": null, "nsfw": false },
+      { "positive": "Nezuko", "negative": null, "nsfw": false },
+      { "positive": "Hatsune Miku", "negative": null, "nsfw": false },
+      { "positive": "Asuka", "negative": null, "nsfw": false },
+      { "positive": "Misato Katsuragi", "negative": null, "nsfw": false },
+      { "positive": "Tifa Lockhart", "negative": null, "nsfw": false },
+      { "positive": "Rapunzel", "negative": null, "nsfw": false },
+      { "positive": "Albedo", "negative": null, "nsfw": false },
+      { "positive": "Laura Rijo", "negative": null, "nsfw": false },
+      { "positive": "Nico Robin", "negative": null, "nsfw": false },
+      { "positive": "Bowsette", "negative": null, "nsfw": false },
+      { "positive": "Chun Li", "negative": null, "nsfw": false },
+      { "positive": "Ahsoka Tano", "negative": null, "nsfw": false },
+      { "positive": "Aerith Gainsborough", "negative": null, "nsfw": false },
+      { "positive": "Sylvara", "negative": null, "nsfw": false },
+      { "positive": "Chikari", "negative": null, "nsfw": false },
+      { "positive": "Kamisato Ayaka", "negative": null, "nsfw": false },
+      { "positive": "Hermione", "negative": null, "nsfw": false },
+      { "positive": "Smur-fette", "negative": null, "nsfw": false },
+      { "positive": "Jin-ah", "negative": null, "nsfw": false },
+      { "positive": "Euphemi4", "negative": null, "nsfw": false },
+      { "positive": "Amy Rose", "negative": null, "nsfw": false },
+      { "positive": "Loona", "negative": null, "nsfw": false },
+      { "positive": "Coco Bandicoot", "negative": null, "nsfw": false },
+      { "positive": "Rouge the Bat", "negative": null, "nsfw": false },
+      { "positive": "Judy Hopps", "negative": null, "nsfw": false },
+      { "positive": "Rainbow Dash", "negative": null, "nsfw": false },
+      { "positive": "Princess Peach", "negative": null, "nsfw": false },
+      { "positive": "Bowser", "negative": null, "nsfw": false },
+      { "positive": "Frieren", "negative": null, "nsfw": false },
+      { "positive": "Krishna", "negative": null, "nsfw": false },
+      { "positive": "Hulk Hogan", "negative": null, "nsfw": false },
+      { "positive": "Ozzy Osbourne", "negative": null, "nsfw": false },
+      { "positive": "Sailor Moon", "negative": null, "nsfw": false },
+      { "positive": "Lara Croft", "negative": null, "nsfw": false },
+      { "positive": "Rem", "negative": null, "nsfw": false },
+      { "positive": "Chisato Nishikigi", "negative": null, "nsfw": false },
+      { "positive": "Kotoha Tachibana", "negative": null, "nsfw": false },
+      { "positive": "tsundere", "negative": "dere dere", "nsfw": false },
+      { "positive": "yandere", "negative": "normal", "nsfw": false },
+      { "positive": "kuudere", "negative": "tsundere", "nsfw": false },
+      { "positive": "dandere", "negative": "genki", "nsfw": false },
+      { "positive": "genki", "negative": "kuudere", "nsfw": false },
+      {
+        "positive": "ojou-sama",
+        "negative": "zwykła dziewczyna",
+        "nsfw": false
+      },
+      { "positive": "imouto", "negative": "oniisan", "nsfw": false },
+      { "positive": "senpai", "negative": "kouhai", "nsfw": false },
+      { "positive": "meganekko", "negative": "bez okularów", "nsfw": false },
+      { "positive": "bokukko", "negative": "watashi girl", "nsfw": false },
+      { "positive": "nekogirl", "negative": "inugirl", "nsfw": false },
+      { "positive": "kitsune", "negative": "zwykła dziewczyna", "nsfw": false },
+      {
+        "positive": "mahou shoujo",
+        "negative": "zwykła dziewczyna",
+        "nsfw": false
+      },
+      { "positive": "idolka", "negative": "zwykła dziewczyna", "nsfw": false },
+      {
+        "positive": "wojowniczka",
+        "negative": "pokojowa dziewczyna",
+        "nsfw": false
+      }
+    ],
+    "en": [
+      { "positive": "Momo Ayase", "negative": null, "nsfw": false },
+      { "positive": "Yoruichi", "negative": null, "nsfw": false },
+      { "positive": "Nezuko", "negative": null, "nsfw": false },
+      { "positive": "Hatsune Miku", "negative": null, "nsfw": false },
+      { "positive": "Asuka", "negative": null, "nsfw": false },
+      { "positive": "Misato Katsuragi", "negative": null, "nsfw": false },
+      { "positive": "Tifa Lockhart", "negative": null, "nsfw": false },
+      { "positive": "Rapunzel", "negative": null, "nsfw": false },
+      { "positive": "Albedo", "negative": null, "nsfw": false },
+      { "positive": "Laura Rijo", "negative": null, "nsfw": false },
+      { "positive": "Nico Robin", "negative": null, "nsfw": false },
+      { "positive": "Bowsette", "negative": null, "nsfw": false },
+      { "positive": "Chun Li", "negative": null, "nsfw": false },
+      { "positive": "Ahsoka Tano", "negative": null, "nsfw": false },
+      { "positive": "Aerith Gainsborough", "negative": null, "nsfw": false },
+      { "positive": "Sylvara", "negative": null, "nsfw": false },
+      { "positive": "Chikari", "negative": null, "nsfw": false },
+      { "positive": "Kamisato Ayaka", "negative": null, "nsfw": false },
+      { "positive": "Hermione", "negative": null, "nsfw": false },
+      { "positive": "Smur-fette", "negative": null, "nsfw": false },
+      { "positive": "Jin-ah", "negative": null, "nsfw": false },
+      { "positive": "Euphemi4", "negative": null, "nsfw": false },
+      { "positive": "Amy Rose", "negative": null, "nsfw": false },
+      { "positive": "Loona", "negative": null, "nsfw": false },
+      { "positive": "Coco Bandicoot", "negative": null, "nsfw": false },
+      { "positive": "Rouge the Bat", "negative": null, "nsfw": false },
+      { "positive": "Judy Hopps", "negative": null, "nsfw": false },
+      { "positive": "Rainbow Dash", "negative": null, "nsfw": false },
+      { "positive": "Princess Peach", "negative": null, "nsfw": false },
+      { "positive": "Bowser", "negative": null, "nsfw": false },
+      { "positive": "Frieren", "negative": null, "nsfw": false },
+      { "positive": "Krishna", "negative": null, "nsfw": false },
+      { "positive": "Hulk Hogan", "negative": null, "nsfw": false },
+      { "positive": "Ozzy Osbourne", "negative": null, "nsfw": false },
+      { "positive": "Sailor Moon", "negative": null, "nsfw": false },
+      { "positive": "Lara Croft", "negative": null, "nsfw": false },
+      { "positive": "Rem (Re:Zero)", "negative": null, "nsfw": false },
+      {
+        "positive": "Chisato Nishikigi (Lycoris Recoil)",
+        "negative": null,
+        "nsfw": false
+      },
+      { "positive": "Kotoha Tachibana", "negative": null, "nsfw": false },
+      { "positive": "tsundere", "negative": "dere dere", "nsfw": false },
+      { "positive": "yandere", "negative": "normal", "nsfw": false },
+      { "positive": "kuudere", "negative": "tsundere", "nsfw": false },
+      { "positive": "dandere", "negative": "genki", "nsfw": false },
+      { "positive": "genki", "negative": "kuudere", "nsfw": false },
+      { "positive": "ojou-sama", "negative": "ordinary girl", "nsfw": false },
+      { "positive": "little sister", "negative": "big brother", "nsfw": false },
+      { "positive": "senpai", "negative": "kouhai", "nsfw": false },
+      { "positive": "glasses girl", "negative": "no glasses", "nsfw": false },
+      { "positive": "tomboy girl", "negative": "feminine girl", "nsfw": false },
+      { "positive": "cat girl", "negative": "dog girl", "nsfw": false },
+      { "positive": "fox girl", "negative": "ordinary girl", "nsfw": false },
+      {
+        "positive": "magical girl",
+        "negative": "ordinary girl",
+        "nsfw": false
+      },
+      { "positive": "idol girl", "negative": "ordinary girl", "nsfw": false },
+      { "positive": "warrior girl", "negative": "peaceful girl", "nsfw": false }
+    ]
+  },
+  "Themes/Moods": {
+    "pl": [
+      { "positive": "cyberpunkowy", "negative": "medieval", "nsfw": false },
+      {
+        "positive": "postapokaliptyczny",
+        "negative": "utopijny",
+        "nsfw": false
+      },
+      { "positive": "steampunkowy", "negative": "cyberpunkowy", "nsfw": false },
+      { "positive": "ocean-punk", "negative": "desert-punk", "nsfw": false },
+      {
+        "positive": "żywiołowy-punk",
+        "negative": "spokojny-punk",
+        "nsfw": false
+      },
+      { "positive": "fantasy", "negative": "realism", "nsfw": false },
+      { "positive": "sci-fi", "negative": "historical", "nsfw": false },
+      { "positive": "magiczny", "negative": "naukowy", "nsfw": false },
+      { "positive": "kosmiczny", "negative": "ziemski", "nsfw": false },
+      {
+        "positive": "surrealistyczny",
+        "negative": "realistyczny",
+        "nsfw": false
+      },
+      { "positive": "dieselpunk", "negative": "biopunk", "nsfw": false },
+      { "positive": "biopunk", "negative": "dieselpunk", "nsfw": false },
+      {
+        "positive": "dark fantasy",
+        "negative": "light fantasy",
+        "nsfw": false
+      },
+      {
+        "positive": "urban fantasy",
+        "negative": "rural fantasy",
+        "nsfw": false
+      },
+      { "positive": "horror", "negative": "comedy", "nsfw": false },
+      {
+        "positive": "apokaliptyczny nastrój",
+        "negative": "optymistyczny nastrój",
+        "nsfw": false
+      },
+      {
+        "positive": "futurystyczny klimat",
+        "negative": "historyczny klimat",
+        "nsfw": false
+      },
+      { "positive": "melancholijny", "negative": "radosny", "nsfw": false },
+      { "positive": "epicki", "negative": "zwykły", "nsfw": false },
+      {
+        "positive": "emocjonalny napięty",
+        "negative": "relaksujący",
+        "nsfw": false
+      },
+      {
+        "positive": "zdrada i przetrwanie",
+        "negative": "lojalność i pokój",
+        "nsfw": false
+      },
+      { "positive": "tajemniczy", "negative": "otwarty", "nsfw": false },
+      {
+        "positive": "nostalgiczny",
+        "negative": "futurystyczny",
+        "nsfw": false
+      },
+      { "positive": "heroiczny", "negative": "tchórzliwy", "nsfw": false },
+      { "positive": "groźny", "negative": "przyjazny", "nsfw": false },
+      { "positive": "romantyczny", "negative": "platoniczny", "nsfw": false }
+    ],
+    "en": [
+      { "positive": "cyberpunk", "negative": "medieval", "nsfw": false },
+      { "positive": "post-apocalyptic", "negative": "utopian", "nsfw": false },
+      { "positive": "steampunk", "negative": "cyberpunk", "nsfw": false },
+      { "positive": "ocean-punk", "negative": "desert-punk", "nsfw": false },
+      { "positive": "elemental-punk", "negative": "calm-punk", "nsfw": false },
+      { "positive": "fantasy", "negative": "realism", "nsfw": false },
+      { "positive": "sci-fi", "negative": "historical", "nsfw": false },
+      { "positive": "magical", "negative": "scientific", "nsfw": false },
+      { "positive": "cosmic", "negative": "earthly", "nsfw": false },
+      { "positive": "surreal", "negative": "realistic", "nsfw": false },
+      { "positive": "dieselpunk", "negative": "biopunk", "nsfw": false },
+      { "positive": "biopunk", "negative": "dieselpunk", "nsfw": false },
+      {
+        "positive": "dark fantasy",
+        "negative": "light fantasy",
+        "nsfw": false
+      },
+      {
+        "positive": "urban fantasy",
+        "negative": "rural fantasy",
+        "nsfw": false
+      },
+      { "positive": "horror", "negative": "comedy", "nsfw": false },
+      {
+        "positive": "apocalyptic mood",
+        "negative": "optimistic mood",
+        "nsfw": false
+      },
+      {
+        "positive": "futuristic vibe",
+        "negative": "historical vibe",
+        "nsfw": false
+      },
+      { "positive": "melancholic", "negative": "joyful", "nsfw": false },
+      { "positive": "epic", "negative": "ordinary", "nsfw": false },
+      {
+        "positive": "emotionally tense",
+        "negative": "relaxing",
+        "nsfw": false
+      },
+      {
+        "positive": "betrayal and survival",
+        "negative": "loyalty and peace",
+        "nsfw": false
+      },
+      { "positive": "mysterious", "negative": "open", "nsfw": false },
+      { "positive": "nostalgic", "negative": "futuristic", "nsfw": false },
+      { "positive": "heroic", "negative": "cowardly", "nsfw": false },
+      { "positive": "ominous", "negative": "friendly", "nsfw": false },
+      { "positive": "romantic", "negative": "platonic", "nsfw": false }
+    ]
+  },
+  "Technology/Objects": {
+    "pl": [
+      {
+        "positive": "futurystyczny transport",
+        "negative": "tradycyjny transport",
+        "nsfw": false
+      },
+      {
+        "positive": "modularny syntezator",
+        "negative": "zwykły syntezator",
+        "nsfw": false
+      },
+      {
+        "positive": "statek kosmiczny",
+        "negative": "statek morski",
+        "nsfw": false
+      },
+      { "positive": "nadajnik", "negative": "odbiornik", "nsfw": false },
+      { "positive": "laptop", "negative": "desktop", "nsfw": false },
+      {
+        "positive": "samochód policyjny",
+        "negative": "zwykły samochód",
+        "nsfw": false
+      },
+      {
+        "positive": "lamborghini",
+        "negative": "zwykły samochód",
+        "nsfw": false
+      },
+      {
+        "positive": "okręt podwodny",
+        "negative": "statek powierzchniowy",
+        "nsfw": false
+      },
+      {
+        "positive": "balon na gorące powietrze",
+        "negative": "samolot",
+        "nsfw": false
+      },
+      {
+        "positive": "stacja kosmiczna",
+        "negative": "stacja ziemska",
+        "nsfw": false
+      },
+      {
+        "positive": "cybernetyczna zbroja",
+        "negative": "tradycyjna zbroja",
+        "nsfw": false
+      },
+      {
+        "positive": "obwód kwantowy",
+        "negative": "obwód klasyczny",
+        "nsfw": false
+      },
+      { "positive": "dron", "negative": "zwykły samolot", "nsfw": false },
+      {
+        "positive": "holograficzny wyświetlacz",
+        "negative": "zwykły wyświetlacz",
+        "nsfw": false
+      },
+      { "positive": "mech", "negative": "człowiek", "nsfw": false },
+      {
+        "positive": "robot humanoidalny",
+        "negative": "zwierzę",
+        "nsfw": false
+      },
+      {
+        "positive": "pojazd antygrawitacyjny",
+        "negative": "pojazd grawitacyjny",
+        "nsfw": false
+      },
+      { "positive": "katana", "negative": "miecz europejski", "nsfw": false },
+      { "positive": "wielki miecz", "negative": "mały miecz", "nsfw": false },
+      { "positive": "kostur", "negative": "miecz", "nsfw": false },
+      { "positive": "kosa", "negative": "miecz", "nsfw": false },
+      { "positive": "łuk", "negative": "kusza", "nsfw": false },
+      { "positive": "włócznia", "negative": "miecz", "nsfw": false },
+      {
+        "positive": "pistolet plazmowy",
+        "negative": "zwykły pistolet",
+        "nsfw": false
+      },
+      {
+        "positive": "miecz energetyczny",
+        "negative": "zwykły miecz",
+        "nsfw": false
+      },
+      { "positive": "tarcza", "negative": "brak tarczy", "nsfw": false },
+      {
+        "positive": "balony czarno-niebieskie",
+        "negative": "balony biało-czerwone",
+        "nsfw": false
+      },
+      { "positive": "mikrofon", "negative": "głośnik", "nsfw": false },
+      { "positive": "deskorolka", "negative": "rower", "nsfw": false },
+      { "positive": "cyborg koń", "negative": "zwykły koń", "nsfw": false },
+      {
+        "positive": "gitara klasyczna",
+        "negative": "gitara elektryczna",
+        "nsfw": false
+      },
+      {
+        "positive": "szpaki w locie",
+        "negative": "szpaki na ziemi",
+        "nsfw": false
+      },
+      {
+        "positive": "symbol nieskończoności",
+        "negative": "symbol skończoności",
+        "nsfw": false
+      },
+      { "positive": "pollywoogle postacie", "negative": null, "nsfw": false },
+      { "positive": "banany", "negative": "jabłka", "nsfw": false },
+      {
+        "positive": "koszyk na owoce",
+        "negative": "pusty koszyk",
+        "nsfw": false
+      },
+      { "positive": "lody", "negative": "gorąca czekolada", "nsfw": false },
+      {
+        "positive": "kwiatowe ozdoby do włosów",
+        "negative": "brak ozdób",
+        "nsfw": false
+      },
+      {
+        "positive": "spinki w kształcie gwiazdy",
+        "negative": "spinki w kształcie koła",
+        "nsfw": false
+      },
+      {
+        "positive": "deska z uchwytem",
+        "negative": "deska bez uchwytu",
+        "nsfw": false
+      },
+      {
+        "positive": "sieć bioluminescencyjna",
+        "negative": "zwykła sieć",
+        "nsfw": false
+      },
+      {
+        "positive": "kryształowe węzły",
+        "negative": "metalowe węzły",
+        "nsfw": false
+      },
+      { "positive": "kod Matrix", "negative": "brak kodu", "nsfw": false },
+      {
+        "positive": "kryształowa kula",
+        "negative": "metalowa kula",
+        "nsfw": false
+      },
+      {
+        "positive": "starożytny artefakt",
+        "negative": "nowoczesny artefakt",
+        "nsfw": false
+      },
+      {
+        "positive": "magiczna księga",
+        "negative": "zwykła księga",
+        "nsfw": false
+      },
+      { "positive": "lampion", "negative": "latarka", "nsfw": false },
+      { "positive": "kompas", "negative": "mapa", "nsfw": false }
+    ],
+    "en": [
+      {
+        "positive": "futuristic transport",
+        "negative": "traditional transport",
+        "nsfw": false
+      },
+      {
+        "positive": "modular synthesizer",
+        "negative": "ordinary synthesizer",
+        "nsfw": false
+      },
+      { "positive": "spaceship", "negative": "sea ship", "nsfw": false },
+      { "positive": "transmitter", "negative": "receiver", "nsfw": false },
+      { "positive": "laptop", "negative": "desktop", "nsfw": false },
+      { "positive": "police car", "negative": "ordinary car", "nsfw": false },
+      { "positive": "lamborghini", "negative": "ordinary car", "nsfw": false },
+      { "positive": "submarine", "negative": "surface ship", "nsfw": false },
+      { "positive": "hot air balloon", "negative": "airplane", "nsfw": false },
+      {
+        "positive": "space station",
+        "negative": "earth station",
+        "nsfw": false
+      },
+      {
+        "positive": "cybernetic armor",
+        "negative": "traditional armor",
+        "nsfw": false
+      },
+      {
+        "positive": "quantum circuit board",
+        "negative": "classical circuit board",
+        "nsfw": false
+      },
+      { "positive": "drone", "negative": "ordinary plane", "nsfw": false },
+      {
+        "positive": "holographic display",
+        "negative": "ordinary display",
+        "nsfw": false
+      },
+      { "positive": "mech", "negative": "human", "nsfw": false },
+      { "positive": "humanoid robot", "negative": "animal", "nsfw": false },
+      {
+        "positive": "anti-gravity vehicle",
+        "negative": "gravity vehicle",
+        "nsfw": false
+      },
+      { "positive": "katana", "negative": "european sword", "nsfw": false },
+      { "positive": "greatsword", "negative": "small sword", "nsfw": false },
+      { "positive": "staff", "negative": "sword", "nsfw": false },
+      { "positive": "scythe", "negative": "sword", "nsfw": false },
+      { "positive": "bow", "negative": "crossbow", "nsfw": false },
+      { "positive": "spear", "negative": "sword", "nsfw": false },
+      { "positive": "plasma gun", "negative": "ordinary gun", "nsfw": false },
+      {
+        "positive": "energy sword",
+        "negative": "ordinary sword",
+        "nsfw": false
+      },
+      { "positive": "shield", "negative": "no shield", "nsfw": false },
+      {
+        "positive": "black-blue balloons",
+        "negative": "white-red balloons",
+        "nsfw": false
+      },
+      { "positive": "microphone", "negative": "speaker", "nsfw": false },
+      { "positive": "skateboard", "negative": "bike", "nsfw": false },
+      { "positive": "cyborg horse", "negative": "normal horse", "nsfw": false },
+      {
+        "positive": "classical guitar",
+        "negative": "electric guitar",
+        "nsfw": false
+      },
+      {
+        "positive": "starlings in flight",
+        "negative": "starlings on ground",
+        "nsfw": false
+      },
+      {
+        "positive": "infinity symbol",
+        "negative": "finite symbol",
+        "nsfw": false
+      },
+      { "positive": "pollywoogle characters", "negative": null, "nsfw": false },
+      { "positive": "bananas", "negative": "apples", "nsfw": false },
+      { "positive": "fruit basket", "negative": "empty basket", "nsfw": false },
+      {
+        "positive": "soft serve ice cream",
+        "negative": "hot chocolate",
+        "nsfw": false
+      },
+      {
+        "positive": "flower hair ornaments",
+        "negative": "no ornaments",
+        "nsfw": false
+      },
+      {
+        "positive": "star-shaped hair clips",
+        "negative": "circle-shaped hair clips",
+        "nsfw": false
+      },
+      {
+        "positive": "paddle with handle",
+        "negative": "paddle without handle",
+        "nsfw": false
+      },
+      {
+        "positive": "bioluminescent slime mold network",
+        "negative": "ordinary network",
+        "nsfw": false
+      },
+      { "positive": "crystal nodes", "negative": "metal nodes", "nsfw": false },
+      { "positive": "Matrix code", "negative": "no code", "nsfw": false },
+      { "positive": "crystal ball", "negative": "metal ball", "nsfw": false },
+      {
+        "positive": "ancient artifact",
+        "negative": "modern artifact",
+        "nsfw": false
+      },
+      {
+        "positive": "magical book",
+        "negative": "ordinary book",
+        "nsfw": false
+      },
+      { "positive": "lantern", "negative": "flashlight", "nsfw": false },
+      { "positive": "compass", "negative": "map", "nsfw": false }
+    ]
+  },
+  "Camera Angles": {
+    "pl": [
+      { "positive": "kąt żabi", "negative": "kąt z lotu ptaka", "nsfw": false },
+      { "positive": "kąt z lotu ptaka", "negative": "kąt żabi", "nsfw": false },
+      {
+        "positive": "kąt na wysokości oczu",
+        "negative": "kąt ukośny",
+        "nsfw": false
+      },
+      {
+        "positive": "ujęcie holenderskie",
+        "negative": "ujęcie proste",
+        "nsfw": false
+      },
+      { "positive": "zbliżenie", "negative": "plan ogólny", "nsfw": false },
+      {
+        "positive": "ekstremalne zbliżenie",
+        "negative": "plan pełny",
+        "nsfw": false
+      },
+      {
+        "positive": "plan amerykański",
+        "negative": "plan ogólny",
+        "nsfw": false
+      },
+      { "positive": "plan średni", "negative": "plan totalny", "nsfw": false },
+      { "positive": "plan totalny", "negative": "zbliżenie", "nsfw": false },
+      {
+        "positive": "ujęcie panoramiczne",
+        "negative": "ujęcie statyczne",
+        "nsfw": false
+      },
+      {
+        "positive": "ujęcie zza pleców",
+        "negative": "ujęcie frontalne",
+        "nsfw": false
+      },
+      {
+        "positive": "ujęcie przez ramię",
+        "negative": "ujęcie frontalne",
+        "nsfw": false
+      },
+      {
+        "positive": "ujęcie z dołu",
+        "negative": "ujęcie z góry",
+        "nsfw": false
+      },
+      {
+        "positive": "ujęcie z góry",
+        "negative": "ujęcie z dołu",
+        "nsfw": false
+      },
+      {
+        "positive": "ujęcie makro",
+        "negative": "ujęcie szerokie",
+        "nsfw": false
+      }
+    ],
+    "en": [
+      {
+        "positive": "worm's-eye view",
+        "negative": "bird's-eye view",
+        "nsfw": false
+      },
+      {
+        "positive": "bird's-eye view",
+        "negative": "worm's-eye view",
+        "nsfw": false
+      },
+      {
+        "positive": "eye-level angle",
+        "negative": "tilted angle",
+        "nsfw": false
+      },
+      {
+        "positive": "dutch angle",
+        "negative": "straight angle",
+        "nsfw": false
+      },
+      { "positive": "close-up", "negative": "wide shot", "nsfw": false },
+      {
+        "positive": "extreme close-up",
+        "negative": "full shot",
+        "nsfw": false
+      },
+      { "positive": "american shot", "negative": "wide shot", "nsfw": false },
+      { "positive": "medium shot", "negative": "long shot", "nsfw": false },
+      { "positive": "long shot", "negative": "close-up", "nsfw": false },
+      {
+        "positive": "panoramic shot",
+        "negative": "static shot",
+        "nsfw": false
+      },
+      {
+        "positive": "back view shot",
+        "negative": "frontal shot",
+        "nsfw": false
+      },
+      {
+        "positive": "over-the-shoulder shot",
+        "negative": "frontal shot",
+        "nsfw": false
+      },
+      {
+        "positive": "low angle shot",
+        "negative": "high angle shot",
+        "nsfw": false
+      },
+      {
+        "positive": "high angle shot",
+        "negative": "low angle shot",
+        "nsfw": false
+      },
+      { "positive": "macro shot", "negative": "wide shot", "nsfw": false }
+    ]
+  },
+  "Perspectives": {
+    "pl": [
+      {
+        "positive": "perspektywa pierwszoosobowa",
+        "negative": "perspektywa trzecioosobowa",
+        "nsfw": false
+      },
+      {
+        "positive": "perspektywa trzecioosobowa",
+        "negative": "perspektywa pierwszoosobowa",
+        "nsfw": false
+      },
+      {
+        "positive": "perspektywa izometryczna",
+        "negative": "perspektywa liniowa",
+        "nsfw": false
+      },
+      {
+        "positive": "perspektywa z góry",
+        "negative": "perspektywa z dołu",
+        "nsfw": false
+      },
+      {
+        "positive": "perspektywa z dołu",
+        "negative": "perspektywa z góry",
+        "nsfw": false
+      },
+      {
+        "positive": "perspektywa wnętrza",
+        "negative": "perspektywa zewnętrzna",
+        "nsfw": false
+      },
+      {
+        "positive": "perspektywa przez okno",
+        "negative": "perspektywa otwarta",
+        "nsfw": false
+      },
+      {
+        "positive": "perspektywa wymuszona",
+        "negative": "perspektywa naturalna",
+        "nsfw": false
+      },
+      {
+        "positive": "perspektywa panoramiczna",
+        "negative": "perspektywa wąska",
+        "nsfw": false
+      },
+      {
+        "positive": "perspektywa makro",
+        "negative": "perspektywa szeroka",
+        "nsfw": false
+      }
+    ],
+    "en": [
+      {
+        "positive": "first-person perspective",
+        "negative": "third-person perspective",
+        "nsfw": false
+      },
+      {
+        "positive": "third-person perspective",
+        "negative": "first-person perspective",
+        "nsfw": false
+      },
+      {
+        "positive": "isometric perspective",
+        "negative": "linear perspective",
+        "nsfw": false
+      },
+      {
+        "positive": "top-down perspective",
+        "negative": "bottom-up perspective",
+        "nsfw": false
+      },
+      {
+        "positive": "bottom-up perspective",
+        "negative": "top-down perspective",
+        "nsfw": false
+      },
+      {
+        "positive": "interior perspective",
+        "negative": "exterior perspective",
+        "nsfw": false
+      },
+      {
+        "positive": "through-window perspective",
+        "negative": "open perspective",
+        "nsfw": false
+      },
+      {
+        "positive": "forced perspective",
+        "negative": "natural perspective",
+        "nsfw": false
+      },
+      {
+        "positive": "panoramic perspective",
+        "negative": "narrow perspective",
+        "nsfw": false
+      },
+      {
+        "positive": "macro perspective",
+        "negative": "wide perspective",
+        "nsfw": false
+      }
+    ]
+  },
+  "Color Palettes": {
+    "pl": [
+      {
+        "positive": "paleta ziemista",
+        "negative": "paleta syntetyczna",
+        "nsfw": false
+      },
+      {
+        "positive": "paleta ciepła",
+        "negative": "paleta chłodna",
+        "nsfw": false
+      },
+      {
+        "positive": "paleta chłodna",
+        "negative": "paleta ciepła",
+        "nsfw": false
+      },
+      {
+        "positive": "wysoki kontrast kolorów",
+        "negative": "niski kontrast kolorów",
+        "nsfw": false
+      },
+      {
+        "positive": "paleta retro 80s",
+        "negative": "paleta nowoczesna",
+        "nsfw": false
+      },
+      {
+        "positive": "paleta vaporwave",
+        "negative": "paleta ziemista",
+        "nsfw": false
+      },
+      {
+        "positive": "paleta film noir",
+        "negative": "paleta kolorowa",
+        "nsfw": false
+      },
+      {
+        "positive": "paleta sepii",
+        "negative": "paleta barwna",
+        "nsfw": false
+      },
+      {
+        "positive": "paleta duotone",
+        "negative": "paleta wielotonowa",
+        "nsfw": false
+      },
+      {
+        "positive": "paleta cyberpunk (magenta-cyjan)",
+        "negative": "paleta naturalna",
+        "nsfw": false
+      },
+      {
+        "positive": "paleta złotej godziny",
+        "negative": "paleta południowa",
+        "nsfw": false
+      },
+      {
+        "positive": "akcent kolorystyczny",
+        "negative": "brak akcentu",
+        "nsfw": false
+      },
+      {
+        "positive": "paleta pastelowa",
+        "negative": "paleta jaskrawa",
+        "nsfw": false
+      },
+      {
+        "positive": "paleta neonowa",
+        "negative": "paleta stonowana",
+        "nsfw": false
+      },
+      {
+        "positive": "paleta monochromatyczna",
+        "negative": "paleta kolorowa",
+        "nsfw": false
+      },
+      {
+        "positive": "paleta ciepłych kolorów",
+        "negative": "paleta zimnych kolorów",
+        "nsfw": false
+      },
+      {
+        "positive": "paleta zimnych kolorów",
+        "negative": "paleta ciepłych kolorów",
+        "nsfw": false
+      }
+    ],
+    "en": [
+      {
+        "positive": "earth tones palette",
+        "negative": "synthetic tones palette",
+        "nsfw": false
+      },
+      { "positive": "warm palette", "negative": "cool palette", "nsfw": false },
+      { "positive": "cool palette", "negative": "warm palette", "nsfw": false },
+      {
+        "positive": "high color contrast",
+        "negative": "low color contrast",
+        "nsfw": false
+      },
+      {
+        "positive": "retro 80s palette",
+        "negative": "modern palette",
+        "nsfw": false
+      },
+      {
+        "positive": "vaporwave palette",
+        "negative": "earth tones palette",
+        "nsfw": false
+      },
+      {
+        "positive": "film noir palette",
+        "negative": "colorful palette",
+        "nsfw": false
+      },
+      {
+        "positive": "sepia palette",
+        "negative": "color palette",
+        "nsfw": false
+      },
+      {
+        "positive": "duotone palette",
+        "negative": "multitone palette",
+        "nsfw": false
+      },
+      {
+        "positive": "cyberpunk palette (magenta-cyan)",
+        "negative": "natural palette",
+        "nsfw": false
+      },
+      {
+        "positive": "golden hour palette",
+        "negative": "midday palette",
+        "nsfw": false
+      },
+      {
+        "positive": "single accent color",
+        "negative": "no accent color",
+        "nsfw": false
+      },
+      {
+        "positive": "pastel color palette",
+        "negative": "vibrant color palette",
+        "nsfw": false
+      },
+      {
+        "positive": "neon color palette",
+        "negative": "muted color palette",
+        "nsfw": false
+      },
+      {
+        "positive": "monochromatic palette",
+        "negative": "colorful palette",
+        "nsfw": false
+      },
+      {
+        "positive": "warm color palette",
+        "negative": "cool color palette",
+        "nsfw": false
+      },
+      {
+        "positive": "cool color palette",
+        "negative": "warm color palette",
+        "nsfw": false
+      }
+    ]
+  },
+  "Expression/Pose": {
+    "pl": [
+      {
+        "positive": "szeroki uśmiech",
+        "negative": "poważna mina",
+        "nsfw": false
+      },
+      {
+        "positive": "gniewna mina",
+        "negative": "spokojna mina",
+        "nsfw": false
+      },
+      { "positive": "zaskoczenie", "negative": "obojętność", "nsfw": false },
+      {
+        "positive": "spojrzenie w bok",
+        "negative": "spojrzenie do przodu",
+        "nsfw": false
+      },
+      {
+        "positive": "spojrzenie w dół",
+        "negative": "spojrzenie w górę",
+        "nsfw": false
+      },
+      {
+        "positive": "poza bojowa",
+        "negative": "poza neutralna",
+        "nsfw": false
+      },
+      {
+        "positive": "poza medytacyjna",
+        "negative": "poza dynamiczna",
+        "nsfw": false
+      },
+      {
+        "positive": "poza dynamicznego skoku",
+        "negative": "poza stojąca",
+        "nsfw": false
+      },
+      { "positive": "poza biegu", "negative": "poza stojąca", "nsfw": false },
+      {
+        "positive": "poza z rękami założonymi",
+        "negative": "poza z rękami opuszczonymi",
+        "nsfw": false
+      },
+      {
+        "positive": "poza z ręką wyciągniętą do przodu",
+        "negative": "poza z rękami przy ciele",
+        "nsfw": false
+      },
+      { "positive": "poza obronna", "negative": "poza otwarta", "nsfw": false },
+      { "positive": "poza triumfu", "negative": "poza porażki", "nsfw": false },
+      {
+        "positive": "poza rzucająca zaklęcie",
+        "negative": "poza neutralna",
+        "nsfw": false
+      },
+      {
+        "positive": "poza wskazująca palcem",
+        "negative": "poza z opuszczoną ręką",
+        "nsfw": false
+      },
+      {
+        "positive": "poza klęcząca",
+        "negative": "poza stojąca",
+        "nsfw": false
+      },
+      {
+        "positive": "poza siedząca",
+        "negative": "poza stojąca",
+        "nsfw": false
+      },
+      {
+        "positive": "poza półleżąca",
+        "negative": "poza wyprostowana",
+        "nsfw": false
+      },
+      {
+        "positive": "poza unosząca się",
+        "negative": "poza stojąca",
+        "nsfw": false
+      },
+      { "positive": "poza obrotu", "negative": "poza statyczna", "nsfw": false }
+    ],
+    "en": [
+      { "positive": "broad smile", "negative": "serious face", "nsfw": false },
+      {
+        "positive": "angry expression",
+        "negative": "calm expression",
+        "nsfw": false
+      },
+      {
+        "positive": "surprised look",
+        "negative": "neutral look",
+        "nsfw": false
+      },
+      { "positive": "side glance", "negative": "forward gaze", "nsfw": false },
+      { "positive": "downward gaze", "negative": "upward gaze", "nsfw": false },
+      {
+        "positive": "battle stance",
+        "negative": "neutral stance",
+        "nsfw": false
+      },
+      {
+        "positive": "meditative pose",
+        "negative": "dynamic pose",
+        "nsfw": false
+      },
+      {
+        "positive": "jumping pose",
+        "negative": "standing pose",
+        "nsfw": false
+      },
+      {
+        "positive": "running pose",
+        "negative": "standing pose",
+        "nsfw": false
+      },
+      {
+        "positive": "arms crossed pose",
+        "negative": "arms lowered pose",
+        "nsfw": false
+      },
+      {
+        "positive": "reaching forward pose",
+        "negative": "hands at sides pose",
+        "nsfw": false
+      },
+      { "positive": "defensive pose", "negative": "open pose", "nsfw": false },
+      {
+        "positive": "triumphant pose",
+        "negative": "defeated pose",
+        "nsfw": false
+      },
+      {
+        "positive": "spellcasting pose",
+        "negative": "neutral pose",
+        "nsfw": false
+      },
+      {
+        "positive": "pointing pose",
+        "negative": "hand lowered pose",
+        "nsfw": false
+      },
+      {
+        "positive": "kneeling pose",
+        "negative": "standing pose",
+        "nsfw": false
+      },
+      {
+        "positive": "sitting pose",
+        "negative": "standing pose",
+        "nsfw": false
+      },
+      {
+        "positive": "reclining pose",
+        "negative": "upright pose",
+        "nsfw": false
+      },
+      {
+        "positive": "floating pose",
+        "negative": "standing pose",
+        "nsfw": false
+      },
+      {
+        "positive": "spinning motion pose",
+        "negative": "static pose",
+        "nsfw": false
+      }
+    ]
+  }
+}

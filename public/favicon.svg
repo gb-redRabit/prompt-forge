@@ -1,0 +1,13 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" rx="12" fill="#18181B"/>
+  <!-- Kowadło (anvil) -->
+  <rect x="16" y="38" width="32" height="8" rx="2" fill="#3B82F6"/>
+  <rect x="22" y="32" width="20" height="8" rx="3" fill="#2563EB"/>
+  <!-- Uchwyt kowadła -->
+  <rect x="28" y="46" width="8" height="5" rx="1.5" fill="#64748B"/>
+  <!-- Młot (hammer) nad kowadłem -->
+  <rect x="26" y="16" width="12" height="4" rx="1.5" fill="#FBBF24" stroke="#FBBF24" stroke-width="1"/>
+  <rect x="31" y="7" width="2" height="13" rx="0.8" fill="#F87171"/>
+  <!-- Symbol promptu ">" pomiędzy młotem a kowadłem -->
+  <polyline points="30,27 36,30 30,33" fill="none" stroke="#FBBF24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,15 +1,15 @@
 <template>
   <div
-    class="container max-w-5xl flex flex-col items-center justify-start py-6"
+    class="container max-w-4xl flex flex-col items-center justify-start py-8"
   >
-    <h1 class="text-3xl font-bold mb-2 text-center">
+    <h1 class="text-3xl font-bold mb-4 text-center text-primary">
       {{ $t("prompts.create") }}:
       <span class="capitalize">{{ promptType }}</span>
     </h1>
 
     <!-- Wybór promptu -->
-    <Form @submit="() => {}" class="mb-6 w-full flex flex-col gap-2">
-      <label class="font-semibold">{{ $t("prompts.choosePrompt") }}</label>
+    <Form @submit="() => {}" class="mb-8 w-full flex flex-col gap-2">
+      <label class="font-semibold mb-1">{{ $t("prompts.choosePrompt") }}</label>
       <Field
         as="select"
         name="prompt"
@@ -26,9 +26,66 @@
       <ErrorMessage name="prompt" class="text-error text-xs" />
     </Form>
 
+    <!-- NOWY: Pasek akcji -->
+    <div
+      v-if="prompt"
+      class="w-full flex flex-wrap gap-2 mb-6 items-center justify-between bg-base-200/60 border border-base-300/40 rounded-xl p-3"
+    >
+      <div class="flex flex-wrap gap-2">
+        <button
+          class="btn btn-xs"
+          @click="copyTemplateRaw"
+          :disabled="!template"
+          :title="$t('prompts.copyTemplate')"
+        >
+          {{ $t('prompts.copyTemplate') }}
+        </button>
+        <button
+          class="btn btn-xs btn-outline"
+          @click="copyFilledTemplate"
+          :disabled="!filledCurrentTemplate"
+        >
+          {{ $t('prompts.copyFilled') }}
+        </button>
+        <button
+          class="btn btn-xs btn-warning"
+          @click="resetPlaceholders"
+          :disabled="!parsedTemplate.length"
+        >
+          {{ $t('prompts.resetPlaceholders') }}
+        </button>
+        <button
+          class="btn btn-xs btn-accent"
+          @click="randomizePlaceholders"
+          :disabled="!parsedTemplate.length"
+        >
+          {{ $t('prompts.randomize') }}
+        </button>
+        <button
+          class="btn btn-xs btn-info"
+          @click="toggleRaw"
+        >
+          {{ showRaw ? $t('prompts.hideRawTemplate') : $t('prompts.showRawTemplate') }}
+        </button>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <button
+          class="btn btn-xs btn-outline"
+          @click="shareLink"
+          :disabled="!prompt"
+        >
+          {{ $t('prompts.shareLink') }}
+        </button>
+      </div>
+    </div>
+    <!-- /NOWY -->
+
     <!-- Szczegóły promptu -->
-    <div v-if="prompt" class="mb-6 w-full bg-base-200 rounded-xl p-5 shadow">
-      <h2 class="text-xl font-semibold mb-1">
+    <div
+      v-if="prompt"
+      class="mb-8 w-full bg-base-200 rounded-xl p-6 shadow flex flex-col gap-2"
+    >
+      <h2 class="text-xl font-semibold mb-1 text-primary">
         {{ prompt.name?.[locale] || prompt.name?.en }}
       </h2>
       <p class="mb-2 text-base-content/80">
@@ -36,11 +93,18 @@
       </p>
       <div class="flex flex-wrap gap-2">
         <span
-          v-for="tag in prompt.tags_ids"
+          v-for="tag in prompt.tags || prompt.tags_ids"
           :key="tag"
           class="badge badge-outline"
         >
           {{ tag }}
+        </span>
+        <span
+          v-for="cat in prompt.categories || []"
+          :key="cat"
+          class="badge badge-info"
+        >
+          {{ cat }}
         </span>
       </div>
     </div>
@@ -48,12 +112,124 @@
     <!-- Podgląd szablonu -->
     <Form
       @submit="sendToOpenAI"
-      class="w-full mt-4"
+      class="w-full mt-2"
       v-if="parsedTemplate.length"
     >
       <h2 class="text-lg font-semibold mb-2">
         {{ $t("prompts.templatePreview") }}
       </h2>
+
+      <!-- NOWY: Filtr placeholderów + tabela -->
+      <div
+        v-if="placeholderEntries.length"
+        class="mb-4 p-3 rounded-lg bg-base-200/50 border border-base-300/40 space-y-3"
+      >
+        <div class="flex flex-wrap gap-3 items-end">
+          <label class="form-control w-56">
+            <span class="label-text text-xs font-semibold mb-1">
+              {{ $t('prompts.placeholderFilter') }}
+            </span>
+            <input
+              v-model="placeholderFilter"
+              type="text"
+              class="input input-sm input-bordered"
+              :placeholder="$t('prompts.searchPlaceholder')"
+            />
+          </label>
+          <div class="text-[11px] opacity-60">
+            {{ filteredPlaceholderKeys.length }} /
+            {{ placeholderEntries.length }}
+            {{ $t('prompts.placeholders') }}
+          </div>
+        </div>
+
+        <div
+          class="overflow-x-auto max-h-52 rounded border border-base-300/40"
+          v-if="filteredPlaceholderKeys.length"
+        >
+          <table class="table table-xs">
+            <thead>
+              <tr>
+                <th class="w-40">{{ $t('prompts.placeholderKey') }}</th>
+                <th>{{ $t('prompts.value') }}</th>
+                <th class="w-24 text-right">
+                  {{ $t('prompts.actions') }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="key in filteredPlaceholderKeys"
+                :key="key"
+                class="align-top"
+              >
+                <td class="font-mono text-[11px]">{{ key }}</td>
+                <td>
+                  <div v-if="placeholderValues[key] === '__custom__'" class="flex items-center gap-2">
+                    <input
+                      v-model="customValues[key]"
+                      type="text"
+                      class="input input-xs input-bordered w-full"
+                      @input="onCustomInput(key)"
+                      :placeholder="$t('prompts.enterCustomValue')"
+                    />
+                    <button
+                      type="button"
+                      class="btn btn-ghost btn-xs"
+                      @click="resetToSelect(key)"
+                      title="Reset"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                  <div v-else>
+                    <select
+                      class="select select-xs w-full"
+                      v-model="placeholderValues[key]"
+                      @change="updateEditor"
+                    >
+                      <option
+                        v-for="(opt, oi) in selectorOptions[key] || []"
+                        :key="opt.value + '-' + oi"
+                        :value="opt.label?.[locale] || opt.value"
+                      >
+                        {{ opt.label?.[locale] || opt.value }}
+                      </option>
+                      <option value="__custom__">
+                        {{ $t('prompts.customValue') }}
+                      </option>
+                    </select>
+                  </div>
+                </td>
+                <td class="text-right">
+                  <button
+                    class="btn btn-ghost btn-xs"
+                    @click="copySinglePlaceholder(key)"
+                    :title="$t('prompts.copy')"
+                  >
+                    ⧉
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div
+          v-else
+          class="text-xs opacity-60 italic"
+        >
+          {{ $t('prompts.noPlaceholders') }}
+        </div>
+      </div>
+      <!-- /NOWY -->
+
+      <!-- RAW TEMPLATE -->
+      <pre
+        v-if="showRaw"
+        class="mb-4 p-3 rounded bg-base-300/40 text-[11px] overflow-x-auto"
+      >{{ template }}</pre>
+      <!-- /RAW TEMPLATE -->
+
       <div
         class="border rounded-xl bg-base-200 p-4 font-mono text-sm min-h-[120px] mb-4"
       >
@@ -118,18 +294,22 @@
     </Form>
 
     <!-- Odpowiedź AI -->
-    <div
-      v-if="aiResponse"
-      class="w-full flex flex-col mt-6 bg-base-200 p-4 rounded-xl shadow"
-    >
-      <b class="mb-2 text-base-content/80">Odpowiedź AI:</b>
-      <pre class="whitespace-pre-wrap break-words text-base-content mb-2">{{
-        aiResponse
-      }}</pre>
-      <button class="btn btn-accent btn-sm self-end" @click="copyAiResponse">
-        {{ $t("prompts.copyAiResponse") || "Kopiuj odpowiedź" }}
-      </button>
-    </div>
+    <transition name="fade">
+      <div
+        v-if="aiResponse"
+        class="w-full flex flex-col mt-8 bg-base-200 p-4 rounded-xl shadow"
+      >
+        <b class="mb-2 text-base-content/80">{{
+          $t("prompts.aiResponse") || "Odpowiedź AI:"
+        }}</b>
+        <pre class="whitespace-pre-wrap break-words text-base-content mb-2">{{
+          aiResponse
+        }}</pre>
+        <button class="btn btn-accent btn-sm self-end" @click="copyAiResponse">
+          {{ $t("prompts.copyAiResponse") || "Kopiuj odpowiedź" }}
+        </button>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -362,5 +542,112 @@ function copyAiResponse() {
     type: "default",
     autoClose: 2000,
   });
+}
+
+// NOWE: stany pomocnicze
+const showRaw = ref(false);
+function toggleRaw() {
+  showRaw.value = !showRaw.value;
+}
+
+const placeholderFilter = ref("");
+
+// Lista placeholderów (unikalne klucze)
+const placeholderEntries = computed(() =>
+  Array.from(
+    new Set(
+      parsedTemplate.value
+        .filter((p) => p.type === "placeholder")
+        .map((p) => p.key)
+    )
+  )
+);
+
+// Filtrowanie
+const filteredPlaceholderKeys = computed(() => {
+  if (!placeholderFilter.value.trim()) return placeholderEntries.value;
+  const q = placeholderFilter.value.toLowerCase();
+  return placeholderEntries.value.filter((k) => k.toLowerCase().includes(q));
+});
+
+// Kopiowanie surowego szablonu
+function copyTemplateRaw() {
+  if (!template.value) return;
+  navigator.clipboard.writeText(template.value);
+  toast.success(t("prompts.copiedTemplate"), { autoClose: 1500 });
+}
+
+// Aktualny wypełniony (tekstowy) template
+const filledCurrentTemplate = computed(() => {
+  let s = "";
+  parsedTemplate.value.forEach((part) => {
+    if (part.type === "text") s += part.value;
+    else {
+      const raw = placeholderValues.value[part.key];
+      s +=
+        raw === "__custom__"
+          ? customValues.value[part.key] || `[${part.key}]`
+          : raw;
+    }
+  });
+  return s.trim();
+});
+
+function copyFilledTemplate() {
+  if (!filledCurrentTemplate.value) return;
+  navigator.clipboard.writeText(filledCurrentTemplate.value);
+  toast.success(t("copied"), { autoClose: 1500 });
+}
+
+// Reset placeholderów
+function resetPlaceholders() {
+  const obj = {};
+  parsedTemplate.value.forEach((p) => {
+    if (p.type === "placeholder") {
+      const opts = selectorOptions[p.key] || [];
+      obj[p.key] =
+        opts && opts[0]
+          ? opts[0].label?.[locale.value] || opts[0].value
+          : `[${p.key}]`;
+    }
+  });
+  placeholderValues.value = obj;
+  customValues.value = {};
+  updateEditor();
+}
+
+// Losowanie placeholderów
+function randomizePlaceholders() {
+  const obj = { ...placeholderValues.value };
+  parsedTemplate.value.forEach((p) => {
+    if (p.type !== "placeholder") return;
+    const opts = selectorOptions[p.key] || [];
+    if (opts.length > 1) {
+      const rand = opts[Math.floor(Math.random() * opts.length)];
+      obj[p.key] = rand.label?.[locale.value] || rand.value;
+    }
+  });
+  placeholderValues.value = obj;
+  updateEditor();
+}
+
+// Udostępnianie linku
+function shareLink() {
+  if (!prompt.value) return;
+  const url = new URL(window.location.href);
+  url.searchParams.set("id", prompt.value.id);
+  navigator.clipboard.writeText(url.toString());
+  toast.success(t("prompts.linkCopied"), { autoClose: 1500 });
+}
+
+// Kopiowanie pojedynczego placeholdera
+function copySinglePlaceholder(key) {
+  const v =
+    placeholderValues.value[key] === "__custom__"
+      ? customValues.value[key] || ""
+      : placeholderValues.value[key];
+  if (!v) return;
+  navigator.clipboard.writeText(v);
+  toast.success(t("copied"), { autoClose: 1200 });
 }
 </script>
