@@ -4,8 +4,6 @@ import { createPinia } from "pinia";
 import router from "./router/index.js";
 import { createI18n } from "vue-i18n";
 import messages from "./i18n/index.js";
-import Vue3Toastify from "vue3-toastify";
-import "vue3-toastify/dist/index.css";
 import "./assets/tailwind.css";
 import MasonryWall from "@yeger/vue-masonry-wall";
 import { OhVueIcon, addIcons } from "oh-vue-icons";
@@ -94,8 +92,5 @@ app
   .use(pinia)
   .use(router)
   .use(i18n)
-  .use(Vue3Toastify, {
-    autoClose: 1000,
-    transition: "flip",
-  })
+
   .mount("#app");

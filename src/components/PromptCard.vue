@@ -86,7 +86,7 @@
 import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-import { toast } from "vue3-toastify";
+import { toast } from "vue-sonner";
 import { useSelectorOptionsStore } from "../store/selectorOptions";
 
 const { locale, t } = useI18n();

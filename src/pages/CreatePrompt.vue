@@ -38,34 +38,35 @@
           :disabled="!template"
           :title="$t('prompts.copyTemplate')"
         >
-          {{ $t('prompts.copyTemplate') }}
+          {{ $t("prompts.copyTemplate") }}
         </button>
         <button
           class="btn btn-xs btn-outline"
           @click="copyFilledTemplate"
           :disabled="!filledCurrentTemplate"
         >
-          {{ $t('prompts.copyFilled') }}
+          {{ $t("prompts.copyFilled") }}
         </button>
         <button
           class="btn btn-xs btn-warning"
           @click="resetPlaceholders"
           :disabled="!parsedTemplate.length"
         >
-          {{ $t('prompts.resetPlaceholders') }}
+          {{ $t("prompts.resetPlaceholders") }}
         </button>
         <button
           class="btn btn-xs btn-accent"
           @click="randomizePlaceholders"
           :disabled="!parsedTemplate.length"
         >
-          {{ $t('prompts.randomize') }}
+          {{ $t("prompts.randomize") }}
         </button>
-        <button
-          class="btn btn-xs btn-info"
-          @click="toggleRaw"
-        >
-          {{ showRaw ? $t('prompts.hideRawTemplate') : $t('prompts.showRawTemplate') }}
+        <button class="btn btn-xs btn-info" @click="toggleRaw">
+          {{
+            showRaw
+              ? $t("prompts.hideRawTemplate")
+              : $t("prompts.showRawTemplate")
+          }}
         </button>
       </div>
       <div class="flex flex-wrap gap-2">
@@ -74,7 +75,7 @@
           @click="shareLink"
           :disabled="!prompt"
         >
-          {{ $t('prompts.shareLink') }}
+          {{ $t("prompts.shareLink") }}
         </button>
       </div>
     </div>
@@ -127,7 +128,7 @@
         <div class="flex flex-wrap gap-3 items-end">
           <label class="form-control w-56">
             <span class="label-text text-xs font-semibold mb-1">
-              {{ $t('prompts.placeholderFilter') }}
+              {{ $t("prompts.placeholderFilter") }}
             </span>
             <input
               v-model="placeholderFilter"
@@ -139,7 +140,7 @@
           <div class="text-[11px] opacity-60">
             {{ filteredPlaceholderKeys.length }} /
             {{ placeholderEntries.length }}
-            {{ $t('prompts.placeholders') }}
+            {{ $t("prompts.placeholders") }}
           </div>
         </div>
 
@@ -150,10 +151,10 @@
           <table class="table table-xs">
             <thead>
               <tr>
-                <th class="w-40">{{ $t('prompts.placeholderKey') }}</th>
-                <th>{{ $t('prompts.value') }}</th>
+                <th class="w-40">{{ $t("prompts.placeholderKey") }}</th>
+                <th>{{ $t("prompts.value") }}</th>
                 <th class="w-24 text-right">
-                  {{ $t('prompts.actions') }}
+                  {{ $t("prompts.actions") }}
                 </th>
               </tr>
             </thead>
@@ -165,7 +166,10 @@
               >
                 <td class="font-mono text-[11px]">{{ key }}</td>
                 <td>
-                  <div v-if="placeholderValues[key] === '__custom__'" class="flex items-center gap-2">
+                  <div
+                    v-if="placeholderValues[key] === '__custom__'"
+                    class="flex items-center gap-2"
+                  >
                     <input
                       v-model="customValues[key]"
                       type="text"
@@ -196,7 +200,7 @@
                         {{ opt.label?.[locale] || opt.value }}
                       </option>
                       <option value="__custom__">
-                        {{ $t('prompts.customValue') }}
+                        {{ $t("prompts.customValue") }}
                       </option>
                     </select>
                   </div>
@@ -214,11 +218,8 @@
             </tbody>
           </table>
         </div>
-        <div
-          v-else
-          class="text-xs opacity-60 italic"
-        >
-          {{ $t('prompts.noPlaceholders') }}
+        <div v-else class="text-xs opacity-60 italic">
+          {{ $t("prompts.noPlaceholders") }}
         </div>
       </div>
       <!-- /NOWY -->
@@ -227,7 +228,8 @@
       <pre
         v-if="showRaw"
         class="mb-4 p-3 rounded bg-base-300/40 text-[11px] overflow-x-auto"
-      >{{ template }}</pre>
+        >{{ template }}</pre
+      >
       <!-- /RAW TEMPLATE -->
 
       <div
@@ -320,10 +322,8 @@ import { useI18n } from "vue-i18n";
 import { usePromptsStore } from "../store/index";
 import selectorOptions from "../prompts/selector_options.json";
 import { askOpenAI } from "../api/openai";
-import { toast } from "vue3-toastify";
-import "vue3-toastify/dist/index.css";
 import { Form, Field, ErrorMessage } from "vee-validate";
-
+import { toast } from "vue-sonner";
 const { locale, t } = useI18n();
 const route = useRoute();
 const router = useRouter();
