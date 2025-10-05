@@ -1,0 +1,528 @@
+{
+  "hello": "Witaj",
+  "nav": {
+    "dashboard": "Panel",
+    "prompts": "Prompty",
+    "library": "Biblioteka",
+    "templates": "Szablony",
+    "analytics": "Analityka",
+    "settings": "Ustawienia",
+    "language": "Język",
+    "theme": "Motyw",
+    "toggle_theme": "Przełącz motyw",
+    "options": "Opcje",
+    "prompt_editor": "Edytor promptów",
+    "chat": "Czat",
+    "home": "Strona główna",
+    "about": "O aplikacji"
+  },
+  "pages": {
+    "prompts": {
+      "subtitle": "Zarządzaj swoimi promptami AI",
+      "create": "Utwórz Prompt",
+      "search": "Szukaj promptów...",
+      "category": "Kategoria",
+      "use": "Użyj",
+      "empty": {
+        "title": "Brak promptów",
+        "description": "Zacznij od utworzenia swojego pierwszego promptu."
+      },
+      "confirm_delete": "Czy na pewno chcesz usunąć ten prompt?",
+      "choose_template": "Wybierz Szablon Promptu",
+      "choose_template_description": "Przeszukaj i wybierz szablon z naszej biblioteki lub przeglądaj wszystkie dostępne opcje",
+      "search_templates": "Szukaj szablonów...",
+      "total_templates": "Wszystkie Szablony",
+      "matching": "Znalezione",
+      "categories": "Kategorie",
+      "variables": "zmiennych",
+      "no_results": "Brak Wyników",
+      "try_different_search": "Spróbuj innych słów kluczowych",
+      "clear_search": "Wyczyść Wyszukiwanie",
+      "browse_all_templates": "Przeglądaj Wszystkie Szablony"
+    },
+    "analytics": {
+      "subtitle": "Śledź i analizuj wydajność swoich promptów AI",
+      "export": "Eksportuj",
+      "usage_trends": "Trendy użycia",
+      "chart_placeholder": "Tutaj zostanie wyświetlona wizualizacja wykresu",
+      "top_prompts": "Najlepsze prompty",
+      "uses": "użyć",
+      "performance": "Metryki wydajności",
+      "metric": "Metryka",
+      "current": "Obecne",
+      "previous": "Poprzednie",
+      "change": "Zmiana",
+      "total_prompts": "Łączna liczba promptów",
+      "total_uses": "Łączna liczba użyć",
+      "success_rate": "Wskaźnik sukcesu",
+      "avg_response": "Średni czas odpowiedzi",
+      "avg_tokens": "Średnia liczba tokenów",
+      "response_time": "Czas odpowiedzi",
+      "error_rate": "Wskaźnik błędów",
+      "user_satisfaction": "Zadowolenie użytkowników"
+    },
+    "templates": {
+      "subtitle": "Gotowe szablony promptów do użycia",
+      "search": "Szukaj szablonów...",
+      "categories": "Kategorie",
+      "tags": "Tagi",
+      "preview": "Podgląd",
+      "placeholders": "zmiennych",
+      "use_template": "Użyj szablonu",
+      "showing": "Wyświetlam",
+      "of": "z",
+      "templates": "szablonów",
+      "reset_filters": "Resetuj filtry",
+      "sort": {
+        "name": "Nazwa",
+        "type": "Typ",
+        "categories": "Kategorie"
+      },
+      "empty": {
+        "title": "Brak szablonów",
+        "description": "Nie znaleziono szablonów pasujących do kryteriów."
+      },
+      "no_more": "To wszystkie dostępne szablony",
+      "search_tags": "Szukaj tagów...",
+      "hidden_tags": "{count} ukrytych tagów (użyj wyszukiwania)",
+      "types": "Typy",
+      "template_editor": "Edytor Szablonu",
+      "template_placeholder": "Wpisz lub edytuj szablon...",
+      "placeholder_values": "Wartości Zmiennych",
+      "no_placeholders": "Brak zmiennych w szablonie",
+      "options_available": "opcji dostępnych",
+      "select_or_type": "Wybierz lub wpisz własną wartość",
+      "enter_value": "Wprowadź wartość",
+      "final_prompt": "Finalny Prompt",
+      "filled": "wypełnione",
+      "unfilled_placeholders": "Niewypełnione zmienne",
+      "error_loading": "Błąd Ładowania Szablonu",
+      "try_again": "Spróbuj Ponownie",
+      "no_template_selected": "Nie Wybrano Szablonu",
+      "select_template_from_library": "Wybierz szablon z biblioteki, aby rozpocząć",
+      "browse_templates": "Przeglądaj Szablony",
+      "characters": "znaków"
+    },
+    "common": {
+      "loading": "Ładowanie...",
+      "edit": "Edytuj",
+      "delete": "Usuń",
+      "duplicate": "Duplikuj",
+      "model_singular": "model dostępny",
+      "model_plural": "modeli dostępnych",
+      "search": "Szukaj"
+    }
+  },
+  "app": {
+    "name": "Prompt Forge",
+    "tagline": "Kreator promptów dla twórców i zespołów",
+    "cta_primary": "Zacznij teraz",
+    "cta_secondary": "Dowiedz się więcej",
+    "cta_title": "Gotowy aby zacząć?",
+    "hero_intro": "Buduj lepsze AI‑prompty szybciej",
+    "hero_sub": "Organizuj, wersjonuj i współtwórz prompt engineering w jednym miejscu.",
+    "features_title": "Dlaczego Prompt Forge?",
+    "features_subtitle": "Wszystko czego potrzebujesz w jednym miejscu",
+    "features": {
+      "library_title": "Biblioteka promptów",
+      "library_desc": "Centralne repozytorium z kategoriami, tagami i wersjonowaniem.",
+      "collab_title": "Współpraca",
+      "collab_desc": "Komentarze, iteracje i historia zmian dla zespołu.",
+      "quality_title": "Jakość",
+      "quality_desc": "Standaryzacja struktury, zmienne kontekstowe i walidacje.",
+      "export_title": "Eksport",
+      "export_desc": "Szybki eksport do JSON / Markdown lub bezpośrednio do API."
+    },
+    "stats": {
+      "prompts": "Prompty",
+      "options": "Opcje",
+      "tags": "Tagi",
+      "availability": "24/7",
+      "availability_label": "Dostępność",
+      "possibilities": "∞",
+      "possibilities_label": "Możliwości"
+    },
+    "section_how_title": "Jak to działa?",
+    "section_how_subtitle": "Prosty proces w 4 krokach",
+    "section_how_steps": {
+      "collect": "Zbieraj i kategoryzuj",
+      "collect_desc": "Zbierz i kategoryzuj prompty",
+      "refine": "Udoskonalaj",
+      "refine_desc": "Udoskonalaj strukturę",
+      "test": "Testuj",
+      "test_desc": "Testuj i porównuj",
+      "deploy": "Wdrażaj",
+      "deploy_desc": "Eksportuj i używaj"
+    },
+    "testimonials_title": "Co mówią użytkownicy",
+    "testimonials": {
+      "testimonial1_text": "Prompt Forge całkowicie zmienił sposób w jaki pracuję z AI. Niesamowite!",
+      "testimonial1_name": "Anna Kowalska",
+      "testimonial1_role": "Content Creator",
+      "testimonial2_text": "Najlepsza platforma do zarządzania promptami. Oszczędza mi godziny pracy.",
+      "testimonial2_name": "Jan Nowak",
+      "testimonial2_role": "AI Developer",
+      "testimonial3_text": "Intuicyjna i potężna. Dokładnie tego potrzebowałem w mojej pracy.",
+      "testimonial3_name": "Maria Wiśniewska",
+      "testimonial3_role": "Marketing Manager"
+    },
+    "footer_note": "Projekt w fazie wczesnego rozwoju – dołącz już dziś.",
+    "trust": {
+      "title": "Zaufali nam tysiące użytkowników",
+      "uptime": "Dostępność",
+      "users": "Użytkowników",
+      "rating": "Ocena",
+      "response": "Odpowiedź"
+    },
+    "demo": {
+      "title": "Wypróbuj na żywo",
+      "subtitle": "Zobacz jak AI optymalizuje Twoje prompty w czasie rzeczywistym",
+      "input_label": "Twój prompt",
+      "input_placeholder": "Wpisz swój prompt tutaj...\n\nNp: 'Napisz artykuł o AI'",
+      "output_label": "Zoptymalizowany wynik",
+      "waiting": "Wprowadź prompt i kliknij 'Optymalizuj'",
+      "process_button": "Optymalizuj",
+      "example_marketing": "Napisz post na LinkedIn o AI w marketingu, który będzie przyciągał uwagę i generował zaangażowanie",
+      "example_marketing_label": "Marketing",
+      "example_code": "Wygeneruj funkcję Python do analizy danych CSV",
+      "example_code_label": "Kod",
+      "example_email": "Napisz email follow-up do klienta",
+      "example_email_label": "Email"
+    },
+    "pricing": {
+      "title": "Wybierz plan dla siebie",
+      "subtitle": "Elastyczne opcje dla każdego",
+      "popular": "Najpopularniejszy",
+      "per_month": "/miesiąc",
+      "free": {
+        "name": "Starter",
+        "description": "Dla indywidualnych użytkowników",
+        "feature1": "100 promptów",
+        "feature2": "Podstawowe szablony",
+        "feature3": "Export do JSON",
+        "feature4": "Wsparcie społeczności",
+        "cta": "Rozpocznij za darmo"
+      },
+      "pro": {
+        "name": "Professional",
+        "description": "Dla profesjonalistów",
+        "feature1": "Nielimitowane prompty",
+        "feature2": "Zaawansowane szablony",
+        "feature3": "Wersjonowanie",
+        "feature4": "Współpraca zespołowa",
+        "feature5": "Priorytetowe wsparcie",
+        "cta": "Rozpocznij 14-dniowy trial"
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "description": "Dla dużych zespołów",
+        "feature1": "Wszystko z Pro",
+        "feature2": "Dedykowany manager",
+        "feature3": "SLA 99.99%",
+        "feature4": "On-premise deployment",
+        "feature5": "Szkolenia dla zespołu",
+        "cta": "Skontaktuj się"
+      }
+    },
+    "faq": {
+      "title": "Często zadawane pytania",
+      "subtitle": "Znajdź odpowiedzi na najczęstsze pytania",
+      "q1": "Jak działa Prompt Forge?",
+      "a1": "Prompt Forge to platforma do zarządzania promptami AI. Pozwala organizować, wersjonować i optymalizować prompty w jednym miejscu.",
+      "q2": "Czy mogę współpracować z zespołem?",
+      "a2": "Tak! Plan Professional umożliwia współpracę zespołową z komentarzami, historią zmian i wspólnym obszarem roboczym.",
+      "q3": "Jakie modele AI są wspierane?",
+      "a3": "Prompt Forge działa z wszystkimi popularnymi modelami: GPT-4, Claude, Gemini, Llama i wieloma innymi.",
+      "q4": "Czy moje dane są bezpieczne?",
+      "a4": "Tak! Używamy szyfrowania end-to-end, a Twoje prompty nigdy nie są udostępniane osobom trzecim.",
+      "q5": "Czy mogę anulować w każdej chwili?",
+      "a5": "Oczywiście! Możesz anulować subskrypcję w każdej chwili bez dodatkowych opłat."
+    },
+    "newsletter": {
+      "title": "Bądź na bieżąco",
+      "subtitle": "Otrzymuj najnowsze wskazówki, aktualizacje i najlepsze praktyki",
+      "placeholder": "Twój email",
+      "button": "Zapisz się",
+      "success": "✓ Dziękujemy! Sprawdź swoją skrzynkę.",
+      "privacy": "Nie spamujemy. Anuluj subskrypcję w każdej chwili."
+    }
+  },
+  "chat": {
+    "title": "Czat",
+    "you": "Ty",
+    "ai_label": "AI",
+    "placeholder_configure": "Skonfiguruj AI aby zacząć...",
+    "placeholder_write": "Napisz wiadomość... (Shift+Enter dla nowej linii)",
+    "keyboard_newline": "nowa linia",
+    "today": "Dziś",
+    "yesterday": "Wczoraj",
+    "days_ago": "dni temu",
+    "quick": {
+      "explain": "Wyjaśnij",
+      "summarize": "Podsumuj",
+      "translate": "Przetłumacz"
+    },
+    "quick_text": {
+      "explain": "Wyjaśnij mi to prostymi słowami: ",
+      "summarize": "Podsumuj następujący tekst: ",
+      "translate": "Przetłumacz na polski: "
+    },
+    "new_conversation": "Nowa rozmowa",
+    "no_conversations": "Brak rozmów",
+    "confirm_delete": "Czy na pewno chcesz usunąć tę rozmowę?",
+    "select_start": "Wybierz lub rozpocznij rozmowę"
+  },
+  "ai": {
+    "status": {
+      "connected": "Połączono",
+      "not_configured": "Nie skonfigurowano"
+    },
+    "config": {
+      "title": "Konfiguracja lokalnego modelu AI",
+      "provider": "Provider",
+      "endpoint": "Adres serwera",
+      "endpoint_hint": "URL do lokalnego API (np. http://localhost:1234/v1/chat/completions)",
+      "model_name": "Nazwa modelu",
+      "model_name_placeholder": "np. llama-3.2-1b-instruct",
+      "model_name_hint": "Kliknij 'Odśwież' aby pobrać modele",
+      "model_name_end": "Model AI został skonfigurowany.",
+      "api_key": "Klucz API",
+      "api_key_placeholder": "Pozostaw puste dla lokalnych modeli",
+      "optional": "Opcjonalne",
+      "advanced_settings": "Zaawansowane ustawienia",
+      "temperature": "Temperature",
+      "precise": "Precyzyjny",
+      "creative": "Kreatywny",
+      "max_tokens": "Maksymalna liczba tokenów",
+      "timeout": "Timeout",
+      "test_connection": "Testuj połączenie",
+      "save": "Zapisz",
+      "cancel": "Anuluj",
+      "configured": "AI skonfigurowane",
+      "setup": "Konfiguruj AI"
+    },
+    "actions": {
+      "test_connection": "Testuj połączenie",
+      "testing": "Testuję...",
+      "save": "Zapisz",
+      "saving": "Zapisuję...",
+      "clear": "Wyczyść",
+      "last_connection": "Ostatnie połączenie"
+    },
+    "status_card": {
+      "title": "Status połączenia",
+      "endpoint": "Endpoint",
+      "endpoint_set": "✓ Ustawiony",
+      "endpoint_missing": "✗ Brak",
+      "model": "Model",
+      "models_available": "Dostępne modele",
+      "status": "Status",
+      "online": "🟢 Online",
+      "offline": "🔴 Offline"
+    },
+    "messages": {
+      "found_models": "Znaleziono {count} modeli",
+      "cannot_connect": "Nie można połączyć się z LM Studio",
+      "connection_ok": "Połączenie działa! Odpowiedź: \"{reply}\"",
+      "saved_config": "Konfiguracja zapisana pomyślnie!",
+      "cleared_config": "Konfiguracja wyczyszczona",
+      "error_saving": "Błąd zapisu konfiguracji",
+      "error_connection": "Nie można połączyć: {err}"
+    },
+    "quick_guide_title": "Jak skonfigurować?"
+  },
+  "settings": {
+    "title": "Ustawienia",
+    "subtitle": "Zarządzaj konfiguracją aplikacji",
+    "ai": {
+      "title": "Konfiguracja AI",
+      "description": "Połącz się z lokalnym LM Studio",
+      "actions": {
+        "clear": "Wyczyść",
+        "last_connection": "Ostatnie połączenie",
+        "save": "Zapisz",
+        "saving": "Zapisywanie...",
+        "test_connection": "Połączenie testowe",
+        "testing": "Testowanie..."
+      },
+      "config": {
+        "endpoint": "Punkt końcowy serwera",
+        "endpoint_hint": "URL do lokalnego interfejsu API modelu (np. Http: // localhost: 1234/v1/cHAT/completes)",
+        "model_name": "Nazwa modelu",
+        "model_name_hint": "Kliknij „Odśwież”, aby pobrać dostępne modele",
+        "model_name_placeholder": "np. LLAMA-3.2-1B-instruct",
+        "title": "Lokalna konfiguracja modelu AI"
+      },
+      "messages": {
+        "cannot_connect": "Nie można połączyć się z LM Studio",
+        "cleared_config": "Konfiguracja oczyszczona",
+        "connection_ok": "Połączenie OK!  Odpowiedz: \"{reply}\"",
+        "error_connection": "Nie można połączyć: {err}",
+        "error_saving": "Konfiguracja oszczędzania błędów",
+        "found_models": "Znaleziono modele {count}",
+        "saved_config": "Konfiguracja zapisana pomyślnie!"
+      },
+      "quick_guide_title": "Jak skonfigurować?",
+      "status": {
+        "connected": "Połączony",
+        "not_configured": "Nie skonfigurowane"
+      },
+      "status_card": {
+        "endpoint": "Punkt końcowy",
+        "endpoint_missing": "Brak",
+        "endpoint_set": "✓ Zestaw",
+        "model": "Model",
+        "models_available": "Dostępne modele",
+        "offline": "🔴 offline",
+        "online": "🟢 Online",
+        "status": "Status",
+        "title": "Status połączenia"
+      }
+    },
+    "language": {
+      "title": "Język",
+      "description": "Wybierz język interfejsu",
+      "change_notice": "Zmiana języka zostanie zastosowana natychmiast na całej stronie"
+    },
+    "theme": {
+      "title": "Motyw",
+      "description": "Dostosuj wygląd aplikacji",
+      "light": "Jasny",
+      "light_desc": "Zawsze jasny",
+      "dark": "Ciemny",
+      "dark_desc": "Zawsze ciemny",
+      "system": "System",
+      "system_desc": "Dopasuj do systemu",
+      "system_info": "Tryb \"System\" automatycznie dostosuje motyw do ustawień systemu operacyjnego"
+    }
+  },
+  "common": {
+    "copy": "Kopiuj",
+    "copied": "Skopiowano!",
+    "loading": "Ładowanie...",
+    "error": "Błąd",
+    "success": "Sukces",
+    "cancel": "Anuluj",
+    "save": "Zapisz",
+    "delete": "Usuń",
+    "edit": "Edytuj",
+    "close": "Zamknij",
+    "back": "Wstecz",
+    "next": "Dalej",
+    "previous": "Poprzedni",
+    "search": "Szukaj",
+    "filter": "Filtruj",
+    "sort": "Sortuj",
+    "clear": "Wyczyść",
+    "reset": "Resetuj",
+    "apply": "Zastosuj"
+  },
+  "library": {
+    "title": "Biblioteka",
+    "subtitle": "Zarządzaj swoimi zapisanymi promptami",
+    "import": "Importuj",
+    "export": "Eksportuj",
+    "newPrompt": "Nowy Prompt",
+    "stats": {
+      "saved": "Zapisane",
+      "custom": "Własne",
+      "collections": "Kolekcje",
+      "history": "Historia"
+    },
+    "tabs": {
+      "saved": "Zapisane",
+      "custom": "Własne",
+      "history": "Historia",
+      "collections": "Kolekcje"
+    },
+    "saved": {
+      "empty": "Nie masz jeszcze zapisanych promptów",
+      "browse": "Przeglądaj Szablony"
+    },
+    "custom": {
+      "badge": "Własny",
+      "addNew": "Dodaj Nowy Prompt",
+      "clickToCreate": "Kliknij, aby utworzyć własny prompt"
+    },
+    "history": {
+      "title": "Ostatnio używane prompty",
+      "description": "Historia automatycznie zapisuje prompty, których używasz",
+      "clear": "Wyczyść historię",
+      "empty": "Brak historii użycia",
+      "howItWorks": "Jak działa historia?",
+      "features": {
+        "autoSave": "Automatycznie zapisuje prompty, których używasz w sekcji \"Prompty\"",
+        "quickAccess": "Pokazuje ostatnio użyte prompty dla szybkiego dostępu",
+        "noSpace": "Nie zajmuje miejsca w Twoich zapisanych promptach",
+        "canClear": "Możesz wyczyścić historię w każdej chwili"
+      }
+    },
+    "collections": {
+      "organize": "Zorganizuj prompty w kolekcje",
+      "new": "Nowa Kolekcja",
+      "empty": "Nie masz jeszcze żadnych kolekcji",
+      "promptCount": "{count} promptów",
+      "more": "+{count} więcej..."
+    },
+    "modals": {
+      "import": {
+        "title": "Importuj Bibliotekę",
+        "description": "Wybierz plik JSON z eksportowaną biblioteką",
+        "selectFile": "Wybierz plik JSON",
+        "mode": "Tryb importu",
+        "merge": "Scal z istniejącymi",
+        "replace": "Zastąp wszystko",
+        "cancel": "Anuluj",
+        "submit": "Importuj",
+        "success": "Biblioteka została pomyślnie zaimportowana!",
+        "error": "Błąd importu. Sprawdź format pliku."
+      },
+      "collection": {
+        "title": "Nowa Kolekcja",
+        "description": "Utwórz kolekcję do organizacji swoich promptów",
+        "name": "Nazwa",
+        "namePlaceholder": "np. Marketing Prompts",
+        "descriptionPlaceholder": "Krótki opis kolekcji...",
+        "cancel": "Anuluj",
+        "create": "Utwórz"
+      },
+      "edit": {
+        "title": "Edytuj Własny Prompt",
+        "description": "Dostosuj nazwę, opis i treść swojego promptu",
+        "namePL": "Nazwa (Polski)",
+        "nameEN": "Nazwa (English)",
+        "descriptionPL": "Opis (Polski)",
+        "descriptionEN": "Opis (English)",
+        "templatePL": "Szablon Promptu (Polski)",
+        "templateEN": "Szablon Promptu (English)",
+        "namePlaceholder": "Nazwa po polsku",
+        "nameEnPlaceholder": "Name in English",
+        "descriptionPlaceholder": "Krótki opis działania promptu po polsku...",
+        "descriptionEnPlaceholder": "Brief description of the prompt functionality...",
+        "templatePlaceholder": "Treść promptu po polsku...",
+        "templateEnPlaceholder": "Prompt content in English...",
+        "saveNote": "Zmiany zostaną zapisane w Twojej bibliotece",
+        "cancel": "Anuluj",
+        "save": "Zapisz Zmiany"
+      },
+      "addToCollection": {
+        "title": "Dodaj do Kolekcji",
+        "description": "Wybierz prompty do dodania do kolekcji: {name}",
+        "empty": "Wszystkie prompty są już w tej kolekcji",
+        "cancel": "Anuluj",
+        "add": "Dodaj ({count})"
+      }
+    },
+    "actions": {
+      "use": "Użyj promptu",
+      "edit": "Edytuj",
+      "delete": "Usuń",
+      "removeFromCollection": "Usuń z kolekcji",
+      "confirmDelete": "Czy na pewno chcesz usunąć ten prompt?",
+      "confirmDeleteCustom": "Czy na pewno chcesz usunąć ten własny prompt?",
+      "confirmDeleteCollection": "Czy na pewno chcesz usunąć tę kolekcję?",
+      "confirmClearHistory": "Czy na pewno chcesz wyczyścić całą historię?",
+      "confirmRemoveFromCollection": "Czy na pewno chcesz usunąć ten prompt z kolekcji?"
+    }
+  }
+}

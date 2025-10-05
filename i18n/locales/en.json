@@ -1,0 +1,555 @@
+{
+  "hello": "Hello",
+  "nav": {
+    "home": "Home",
+    "chat": "Chat",
+    "prompts": "Prompts",
+    "settings": "Settings",
+    "dashboard": "Dashboard",
+    "library": "Library",
+    "templates": "Templates",
+    "analytics": "Analytics",
+    "language": "Language",
+    "theme": "Theme",
+    "toggle_theme": "Toggle theme",
+    "options": "Options",
+    "prompt_editor": "Prompt editor",
+    "about": "About"
+  },
+  "pages": {
+    "prompts": {
+      "subtitle": "Manage your AI prompts",
+      "create": "Create Prompt",
+      "search": "Search prompts...",
+      "category": "Category",
+      "use": "Use",
+      "empty": {
+        "title": "No prompts",
+        "description": "Start by creating your first prompt."
+      },
+      "confirm_delete": "Are you sure you want to delete this prompt?",
+      "choose_template": "Choose a Prompt Template",
+      "choose_template_description": "Search and select a template from our library or browse all available options",
+      "search_templates": "Search templates...",
+      "total_templates": "Total Templates",
+      "matching": "Matching",
+      "categories": "Categories",
+      "variables": "variables",
+      "no_results": "No Results Found",
+      "try_different_search": "Try different keywords",
+      "clear_search": "Clear Search",
+      "browse_all_templates": "Browse All Templates"
+    },
+    "analytics": {
+      "subtitle": "Track and analyze your AI prompt performance",
+      "export": "Export",
+      "usage_trends": "Usage Trends",
+      "chart_placeholder": "Chart visualization will be displayed here",
+      "top_prompts": "Top Prompts",
+      "uses": "uses",
+      "performance": "Performance Metrics",
+      "metric": "Metric",
+      "current": "Current",
+      "previous": "Previous",
+      "change": "Change",
+      "total_prompts": "Total Prompts",
+      "total_uses": "Total Uses",
+      "success_rate": "Success Rate",
+      "avg_response": "Avg. Response Time",
+      "avg_tokens": "Average Tokens",
+      "response_time": "Response Time",
+      "error_rate": "Error Rate",
+      "user_satisfaction": "User Satisfaction",
+      "title": "Analytics",
+      "description": "Track your usage and performance metrics",
+      "usageOverTime": "Usage Over Time",
+      "categoryDistribution": "Category Distribution",
+      "topPrompts": "Top Prompts",
+      "aiPerformance": "AI Performance",
+      "metrics": {
+        "totalPrompts": "Total Prompts",
+        "totalQueries": "Total Queries",
+        "collections": "Collections",
+        "customPrompts": "Custom Prompts",
+        "avgResponseTime": "Avg Response Time",
+        "successRate": "Success Rate"
+      }
+    },
+    "templates": {
+      "subtitle": "Ready-to-use prompt templates",
+      "search": "Search templates...",
+      "categories": "Categories",
+      "tags": "Tags",
+      "preview": "Preview",
+      "placeholders": "placeholders",
+      "use_template": "Use template",
+      "showing": "Showing",
+      "of": "of",
+      "templates": "templates",
+      "reset_filters": "Reset filters",
+      "sort": {
+        "name": "Name",
+        "type": "Type",
+        "categories": "Categories"
+      },
+      "empty": {
+        "title": "No templates",
+        "description": "No templates match your criteria."
+      },
+      "no_more": "That's all available templates",
+      "types": "Types",
+      "template_editor": "Template Editor",
+      "template_placeholder": "Type or edit template...",
+      "placeholder_values": "Variable Values",
+      "no_placeholders": "No variables in template",
+      "options_available": "options available",
+      "select_or_type": "Select or type your own value",
+      "enter_value": "Enter value",
+      "final_prompt": "Final Prompt",
+      "filled": "filled",
+      "unfilled_placeholders": "Unfilled variables",
+      "error_loading": "Error Loading Template",
+      "try_again": "Try Again",
+      "no_template_selected": "No Template Selected",
+      "select_template_from_library": "Select a template from the library to get started",
+      "browse_templates": "Browse Templates",
+      "characters": "characters",
+      "search_tags": "Search tags...",
+      "hidden_tags": "{count} hidden tags (use search)"
+    },
+    "common": {
+      "loading": "Loading...",
+      "edit": "Edit",
+      "delete": "Delete",
+      "duplicate": "Duplicate",
+      "model_singular": "model available",
+      "model_plural": "models available",
+      "search": "Search",
+      "error": "Error",
+      "success": "Success",
+      "cancel": "Cancel",
+      "save": "Save",
+      "close": "Close",
+      "back": "Back",
+      "next": "Next",
+      "previous": "Previous",
+      "filter": "Filter",
+      "sort": "Sort",
+      "clear": "Clear",
+      "reset": "Reset",
+      "apply": "Apply"
+    }
+  },
+  "app": {
+    "name": "Prompt Forge",
+    "tagline": "A prompt builder for creators and teams",
+    "cta_primary": "Get Started",
+    "cta_secondary": "Learn More",
+    "cta_title": "Ready to get started?",
+    "hero_intro": "Build better AI prompts faster",
+    "hero_sub": "Organize, version and collaborate on prompt engineering in one place.",
+    "features_title": "Why Prompt Forge?",
+    "features_subtitle": "Everything you need in one place",
+    "features": {
+      "library_title": "Prompt Library",
+      "library_desc": "Central repository with categories, tags and versioning.",
+      "collab_title": "Collaboration",
+      "collab_desc": "Comments, iterations and change history for the team.",
+      "quality_title": "Quality",
+      "quality_desc": "Standardized structure, contextual variables and validation.",
+      "export_title": "Export",
+      "export_desc": "Quick export to JSON / Markdown or directly into APIs."
+    },
+    "section_how_title": "How it works",
+    "section_how_subtitle": "Simple 4-step process",
+    "section_how_steps": {
+      "collect": "Collect and categorize",
+      "collect_desc": "Collect and categorize prompts",
+      "refine": "Refine",
+      "refine_desc": "Refine the structure",
+      "test": "Test",
+      "test_desc": "Test and compare",
+      "deploy": "Deploy",
+      "deploy_desc": "Export and use"
+    },
+    "footer_note": "Early stage project – join today.",
+    "demo": {
+      "example_code": "Generate a Python function to analyze CSV data",
+      "example_code_label": "Code",
+      "example_email": "Write a client follow-up email",
+      "example_email_label": "Email",
+      "example_marketing": "Write a LinkedIn post about AI in marketing that attracts attention and drives engagement",
+      "example_marketing_label": "Marketing",
+      "input_label": "Your prompt",
+      "input_placeholder": "Type your prompt here...\n\nE.g.: 'Write an article about AI'",
+      "output_label": "Optimized output",
+      "process_button": "Optimize",
+      "subtitle": "See how AI optimizes your prompts in real time",
+      "title": "Try live demo",
+      "waiting": "Enter a prompt and click 'Optimize'"
+    },
+    "faq": {
+      "a1": "Prompt Forge is a platform for managing AI prompts. It lets you organize, version and optimize prompts in one place.",
+      "a2": "Yes — the Professional plan enables team collaboration with comments, change history and a shared workspace.",
+      "a3": "Prompt Forge works with popular models: GPT-4, Claude, Gemini, Llama and more.",
+      "a4": "Yes — we use encryption and take data privacy seriously.",
+      "a5": "Yes — you can cancel your subscription at any time without extra fees.",
+      "q1": "How does Prompt Forge work?",
+      "q2": "Can I collaborate with a team?",
+      "q3": "What AI models are supported?",
+      "q4": "Is my data secure?",
+      "q5": "Can I cancel anytime?",
+      "subtitle": "Find answers to the most common questions",
+      "title": "Frequently Asked Questions"
+    },
+    "newsletter": {
+      "button": "Subscribe",
+      "placeholder": "Your email",
+      "privacy": "We don't spam. Unsubscribe at any time.",
+      "subtitle": "Receive latest tips, updates and best practices",
+      "success": "✓ Thanks! Check your inbox.",
+      "title": "Stay up to date"
+    },
+    "pricing": {
+      "enterprise": {
+        "cta": "Contact us",
+        "description": "For large teams",
+        "feature1": "Everything from Pro",
+        "feature2": "Dedicated manager",
+        "feature3": "SLA 99.99%",
+        "feature4": "On-premise deployment",
+        "feature5": "Team training",
+        "name": "Enterprise"
+      },
+      "free": {
+        "cta": "Start for free",
+        "description": "For individual users",
+        "feature1": "100 prompts",
+        "feature2": "Basic templates",
+        "feature3": "Export to JSON",
+        "feature4": "Community support",
+        "name": "Starter"
+      },
+      "per_month": "/month",
+      "popular": "Most popular",
+      "pro": {
+        "cta": "Start 14-day trial",
+        "description": "For professionals",
+        "feature1": "Unlimited prompts",
+        "feature2": "Advanced templates",
+        "feature3": "Versioning",
+        "feature4": "Team collaboration",
+        "feature5": "Priority support",
+        "name": "Professional"
+      },
+      "subtitle": "Flexible options for everyone",
+      "title": "Choose a plan"
+    },
+    "stats": {
+      "availability": "24/7",
+      "availability_label": "Availability",
+      "options": "Options",
+      "possibilities": "∞",
+      "possibilities_label": "Possibilities",
+      "prompts": "Prompts",
+      "tags": "Tags"
+    },
+    "testimonials": {
+      "testimonial1_name": "Anna Kowalska",
+      "testimonial1_role": "Content Creator",
+      "testimonial1_text": "Prompt Forge completely changed how I work with AI. Amazing!",
+      "testimonial2_name": "Jan Nowak",
+      "testimonial2_role": "AI Developer",
+      "testimonial2_text": "Best platform to manage prompts. Saves me hours of work.",
+      "testimonial3_name": "Maria Wiśniewska",
+      "testimonial3_role": "Marketing Manager",
+      "testimonial3_text": "Intuitive and powerful. Exactly what I needed."
+    },
+    "testimonials_title": "What users say",
+    "trust": {
+      "rating": "Rating",
+      "response": "Response",
+      "title": "Trusted by thousands",
+      "uptime": "Uptime",
+      "users": "Users"
+    }
+  },
+  "chat": {
+    "title": "Chat",
+    "you": "You",
+    "ai_label": "AI",
+    "placeholder_configure": "Configure AI to start...",
+    "placeholder_write": "Write a message... (Shift+Enter for newline)",
+    "keyboard_newline": "newline",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "days_ago": "days ago",
+    "quick": {
+      "explain": "Explain",
+      "summarize": "Summarize",
+      "translate": "Translate"
+    },
+    "quick_text": {
+      "explain": "Explain this in simple terms: ",
+      "summarize": "Summarize the following text: ",
+      "translate": "Translate to Polish: "
+    },
+    "new_conversation": "New conversation",
+    "no_conversations": "No conversations",
+    "confirm_delete": "Are you sure you want to delete this conversation?",
+    "select_start": "Select or start a conversation"
+  },
+  "ai": {
+    "status": {
+      "connected": "Connected",
+      "not_configured": "Not configured"
+    },
+    "config": {
+      "title": "Local AI model configuration",
+      "provider": "Provider",
+      "endpoint": "Server endpoint",
+      "endpoint_hint": "URL to local model API (eg. http://localhost:1234/v1/chat/completions)",
+      "model_name": "Model name",
+      "model_name_placeholder": "e.g. llama-3.2-1b-instruct",
+      "model_name_hint": "Click 'Refresh' to fetch models",
+      "model_name_end": "Model AI has been configured.",
+      "api_key": "API key",
+      "api_key_placeholder": "Leave empty for local models",
+      "optional": "Optional",
+      "advanced_settings": "Advanced settings",
+      "temperature": "Temperature",
+      "precise": "Precise",
+      "creative": "Creative",
+      "max_tokens": "Max tokens",
+      "timeout": "Timeout",
+      "test_connection": "Test connection",
+      "save": "Save",
+      "cancel": "Cancel",
+      "configured": "AI configured",
+      "setup": "Set up AI"
+    },
+    "actions": {
+      "test_connection": "Test connection",
+      "testing": "Testing...",
+      "save": "Save",
+      "saving": "Saving...",
+      "clear": "Clear",
+      "last_connection": "Last connection"
+    },
+    "status_card": {
+      "title": "Connection status",
+      "endpoint": "Endpoint",
+      "endpoint_set": "✓ Set",
+      "endpoint_missing": "✗ Missing",
+      "model": "Model",
+      "models_available": "Available models",
+      "status": "Status",
+      "online": "🟢 Online",
+      "offline": "🔴 Offline"
+    },
+    "messages": {
+      "found_models": "Found {count} models",
+      "cannot_connect": "Cannot connect to LM Studio",
+      "connection_ok": "Connection OK! Reply: \"{reply}\"",
+      "saved_config": "Configuration saved successfully!",
+      "cleared_config": "Configuration cleared",
+      "error_saving": "Error saving configuration",
+      "error_connection": "Cannot connect: {err}"
+    },
+    "quick_guide_title": "How to configure?"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Manage application configuration",
+    "ai": {
+      "title": "AI configuration",
+      "description": "Connect to local LM Studio",
+      "actions": {
+        "clear": "Clear",
+        "last_connection": "Last connection",
+        "save": "Save",
+        "saving": "Saving...",
+        "test_connection": "Test connection",
+        "testing": "Testing..."
+      },
+      "config": {
+        "title": "Local AI model configuration",
+        "endpoint": "Server endpoint",
+        "endpoint_hint": "URL to local model API (eg. http://localhost:1234/v1/chat/completions)",
+        "model_name": "Model name",
+        "model_name_hint": "Click 'Refresh' to fetch available models",
+        "model_name_placeholder": "e.g. llama-3.2-1b-instruct"
+      },
+      "messages": {
+        "cannot_connect": "Cannot connect to LM Studio",
+        "cleared_config": "Configuration cleared",
+        "connection_ok": "Connection OK! Reply: \"{reply}\"",
+        "error_connection": "Cannot connect: {err}",
+        "error_saving": "Error saving configuration",
+        "found_models": "Found {count} models",
+        "saved_config": "Configuration saved successfully!"
+      },
+      "quick_guide_title": "How to configure?",
+      "status": {
+        "connected": "Connected",
+        "not_configured": "Not configured"
+      },
+      "status_card": {
+        "endpoint": "Endpoint",
+        "endpoint_missing": "Missing",
+        "endpoint_set": "✓ Set",
+        "model": "Model",
+        "models_available": "Available models",
+        "offline": "🔴 Offline",
+        "online": "🟢 Online",
+        "status": "Status",
+        "title": "Connection status"
+      }
+    },
+    "language": {
+      "title": "Language",
+      "description": "Choose UI language",
+      "change_notice": "Language change will be applied immediately across the app"
+    },
+    "theme": {
+      "title": "Theme",
+      "description": "Customize application appearance",
+      "light": "Light",
+      "light_desc": "Always light",
+      "dark": "Dark",
+      "dark_desc": "Always dark",
+      "system": "System",
+      "system_desc": "Match OS setting",
+      "system_info": "System mode will follow the OS theme"
+    }
+  },
+  "common": {
+    "copy": "Copy",
+    "copied": "Copied!",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "clear": "Clear",
+    "reset": "Reset",
+    "apply": "Apply"
+  },
+  "library": {
+    "title": "Library",
+    "subtitle": "Manage your saved prompts",
+    "import": "Import",
+    "export": "Export",
+    "newPrompt": "New Prompt",
+    "stats": {
+      "saved": "Saved",
+      "custom": "Custom",
+      "collections": "Collections",
+      "history": "History"
+    },
+    "tabs": {
+      "saved": "Saved",
+      "custom": "Custom",
+      "history": "History",
+      "collections": "Collections"
+    },
+    "saved": {
+      "empty": "You don't have any saved prompts yet",
+      "browse": "Browse Templates"
+    },
+    "custom": {
+      "badge": "Custom",
+      "addNew": "Add New Prompt",
+      "clickToCreate": "Click to create your own prompt"
+    },
+    "history": {
+      "title": "Recently used prompts",
+      "description": "History automatically saves prompts you use",
+      "clear": "Clear history",
+      "empty": "No usage history",
+      "howItWorks": "How does history work?",
+      "features": {
+        "autoSave": "Automatically saves prompts you use in \"Prompts\" section",
+        "quickAccess": "Shows recently used prompts for quick access",
+        "noSpace": "Doesn't take space in your saved prompts",
+        "canClear": "You can clear history at any time"
+      }
+    },
+    "collections": {
+      "organize": "Organize prompts into collections",
+      "new": "New Collection",
+      "empty": "You don't have any collections yet",
+      "promptCount": "{count} prompts",
+      "more": "+{count} more..."
+    },
+    "modals": {
+      "import": {
+        "title": "Import Library",
+        "description": "Select JSON file with exported library",
+        "selectFile": "Select JSON file",
+        "mode": "Import mode",
+        "merge": "Merge with existing",
+        "replace": "Replace all",
+        "cancel": "Cancel",
+        "submit": "Import",
+        "success": "Library imported successfully!",
+        "error": "Import error. Check file format."
+      },
+      "collection": {
+        "title": "New Collection",
+        "description": "Create a collection to organize your prompts",
+        "name": "Name",
+        "namePlaceholder": "e.g. Marketing Prompts",
+        "descriptionPlaceholder": "Brief collection description...",
+        "cancel": "Cancel",
+        "create": "Create"
+      },
+      "edit": {
+        "title": "Edit Custom Prompt",
+        "description": "Customize name, description and content of your prompt",
+        "namePL": "Name (Polish)",
+        "nameEN": "Name (English)",
+        "descriptionPL": "Description (Polish)",
+        "descriptionEN": "Description (English)",
+        "templatePL": "Prompt Template (Polish)",
+        "templateEN": "Prompt Template (English)",
+        "namePlaceholder": "Nazwa po polsku",
+        "nameEnPlaceholder": "Name in English",
+        "descriptionPlaceholder": "Krótki opis działania promptu po polsku...",
+        "descriptionEnPlaceholder": "Brief description of the prompt functionality...",
+        "templatePlaceholder": "Treść promptu po polsku...",
+        "templateEnPlaceholder": "Prompt content in English...",
+        "saveNote": "Changes will be saved to your library",
+        "cancel": "Cancel",
+        "save": "Save Changes"
+      },
+      "addToCollection": {
+        "title": "Add to Collection",
+        "description": "Select prompts to add to collection: {name}",
+        "empty": "All prompts are already in this collection",
+        "cancel": "Cancel",
+        "add": "Add ({count})"
+      }
+    },
+    "actions": {
+      "use": "Use prompt",
+      "edit": "Edit",
+      "delete": "Delete",
+      "removeFromCollection": "Remove from collection",
+      "confirmDelete": "Are you sure you want to delete this prompt?",
+      "confirmDeleteCustom": "Are you sure you want to delete this custom prompt?",
+      "confirmDeleteCollection": "Are you sure you want to delete this collection?",
+      "confirmClearHistory": "Are you sure you want to clear all history?",
+      "confirmRemoveFromCollection": "Are you sure you want to remove this prompt from collection?"
+    }
+  }
+}
