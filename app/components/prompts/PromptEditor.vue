@@ -466,7 +466,7 @@ defineEmits<{
 const { locale } = useI18n();
 const { options } = usePreloadedContent();
 const { savePrompt, removePrompt, savedPrompts, addToHistory } = useLibrary();
-const { trackEvent } = useAnalytics();
+
 // State
 const editedTemplate = ref("");
 const placeholderValues = ref<Record<string, string>>({});
@@ -482,19 +482,19 @@ const selectedPlaceholderKey = computed(() => {
   return detectedPlaceholders.value[selectedPlaceholderIndex.value] || null;
 });
 
+// NAPRAWA: Konwertuj template.id na string
+const templateIdString = computed(() => {
+  return props.template.id?.toString() || "";
+});
+
 // Check if current prompt is saved in library
 const isInLibrary = computed(() => {
   return savedPrompts.value.some(
-    (p) => p.id === props.template.id && p.savedId === savedPromptId.value
+    (p) =>
+      p.promptId === templateIdString.value && p.savedId === savedPromptId.value
   );
 });
-const usePrompt = (template: Prompt) => {
-  trackEvent("prompt_used", {
-    promptId: template.id,
-    category: template.category,
-    hasPlaceholders: !!template.placeholder_keys?.length,
-  });
-};
+
 // Translated fields - reactive to locale changes
 const translatedName = computed(() => {
   if (!props.template.name) return "Untitled";
@@ -552,7 +552,9 @@ const initializeTemplate = () => {
 
 // Check if prompt is in library
 const checkIfInLibrary = () => {
-  const existing = savedPrompts.value.find((p) => p.id === props.template.id);
+  const existing = savedPrompts.value.find(
+    (p) => p.promptId === templateIdString.value
+  );
   if (existing) {
     savedPromptId.value = existing.savedId;
   } else {
@@ -691,11 +693,13 @@ const toggleLibrary = () => {
     removePrompt(savedPromptId.value);
     savedPromptId.value = null;
   } else {
-    const saved = savePrompt(
-      props.template,
-      resultPrompt.value,
-      placeholderValues.value
-    );
+    const saved = savePrompt({
+      savedId: `saved_${Date.now()}`,
+      promptId: templateIdString.value,
+      result: resultPrompt.value,
+      placeholderValues: { ...placeholderValues.value },
+      timestamp: Date.now(),
+    });
     savedPromptId.value = saved.savedId;
   }
 };

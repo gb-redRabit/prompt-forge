@@ -1,9 +1,14 @@
-import type { PromptTemplate } from "~/types/content";
+import type { Prompt } from "~/types/content";
 
-export interface SavedPrompt extends PromptTemplate {
+export interface SavedPrompt {
   savedId: string;
-  savedAt: string;
-  isCustom?: boolean;
+  promptId: string; // ID oryginalnego promptu
+  result: string; // Wypełniony prompt
+  placeholderValues: Record<string, string>; // Wartości placeholder'ów
+  timestamp: number; // Czas zapisu
+  name?: { pl: string; en: string }; // Opcjonalna nazwa
+  description?: { pl: string; en: string }; // Opcjonalny opis
+  isCustom?: boolean; // Czy to custom prompt
 }
 
 export interface PromptCollection {
@@ -38,7 +43,7 @@ export const useLibrary = () => {
   }));
 
   const loadLibrary = () => {
-    if (import.meta.client) {
+    if (process.client) {
       try {
         const data = localStorage.getItem("prompt-library");
         if (data) {
@@ -55,7 +60,7 @@ export const useLibrary = () => {
   };
 
   const saveLibrary = () => {
-    if (import.meta.client) {
+    if (process.client) {
       const data: LibraryData = {
         saved: savedPrompts.value,
         custom: customPrompts.value,
@@ -66,12 +71,13 @@ export const useLibrary = () => {
     }
   };
 
-  // Zapisane prompty (z szablonów)
-  const savePrompt = (template: PromptTemplate) => {
+  const savePrompt = (promptData: SavedPrompt) => {
     const savedPrompt: SavedPrompt = {
-      ...template,
-      savedId: `saved-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-      savedAt: new Date().toISOString(),
+      ...promptData,
+      savedId:
+        promptData.savedId ||
+        `saved-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      timestamp: promptData.timestamp || Date.now(),
     };
     savedPrompts.value.push(savedPrompt);
     saveLibrary();
@@ -85,21 +91,19 @@ export const useLibrary = () => {
     saveLibrary();
   };
 
-  // Własne prompty
   const createCustomPrompt = (data: {
     name: { pl: string; en: string };
     description: { pl: string; en: string };
     template: { pl: string; en: string };
   }): SavedPrompt => {
     const customPrompt: SavedPrompt = {
-      id: `custom-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       savedId: `saved-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      promptId: `custom-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      result: data.template.pl || data.template.en || "",
+      placeholderValues: {},
+      timestamp: Date.now(),
       name: data.name,
       description: data.description,
-      template: data.template,
-      category: "custom",
-      tags: [],
-      savedAt: new Date().toISOString(),
       isCustom: true,
     };
     customPrompts.value.push(customPrompt);
@@ -109,13 +113,28 @@ export const useLibrary = () => {
 
   const updateCustomPrompt = (
     savedId: string,
-    data: Partial<Pick<SavedPrompt, "name" | "description" | "template">>
+    data: Partial<Pick<SavedPrompt, "name" | "description" | "result">>
   ) => {
     const index = customPrompts.value.findIndex((p) => p.savedId === savedId);
     if (index !== -1) {
+      // NAPRAWA: Pobierz istniejący prompt i sprawdź czy istnieje
+      const existingPrompt = customPrompts.value[index];
+
+      if (!existingPrompt) {
+        console.error(`Prompt with savedId ${savedId} not found`);
+        return;
+      }
+
+      // Teraz TypeScript wie, że existingPrompt nie jest undefined
       customPrompts.value[index] = {
-        ...customPrompts.value[index],
-        ...data,
+        savedId: existingPrompt.savedId,
+        promptId: existingPrompt.promptId,
+        result: data.result ?? existingPrompt.result,
+        placeholderValues: existingPrompt.placeholderValues,
+        timestamp: existingPrompt.timestamp,
+        name: data.name ?? existingPrompt.name,
+        description: data.description ?? existingPrompt.description,
+        isCustom: existingPrompt.isCustom,
       };
       saveLibrary();
     }
@@ -128,18 +147,23 @@ export const useLibrary = () => {
     saveLibrary();
   };
 
-  // Historia - NAPRAWIONA FUNKCJA
-  const addToHistory = (template: PromptTemplate) => {
+  const addToHistory = (template: Prompt) => {
+    // Konwertuj template.id na string dla porównania
+    const templateId = template.id?.toString();
+
     // Usuń duplikaty (ten sam ID promptu)
     promptHistory.value = promptHistory.value.filter(
-      (p) => p.id !== template.id
+      (p) => p.promptId !== templateId
     );
 
-    // Dodaj na początek
     const historyItem: SavedPrompt = {
-      ...template,
       savedId: `history-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-      savedAt: new Date().toISOString(),
+      promptId: templateId || `temp-${Date.now()}`,
+      result: "",
+      placeholderValues: {},
+      timestamp: Date.now(),
+      name: template.name,
+      description: template.description,
     };
     promptHistory.value.unshift(historyItem);
 
@@ -157,7 +181,6 @@ export const useLibrary = () => {
     saveLibrary();
   };
 
-  // Kolekcje
   const createCollection = (name: string, description: string = "") => {
     const collection: PromptCollection = {
       id: `col-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
@@ -194,7 +217,6 @@ export const useLibrary = () => {
     }
   };
 
-  // Import/Export
   const importLibrary = (
     jsonData: string,
     mode: "merge" | "replace" = "merge"
@@ -208,7 +230,6 @@ export const useLibrary = () => {
         collections.value = data.collections || [];
         promptHistory.value = data.history || [];
       } else {
-        // Merge - dodaj unikalne
         const existingSavedIds = new Set(
           savedPrompts.value.map((p) => p.savedId)
         );

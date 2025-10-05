@@ -55,8 +55,6 @@ export const useAI = () => {
       maxTokens?: number;
     } = {}
   ) => {
-    const startTime = Date.now();
-
     if (!config.value) {
       loadConfig();
     }
@@ -113,33 +111,11 @@ export const useAI = () => {
         throw new Error("Pusta odpowiedź od modelu");
       }
 
-      // Track successful query
-      if (process.client) {
-        const { trackEvent } = useAnalytics();
-        trackEvent("ai_query", {
-          model: config.value.modelId,
-          responseTime: Date.now() - startTime,
-          promptLength: prompt.length,
-          success: true,
-        });
-      }
-
       return {
         content: content.trim(),
         raw: data,
       };
     } catch (error: any) {
-      // Track failed query
-      if (process.client) {
-        const { trackEvent } = useAnalytics();
-        trackEvent("ai_query", {
-          model: config.value.modelId,
-          responseTime: Date.now() - startTime,
-          error: error.message,
-          success: false,
-        });
-      }
-
       throw new Error(`Błąd komunikacji z AI: ${error.message}`);
     }
   };
