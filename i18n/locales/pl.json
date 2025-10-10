@@ -101,7 +101,19 @@
       "no_template_selected": "Nie Wybrano Szablonu",
       "select_template_from_library": "Wybierz szablon z biblioteki, aby rozpocząć",
       "browse_templates": "Przeglądaj Szablony",
-      "characters": "znaków"
+      "characters": "znaków",
+      "reset": "Reset",
+      "clear": "Wyczyść",
+      "previous": "Poprzedni",
+      "next": "Następny",
+      "show_less": "Pokaż mniej",
+      "show_all": "Pokaż wszystkie ({count})",
+      "search_options": "Szukaj opcji...",
+      "quick_select": "Szybki wybór:",
+      "all_options": "Wszystkie opcje:",
+      "options_count": "{count} opcji",
+      "saved_in_library": "W bibliotece",
+      "save_to_library": "Zapisz do biblioteki"
     },
     "common": {
       "loading": "Ładowanie...",
@@ -267,6 +279,53 @@
       "summarize": "Podsumuj następujący tekst: ",
       "translate": "Przetłumacz na polski: "
     },
+    "input": {
+      "sending_to": "Wysyłasz do:",
+      "character_count": "Liczba znaków",
+      "send_message": "Wyślij wiadomość",
+      "key_shift": "Shift",
+      "key_enter": "Enter"
+    },
+    "sidebar": {
+      "new_conversation": "Nowa rozmowa",
+      "no_conversations": "Brak rozmów",
+      "start_conversation": "Kliknij przycisk wyżej, aby rozpocząć",
+      "confirm_delete": "Czy na pewno chcesz usunąć tę rozmowę?",
+      "delete_conversation": "Usuń rozmowę",
+      "message_count": "{count} {count, plural, one {wiadomość} few {wiadomości} many {wiadomości} other {wiadomości}}",
+      "total_conversations": "Wszystkie rozmowy",
+      "total_messages": "Wszystkie wiadomości",
+      "yesterday": "Wczoraj",
+      "days_ago": "{count} {count, plural, one {dzień} few {dni} many {dni} other {dni}} temu"
+    },
+    "window": {
+      "start_title": "Rozpocznij rozmowę",
+      "start_description": "Zadaj pytanie lub opisz co chcesz zrobić",
+      "thinking": "myśli...",
+      "confirm_clear": "Czy na pewno chcesz wyczyścić tę rozmowę?",
+      "rename_prompt": "Nowa nazwa rozmowy:",
+      "quick_prompts": {
+        "help_email": "Pomóż mi napisać email",
+        "explain_ai": "Wyjaśnij mi jak działa AI",
+        "project_ideas": "Zaproponuj pomysły na projekt",
+        "analyze_code": "Przeanalizuj ten kod"
+      }
+    },
+    "header": {
+      "new_conversation": "Nowa rozmowa",
+      "rename": "Zmień nazwę",
+      "clear": "Wyczyść rozmowę",
+      "messages_count": "{count} {count, plural, one {wiadomość} few {wiadomości} many {wiadomości} other {wiadomości}}",
+      "generating": "Generowanie...",
+      "model": "Model:"
+    },
+    "message": {
+      "copy": "Kopiuj",
+      "copied": "Skopiowano!",
+      "retry": "Spróbuj ponownie",
+      "error": "Błąd generowania odpowiedzi",
+      "timestamp": "o"
+    },
     "new_conversation": "Nowa rozmowa",
     "no_conversations": "Brak rozmów",
     "confirm_delete": "Czy na pewno chcesz usunąć tę rozmowę?",
@@ -415,7 +474,8 @@
     "sort": "Sortuj",
     "clear": "Wyczyść",
     "reset": "Resetuj",
-    "apply": "Zastosuj"
+    "apply": "Zastosuj",
+    "use": "Użyj"
   },
   "library": {
     "title": "Biblioteka",
@@ -487,23 +547,62 @@
         "create": "Utwórz"
       },
       "edit": {
-        "title": "Edytuj Własny Prompt",
-        "description": "Dostosuj nazwę, opis i treść swojego promptu",
-        "namePL": "Nazwa (Polski)",
-        "nameEN": "Nazwa (English)",
-        "descriptionPL": "Opis (Polski)",
-        "descriptionEN": "Opis (English)",
-        "templatePL": "Szablon Promptu (Polski)",
-        "templateEN": "Szablon Promptu (English)",
-        "namePlaceholder": "Nazwa po polsku",
-        "nameEnPlaceholder": "Name in English",
-        "descriptionPlaceholder": "Krótki opis działania promptu po polsku...",
-        "descriptionEnPlaceholder": "Brief description of the prompt functionality...",
-        "templatePlaceholder": "Treść promptu po polsku...",
-        "templateEnPlaceholder": "Prompt content in English...",
-        "saveNote": "Zmiany zostaną zapisane w Twojej bibliotece",
-        "cancel": "Anuluj",
-        "save": "Zapisz Zmiany"
+        "title": "Edytuj Prompt",
+        "description": "Dostosuj nazwę, opis, kategorie, tagi i zmienne swojego promptu",
+        "sections": {
+          "basic": "Podstawowe informacje",
+          "template": "Szablon promptu",
+          "organization": "Organizacja",
+          "variables": "Zmienne (Placeholders)",
+          "variables_hint": "Definiuj zmienne używane w szablonie"
+        },
+        "fields": {
+          "namePL": "Nazwa",
+          "nameEN": "Name",
+          "descriptionPL": "Opis",
+          "descriptionEN": "Description",
+          "templatePL": "Szablon",
+          "templateEN": "Template",
+          "categories": "Kategorie",
+          "tags": "Tagi",
+          "placeholders": "Zmienne"
+        },
+        "placeholders": {
+          "namePL": "Wprowadź nazwę po polsku",
+          "nameEN": "Enter name in English",
+          "descriptionPL": "Wprowadź opis po polsku",
+          "descriptionEN": "Enter description in English",
+          "templatePL": "Wprowadź szablon po polsku...",
+          "templateEN": "Enter template in English...",
+          "category": "Dodaj kategorię...",
+          "tag": "Dodaj tag...",
+          "variableKey": "Klucz zmiennej...",
+          "variableValue": "Wartość domyślna...",
+          "variableKeyExample": "np. author_name",
+          "variableValueExample": "np. Jan Kowalski"
+        },
+        "labels": {
+          "key": "Klucz",
+          "value": "Wartość domyślna"
+        },
+        "actions": {
+          "add": "Dodaj",
+          "clear": "Wyczyść",
+          "remove": "Usuń"
+        },
+        "empty": {
+          "noData": "Brak danych do edycji",
+          "noVariables": "Brak zdefiniowanych zmiennych"
+        },
+        "hints": {
+          "saveNote": "Zmiany zostaną zapisane natychmiast",
+          "categoryCount": "{count} kategorii",
+          "tagCount": "{count} tagów"
+        },
+        "badges": {
+          "pl": "PL",
+          "en": "EN"
+        }
       },
       "addToCollection": {
         "title": "Dodaj do Kolekcji",

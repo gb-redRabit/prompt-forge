@@ -24,22 +24,23 @@
             />
           </div>
           <h3 class="text-xl font-bold text-gray-900 dark:text-white">
-            Rozpocznij rozmowę
+            {{ $t("chat.window.start_title") }}
           </h3>
           <p class="text-gray-600 dark:text-gray-400">
-            Zadaj pytanie lub opisz co chcesz zrobić
+            {{ $t("chat.window.start_description") }}
           </p>
 
           <!-- Quick prompts -->
           <div class="grid grid-cols-1 gap-2 pt-4">
             <UButton
-              v-for="prompt in quickPrompts"
-              :key="prompt"
+              v-for="(prompt, index) in quickPrompts"
+              :key="index"
               variant="outline"
               block
-              @click="sendQuickPrompt(prompt)"
+              @click="sendQuickPrompt(prompt.text)"
             >
-              {{ prompt }}
+              <UIcon :name="prompt.icon" class="mr-2" />
+              {{ prompt.text }}
             </UButton>
           </div>
         </div>
@@ -77,10 +78,10 @@
                 <span
                   class="font-semibold text-gray-900 dark:text-white text-sm"
                 >
-                  AI
+                  {{ $t("chat.ai_label") }}
                 </span>
                 <span class="text-xs text-purple-600 dark:text-purple-400">
-                  myśli...
+                  {{ $t("chat.window.thinking") }}
                 </span>
               </div>
 
@@ -116,6 +117,9 @@
 
 <script setup lang="ts">
 import { useChat } from "~/composables/useChat";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const {
   activeConversation,
@@ -129,12 +133,24 @@ const {
 
 const messagesContainer = ref<HTMLDivElement | null>(null);
 
-const quickPrompts = [
-  "Pomóż mi napisać email",
-  "Wyjaśnij mi jak działa AI",
-  "Zaproponuj pomysły na projekt",
-  "Przeanalizuj ten kod",
-];
+const quickPrompts = computed(() => [
+  {
+    text: t("chat.window.quick_prompts.help_email"),
+    icon: "i-heroicons-envelope",
+  },
+  {
+    text: t("chat.window.quick_prompts.explain_ai"),
+    icon: "i-heroicons-light-bulb",
+  },
+  {
+    text: t("chat.window.quick_prompts.project_ideas"),
+    icon: "i-heroicons-sparkles",
+  },
+  {
+    text: t("chat.window.quick_prompts.analyze_code"),
+    icon: "i-heroicons-code-bracket",
+  },
+]);
 
 const handleSend = async (message: string) => {
   if (!activeConversation.value) return;
@@ -158,7 +174,7 @@ const sendQuickPrompt = (prompt: string) => {
 const handleClear = () => {
   if (!activeConversation.value) return;
 
-  if (confirm("Czy na pewno chcesz wyczyścić tę rozmowę?")) {
+  if (confirm(t("chat.window.confirm_clear"))) {
     clearConversation(activeConversation.value.id);
   }
 };
@@ -167,7 +183,7 @@ const handleRename = () => {
   if (!activeConversation.value) return;
 
   const newTitle = prompt(
-    "Nowa nazwa konwersacji:",
+    t("chat.window.rename_prompt"),
     activeConversation.value.title
   );
   if (newTitle && newTitle.trim()) {

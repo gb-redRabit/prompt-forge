@@ -204,7 +204,7 @@ definePageMeta({
 const route = useRoute();
 const { locale } = useI18n();
 const { prompts, isLoaded } = usePreloadedContent();
-const { customPrompts, savedPrompts } = useLibrary();
+const { getPromptById } = useLibrary();
 
 const selectedTemplate = ref<Prompt | null>(null);
 const isLoading = ref(true);
@@ -275,27 +275,17 @@ const loadTemplate = async () => {
       return;
     }
 
-    // NOWA LOGIKA: Sprawdź czy to custom prompt (string ID)
+    // NOWA LOGIKA: Sprawdź czy to custom prompt
     if (typeof templateId === "string" && templateId.startsWith("custom-")) {
-      // Szukaj w customPrompts
-      const customPrompt = customPrompts.value.find((p) => p.id === templateId);
+      const customPrompt = getPromptById(templateId);
 
       if (customPrompt) {
-        selectedTemplate.value = customPrompt as Prompt;
+        selectedTemplate.value = customPrompt;
         isLoading.value = false;
         return;
       }
 
-      // Jeśli nie znaleziono w custom, sprawdź savedPrompts
-      const savedPrompt = savedPrompts.value.find((p) => p.id === templateId);
-
-      if (savedPrompt) {
-        selectedTemplate.value = savedPrompt as Prompt;
-        isLoading.value = false;
-        return;
-      }
-
-      error.value = `Custom prompt with ID ${templateId} not found`;
+      error.value = `Prompt with ID ${templateId} not found`;
       isLoading.value = false;
       return;
     }

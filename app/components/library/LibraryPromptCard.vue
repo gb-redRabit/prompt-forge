@@ -1,5 +1,5 @@
 <template>
-  <UCard class="hover:shadow-lg transition-all">
+  <UCard class="hover:shadow-lg transition-all flex flex-col justify-between">
     <template #header>
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
@@ -24,62 +24,39 @@
         {{ promptDescription }}
       </p>
 
-      <div class="flex flex-wrap gap-1">
-        <UBadge
-          v-for="tag in prompt.tags?.slice(0, 3)"
-          :key="tag"
-          variant="subtle"
-          size="xs"
-        >
-          {{ tag }}
-        </UBadge>
-        <UBadge
-          v-if="(prompt.tags?.length || 0) > 3"
-          variant="subtle"
-          size="xs"
-        >
-          +{{ (prompt.tags?.length || 0) - 3 }}
-        </UBadge>
-      </div>
-
       <div
         class="flex items-center justify-between pt-2 border-t border-gray-200 dark:border-gray-700"
       >
         <span class="text-xs text-gray-500">
-          {{ new Date(prompt.savedAt).toLocaleDateString() }}
+          {{ formattedDate }}
         </span>
 
         <div class="flex items-center gap-1">
-          <!-- Use button - zawsze widoczny -->
           <UButton
+            icon="i-heroicons-play"
+            size="xs"
             color="primary"
-            variant="ghost"
-            size="xs"
-            icon="i-heroicons-arrow-right"
-            :title="$t('library.actions.use')"
+            variant="soft"
             @click="$emit('use', prompt)"
-          />
+          >
+            {{ $t("common.use") || "Użyj" }}
+          </UButton>
 
-          <!-- Edit button - TYLKO dla własnych promptów -->
           <UButton
-            v-if="prompt.isCustom && showEdit"
-            color="warning"
-            variant="ghost"
-            size="xs"
+            v-if="showEdit"
             icon="i-heroicons-pencil"
-            :title="$t('library.actions.edit')"
+            size="xs"
+            color="neutral"
+            variant="ghost"
             @click="$emit('edit', prompt)"
           />
 
-          <!-- Delete button - opcjonalny -->
           <UButton
-            v-if="showDelete"
+            icon="i-heroicons-trash"
+            size="xs"
             color="error"
             variant="ghost"
-            size="xs"
-            icon="i-heroicons-trash"
-            :title="$t('library.actions.delete')"
-            @click="$emit('delete', prompt)"
+            @click="$emit('delete', prompt.savedId)"
           />
         </div>
       </div>
@@ -90,48 +67,101 @@
 <script setup lang="ts">
 import type { SavedPrompt } from "~/composables/useLibrary";
 
-const props = withDefaults(
-  defineProps<{
-    prompt: SavedPrompt;
-    showEdit?: boolean;
-    showDelete?: boolean;
-  }>(),
-  {
-    showEdit: true,
-    showDelete: true,
-  }
-);
+const props = defineProps<{
+  prompt: SavedPrompt;
+  showEdit?: boolean;
+}>();
 
 defineEmits<{
   use: [prompt: SavedPrompt];
   edit: [prompt: SavedPrompt];
-  delete: [prompt: SavedPrompt];
+  delete: [savedId: string];
 }>();
 
 const { locale } = useI18n();
 
+// Używamy preloadowanych danych zamiast ładować ponownie
+const { prompts: templates } = usePreloadedContent();
+
+// Helper do pobierania tekstu w odpowiednim języku
+const getLocalizedText = (value: any): string => {
+  if (!value) return "";
+  if (typeof value === "string") return value;
+  if (typeof value === "object" && value !== null) {
+    return locale.value === "pl"
+      ? value.pl || value.en || ""
+      : value.en || value.pl || "";
+  }
+  return "";
+};
+
+// Nazwa promptu
 const promptName = computed(() => {
-  if (!props.prompt.name) return "Bez nazwy";
-  return locale.value === "pl" ? props.prompt.name.pl : props.prompt.name.en;
+  // Jeśli ma name w obiekcie
+  if (props.prompt.name) {
+    return getLocalizedText(props.prompt.name);
+  }
+
+  // Jeśli to zapisany prompt z promptId, pobierz z templates
+  if (props.prompt.promptId && templates.value?.length) {
+    const template = templates.value.find(
+      (t) => t.id?.toString() === props.prompt.promptId
+    );
+    if (template?.name) {
+      return getLocalizedText(template.name);
+    }
+  }
+
+  // Fallback - pierwsze 50 znaków z result
+  const resultText = props.prompt.result || "Prompt";
+  return resultText.length > 50
+    ? resultText.substring(0, 50) + "..."
+    : resultText;
 });
 
+// Opis promptu
 const promptDescription = computed(() => {
-  if (!props.prompt.description) return "";
-  return locale.value === "pl"
-    ? props.prompt.description.pl
-    : props.prompt.description.en;
+  // Jeśli ma description w obiekcie
+  if (props.prompt.description) {
+    return getLocalizedText(props.prompt.description);
+  }
+
+  // Jeśli to zapisany prompt z promptId, pobierz z templates
+  if (props.prompt.promptId && templates.value?.length) {
+    const template = templates.value.find(
+      (t) => t.id?.toString() === props.prompt.promptId
+    );
+    if (template?.description) {
+      return getLocalizedText(template.description);
+    }
+  }
+
+  // Fallback - fragment result
+  const resultText = props.prompt.result || "";
+  return resultText.length > 100
+    ? resultText.substring(0, 100) + "..."
+    : resultText;
 });
 
+// Ikona kategorii
 const categoryIcon = computed(() => {
-  const icons: Record<string, string> = {
-    custom: "i-heroicons-pencil",
-    writing: "i-heroicons-pencil-square",
-    coding: "i-heroicons-code-bracket",
-    business: "i-heroicons-briefcase",
-    education: "i-heroicons-academic-cap",
-    creative: "i-heroicons-sparkles",
-    analysis: "i-heroicons-chart-bar",
-  };
-  return icons[props.prompt.category] || "i-heroicons-document-text";
+  // Jeśli to custom prompt
+  if (props.prompt.isCustom) {
+    return "i-heroicons-sparkles";
+  }
+  return "i-heroicons-document-text";
+});
+
+// Sformatowana data
+const formattedDate = computed(() => {
+  const timestamp = props.prompt.savedAt || props.prompt.timestamp;
+  if (!timestamp) return "";
+
+  const date = new Date(timestamp);
+  return date.toLocaleDateString(locale.value === "pl" ? "pl-PL" : "en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
 });
 </script>

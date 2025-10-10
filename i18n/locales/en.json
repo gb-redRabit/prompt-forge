@@ -81,7 +81,7 @@
       "categories": "Categories",
       "tags": "Tags",
       "preview": "Preview",
-      "placeholders": "placeholders",
+      "placeholders": "variables",
       "use_template": "Use template",
       "showing": "Showing",
       "of": "of",
@@ -107,7 +107,7 @@
       "enter_value": "Enter value",
       "final_prompt": "Final Prompt",
       "filled": "filled",
-      "unfilled_placeholders": "Unfilled variables",
+      "unfilled_placeholders": "Unfilled variables:",
       "error_loading": "Error Loading Template",
       "try_again": "Try Again",
       "no_template_selected": "No Template Selected",
@@ -115,7 +115,19 @@
       "browse_templates": "Browse Templates",
       "characters": "characters",
       "search_tags": "Search tags...",
-      "hidden_tags": "{count} hidden tags (use search)"
+      "hidden_tags": "{count} hidden tags (use search)",
+      "reset": "Reset",
+      "clear": "Clear",
+      "previous": "Previous",
+      "next": "Next",
+      "show_less": "Show less",
+      "show_all": "Show all ({count})",
+      "search_options": "Search options...",
+      "quick_select": "Quick select:",
+      "all_options": "All options:",
+      "options_count": "{count} options",
+      "saved_in_library": "In library",
+      "save_to_library": "Save to library"
     },
     "common": {
       "loading": "Loading...",
@@ -279,8 +291,8 @@
     "you": "You",
     "ai_label": "AI",
     "placeholder_configure": "Configure AI to start...",
-    "placeholder_write": "Write a message... (Shift+Enter for newline)",
-    "keyboard_newline": "newline",
+    "placeholder_write": "Write a message... (Shift+Enter for new line)",
+    "keyboard_newline": "new line",
     "today": "Today",
     "yesterday": "Yesterday",
     "days_ago": "days ago",
@@ -292,7 +304,54 @@
     "quick_text": {
       "explain": "Explain this in simple terms: ",
       "summarize": "Summarize the following text: ",
-      "translate": "Translate to Polish: "
+      "translate": "Translate to English: "
+    },
+    "input": {
+      "sending_to": "Sending to:",
+      "character_count": "Character count",
+      "send_message": "Send message",
+      "key_shift": "Shift",
+      "key_enter": "Enter"
+    },
+    "sidebar": {
+      "new_conversation": "New conversation",
+      "no_conversations": "No conversations",
+      "start_conversation": "Click the button above to start",
+      "confirm_delete": "Are you sure you want to delete this conversation?",
+      "delete_conversation": "Delete conversation",
+      "message_count": "{count} {count, plural, one {message} other {messages}}",
+      "total_conversations": "Total conversations",
+      "total_messages": "Total messages",
+      "yesterday": "Yesterday",
+      "days_ago": "{count} {count, plural, one {day} other {days}} ago"
+    },
+    "window": {
+      "start_title": "Start a conversation",
+      "start_description": "Ask a question or describe what you want to do",
+      "thinking": "thinking...",
+      "confirm_clear": "Are you sure you want to clear this conversation?",
+      "rename_prompt": "New conversation name:",
+      "quick_prompts": {
+        "help_email": "Help me write an email",
+        "explain_ai": "Explain how AI works",
+        "project_ideas": "Suggest project ideas",
+        "analyze_code": "Analyze this code"
+      }
+    },
+    "header": {
+      "new_conversation": "New conversation",
+      "rename": "Rename",
+      "clear": "Clear conversation",
+      "messages_count": "{count} {count, plural, one {message} other {messages}}",
+      "generating": "Generating...",
+      "model": "Model:"
+    },
+    "message": {
+      "copy": "Copy",
+      "copied": "Copied!",
+      "retry": "Retry",
+      "error": "Error generating response",
+      "timestamp": "at"
     },
     "new_conversation": "New conversation",
     "no_conversations": "No conversations",

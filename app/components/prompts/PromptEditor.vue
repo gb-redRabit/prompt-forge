@@ -32,7 +32,11 @@
             "
             class="mr-2"
           />
-          {{ isInLibrary ? "W bibliotece" : "Zapisz do biblioteki" }}
+          {{
+            isInLibrary
+              ? $t("pages.templates.saved_in_library")
+              : $t("pages.templates.save_to_library")
+          }}
         </UButton>
 
         <!-- Close button -->
@@ -52,6 +56,8 @@
       <UBadge v-if="template.type" color="secondary" size="lg" variant="subtle">
         {{ template.type }}
       </UBadge>
+
+      <!-- Kategorie -->
       <UBadge
         v-for="category in template.categories?.slice(0, 3)"
         :key="category"
@@ -62,6 +68,16 @@
         {{ category }}
       </UBadge>
       <UBadge
+        v-if="(template.categories?.length || 0) > 3"
+        color="primary"
+        variant="subtle"
+        size="md"
+      >
+        +{{ (template.categories?.length || 0) - 3 }}
+      </UBadge>
+
+      <!-- Tagi -->
+      <UBadge
         v-for="tag in template.tags?.slice(0, 5)"
         :key="tag"
         color="neutral"
@@ -69,6 +85,14 @@
         size="md"
       >
         #{{ tag }}
+      </UBadge>
+      <UBadge
+        v-if="(template.tags?.length || 0) > 5"
+        color="neutral"
+        variant="outline"
+        size="md"
+      >
+        +{{ (template.tags?.length || 0) - 5 }}
       </UBadge>
     </div>
 
@@ -88,7 +112,7 @@
                 @click="resetTemplate"
               >
                 <UIcon name="i-heroicons-arrow-path" class="mr-1" />
-                Reset
+                {{ $t("pages.templates.reset") }}
               </UButton>
             </div>
           </template>
@@ -105,14 +129,14 @@
           <div
             class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mt-2"
           >
-            <span
-              >{{ editedTemplate.length }}
-              {{ $t("pages.templates.characters") }}</span
-            >
-            <span
-              >{{ detectedPlaceholders.length }}
-              {{ $t("pages.templates.placeholders") }}</span
-            >
+            <span>
+              {{ editedTemplate.length }}
+              {{ $t("pages.templates.characters") }}
+            </span>
+            <span>
+              {{ detectedPlaceholders.length }}
+              {{ $t("pages.templates.placeholders") }}
+            </span>
           </div>
         </UCard>
       </div>
@@ -203,7 +227,7 @@
                   icon="i-heroicons-x-mark"
                   @click="clearPlaceholder(selectedPlaceholderKey)"
                 >
-                  Wyczyść
+                  {{ $t("pages.templates.clear") }}
                 </UButton>
               </div>
 
@@ -228,7 +252,7 @@
                     getOptionsForKey(selectedPlaceholderKey).length > 6
                   "
                   v-model="optionsSearch"
-                  placeholder="Szukaj opcji..."
+                  :placeholder="$t('pages.templates.search_options')"
                   icon="i-heroicons-magnifying-glass"
                   size="sm"
                 />
@@ -248,13 +272,17 @@
                   >
                     {{
                       showAllOptions[selectedPlaceholderKey]
-                        ? "Wszystkie opcje:"
-                        : "Szybki wybór:"
+                        ? $t("pages.templates.all_options")
+                        : $t("pages.templates.quick_select")
                     }}
                   </p>
                   <span class="text-xs text-gray-500">
-                    {{ filteredVisibleOptions(selectedPlaceholderKey).length }}
-                    opcji
+                    {{
+                      $t("pages.templates.options_count", {
+                        count: filteredVisibleOptions(selectedPlaceholderKey)
+                          .length,
+                      })
+                    }}
                   </span>
                 </div>
 
@@ -317,8 +345,11 @@
                     />
                     {{
                       showAllOptions[selectedPlaceholderKey]
-                        ? "Pokaż mniej"
-                        : `Pokaż wszystkie (${getOptionsForKey(selectedPlaceholderKey).length})`
+                        ? $t("pages.templates.show_less")
+                        : $t("pages.templates.show_all", {
+                            count: getOptionsForKey(selectedPlaceholderKey)
+                              .length,
+                          })
                     }}
                   </UButton>
                 </div>
@@ -332,7 +363,7 @@
                 <p
                   class="text-xs font-medium text-primary-700 dark:text-primary-300 mb-1"
                 >
-                  Podgląd:
+                  {{ $t("pages.templates.preview") }}
                 </p>
                 <p class="text-sm text-gray-900 dark:text-white font-mono">
                   {{ placeholderValues[selectedPlaceholderKey] }}
@@ -357,7 +388,7 @@
                 "
               >
                 <UIcon name="i-heroicons-chevron-left" class="mr-1" />
-                Poprzedni
+                {{ $t("pages.templates.previous") }}
               </UButton>
 
               <span class="text-xs text-gray-500">
@@ -379,7 +410,7 @@
                   )
                 "
               >
-                Następny
+                {{ $t("pages.templates.next") }}
                 <UIcon name="i-heroicons-chevron-right" class="ml-1" />
               </UButton>
             </div>
@@ -544,6 +575,13 @@ const initializeTemplate = () => {
       placeholderValues.value[key] = "";
     }
   });
+
+  // Jeśli to zapisany prompt, załaduj zapisane wartości
+  if (props.template.placeholderValues) {
+    Object.entries(props.template.placeholderValues).forEach(([key, value]) => {
+      placeholderValues.value[key] = String(value ?? "");
+    });
+  }
 
   checkIfInLibrary();
   addToHistory(props.template);

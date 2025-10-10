@@ -7,7 +7,7 @@
     >
       <span class="flex items-center gap-1">
         <UIcon name="i-heroicons-cpu-chip" class="w-3 h-3" />
-        Wysyłasz do:
+        {{ $t("chat.input.sending_to") }}
         <strong class="text-primary-600 dark:text-primary-400">{{
           currentModel
         }}</strong>
@@ -39,6 +39,7 @@
             <div
               v-if="input.length > 0"
               class="absolute bottom-2 right-2 text-xs text-gray-400 dark:text-gray-600"
+              :title="$t('chat.input.character_count')"
             >
               {{ input.length }}
             </div>
@@ -51,6 +52,7 @@
             size="lg"
             :disabled="!canSend"
             :loading="disabled"
+            :title="$t('chat.input.send_message')"
             class="self-end"
           >
             <UIcon
@@ -73,6 +75,7 @@
               :key="action.labelKey"
               variant="ghost"
               size="xs"
+              :title="$t(action.labelKey)"
               @click="insertQuickAction(action.text)"
             >
               <UIcon :name="action.icon" class="mr-1" />
@@ -81,13 +84,13 @@
           </div>
 
           <div class="text-xs text-gray-500 dark:text-gray-400">
-            <kbd class="px-2 py-0.5 bg-gray-100 dark:bg-gray-800 rounded"
-              >Shift</kbd
-            >
+            <kbd class="px-2 py-0.5 bg-gray-100 dark:bg-gray-800 rounded">{{
+              $t("chat.input.key_shift")
+            }}</kbd>
             +
-            <kbd class="px-2 py-0.5 bg-gray-100 dark:bg-gray-800 rounded"
-              >Enter</kbd
-            >
+            <kbd class="px-2 py-0.5 bg-gray-100 dark:bg-gray-800 rounded">{{
+              $t("chat.input.key_enter")
+            }}</kbd>
             {{ $t("chat.keyboard_newline") }}
           </div>
         </div>

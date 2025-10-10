@@ -2,13 +2,18 @@ import type { Prompt } from "~/types/content";
 
 export interface SavedPrompt {
   savedId: string;
-  promptId: string; // ID oryginalnego promptu
-  result: string; // Wypełniony prompt
-  placeholderValues: Record<string, string>; // Wartości placeholder'ów
-  timestamp: number; // Czas zapisu
-  name?: { pl: string; en: string }; // Opcjonalna nazwa
-  description?: { pl: string; en: string }; // Opcjonalny opis
-  isCustom?: boolean; // Czy to custom prompt
+  promptId: string;
+  result: string;
+  placeholderValues: Record<string, string>;
+  timestamp: number;
+  name?: { pl: string; en: string };
+  description?: { pl: string; en: string };
+  template?: { pl: string; en: string };
+  isCustom?: boolean;
+  tags?: string[];
+  categories?: string[];
+  placeholder_keys?: string[];
+  savedAt?: number;
 }
 
 export interface PromptCollection {
@@ -67,7 +72,23 @@ export const useLibrary = () => {
         collections: collections.value,
         history: promptHistory.value,
       };
+
+      console.log("💾 Zapisywanie biblioteki do localStorage:", {
+        customPromptsCount: customPrompts.value.length,
+        firstCustomPrompt: customPrompts.value[0],
+      });
+
       localStorage.setItem("prompt-library", JSON.stringify(data));
+
+      // Weryfikacja zapisu
+      const saved = localStorage.getItem("prompt-library");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        console.log("✅ Zweryfikowano zapis w localStorage:", {
+          customPromptsCount: parsed.custom?.length,
+          firstCustomPrompt: parsed.custom?.[0],
+        });
+      }
     }
   };
 
@@ -96,28 +117,30 @@ export const useLibrary = () => {
     description: { pl: string; en: string };
     template: { pl: string; en: string };
   }): SavedPrompt => {
-    const customPrompt: SavedPrompt = {
-      savedId: `saved-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-      promptId: `custom-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-      result: data.template.pl || data.template.en || "",
-      placeholderValues: {},
-      timestamp: Date.now(),
+    const id = `custom-${Date.now()}-${Math.random().toString(36).substring(2, 15)}`;
+    const savedId = `saved-${Date.now()}-${Math.random().toString(36).substring(2, 15)}`;
+
+    const newPrompt: SavedPrompt = {
+      savedId,
+      promptId: id,
       name: data.name,
       description: data.description,
+      result: data.template.pl, // lub wybierz odpowiedni język
+      template: data.template,
+      placeholderValues: {},
+      timestamp: Date.now(),
       isCustom: true,
     };
-    customPrompts.value.push(customPrompt);
+
+    customPrompts.value.push(newPrompt);
     saveLibrary();
-    return customPrompt;
+
+    return newPrompt;
   };
 
-  const updateCustomPrompt = (
-    savedId: string,
-    data: Partial<Pick<SavedPrompt, "name" | "description" | "result">>
-  ) => {
+  const updateCustomPrompt = (savedId: string, data: Partial<SavedPrompt>) => {
     const index = customPrompts.value.findIndex((p) => p.savedId === savedId);
     if (index !== -1) {
-      // NAPRAWA: Pobierz istniejący prompt i sprawdź czy istnieje
       const existingPrompt = customPrompts.value[index];
 
       if (!existingPrompt) {
@@ -125,18 +148,30 @@ export const useLibrary = () => {
         return;
       }
 
-      // Teraz TypeScript wie, że existingPrompt nie jest undefined
+      console.log("🔄 Aktualizacja promptu:", {
+        savedId,
+        oldData: existingPrompt,
+        newData: data,
+      });
+
+      // POPRAWKA: Merge wszystkie pola, zachowaj istniejące jeśli nie są w data
       customPrompts.value[index] = {
-        savedId: existingPrompt.savedId,
-        promptId: existingPrompt.promptId,
-        result: data.result ?? existingPrompt.result,
-        placeholderValues: existingPrompt.placeholderValues,
-        timestamp: existingPrompt.timestamp,
-        name: data.name ?? existingPrompt.name,
-        description: data.description ?? existingPrompt.description,
-        isCustom: existingPrompt.isCustom,
+        ...existingPrompt,
+        ...data,
+        savedId: existingPrompt.savedId, // Zachowaj savedId
+        promptId: existingPrompt.promptId, // Zachowaj promptId
+        timestamp: existingPrompt.timestamp, // Zachowaj oryginalny timestamp
+        savedAt: Date.now(), // Zaktualizuj czas modyfikacji
+        isCustom: true, // Upewnij się, że to custom
       };
+
+      console.log("✅ Zaktualizowano prompt:", customPrompts.value[index]);
+
       saveLibrary();
+    } else {
+      console.error(
+        `Prompt with savedId ${savedId} not found in customPrompts`
+      );
     }
   };
 
@@ -278,6 +313,37 @@ export const useLibrary = () => {
     URL.revokeObjectURL(url);
   };
 
+  // NOWA FUNKCJA: Konwertuj SavedPrompt na Prompt (dla custom promptów)
+  const getPromptById = (promptId: string): Prompt | null => {
+    // Sprawdź czy to custom prompt
+    if (promptId.startsWith("custom-")) {
+      const customPrompt = customPrompts.value.find(
+        (p) => p.promptId === promptId || p.savedId === promptId
+      );
+
+      if (!customPrompt) return null;
+
+      // Konwertuj SavedPrompt na Prompt
+      return {
+        id: customPrompt.promptId,
+        name: customPrompt.name || { pl: "Bez nazwy", en: "Untitled" },
+        description: customPrompt.description || { pl: "", en: "" },
+        template:
+          typeof customPrompt.result === "string"
+            ? { pl: customPrompt.result, en: customPrompt.result }
+            : (customPrompt.result as any),
+        type: "custom",
+        categories: customPrompt.categories || ["custom"],
+        tags: customPrompt.tags || [],
+        placeholder_keys: customPrompt.placeholder_keys || [],
+        placeholderValues: customPrompt.placeholderValues || {}, // Dodane brakujące pole
+      } as unknown as Prompt;
+    }
+
+    // Dla zapisanych promptów zwróć null (będą ładowane z głównej kolekcji)
+    return null;
+  };
+
   return {
     savedPrompts,
     customPrompts,
@@ -298,5 +364,6 @@ export const useLibrary = () => {
     removeFromCollection,
     importLibrary,
     downloadLibrary,
+    getPromptById,
   };
 };

@@ -27,11 +27,6 @@
             $t("library.export")
           }}
         </UButton>
-        <UButton color="primary" @click="createNewPrompt">
-          <UIcon name="i-heroicons-plus" class="mr-2" />{{
-            $t("library.newPrompt")
-          }}
-        </UButton>
       </div>
     </div>
 
@@ -122,7 +117,7 @@ definePageMeta({
   layout: "dashboard",
 });
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 const {
   savedPrompts,
@@ -191,9 +186,17 @@ const availablePromptsForCollection = computed(() => {
 
 // Actions
 const usePrompt = (prompt: SavedPrompt) => {
+  // Dla zapisanych promptów używamy promptId, a nie id
+  const templateId = prompt.promptId;
+
+  if (!templateId) {
+    console.error("Brak promptId dla promptu:", prompt);
+    return;
+  }
+
   navigateTo({
     path: "/prompts",
-    query: { templateId: prompt.id },
+    query: { templateId },
   });
   addToHistory(prompt);
 };
@@ -210,12 +213,23 @@ const handleEditPrompt = (prompt: SavedPrompt) => {
 };
 
 const handleSaveEdit = (data: SavedPrompt) => {
+  console.log("📝 Otrzymano dane do zapisu:", data);
+
+  // POPRAWKA: Przekaż WSZYSTKIE pola, nie tylko name/description/template
   updateCustomPrompt(data.savedId, {
     name: data.name,
     description: data.description,
     template: data.template,
+    tags: data.tags || [], // Dodaj tagi
+    categories: data.categories || [], // Dodaj kategorie
+    placeholder_keys: data.placeholder_keys || [], // Dodaj placeholder_keys
+    placeholderValues: data.placeholderValues || {}, // Dodaj placeholderValues
+    result: data.result, // Dodaj result
   });
+
   editingPrompt.value = null;
+
+  console.log("✅ Zaktualizowano prompt w bibliotece");
 };
 
 const handleDeleteCustomPrompt = (prompt: SavedPrompt) => {
@@ -260,6 +274,8 @@ const handleRemoveFromCollection = (collectionId: string, promptId: string) => {
 };
 
 const createNewPrompt = () => {
+  const currentLocale = locale.value as "en" | "pl";
+
   const prompt = createCustomPrompt({
     name: { en: "New Custom Prompt", pl: "Nowy Własny Prompt" },
     description: { en: "Enter description...", pl: "Wprowadź opis..." },
@@ -268,7 +284,12 @@ const createNewPrompt = () => {
       pl: "Wprowadź swój szablon tutaj...",
     },
   });
-  handleEditPrompt(prompt);
+
+  // Użyj nextTick aby upewnić się, że Vue zakończył aktualizację DOM
+  nextTick(() => {
+    editingPrompt.value = prompt;
+    showEditModal.value = true;
+  });
 };
 
 const handleImport = async (file: File, mode: "merge" | "replace") => {

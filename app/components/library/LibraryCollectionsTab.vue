@@ -76,7 +76,9 @@
               :key="prompt.savedId"
               class="flex items-center justify-between gap-2 p-2 bg-gray-50 dark:bg-gray-800 rounded text-xs"
             >
-              <span class="truncate flex-1">{{ getPromptName(prompt) }}</span>
+              <span class="truncate flex-1" :title="getPromptName(prompt)">
+                {{ getPromptName(prompt) }}
+              </span>
               <div class="flex items-center gap-1 flex-shrink-0">
                 <UButton
                   color="primary"
@@ -143,10 +145,48 @@ defineEmits<{
 }>();
 
 const { locale } = useI18n();
+const { prompts: templates } = usePreloadedContent();
 
-const getPromptName = (prompt: SavedPrompt) => {
-  if (!prompt.name) return "Bez nazwy";
-  return locale.value === "pl" ? prompt.name.pl : prompt.name.en;
+const getPromptName = (prompt: SavedPrompt): string => {
+  // 1. Jeśli prompt ma bezpośrednio nazwę (custom prompty)
+  if (prompt.name) {
+    if (typeof prompt.name === "string") return prompt.name;
+    return locale.value === "pl"
+      ? prompt.name.pl || prompt.name.en || "Bez nazwy"
+      : prompt.name.en || prompt.name.pl || "Untitled";
+  }
+
+  // 2. Jeśli to zapisany prompt z biblioteki - znajdź w templates
+  if (prompt.promptId && templates.value) {
+    const template = templates.value.find(
+      (t) => t.id?.toString() === prompt.promptId
+    );
+
+    if (template?.name) {
+      if (typeof template.name === "string") return template.name;
+      return locale.value === "pl"
+        ? template.name.pl || template.name.en || "Bez nazwy"
+        : template.name.en || template.name.pl || "Untitled";
+    }
+  }
+
+  // 3. Fallback - pierwsze 50 znaków z result
+  if (prompt.result) {
+    let text = "";
+    if (typeof prompt.result === "string") {
+      text = prompt.result;
+    } else if (typeof prompt.result === "object" && prompt.result !== null) {
+      const localizedResult = prompt.result as { pl?: string; en?: string };
+      text = localizedResult.pl || localizedResult.en || "";
+    }
+
+    return text.length > 50
+      ? text.substring(0, 50) + "..."
+      : text || "Bez nazwy";
+  }
+
+  // 4. Ostateczny fallback
+  return locale.value === "pl" ? "Bez nazwy" : "Untitled";
 };
 
 const getCollectionPrompts = (collectionId: string) => {

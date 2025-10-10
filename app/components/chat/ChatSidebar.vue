@@ -6,7 +6,7 @@
     <div class="p-4 border-b border-gray-200 dark:border-gray-800">
       <UButton color="primary" block @click="createNew">
         <UIcon name="i-heroicons-plus" class="mr-2" />
-        {{ $t("chat.new_conversation") }}
+        {{ $t("chat.sidebar.new_conversation") }}
       </UButton>
     </div>
 
@@ -27,11 +27,16 @@
           <div class="flex-1 min-w-0">
             <h3
               class="font-medium text-sm text-gray-900 dark:text-white truncate"
+              :title="conv.title"
             >
               {{ conv.title }}
             </h3>
             <p class="text-xs text-gray-500 dark:text-gray-400 truncate">
-              {{ conv.messages.length }} wiadomości
+              {{
+                $t("chat.sidebar.message_count", {
+                  count: conv.messages.length,
+                })
+              }}
             </p>
             <p class="text-xs text-gray-400 dark:text-gray-600 mt-1">
               {{ formatDate(conv.updatedAt) }}
@@ -43,6 +48,7 @@
             color="neutral"
             variant="ghost"
             size="xs"
+            :title="$t('chat.sidebar.delete_conversation')"
             class="opacity-0 group-hover:opacity-100 transition-opacity"
             @click.stop="deleteConv(conv.id)"
           >
@@ -58,8 +64,28 @@
           class="w-12 h-12 mx-auto text-gray-400 dark:text-gray-600 mb-2"
         />
         <p class="text-sm text-gray-500 dark:text-gray-400">
-          {{ $t("chat.no_conversations") }}
+          {{ $t("chat.sidebar.no_conversations") }}
         </p>
+        <p class="text-xs text-gray-400 dark:text-gray-600 mt-2">
+          {{ $t("chat.sidebar.start_conversation") }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Footer with stats -->
+    <div
+      v-if="conversations.length > 0"
+      class="p-4 border-t border-gray-200 dark:border-gray-800"
+    >
+      <div class="text-xs text-gray-500 dark:text-gray-400 space-y-1">
+        <div class="flex items-center justify-between">
+          <span>{{ $t("chat.sidebar.total_conversations") }}</span>
+          <span class="font-medium">{{ conversations.length }}</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span>{{ $t("chat.sidebar.total_messages") }}</span>
+          <span class="font-medium">{{ totalMessages }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -69,7 +95,7 @@
 import { useChat } from "~/composables/useChat";
 import { useI18n } from "vue-i18n";
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 const {
   conversations,
@@ -88,10 +114,18 @@ const selectConv = (id: string) => {
 };
 
 const deleteConv = (id: string) => {
-  if (window.confirm(t("chat.confirm_delete"))) {
+  if (window.confirm(t("chat.sidebar.confirm_delete"))) {
     deleteConversation(id);
   }
 };
+
+// Oblicz całkowitą liczbę wiadomości
+const totalMessages = computed(() => {
+  return conversations.value.reduce(
+    (sum, conv) => sum + conv.messages.length,
+    0
+  );
+});
 
 const formatDate = (timestamp: number) => {
   const date = new Date(timestamp);
@@ -99,10 +133,27 @@ const formatDate = (timestamp: number) => {
   const diffMs = now.getTime() - date.getTime();
   const diffDays = Math.floor(diffMs / 86400000);
 
-  if (diffDays === 0) return t("chat.today") || "Dziś";
-  if (diffDays === 1) return t("chat.yesterday") || "Wczoraj";
-  if (diffDays < 7) return `${diffDays} ${t("chat.days_ago") || "dni temu"}`;
+  if (diffDays === 0) {
+    // Dziś - pokaż godzinę
+    return date.toLocaleTimeString(locale.value === "pl" ? "pl-PL" : "en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  }
 
-  return date.toLocaleDateString("pl-PL", { day: "2-digit", month: "2-digit" });
+  if (diffDays === 1) {
+    return t("chat.sidebar.yesterday");
+  }
+
+  if (diffDays < 7) {
+    return t("chat.sidebar.days_ago", { count: diffDays });
+  }
+
+  // Starsze - pełna data
+  return date.toLocaleDateString(locale.value === "pl" ? "pl-PL" : "en-US", {
+    day: "2-digit",
+    month: "2-digit",
+    year: diffDays > 365 ? "2-digit" : undefined,
+  });
 };
 </script>

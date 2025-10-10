@@ -13,6 +13,7 @@
           </label>
           <UInput
             id="collection-name"
+            class="w-full"
             v-model="name"
             :placeholder="$t('library.modals.collection.namePlaceholder')"
           />
@@ -23,6 +24,7 @@
           </label>
           <UTextarea
             id="collection-desc"
+            class="w-full"
             v-model="description"
             :placeholder="
               $t('library.modals.collection.descriptionPlaceholder')

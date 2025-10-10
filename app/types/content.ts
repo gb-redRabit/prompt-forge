@@ -1,4 +1,5 @@
 export interface Prompt {
+  placeholderValues: any;
   id?: number;
   type?: string;
   name?: {
