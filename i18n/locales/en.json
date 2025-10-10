@@ -319,11 +319,11 @@
       "start_conversation": "Click the button above to start",
       "confirm_delete": "Are you sure you want to delete this conversation?",
       "delete_conversation": "Delete conversation",
-      "message_count": "{count} {count, plural, one {message} other {messages}}",
+      "message_count": "no messages | {n} message | {n} messages",
       "total_conversations": "Total conversations",
       "total_messages": "Total messages",
       "yesterday": "Yesterday",
-      "days_ago": "{count} {count, plural, one {day} other {days}} ago"
+      "days_ago": "no days | {n} day ago | {n} days ago"
     },
     "window": {
       "start_title": "Start a conversation",
@@ -342,7 +342,7 @@
       "new_conversation": "New conversation",
       "rename": "Rename",
       "clear": "Clear conversation",
-      "messages_count": "{count} {count, plural, one {message} other {messages}}",
+      "messages_count": "no messages | {n} message | {n} messages",
       "generating": "Generating...",
       "model": "Model:"
     },
@@ -589,7 +589,11 @@
         "templateEnPlaceholder": "Prompt content in English...",
         "saveNote": "Changes will be saved to your library",
         "cancel": "Cancel",
-        "save": "Save Changes"
+        "save": "Save Changes",
+        "hints": {
+          "categoryCount": "no categories | {n} category | {n} categories",
+          "tagCount": "no tags | {n} tag | {n} tags"
+        }
       },
       "addToCollection": {
         "title": "Add to Collection",

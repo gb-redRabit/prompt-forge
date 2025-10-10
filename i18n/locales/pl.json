@@ -292,11 +292,11 @@
       "start_conversation": "Kliknij przycisk wyżej, aby rozpocząć",
       "confirm_delete": "Czy na pewno chcesz usunąć tę rozmowę?",
       "delete_conversation": "Usuń rozmowę",
-      "message_count": "{count} {count, plural, one {wiadomość} few {wiadomości} many {wiadomości} other {wiadomości}}",
+      "message_count": "brak wiadomości | {n} wiadomość | {n} wiadomości | {n} wiadomości",
       "total_conversations": "Wszystkie rozmowy",
       "total_messages": "Wszystkie wiadomości",
       "yesterday": "Wczoraj",
-      "days_ago": "{count} {count, plural, one {dzień} few {dni} many {dni} other {dni}} temu"
+      "days_ago": "brak dni | {n} dzień temu | {n} dni temu | {n} dni temu"
     },
     "window": {
       "start_title": "Rozpocznij rozmowę",
@@ -315,7 +315,7 @@
       "new_conversation": "Nowa rozmowa",
       "rename": "Zmień nazwę",
       "clear": "Wyczyść rozmowę",
-      "messages_count": "{count} {count, plural, one {wiadomość} few {wiadomości} many {wiadomości} other {wiadomości}}",
+      "messages_count": "brak wiadomości | {n} wiadomość | {n} wiadomości | {n} wiadomości",
       "generating": "Generowanie...",
       "model": "Model:"
     },
@@ -596,8 +596,8 @@
         },
         "hints": {
           "saveNote": "Zmiany zostaną zapisane natychmiast",
-          "categoryCount": "{count} kategorii",
-          "tagCount": "{count} tagów"
+          "categoryCount": "brak kategorii | {n} kategoria | {n} kategorie | {n} kategorii",
+          "tagCount": "brak tagów | {n} tag | {n} tagi | {n} tagów"
         },
         "badges": {
           "pl": "PL",
