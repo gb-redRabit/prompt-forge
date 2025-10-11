@@ -122,7 +122,8 @@
       "duplicate": "Duplikuj",
       "model_singular": "model dostępny",
       "model_plural": "modeli dostępnych",
-      "search": "Szukaj"
+      "search": "Szukaj",
+      "clear": "Wyczyść"
     }
   },
   "app": {
@@ -468,14 +469,20 @@
     "close": "Zamknij",
     "back": "Wstecz",
     "next": "Dalej",
-    "previous": "Poprzedni",
+    "previous": "Wstecz",
     "search": "Szukaj",
     "filter": "Filtruj",
     "sort": "Sortuj",
     "clear": "Wyczyść",
     "reset": "Resetuj",
     "apply": "Zastosuj",
-    "use": "Użyj"
+    "use": "Użyj",
+    "skip": "Pomiń",
+    "finish": "Zakończ",
+    "clear_all": "Wyczyść wszystko",
+    "save_prompt": "Zapisz prompt",
+    "use_prompt": "Użyj prompt",
+    "create": "Utwórz"
   },
   "library": {
     "title": "Biblioteka",
@@ -623,5 +630,44 @@
       "confirmClearHistory": "Czy na pewno chcesz wyczyścić całą historię?",
       "confirmRemoveFromCollection": "Czy na pewno chcesz usunąć ten prompt z kolekcji?"
     }
+  },
+  "prompt_creator": {
+    "title": "Kreator Promptów",
+    "description": "Stwórz idealny prompt krok po kroku",
+    "page_title": "Kreator Promptów - Prompt Forge",
+    "page_description": "Interaktywny kreator promptów z podziałem na kategorie",
+    "progress": "Postęp",
+    "select_options": "Wybierz opcje dla tej kategorii",
+    "selected": "wybrano",
+    "search_in_category": "Szukaj w kategorii...",
+    "your_selections": "Twoje wybory",
+    "available_options": "Dostępne opcje",
+    "no_options_found": "Nie znaleziono opcji",
+    "summary": "Podsumowanie",
+    "categories_used": "kategorii",
+    "total_tags": "tagów",
+    "no_selections_yet": "Nie dokonano jeszcze żadnych wyborów",
+    "positive_prompt": "Prompt pozytywny",
+    "negative_prompt": "Prompt negatywny",
+    "confirm_clear_all": "Czy na pewno chcesz wyczyścić wszystkie wybory?",
+    "saved_successfully": "Prompt został zapisany!",
+    "save_prompt": "Zapisz prompt",
+    "prompt_name": "Nazwa promptu",
+    "prompt_name_placeholder": "np. Cyberpunk Girl Portrait",
+    "description": "Opis",
+    "description_placeholder": "Opisz swój prompt...",
+    "tags_included": "tagów",
+    "step": "Krok",
+    "search_placeholder": "Szukaj tagów...",
+    "results": "wyników",
+    "no_results": "Nie znaleziono tagów",
+    "your_progress": "Twój postęp",
+    "categories": "Kategorie",
+    "completion": "Ukończenie",
+    "selected_categories": "Wybrane kategorie",
+    "no_selections": "Brak wyborów",
+    "prompts": "Wygenerowane prompty",
+    "positive": "Pozytywny",
+    "negative": "Negatywny"
   }
 }

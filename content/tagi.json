@@ -3232,14 +3232,6 @@
     "nsfw": false
   },
   {
-    "pl": "epicka wykwintna sztuka postaci",
-    "en": "epic exquisite character art",
-    "neg_pl": "prosta sztuka",
-    "neg_en": "simple art",
-    "category": "Art Style",
-    "nsfw": false
-  },
-  {
     "pl": "eleganckie krzywe, bogate tekstury",
     "en": "elegant curves, rich textures",
     "neg_pl": "proste kształty",
@@ -9816,14 +9808,6 @@
     "nsfw": true
   },
   {
-    "pl": "elegancka",
-    "en": "elegant",
-    "neg_pl": "nieelegancka",
-    "neg_en": "inelegant",
-    "category": "Character Traits",
-    "nsfw": false
-  },
-  {
     "pl": "elegancki",
     "en": "elegant",
     "neg_pl": "nieelegancki",
@@ -9840,22 +9824,6 @@
     "nsfw": false
   },
   {
-    "pl": "empatyczna",
-    "en": "empathetic",
-    "neg_pl": "bezduszna",
-    "neg_en": "callous",
-    "category": "Character Traits",
-    "nsfw": false
-  },
-  {
-    "pl": "energetyczna",
-    "en": "energetic",
-    "neg_pl": "zmęczona",
-    "neg_en": "tired",
-    "category": "Character Traits",
-    "nsfw": false
-  },
-  {
     "pl": "elegancka",
     "en": "elegant",
     "neg_pl": "nieelegancka",
@@ -9863,14 +9831,7 @@
     "category": "Character Traits",
     "nsfw": false
   },
-  {
-    "pl": "emo",
-    "en": "emo",
-    "neg_pl": "nie-emo, klasyczny styl",
-    "neg_en": "non-emo, classic style",
-    "category": "Character Traits",
-    "nsfw": false
-  },
+
   {
     "pl": "empatyczna",
     "en": "empathetic",
@@ -10168,14 +10129,6 @@
     "nsfw": false
   },
   {
-    "pl": "niewinna",
-    "en": "nubile",
-    "neg_pl": "doświadczona",
-    "neg_en": "experienced",
-    "category": "Character Traits",
-    "nsfw": false
-  },
-  {
     "pl": "nieśmiała",
     "en": "shy",
     "neg_pl": "śmiała",
@@ -10460,14 +10413,6 @@
     "en": "sadness",
     "neg_pl": "radość",
     "neg_en": "joy",
-    "category": "Character Traits",
-    "nsfw": false
-  },
-  {
-    "pl": "smutek",
-    "en": "sorrow",
-    "neg_pl": "szczęście",
-    "neg_en": "happiness",
     "category": "Character Traits",
     "nsfw": false
   },
@@ -11312,14 +11257,6 @@
     "nsfw": false
   },
   {
-    "pl": "elf",
-    "en": "elf",
-    "neg_pl": "człowiek",
-    "neg_en": "human",
-    "category": "Characters",
-    "nsfw": false
-  },
-  {
     "pl": "elfia dziewczyna",
     "en": "elf girl",
     "neg_pl": "człowiek",
@@ -11338,14 +11275,6 @@
   {
     "pl": "erotyczna fotomodelka",
     "en": "erotic photomodel",
-    "neg_pl": "nie-erotyczna",
-    "neg_en": "non-erotic",
-    "category": "Characters",
-    "nsfw": true
-  },
-  {
-    "pl": "erotyczna modelka",
-    "en": "erotic model",
     "neg_pl": "nie-erotyczna",
     "neg_en": "non-erotic",
     "category": "Characters",
@@ -11368,28 +11297,12 @@
     "nsfw": false
   },
   {
-    "pl": "elfia dziewczyna",
-    "en": "elf girl",
-    "neg_pl": "człowiek",
-    "neg_en": "human",
-    "category": "Characters",
-    "nsfw": false
-  },
-  {
     "pl": "emo dziewczyna",
     "en": "emo girl",
     "neg_pl": "radosna dziewczyna",
     "neg_en": "cheerful girl",
     "category": "Characters",
     "nsfw": false
-  },
-  {
-    "pl": "erotyczna fotomodelka",
-    "en": "erotic photomodel",
-    "neg_pl": "nie-erotyczna",
-    "neg_en": "non-erotic",
-    "category": "Characters",
-    "nsfw": true
   },
   {
     "pl": "erotyczna modelka",

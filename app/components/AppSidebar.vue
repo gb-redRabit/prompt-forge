@@ -288,7 +288,6 @@
 import { useSidebar } from "~/composables/useSidebar";
 import { useI18n } from "vue-i18n";
 import { useColorMode } from "#imports";
-
 const { isSidebarOpen, close, open } = useSidebar();
 const isOpen = defineModel<boolean>("open", { default: true });
 // persisted collapsed state
@@ -345,6 +344,11 @@ const navigation = [
     name: "chat.title",
     href: "/chat",
     icon: "i-heroicons-cpu-chip",
+  },
+  {
+    name: "prompt_creator.title",
+    href: "/editor",
+    icon: "i-heroicons-pencil-square",
   },
 ];
 

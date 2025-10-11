@@ -1,0 +1,1052 @@
+<template>
+  <div
+    class="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
+  >
+    <div class="flex h-screen overflow-hidden">
+      <!-- Sidebar z kategoriami -->
+      <aside
+        :class="[
+          'bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 transition-all duration-300',
+          sidebarExpanded ? 'w-72' : 'w-20',
+        ]"
+      >
+        <!-- Toggle Button -->
+        <div
+          class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between"
+        >
+          <h2
+            v-if="sidebarExpanded"
+            class="font-bold text-gray-900 dark:text-white"
+          >
+            {{ $t("prompt_creator.categories") }}
+          </h2>
+          <button
+            @click="sidebarExpanded = !sidebarExpanded"
+            class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+          >
+            <UIcon
+              :name="
+                sidebarExpanded
+                  ? 'i-heroicons-chevron-left'
+                  : 'i-heroicons-chevron-right'
+              "
+              class="w-5 h-5 text-gray-600 dark:text-gray-400"
+            />
+          </button>
+        </div>
+
+        <!-- Categories List -->
+        <div class="overflow-y-auto h-[calc(100vh-73px)] custom-scrollbar">
+          <div class="p-2 space-y-1">
+            <button
+              v-for="(category, index) in categories"
+              :key="category"
+              @click="currentStep = index"
+              :class="[
+                'w-full flex items-center gap-3 p-3 rounded-xl transition-all',
+                currentStep === index
+                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 shadow-sm'
+                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50',
+              ]"
+            >
+              <div
+                :class="[
+                  'flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center',
+                  currentStep === index
+                    ? 'bg-primary-500 text-white'
+                    : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400',
+                ]"
+              >
+                <UIcon :name="getCategoryIcon(category)" class="w-5 h-5" />
+              </div>
+              <div v-if="sidebarExpanded" class="flex-1 text-left">
+                <p class="text-sm font-semibold">{{ category }}</p>
+                <p
+                  v-if="selectedTags[category]?.length"
+                  class="text-xs opacity-70"
+                >
+                  {{ selectedTags[category].length }}
+                  {{ $t("prompt_creator.selected") }}
+                </p>
+              </div>
+              <div
+                v-if="selectedTags[category]?.length && sidebarExpanded"
+                class="flex-shrink-0 w-6 h-6 rounded-full bg-primary-500 text-white text-xs flex items-center justify-center font-bold"
+              >
+                {{ selectedTags[category].length }}
+              </div>
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 overflow-y-auto">
+        <div class="container mx-auto px-6 py-8">
+          <!-- Header -->
+          <div class="mb-8">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h1
+                  class="text-4xl font-bold bg-gradient-to-r from-primary-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-2"
+                >
+                  {{ currentCategory }}
+                </h1>
+                <p class="text-gray-600 dark:text-gray-400">
+                  {{ $t("prompt_creator.step") }} {{ currentStep + 1 }} /
+                  {{ totalSteps }}
+                </p>
+              </div>
+              <div class="flex items-center gap-4">
+                <!-- Add Custom Tag -->
+                <UButton
+                  color="neutral"
+                  variant="outline"
+                  @click="showAddTagModal = true"
+                >
+                  <UIcon name="i-heroicons-plus" class="mr-2" />
+                  {{ $t("prompt_creator.add_custom_tag") }}
+                </UButton>
+
+                <!-- Stats -->
+                <div
+                  class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 px-6 py-3"
+                >
+                  <div
+                    class="text-3xl font-bold text-primary-600 dark:text-primary-400"
+                  >
+                    {{ Math.round(((currentStep + 1) / totalSteps) * 100) }}%
+                  </div>
+                  <div class="text-xs text-gray-500">
+                    {{ $t("prompt_creator.completed") }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div
+              class="relative h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden"
+            >
+              <div
+                class="absolute inset-y-0 left-0 bg-gradient-to-r from-primary-500 via-purple-500 to-pink-500 transition-all duration-500 rounded-full"
+                :style="{ width: `${((currentStep + 1) / totalSteps) * 100}%` }"
+              >
+                <div class="absolute inset-0 bg-white/20 animate-pulse"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Tags Selection -->
+            <div class="lg:col-span-2 space-y-6">
+              <!-- Search & Filters -->
+              <div
+                class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-4"
+              >
+                <div class="flex gap-3">
+                  <UInput
+                    v-model="categorySearch"
+                    :placeholder="$t('prompt_creator.search_placeholder')"
+                    icon="i-heroicons-magnifying-glass"
+                    size="lg"
+                    class="flex-1"
+                  />
+                  <UButton
+                    :color="showOnlyFavorites ? 'primary' : 'neutral'"
+                    :variant="showOnlyFavorites ? 'solid' : 'outline'"
+                    size="lg"
+                    @click="showOnlyFavorites = !showOnlyFavorites"
+                  >
+                    <UIcon name="i-heroicons-star-solid" class="mr-2" />
+                    {{ $t("prompt_creator.favorites") }}
+                  </UButton>
+                </div>
+                <div class="mt-3 flex items-center justify-between text-sm">
+                  <span class="text-gray-600 dark:text-gray-400">
+                    {{ filteredTagsForCategory.length }}
+                    {{ $t("prompt_creator.results") }}
+                  </span>
+                  <button
+                    v-if="selectedTagsForCurrentCategory.length > 0"
+                    @click="clearCurrentCategory"
+                    class="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 font-medium"
+                  >
+                    {{ $t("common.clear") }} ({{
+                      selectedTagsForCurrentCategory.length
+                    }})
+                  </button>
+                </div>
+              </div>
+
+              <!-- Selected Tags -->
+              <div
+                v-if="selectedTagsForCurrentCategory.length > 0"
+                class="bg-gradient-to-r from-primary-50 to-purple-50 dark:from-primary-900/20 dark:to-purple-900/20 rounded-2xl border border-primary-200 dark:border-primary-800 p-4"
+              >
+                <div class="flex items-center gap-2 mb-3">
+                  <UIcon
+                    name="i-heroicons-check-circle"
+                    class="w-5 h-5 text-primary-500"
+                  />
+                  <span class="font-semibold text-gray-900 dark:text-white">
+                    {{ selectedTagsForCurrentCategory.length }}
+                    {{ $t("prompt_creator.selected") }}
+                  </span>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  <button
+                    v-for="tagObj in selectedTagsForCurrentCategory"
+                    :key="getTagText(tagObj)"
+                    @click="toggleTag(tagObj)"
+                    :class="[
+                      'px-3 py-1.5 rounded-lg text-sm font-medium transition-all',
+                      'border-2 hover:scale-105',
+                      tagObj.nsfw
+                        ? 'bg-red-50 dark:bg-red-900/20 border-red-500 text-red-700 dark:text-red-300'
+                        : 'bg-white dark:bg-gray-800 border-primary-500 text-gray-900 dark:text-white',
+                    ]"
+                  >
+                    {{ getTagText(tagObj) }}
+                  </button>
+                </div>
+              </div>
+
+              <!-- Tags Grid -->
+              <div
+                class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6"
+              >
+                <div
+                  v-if="filteredTagsForCategory.length > 0"
+                  class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar"
+                >
+                  <button
+                    v-for="tagObj in filteredTagsForCategory"
+                    :key="getTagText(tagObj)"
+                    @click="toggleTag(tagObj)"
+                    :class="[
+                      'group relative px-3 py-2 rounded-lg text-sm font-medium transition-all text-left',
+                      'hover:scale-105',
+                      isTagSelected(tagObj)
+                        ? tagObj.nsfw
+                          ? 'bg-red-500 text-white shadow-md'
+                          : 'bg-primary-500 text-white shadow-md'
+                        : 'bg-gray-50 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700',
+                    ]"
+                  >
+                    <div class="flex items-center justify-between gap-1">
+                      <span class="truncate flex-1">{{
+                        getTagText(tagObj)
+                      }}</span>
+                      <button
+                        @click.stop="toggleFavorite(tagObj)"
+                        :class="[
+                          'flex-shrink-0 p-1 rounded transition-all',
+                          isFavorite(tagObj)
+                            ? 'text-yellow-400'
+                            : isTagSelected(tagObj)
+                              ? 'text-white/50 hover:text-white'
+                              : 'text-gray-400 hover:text-yellow-400',
+                        ]"
+                      >
+                        <UIcon
+                          :name="
+                            isFavorite(tagObj)
+                              ? 'i-heroicons-star-solid'
+                              : 'i-heroicons-star'
+                          "
+                          class="w-4 h-4"
+                        />
+                      </button>
+                    </div>
+                  </button>
+                </div>
+
+                <!-- Empty State -->
+                <div v-else class="text-center py-16">
+                  <div
+                    class="w-20 h-20 mx-auto mb-4 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center"
+                  >
+                    <UIcon
+                      name="i-heroicons-magnifying-glass"
+                      class="w-10 h-10 text-gray-400"
+                    />
+                  </div>
+                  <p class="text-gray-600 dark:text-gray-400 font-medium">
+                    {{ $t("prompt_creator.no_results") }}
+                  </p>
+                </div>
+              </div>
+
+              <!-- Navigation -->
+              <div class="flex justify-between items-center gap-4">
+                <UButton
+                  size="xl"
+                  color="neutral"
+                  variant="outline"
+                  :disabled="currentStep === 0"
+                  @click="previousStep"
+                  class="flex-1"
+                >
+                  <UIcon name="i-heroicons-arrow-left" class="mr-2" />
+                  {{ $t("common.previous") }}
+                </UButton>
+
+                <UButton
+                  size="xl"
+                  color="neutral"
+                  variant="ghost"
+                  @click="skipCategory"
+                >
+                  {{ $t("common.skip") }}
+                </UButton>
+
+                <UButton
+                  size="xl"
+                  color="primary"
+                  @click="nextStep"
+                  class="flex-1 shadow-lg shadow-primary-500/30"
+                >
+                  {{
+                    currentStep === totalSteps - 1
+                      ? $t("common.finish")
+                      : $t("common.next")
+                  }}
+                  <UIcon name="i-heroicons-arrow-right" class="ml-2" />
+                </UButton>
+              </div>
+            </div>
+
+            <!-- Sidebar - Summary -->
+            <div class="lg:col-span-1">
+              <div class="sticky top-8 space-y-6">
+                <!-- Stats Card -->
+                <div
+                  class="bg-gradient-to-br from-primary-500 to-purple-600 rounded-2xl shadow-2xl p-6 text-white"
+                >
+                  <h3 class="text-lg font-bold mb-4">
+                    {{ $t("prompt_creator.summary") }}
+                  </h3>
+                  <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                      <span class="text-sm opacity-90">{{
+                        $t("prompt_creator.categories")
+                      }}</span>
+                      <span class="text-2xl font-bold">{{
+                        Object.keys(selectedTags).length
+                      }}</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                      <span class="text-sm opacity-90">{{
+                        $t("prompt_creator.total_tags")
+                      }}</span>
+                      <span class="text-2xl font-bold">{{
+                        totalSelectedTags
+                      }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Selected Summary -->
+                <div
+                  class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden max-h-[400px]"
+                >
+                  <div
+                    class="bg-gray-50 dark:bg-gray-900/50 px-4 py-3 border-b border-gray-200 dark:border-gray-700"
+                  >
+                    <h3 class="font-bold text-gray-900 dark:text-white text-sm">
+                      {{ $t("prompt_creator.selected_tags") }}
+                    </h3>
+                  </div>
+                  <div
+                    class="p-4 overflow-y-auto max-h-[320px] custom-scrollbar"
+                  >
+                    <div
+                      v-if="Object.keys(selectedTags).length > 0"
+                      class="space-y-3"
+                    >
+                      <div
+                        v-for="(tagObjs, category) in selectedTags"
+                        :key="category"
+                      >
+                        <div
+                          class="text-xs font-bold text-gray-500 dark:text-gray-400 mb-1.5"
+                        >
+                          {{ category }} ({{ tagObjs.length }})
+                        </div>
+                        <div class="flex flex-wrap gap-1.5">
+                          <button
+                            v-for="tagObj in tagObjs"
+                            :key="getTagText(tagObj)"
+                            @click="removeTagFromSummary(category, tagObj)"
+                            :class="[
+                              'px-2 py-1 rounded text-xs font-medium transition-all hover:scale-105',
+                              tagObj.nsfw
+                                ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 border border-red-300 dark:border-red-700'
+                                : 'bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 border border-primary-300 dark:border-primary-700',
+                            ]"
+                          >
+                            {{ getTagText(tagObj) }}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div v-else class="text-center py-8">
+                      <UIcon
+                        name="i-heroicons-inbox"
+                        class="w-12 h-12 mx-auto mb-2 text-gray-300 dark:text-gray-600"
+                      />
+                      <p class="text-sm text-gray-500 dark:text-gray-400">
+                        {{ $t("prompt_creator.no_selections") }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Generated Prompts -->
+                <div
+                  v-if="generatedPrompt.positive"
+                  class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden"
+                >
+                  <div
+                    class="bg-green-50 dark:bg-green-900/20 px-4 py-3 border-b border-gray-200 dark:border-gray-700"
+                  >
+                    <h3
+                      class="font-bold text-gray-900 dark:text-white text-sm flex items-center gap-2"
+                    >
+                      <UIcon
+                        name="i-heroicons-sparkles"
+                        class="w-4 h-4 text-green-500"
+                      />
+                      {{ $t("prompt_creator.prompts") }}
+                    </h3>
+                  </div>
+                  <div class="p-4 space-y-3">
+                    <!-- Positive -->
+                    <div>
+                      <div class="flex items-center justify-between mb-2">
+                        <span
+                          class="text-xs font-bold text-green-600 dark:text-green-400"
+                        >
+                          {{ $t("prompt_creator.positive") }}
+                        </span>
+                        <button
+                          @click="copyPrompt('positive')"
+                          class="text-xs text-gray-600 hover:text-green-600 dark:text-gray-400 dark:hover:text-green-400"
+                        >
+                          {{ copiedPositive ? "✓" : "📋" }}
+                        </button>
+                      </div>
+                      <div
+                        class="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-2"
+                      >
+                        <p
+                          class="text-xs font-mono text-gray-700 dark:text-gray-300 line-clamp-3"
+                        >
+                          {{ generatedPrompt.positive }}
+                        </p>
+                      </div>
+                    </div>
+
+                    <!-- Negative -->
+                    <div v-if="generatedPrompt.negative">
+                      <div class="flex items-center justify-between mb-2">
+                        <span
+                          class="text-xs font-bold text-red-600 dark:text-red-400"
+                        >
+                          {{ $t("prompt_creator.negative") }}
+                        </span>
+                        <button
+                          @click="copyPrompt('negative')"
+                          class="text-xs text-gray-600 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400"
+                        >
+                          {{ copiedNegative ? "✓" : "📋" }}
+                        </button>
+                      </div>
+                      <div
+                        class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-2"
+                      >
+                        <p
+                          class="text-xs font-mono text-gray-700 dark:text-gray-300 line-clamp-3"
+                        >
+                          {{ generatedPrompt.negative }}
+                        </p>
+                      </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="pt-2 space-y-2">
+                      <UButton
+                        color="green"
+                        size="lg"
+                        block
+                        @click="savePrompt"
+                      >
+                        <UIcon name="i-heroicons-bookmark-solid" class="mr-2" />
+                        {{ $t("common.save") }}
+                      </UButton>
+                      <UButton
+                        color="primary"
+                        size="lg"
+                        block
+                        @click="usePrompt"
+                      >
+                        <UIcon name="i-heroicons-play-solid" class="mr-2" />
+                        {{ $t("common.use") }}
+                      </UButton>
+                      <UButton
+                        color="neutral"
+                        variant="outline"
+                        size="sm"
+                        block
+                        @click="clearAll"
+                      >
+                        <UIcon name="i-heroicons-trash" class="mr-2" />
+                        {{ $t("common.clear_all") }}
+                      </UButton>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Save Modal -->
+    <SavePromptModal
+      v-model:open="showSaveModal"
+      :positive-prompt="generatedPrompt.positive"
+      :negative-prompt="generatedPrompt.negative"
+      :tags="allSelectedTagsList"
+      @save="handleSavePrompt"
+    />
+
+    <!-- Add Custom Tag Modal -->
+    <UModal
+      v-model:open="showAddTagModal"
+      :title="$t('prompt_creator.add_custom_tag')"
+    >
+      <template #body>
+        <form @submit.prevent="addCustomTag" class="space-y-4 p-4">
+          <div class="space-y-2">
+            <label
+              class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              {{ $t("prompt_creator.tag_name") }} (PL)
+            </label>
+            <UInput v-model="customTag.pl" size="lg" />
+          </div>
+          <div class="space-y-2">
+            <label
+              class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              {{ $t("prompt_creator.tag_name") }} (EN)
+            </label>
+            <UInput v-model="customTag.en" size="lg" />
+          </div>
+          <div class="space-y-2">
+            <label
+              class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              {{ $t("prompt_creator.negative_prompt") }} (PL)
+            </label>
+            <UInput v-model="customTag.neg_pl" size="lg" />
+          </div>
+          <div class="space-y-2">
+            <label
+              class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              {{ $t("prompt_creator.negative_prompt") }} (EN)
+            </label>
+            <UInput v-model="customTag.neg_en" size="lg" />
+          </div>
+          <div class="flex items-center gap-2">
+            <input
+              type="checkbox"
+              v-model="customTag.nsfw"
+              id="nsfw-check"
+              class="rounded"
+            />
+            <label
+              for="nsfw-check"
+              class="text-sm text-gray-700 dark:text-gray-300"
+            >
+              NSFW
+            </label>
+          </div>
+          <div class="flex justify-end gap-3 pt-4 border-t">
+            <UButton
+              color="neutral"
+              variant="outline"
+              @click="showAddTagModal = false"
+            >
+              {{ $t("common.cancel") }}
+            </UButton>
+            <UButton type="submit" color="primary">
+              {{ $t("common.add") }}
+            </UButton>
+          </div>
+        </form>
+      </template>
+    </UModal>
+  </div>
+</template>
+
+<script setup lang="ts">
+interface TagObject {
+  pl: string;
+  en: string;
+  neg_pl: string;
+  neg_en: string;
+  category: string;
+  nsfw: boolean;
+  custom?: boolean;
+}
+
+import SavePromptModal from "~/components/editor/SavePromptModal.vue";
+
+definePageMeta({
+  layout: "dashboard",
+});
+
+const { t, locale } = useI18n();
+const router = useRouter();
+
+// Preloaded content
+const { tags, isLoaded: isContentLoaded } = usePreloadedContent();
+
+// Category Icons Map
+const categoryIcons: Record<string, string> = {
+  Subject: "i-heroicons-user",
+  "Art Style": "i-heroicons-paint-brush",
+  Medium: "i-heroicons-photo",
+  Quality: "i-heroicons-star",
+  Characters: "i-heroicons-users",
+  "Character Traits": "i-heroicons-identification",
+  "Facial Features": "i-heroicons-face-smile",
+  Eyes: "i-heroicons-eye",
+  Hair: "i-heroicons-scissors",
+  "Body Features": "i-heroicons-user-circle",
+  Breasts: "i-heroicons-heart",
+  Genitals: "i-heroicons-shield-exclamation",
+  "Anatomy Details": "i-heroicons-finger-print",
+  "Hand Details": "i-heroicons-hand-raised",
+  "Expression/Pose": "i-heroicons-face-smile",
+  Posture: "i-heroicons-arrow-trending-up",
+  Clothing: "i-heroicons-shopping-bag",
+  Accessories: "i-heroicons-sparkles",
+  Setting: "i-heroicons-map-pin",
+  "Environment Details": "i-heroicons-building-office",
+  "Background Elements": "i-heroicons-square-3-stack-3d",
+  "Time of Day": "i-heroicons-clock",
+  Weather: "i-heroicons-cloud",
+  "Lighting/Effects": "i-heroicons-light-bulb",
+  "Themes/Moods": "i-heroicons-face-frown",
+  "Color Palettes": "i-heroicons-swatch",
+  "Camera Angles": "i-heroicons-camera",
+  Perspectives: "i-heroicons-cube",
+  "Camera Settings": "i-heroicons-cog-6-tooth",
+  "Lens Type": "i-heroicons-magnifying-glass-circle",
+  "Composition Rules": "i-heroicons-squares-2x2",
+  "Motion Effects": "i-heroicons-arrow-path",
+  "Rendering Engine": "i-heroicons-cpu-chip",
+  "Post Processing": "i-heroicons-adjustments-horizontal",
+  "Texture Materials": "i-heroicons-cube-transparent",
+  "Technology/Objects": "i-heroicons-rocket-launch",
+  Other: "i-heroicons-ellipsis-horizontal-circle",
+};
+
+const getCategoryIcon = (category: string) => {
+  return categoryIcons[category] || "i-heroicons-tag";
+};
+
+// Wszystkie kategorie
+const categories = Object.keys(categoryIcons);
+
+// State
+const currentStep = ref(0);
+const categorySearch = ref("");
+const selectedTags = ref<Record<string, TagObject[]>>({});
+const showSaveModal = ref(false);
+const showAddTagModal = ref(false);
+const copiedPositive = ref(false);
+const copiedNegative = ref(false);
+const sidebarExpanded = ref(true);
+const showOnlyFavorites = ref(false);
+const favorites = ref<Set<string>>(new Set());
+const customTags = ref<TagObject[]>([]);
+
+const customTag = ref({
+  pl: "",
+  en: "",
+  neg_pl: "",
+  neg_en: "",
+  nsfw: false,
+});
+
+// Load favorites and custom tags from localStorage
+onMounted(() => {
+  const savedFavorites = localStorage.getItem("tag_favorites");
+  if (savedFavorites) {
+    favorites.value = new Set(JSON.parse(savedFavorites));
+  }
+
+  const savedCustomTags = localStorage.getItem("custom_tags");
+  if (savedCustomTags) {
+    customTags.value = JSON.parse(savedCustomTags);
+  }
+});
+
+// Computed
+const totalSteps = computed(() => categories.length);
+const currentCategory = computed(() => categories[currentStep.value]);
+
+// Helper functions
+const getTagText = (tagObj: TagObject): string => {
+  return locale.value === "pl" ? tagObj.pl : tagObj.en;
+};
+
+const getNegativeTagText = (tagObj: TagObject): string => {
+  return locale.value === "pl" ? tagObj.neg_pl : tagObj.neg_en;
+};
+
+const getTagId = (tagObj: TagObject): string => {
+  return `${tagObj.category}_${tagObj.pl}_${tagObj.en}`;
+};
+
+const isFavorite = (tagObj: TagObject): boolean => {
+  return favorites.value.has(getTagId(tagObj));
+};
+
+const toggleFavorite = (tagObj: TagObject) => {
+  const id = getTagId(tagObj);
+  if (favorites.value.has(id)) {
+    favorites.value.delete(id);
+  } else {
+    favorites.value.add(id);
+  }
+  localStorage.setItem("tag_favorites", JSON.stringify([...favorites.value]));
+};
+
+// Extract all tags
+const allTagsFlat = computed(() => {
+  if (!tags.value) return [];
+
+  const allTags: TagObject[] = [];
+
+  const extractTags = (obj: any) => {
+    if (Array.isArray(obj)) {
+      obj.forEach((item) => {
+        if (item && typeof item === "object") {
+          if (item.category && (item.pl || item.en)) {
+            allTags.push(item as TagObject);
+          } else {
+            extractTags(item);
+          }
+        }
+      });
+    } else if (obj && typeof obj === "object") {
+      Object.values(obj).forEach((value) => extractTags(value));
+    }
+  };
+
+  extractTags(tags.value);
+
+  // Add custom tags
+  customTags.value.forEach((tag) => {
+    if (tag.category === currentCategory.value) {
+      allTags.push(tag);
+    }
+  });
+
+  return allTags;
+});
+
+// Tags for current category
+const tagsForCurrentCategory = computed(() => {
+  if (!currentCategory.value) return [];
+
+  let categoryTags = allTagsFlat.value.filter(
+    (tag) => tag.category === currentCategory.value
+  );
+
+  // Sort: favorites first, then alphabetically
+  return categoryTags.sort((a, b) => {
+    const aFav = isFavorite(a);
+    const bFav = isFavorite(b);
+
+    if (aFav && !bFav) return -1;
+    if (!aFav && bFav) return 1;
+
+    const textA = getTagText(a).toLowerCase();
+    const textB = getTagText(b).toLowerCase();
+    return textA.localeCompare(textB);
+  });
+});
+
+// Filtered tags
+const filteredTagsForCategory = computed(() => {
+  let tags = tagsForCurrentCategory.value;
+
+  if (showOnlyFavorites.value) {
+    tags = tags.filter((tag) => isFavorite(tag));
+  }
+
+  const search = categorySearch.value.toLowerCase().trim();
+  if (search) {
+    tags = tags.filter((tagObj) => {
+      const text = getTagText(tagObj).toLowerCase();
+      return text.includes(search);
+    });
+  }
+
+  return tags;
+});
+
+const selectedTagsForCurrentCategory = computed(() => {
+  return selectedTags.value[currentCategory.value] || [];
+});
+
+const totalSelectedTags = computed(() => {
+  return Object.values(selectedTags.value).reduce(
+    (sum, tagObjs) => sum + tagObjs.length,
+    0
+  );
+});
+
+const allSelectedTagsList = computed(() => {
+  const allTags: string[] = [];
+  Object.values(selectedTags.value).forEach((tagObjs) => {
+    tagObjs.forEach((tagObj) => {
+      allTags.push(getTagText(tagObj));
+    });
+  });
+  return allTags;
+});
+
+const generatedPrompt = computed(() => {
+  if (Object.keys(selectedTags.value).length === 0) {
+    return { positive: "", negative: "" };
+  }
+
+  const positiveParts: string[] = [];
+  const negativeParts: string[] = [];
+
+  categories.forEach((category) => {
+    const tagObjs = selectedTags.value[category];
+    if (tagObjs && tagObjs.length > 0) {
+      const positiveTexts = tagObjs.map(getTagText);
+      const negativeTexts = tagObjs.map(getNegativeTagText).filter((t) => t);
+
+      if (positiveTexts.length > 0) {
+        positiveParts.push(positiveTexts.join(", "));
+      }
+      if (negativeTexts.length > 0) {
+        negativeParts.push(negativeTexts.join(", "));
+      }
+    }
+  });
+
+  return {
+    positive: positiveParts.join(", "),
+    negative: negativeParts.join(", "),
+  };
+});
+
+// Actions
+const isTagSelected = (tagObj: TagObject) => {
+  return selectedTagsForCurrentCategory.value.some(
+    (selected) => getTagText(selected) === getTagText(tagObj)
+  );
+};
+
+const toggleTag = (tagObj: TagObject) => {
+  const category = currentCategory.value;
+  if (!selectedTags.value[category]) {
+    selectedTags.value[category] = [];
+  }
+
+  const index = selectedTags.value[category].findIndex(
+    (selected) => getTagText(selected) === getTagText(tagObj)
+  );
+
+  if (index > -1) {
+    selectedTags.value[category].splice(index, 1);
+    if (selectedTags.value[category].length === 0) {
+      delete selectedTags.value[category];
+    }
+  } else {
+    selectedTags.value[category].push(tagObj);
+  }
+};
+
+const removeTagFromSummary = (category: string, tagObj: TagObject) => {
+  if (!selectedTags.value[category]) return;
+
+  const index = selectedTags.value[category].findIndex(
+    (selected) => getTagText(selected) === getTagText(tagObj)
+  );
+
+  if (index > -1) {
+    selectedTags.value[category].splice(index, 1);
+    if (selectedTags.value[category].length === 0) {
+      delete selectedTags.value[category];
+    }
+  }
+};
+
+const addCustomTag = () => {
+  if (!customTag.value.pl || !customTag.value.en) {
+    alert(t("prompt_creator.fill_required_fields"));
+    return;
+  }
+
+  const newTag: TagObject = {
+    ...customTag.value,
+    category: currentCategory.value,
+    custom: true,
+  };
+
+  customTags.value.push(newTag);
+  localStorage.setItem("custom_tags", JSON.stringify(customTags.value));
+
+  customTag.value = { pl: "", en: "", neg_pl: "", neg_en: "", nsfw: false };
+  showAddTagModal.value = false;
+};
+
+const nextStep = () => {
+  if (currentStep.value < totalSteps.value - 1) {
+    currentStep.value++;
+    categorySearch.value = "";
+  } else {
+    if (generatedPrompt.value.positive) {
+      showSaveModal.value = true;
+    }
+  }
+};
+
+const previousStep = () => {
+  if (currentStep.value > 0) {
+    currentStep.value--;
+    categorySearch.value = "";
+  }
+};
+
+const skipCategory = () => {
+  nextStep();
+};
+
+const clearCurrentCategory = () => {
+  const category = currentCategory.value;
+  if (selectedTags.value[category]) {
+    delete selectedTags.value[category];
+  }
+};
+
+const clearAll = () => {
+  if (confirm(t("prompt_creator.confirm_clear_all"))) {
+    selectedTags.value = {};
+    currentStep.value = 0;
+  }
+};
+
+const copyPrompt = async (type: "positive" | "negative") => {
+  const text =
+    type === "positive"
+      ? generatedPrompt.value.positive
+      : generatedPrompt.value.negative;
+
+  if (!text) return;
+
+  try {
+    await navigator.clipboard.writeText(text);
+    if (type === "positive") {
+      copiedPositive.value = true;
+      setTimeout(() => {
+        copiedPositive.value = false;
+      }, 2000);
+    } else {
+      copiedNegative.value = true;
+      setTimeout(() => {
+        copiedNegative.value = false;
+      }, 2000);
+    }
+  } catch (error) {
+    console.error("Failed to copy:", error);
+  }
+};
+
+const savePrompt = () => {
+  showSaveModal.value = true;
+};
+
+const handleSavePrompt = (data: { name: string; description: string }) => {
+  const customPrompt = {
+    id: `custom_${Date.now()}`,
+    name: data.name,
+    description: data.description,
+    positivePrompt: generatedPrompt.value.positive,
+    negativePrompt: generatedPrompt.value.negative,
+    tags: allSelectedTagsList.value,
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
+  };
+
+  const saved = localStorage.getItem("custom_prompts");
+  const prompts = saved ? JSON.parse(saved) : [];
+  prompts.unshift(customPrompt);
+  localStorage.setItem("custom_prompts", JSON.stringify(prompts));
+
+  showSaveModal.value = false;
+  alert(t("prompt_creator.saved_successfully"));
+};
+
+const usePrompt = () => {
+  router.push({
+    path: "/chat",
+    query: {
+      prompt: generatedPrompt.value.positive,
+      negativePrompt: generatedPrompt.value.negative,
+    },
+  });
+};
+
+// SEO
+useHead({
+  title: t("prompt_creator.page_title"),
+  meta: [
+    {
+      name: "description",
+      content: t("prompt_creator.page_description"),
+    },
+  ],
+});
+</script>
+
+<style scoped>
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+/* .custom-scrollbar::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400 dark:bg-gray-500;
+} */
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+</style>
