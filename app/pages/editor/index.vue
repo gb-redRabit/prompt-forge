@@ -1,28 +1,27 @@
 <template>
-  <div
-    class="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
-  >
+  <div class="min-h-screen">
     <div class="flex h-screen overflow-hidden">
       <!-- Sidebar z kategoriami -->
       <aside
         :class="[
-          'bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 transition-all duration-300',
-          sidebarExpanded ? 'w-72' : 'w-20',
+          'bg-white dark:bg-gray-800 border-r border-l border-gray-200 dark:border-gray-700 transition-all duration-200',
+          sidebarExpanded ? 'w-72' : 'w-16 ',
         ]"
       >
         <!-- Toggle Button -->
         <div
-          class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between"
+          class="p-1 h-16 border-b border-gray-200 dark:border-gray-700 flex items-center"
+          :class="[sidebarExpanded ? 'justify-between' : 'justify-center']"
         >
           <h2
             v-if="sidebarExpanded"
-            class="font-bold text-gray-900 dark:text-white"
+            class="font-bold text-gray-900 dark:text-white pl-2"
           >
             {{ $t("prompt_creator.categories") }}
           </h2>
           <button
             @click="sidebarExpanded = !sidebarExpanded"
-            class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            class="p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex justify-center items-center"
           >
             <UIcon
               :name="
@@ -30,37 +29,46 @@
                   ? 'i-heroicons-chevron-left'
                   : 'i-heroicons-chevron-right'
               "
-              class="w-5 h-5 text-gray-600 dark:text-gray-400"
+              class="w-4 h-4 text-gray-600 dark:text-gray-400"
             />
           </button>
         </div>
 
         <!-- Categories List -->
-        <div class="overflow-y-auto h-[calc(100vh-73px)] custom-scrollbar">
-          <div class="p-2 space-y-1">
+        <div class="overflow-y-auto h-[calc(100vh-72px)] custom-scrollbar">
+          <div
+            :class="[
+              'p-2',
+              sidebarExpanded
+                ? 'space-y-1'
+                : 'space-y-2 flex flex-col items-center',
+            ]"
+          >
             <button
               v-for="(category, index) in categories"
               :key="category"
               @click="currentStep = index"
               :class="[
-                'w-full flex items-center gap-3 p-3 rounded-xl transition-all',
+                'group w-full flex items-center  gap-1 p-2  rounded-xl transition-all',
                 currentStep === index
-                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 shadow-sm'
-                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50',
+                  ? ' text-primary-600 dark:text-primary-400 '
+                  : 'text-gray-700 dark:text-gray-300 ',
               ]"
             >
               <div
                 :class="[
-                  'flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center',
+                  'flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center',
                   currentStep === index
-                    ? 'bg-primary-500 text-white'
-                    : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400',
+                    ? 'bg-primary-500 text-white group-hover:text-primary-600'
+                    : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 group-hover:text-primary-600',
                 ]"
               >
-                <UIcon :name="getCategoryIcon(category)" class="w-5 h-5" />
+                <UIcon :name="getCategoryIcon(category)" class="w-7 h-7" />
               </div>
               <div v-if="sidebarExpanded" class="flex-1 text-left">
-                <p class="text-sm font-semibold">{{ category }}</p>
+                <p class="text-sm font-semibold group-hover:text-primary-600">
+                  {{ category }}
+                </p>
                 <p
                   v-if="selectedTags[category]?.length"
                   class="text-xs opacity-70"
@@ -81,266 +89,285 @@
       </aside>
 
       <!-- Main Content -->
-      <main class="flex-1 overflow-y-auto">
-        <div class="container mx-auto px-6 py-8">
-          <!-- Header -->
-          <div class="mb-8">
-            <div class="flex items-center justify-between mb-4">
-              <div>
-                <h1
-                  class="text-4xl font-bold bg-gradient-to-r from-primary-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-2"
-                >
-                  {{ currentCategory }}
-                </h1>
-                <p class="text-gray-600 dark:text-gray-400">
-                  {{ $t("prompt_creator.step") }} {{ currentStep + 1 }} /
-                  {{ totalSteps }}
-                </p>
-              </div>
-              <div class="flex items-center gap-4">
-                <!-- Add Custom Tag -->
-                <UButton
-                  color="neutral"
-                  variant="outline"
-                  @click="showAddTagModal = true"
-                >
-                  <UIcon name="i-heroicons-plus" class="mr-2" />
-                  {{ $t("prompt_creator.add_custom_tag") }}
-                </UButton>
-
-                <!-- Stats -->
-                <div
-                  class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 px-6 py-3"
-                >
-                  <div
-                    class="text-3xl font-bold text-primary-600 dark:text-primary-400"
+      <main class="flex-1 overflow-hidden flex flex-col h-screen">
+        <div class="flex-1 overflow-y-auto custom-scrollbar">
+          <div class="container p-6 mx-auto">
+            <!-- Header -->
+            <div class="mb-6">
+              <div class="flex items-center justify-between mb-4">
+                <div>
+                  <h1
+                    class="text-3xl font-bold bg-gradient-to-r from-primary-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-1"
                   >
-                    {{ Math.round(((currentStep + 1) / totalSteps) * 100) }}%
-                  </div>
-                  <div class="text-xs text-gray-500">
-                    {{ $t("prompt_creator.completed") }}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Progress Bar -->
-            <div
-              class="relative h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden"
-            >
-              <div
-                class="absolute inset-y-0 left-0 bg-gradient-to-r from-primary-500 via-purple-500 to-pink-500 transition-all duration-500 rounded-full"
-                :style="{ width: `${((currentStep + 1) / totalSteps) * 100}%` }"
-              >
-                <div class="absolute inset-0 bg-white/20 animate-pulse"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Tags Selection -->
-            <div class="lg:col-span-2 space-y-6">
-              <!-- Search & Filters -->
-              <div
-                class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-4"
-              >
-                <div class="flex gap-3">
-                  <UInput
-                    v-model="categorySearch"
-                    :placeholder="$t('prompt_creator.search_placeholder')"
-                    icon="i-heroicons-magnifying-glass"
-                    size="lg"
-                    class="flex-1"
-                  />
-                  <UButton
-                    :color="showOnlyFavorites ? 'primary' : 'neutral'"
-                    :variant="showOnlyFavorites ? 'solid' : 'outline'"
-                    size="lg"
-                    @click="showOnlyFavorites = !showOnlyFavorites"
-                  >
-                    <UIcon name="i-heroicons-star-solid" class="mr-2" />
-                    {{ $t("prompt_creator.favorites") }}
-                  </UButton>
-                </div>
-                <div class="mt-3 flex items-center justify-between text-sm">
-                  <span class="text-gray-600 dark:text-gray-400">
-                    {{ filteredTagsForCategory.length }}
-                    {{ $t("prompt_creator.results") }}
-                  </span>
-                  <button
-                    v-if="selectedTagsForCurrentCategory.length > 0"
-                    @click="clearCurrentCategory"
-                    class="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 font-medium"
-                  >
-                    {{ $t("common.clear") }} ({{
-                      selectedTagsForCurrentCategory.length
-                    }})
-                  </button>
-                </div>
-              </div>
-
-              <!-- Selected Tags -->
-              <div
-                v-if="selectedTagsForCurrentCategory.length > 0"
-                class="bg-gradient-to-r from-primary-50 to-purple-50 dark:from-primary-900/20 dark:to-purple-900/20 rounded-2xl border border-primary-200 dark:border-primary-800 p-4"
-              >
-                <div class="flex items-center gap-2 mb-3">
-                  <UIcon
-                    name="i-heroicons-check-circle"
-                    class="w-5 h-5 text-primary-500"
-                  />
-                  <span class="font-semibold text-gray-900 dark:text-white">
-                    {{ selectedTagsForCurrentCategory.length }}
-                    {{ $t("prompt_creator.selected") }}
-                  </span>
-                </div>
-                <div class="flex flex-wrap gap-2">
-                  <button
-                    v-for="tagObj in selectedTagsForCurrentCategory"
-                    :key="getTagText(tagObj)"
-                    @click="toggleTag(tagObj)"
-                    :class="[
-                      'px-3 py-1.5 rounded-lg text-sm font-medium transition-all',
-                      'border-2 hover:scale-105',
-                      tagObj.nsfw
-                        ? 'bg-red-50 dark:bg-red-900/20 border-red-500 text-red-700 dark:text-red-300'
-                        : 'bg-white dark:bg-gray-800 border-primary-500 text-gray-900 dark:text-white',
-                    ]"
-                  >
-                    {{ getTagText(tagObj) }}
-                  </button>
-                </div>
-              </div>
-
-              <!-- Tags Grid -->
-              <div
-                class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6"
-              >
-                <div
-                  v-if="filteredTagsForCategory.length > 0"
-                  class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar"
-                >
-                  <button
-                    v-for="tagObj in filteredTagsForCategory"
-                    :key="getTagText(tagObj)"
-                    @click="toggleTag(tagObj)"
-                    :class="[
-                      'group relative px-3 py-2 rounded-lg text-sm font-medium transition-all text-left',
-                      'hover:scale-105',
-                      isTagSelected(tagObj)
-                        ? tagObj.nsfw
-                          ? 'bg-red-500 text-white shadow-md'
-                          : 'bg-primary-500 text-white shadow-md'
-                        : 'bg-gray-50 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700',
-                    ]"
-                  >
-                    <div class="flex items-center justify-between gap-1">
-                      <span class="truncate flex-1">{{
-                        getTagText(tagObj)
-                      }}</span>
-                      <button
-                        @click.stop="toggleFavorite(tagObj)"
-                        :class="[
-                          'flex-shrink-0 p-1 rounded transition-all',
-                          isFavorite(tagObj)
-                            ? 'text-yellow-400'
-                            : isTagSelected(tagObj)
-                              ? 'text-white/50 hover:text-white'
-                              : 'text-gray-400 hover:text-yellow-400',
-                        ]"
-                      >
-                        <UIcon
-                          :name="
-                            isFavorite(tagObj)
-                              ? 'i-heroicons-star-solid'
-                              : 'i-heroicons-star'
-                          "
-                          class="w-4 h-4"
-                        />
-                      </button>
-                    </div>
-                  </button>
-                </div>
-
-                <!-- Empty State -->
-                <div v-else class="text-center py-16">
-                  <div
-                    class="w-20 h-20 mx-auto mb-4 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center"
-                  >
-                    <UIcon
-                      name="i-heroicons-magnifying-glass"
-                      class="w-10 h-10 text-gray-400"
-                    />
-                  </div>
-                  <p class="text-gray-600 dark:text-gray-400 font-medium">
-                    {{ $t("prompt_creator.no_results") }}
+                    {{ currentCategory }}
+                  </h1>
+                  <p class="text-sm text-gray-600 dark:text-gray-400">
+                    {{ $t("prompt_creator.step") }} {{ currentStep + 1 }} /
+                    {{ totalSteps }}
                   </p>
                 </div>
+                <div class="flex items-center gap-3">
+                  <!-- Add Custom Tag -->
+                  <UButton
+                    color="neutral"
+                    variant="outline"
+                    size="xl"
+                    @click="showAddTagModal = true"
+                  >
+                    <UIcon name="i-heroicons-plus" class="mr-2" />
+                    {{ $t("prompt_creator.add_custom_tag") }}
+                  </UButton>
+
+                  <!-- Stats -->
+                  <div
+                    class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 px-4 py-1 flex justify-center items-center gap-3"
+                  >
+                    <div
+                      class="text-2xl font-bold text-primary-600 dark:text-primary-400"
+                    >
+                      {{ Math.round(((currentStep + 1) / totalSteps) * 100) }}%
+                    </div>
+                    <div class="text-xs text-gray-500">
+                      {{ $t("prompt_creator.completed") }}
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <!-- Navigation -->
-              <div class="flex justify-between items-center gap-4">
-                <UButton
-                  size="xl"
-                  color="neutral"
-                  variant="outline"
-                  :disabled="currentStep === 0"
-                  @click="previousStep"
-                  class="flex-1"
+              <!-- Progress Bar -->
+              <div
+                class="relative h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden"
+              >
+                <div
+                  class="absolute inset-y-0 left-0 bg-gradient-to-r from-primary-500 via-purple-500 to-pink-500 transition-all duration-500 rounded-full"
+                  :style="{
+                    width: `${((currentStep + 1) / totalSteps) * 100}%`,
+                  }"
                 >
-                  <UIcon name="i-heroicons-arrow-left" class="mr-2" />
-                  {{ $t("common.previous") }}
-                </UButton>
-
-                <UButton
-                  size="xl"
-                  color="neutral"
-                  variant="ghost"
-                  @click="skipCategory"
-                >
-                  {{ $t("common.skip") }}
-                </UButton>
-
-                <UButton
-                  size="xl"
-                  color="primary"
-                  @click="nextStep"
-                  class="flex-1 shadow-lg shadow-primary-500/30"
-                >
-                  {{
-                    currentStep === totalSteps - 1
-                      ? $t("common.finish")
-                      : $t("common.next")
-                  }}
-                  <UIcon name="i-heroicons-arrow-right" class="ml-2" />
-                </UButton>
+                  <div class="absolute inset-0 bg-white/20 animate-pulse"></div>
+                </div>
               </div>
             </div>
 
-            <!-- Sidebar - Summary -->
-            <div class="lg:col-span-1">
-              <div class="sticky top-8 space-y-6">
+            <div
+              class="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[calc(100vh-170px)]"
+            >
+              <!-- Tags Selection -->
+              <div
+                class="lg:col-span-2 flex flex-col space-y-4 overflow-hidden"
+              >
+                <!-- Search & Filters -->
+                <div
+                  class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-3 flex-shrink-0"
+                >
+                  <div class="flex gap-3">
+                    <UInput
+                      v-model="categorySearch"
+                      :placeholder="$t('prompt_creator.search_placeholder')"
+                      icon="i-heroicons-magnifying-glass"
+                      size="md"
+                      class="flex-1"
+                    />
+                    <UButton
+                      :color="showOnlyFavorites ? 'primary' : 'neutral'"
+                      :variant="showOnlyFavorites ? 'solid' : 'outline'"
+                      size="md"
+                      @click="showOnlyFavorites = !showOnlyFavorites"
+                    >
+                      <UIcon name="i-heroicons-star-solid" class="mr-2" />
+                      {{ $t("prompt_creator.favorites") }}
+                    </UButton>
+                  </div>
+                  <div class="mt-2 flex items-center justify-between text-sm">
+                    <span class="text-gray-600 dark:text-gray-400">
+                      {{ filteredTagsForCategory.length }}
+                      {{ $t("prompt_creator.results") }}
+                    </span>
+                    <button
+                      v-if="selectedTagsForCurrentCategory.length > 0"
+                      @click="clearCurrentCategory"
+                      class="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 font-medium"
+                    >
+                      {{ $t("common.clear") }} ({{
+                        selectedTagsForCurrentCategory.length
+                      }})
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Selected Tags -->
+                <div
+                  v-if="selectedTagsForCurrentCategory.length > 0"
+                  class="bg-gradient-to-r from-primary-50 to-purple-50 dark:from-primary-900/20 dark:to-purple-900/20 rounded-2xl border border-primary-200 dark:border-primary-800 p-3 flex-shrink-0"
+                >
+                  <div class="flex items-center gap-2 mb-2">
+                    <UIcon
+                      name="i-heroicons-check-circle"
+                      class="w-4 h-4 text-primary-500"
+                    />
+                    <span
+                      class="text-sm font-semibold text-gray-900 dark:text-white"
+                    >
+                      {{ selectedTagsForCurrentCategory.length }}
+                      {{ $t("prompt_creator.selected") }}
+                    </span>
+                  </div>
+                  <div class="flex flex-wrap gap-2">
+                    <button
+                      v-for="tagObj in selectedTagsForCurrentCategory"
+                      :key="getTagText(tagObj)"
+                      @click="toggleTag(tagObj)"
+                      :class="[
+                        'px-2 py-1 rounded-lg text-xs font-medium transition-all',
+                        'border-2 hover:scale-105',
+                        tagObj.nsfw
+                          ? 'bg-red-50 dark:bg-red-900/20 border-red-500 text-red-700 dark:text-red-300'
+                          : 'bg-white dark:bg-gray-800 border-primary-500 text-gray-900 dark:text-white',
+                      ]"
+                    >
+                      {{ getTagText(tagObj) }}
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Tags Grid -->
+                <div
+                  class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-4 overflow-hidden"
+                >
+                  <div
+                    v-if="filteredTagsForCategory.length > 0"
+                    class="flex flex-wrap justify-start items-start gap-2 h-full overflow-y-auto pr-2 custom-scrollbar"
+                  >
+                    <button
+                      v-for="tagObj in filteredTagsForCategory"
+                      :key="getTagText(tagObj)"
+                      @click="toggleTag(tagObj)"
+                      :class="[
+                        'group relative px-2 py-2 rounded-lg text-xs font-medium transition-all text-left h-fit',
+                        'hover:scale-105',
+                        tagObj.nsfw
+                          ? ' bg-red-500/40'
+                          : isTagSelected(tagObj)
+                            ? tagObj.nsfw
+                              ? 'bg-red-500 text-white shadow-md'
+                              : 'bg-primary-500 text-white shadow-md'
+                            : 'bg-gray-50 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700',
+                      ]"
+                    >
+                      <div class="flex items-center justify-between gap-1">
+                        <span class="truncate flex-1">{{
+                          getTagText(tagObj)
+                        }}</span>
+                        <button
+                          @click.stop="toggleFavorite(tagObj)"
+                          :class="[
+                            'flex-shrink-0 p-0.5 rounded transition-all',
+                            isFavorite(tagObj)
+                              ? 'text-yellow-400'
+                              : isTagSelected(tagObj)
+                                ? 'text-white/50 hover:text-white'
+                                : 'text-gray-400 hover:text-yellow-400',
+                          ]"
+                        >
+                          <UIcon
+                            :name="
+                              isFavorite(tagObj)
+                                ? 'i-heroicons-star-solid'
+                                : 'i-heroicons-star'
+                            "
+                            class="w-3 h-3"
+                          />
+                        </button>
+                      </div>
+                    </button>
+                  </div>
+
+                  <!-- Empty State -->
+                  <div v-else class="flex items-center justify-center h-full">
+                    <div class="text-center">
+                      <div
+                        class="w-16 h-16 mx-auto mb-3 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center"
+                      >
+                        <UIcon
+                          name="i-heroicons-magnifying-glass"
+                          class="w-8 h-8 text-gray-400"
+                        />
+                      </div>
+                      <p
+                        class="text-gray-600 dark:text-gray-400 font-medium text-sm"
+                      >
+                        {{ $t("prompt_creator.no_results") }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Navigation -->
+                <div
+                  class="flex justify-between items-center gap-3 flex-shrink-0"
+                >
+                  <UButton
+                    size="lg"
+                    color="neutral"
+                    variant="outline"
+                    :disabled="currentStep === 0"
+                    @click="previousStep"
+                    class="flex-1"
+                  >
+                    <UIcon name="i-heroicons-arrow-left" class="mr-2" />
+                    {{ $t("common.previous") }}
+                  </UButton>
+
+                  <UButton
+                    size="lg"
+                    color="neutral"
+                    variant="soft"
+                    @click="skipCategory"
+                  >
+                    {{ $t("common.skip") }}
+                  </UButton>
+
+                  <UButton
+                    size="lg"
+                    color="primary"
+                    @click="nextStep"
+                    class="flex-1 shadow-lg shadow-primary-500/30"
+                  >
+                    {{
+                      currentStep === totalSteps - 1
+                        ? $t("common.finish")
+                        : $t("common.next")
+                    }}
+                    <UIcon name="i-heroicons-arrow-right" class="ml-2" />
+                  </UButton>
+                </div>
+              </div>
+
+              <!-- Sidebar - Summary -->
+              <div
+                class="lg:col-span-1 flex flex-col space-y-4 overflow-hidden"
+              >
                 <!-- Stats Card -->
                 <div
-                  class="bg-gradient-to-br from-primary-500 to-purple-600 rounded-2xl shadow-2xl p-6 text-white"
+                  class="bg-gradient-to-br from-primary-500 flex justify-between items-center to-purple-600 rounded-2xl p-4 text-white flex-shrink-0"
                 >
-                  <h3 class="text-lg font-bold mb-4">
+                  <h3 class="text-base font-bold">
                     {{ $t("prompt_creator.summary") }}
                   </h3>
-                  <div class="space-y-3">
-                    <div class="flex justify-between items-center">
-                      <span class="text-sm opacity-90">{{
-                        $t("prompt_creator.categories")
-                      }}</span>
-                      <span class="text-2xl font-bold">{{
+                  <div class="flex gap-2">
+                    <div class="flex justify-center items-center gap-1">
+                      <span class="text-sm opacity-90"
+                        >{{ $t("prompt_creator.categories") }}:
+                      </span>
+                      <span class="text-sm font-bold">{{
                         Object.keys(selectedTags).length
                       }}</span>
                     </div>
-                    <div class="flex justify-between items-center">
-                      <span class="text-sm opacity-90">{{
-                        $t("prompt_creator.total_tags")
-                      }}</span>
-                      <span class="text-2xl font-bold">{{
+                    <div class="flex justify-center items-center gap-1">
+                      <span class="text-sm opacity-90"
+                        >{{ $t("prompt_creator.total_tags") }}:
+                      </span>
+                      <span class="text-sm font-bold">{{
                         totalSelectedTags
                       }}</span>
                     </div>
@@ -349,38 +376,39 @@
 
                 <!-- Selected Summary -->
                 <div
-                  class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden max-h-[400px]"
+                  class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 flex-1 overflow-hidden flex flex-col"
+                  :class="[
+                    totalSelectedTags === 0 ? 'opacity-0' : 'opacity-100 ',
+                  ]"
                 >
                   <div
-                    class="bg-gray-50 dark:bg-gray-900/50 px-4 py-3 border-b border-gray-200 dark:border-gray-700"
+                    class="bg-gray-50 dark:bg-gray-900/50 px-4 py-2 border-b border-gray-200 dark:border-gray-700 flex-shrink-0"
                   >
                     <h3 class="font-bold text-gray-900 dark:text-white text-sm">
                       {{ $t("prompt_creator.selected_tags") }}
                     </h3>
                   </div>
-                  <div
-                    class="p-4 overflow-y-auto max-h-[320px] custom-scrollbar"
-                  >
+                  <div class="p-3 overflow-y-auto flex-1 custom-scrollbar">
                     <div
                       v-if="Object.keys(selectedTags).length > 0"
-                      class="space-y-3"
+                      class="space-y-2"
                     >
                       <div
                         v-for="(tagObjs, category) in selectedTags"
                         :key="category"
                       >
                         <div
-                          class="text-xs font-bold text-gray-500 dark:text-gray-400 mb-1.5"
+                          class="text-xs font-bold text-gray-500 dark:text-gray-400 mb-1"
                         >
                           {{ category }} ({{ tagObjs.length }})
                         </div>
-                        <div class="flex flex-wrap gap-1.5">
+                        <div class="flex flex-wrap gap-1">
                           <button
                             v-for="tagObj in tagObjs"
                             :key="getTagText(tagObj)"
                             @click="removeTagFromSummary(category, tagObj)"
                             :class="[
-                              'px-2 py-1 rounded text-xs font-medium transition-all hover:scale-105',
+                              'px-2 py-0.5 rounded text-xs font-medium transition-all hover:scale-105',
                               tagObj.nsfw
                                 ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 border border-red-300 dark:border-red-700'
                                 : 'bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 border border-primary-300 dark:border-primary-700',
@@ -391,14 +419,16 @@
                         </div>
                       </div>
                     </div>
-                    <div v-else class="text-center py-8">
-                      <UIcon
-                        name="i-heroicons-inbox"
-                        class="w-12 h-12 mx-auto mb-2 text-gray-300 dark:text-gray-600"
-                      />
-                      <p class="text-sm text-gray-500 dark:text-gray-400">
-                        {{ $t("prompt_creator.no_selections") }}
-                      </p>
+                    <div v-else class="flex items-center justify-center h-full">
+                      <div class="text-center">
+                        <UIcon
+                          name="i-heroicons-inbox"
+                          class="w-10 h-10 mx-auto mb-2 text-gray-300 dark:text-gray-600"
+                        />
+                        <p class="text-xs text-gray-500 dark:text-gray-400">
+                          {{ $t("prompt_creator.no_selections") }}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -406,10 +436,10 @@
                 <!-- Generated Prompts -->
                 <div
                   v-if="generatedPrompt.positive"
-                  class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden"
+                  class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 flex-shrink-0"
                 >
                   <div
-                    class="bg-green-50 dark:bg-green-900/20 px-4 py-3 border-b border-gray-200 dark:border-gray-700"
+                    class="bg-green-50 dark:bg-green-900/20 px-4 py-2 border-b border-gray-200 dark:border-gray-700"
                   >
                     <h3
                       class="font-bold text-gray-900 dark:text-white text-sm flex items-center gap-2"
@@ -421,10 +451,10 @@
                       {{ $t("prompt_creator.prompts") }}
                     </h3>
                   </div>
-                  <div class="p-4 space-y-3">
+                  <div class="p-3 space-y-2">
                     <!-- Positive -->
                     <div>
-                      <div class="flex items-center justify-between mb-2">
+                      <div class="flex items-center justify-between mb-1">
                         <span
                           class="text-xs font-bold text-green-600 dark:text-green-400"
                         >
@@ -441,7 +471,7 @@
                         class="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-2"
                       >
                         <p
-                          class="text-xs font-mono text-gray-700 dark:text-gray-300 line-clamp-3"
+                          class="text-xs font-mono text-gray-700 dark:text-gray-300 line-clamp-2"
                         >
                           {{ generatedPrompt.positive }}
                         </p>
@@ -450,7 +480,7 @@
 
                     <!-- Negative -->
                     <div v-if="generatedPrompt.negative">
-                      <div class="flex items-center justify-between mb-2">
+                      <div class="flex items-center justify-between mb-1">
                         <span
                           class="text-xs font-bold text-red-600 dark:text-red-400"
                         >
@@ -467,7 +497,7 @@
                         class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-2"
                       >
                         <p
-                          class="text-xs font-mono text-gray-700 dark:text-gray-300 line-clamp-3"
+                          class="text-xs font-mono text-gray-700 dark:text-gray-300 line-clamp-2"
                         >
                           {{ generatedPrompt.negative }}
                         </p>
@@ -477,8 +507,8 @@
                     <!-- Actions -->
                     <div class="pt-2 space-y-2">
                       <UButton
-                        color="green"
-                        size="lg"
+                        color="success"
+                        size="md"
                         block
                         @click="savePrompt"
                       >
@@ -487,7 +517,7 @@
                       </UButton>
                       <UButton
                         color="primary"
-                        size="lg"
+                        size="md"
                         block
                         @click="usePrompt"
                       >
@@ -673,7 +703,7 @@ const showSaveModal = ref(false);
 const showAddTagModal = ref(false);
 const copiedPositive = ref(false);
 const copiedNegative = ref(false);
-const sidebarExpanded = ref(true);
+const sidebarExpanded = ref(false);
 const showOnlyFavorites = ref(false);
 const favorites = ref<Set<string>>(new Set());
 const customTags = ref<TagObject[]>([]);
@@ -806,7 +836,9 @@ const filteredTagsForCategory = computed(() => {
 });
 
 const selectedTagsForCurrentCategory = computed(() => {
-  return selectedTags.value[currentCategory.value] || [];
+  const category = currentCategory.value;
+  if (!category) return [];
+  return selectedTags.value[category] || [];
 });
 
 const totalSelectedTags = computed(() => {
@@ -864,6 +896,7 @@ const isTagSelected = (tagObj: TagObject) => {
 
 const toggleTag = (tagObj: TagObject) => {
   const category = currentCategory.value;
+  if (!category) return;
   if (!selectedTags.value[category]) {
     selectedTags.value[category] = [];
   }
@@ -900,6 +933,10 @@ const removeTagFromSummary = (category: string, tagObj: TagObject) => {
 const addCustomTag = () => {
   if (!customTag.value.pl || !customTag.value.en) {
     alert(t("prompt_creator.fill_required_fields"));
+    return;
+  }
+
+  if (!currentCategory.value) {
     return;
   }
 
@@ -940,7 +977,7 @@ const skipCategory = () => {
 
 const clearCurrentCategory = () => {
   const category = currentCategory.value;
-  if (selectedTags.value[category]) {
+  if (category && selectedTags.value[category]) {
     delete selectedTags.value[category];
   }
 };
@@ -1027,25 +1064,43 @@ useHead({
 
 <style scoped>
 .custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
+  width: 1px;
   height: 6px;
 }
 
-/* .custom-scrollbar::-webkit-scrollbar-track {
-  @apply bg-transparent;
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+  background-color: rgb(209 213 219);
+  border-radius: 9999px;
+}
+
+:global(.dark) .custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgb(75 85 99);
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400 dark:bg-gray-500;
-} */
+  background-color: rgb(156 163 175);
+}
+
+:global(.dark) .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(107 114 128);
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
 .line-clamp-3 {
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }

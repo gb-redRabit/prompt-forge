@@ -3,13 +3,11 @@
     <AppSidebar v-model:open="sidebarOpen" />
 
     <div
-      class="flex-1 flex flex-col transition-all duration-300 ease-in-out mt-4"
-      :class="[sidebarOpen ? 'lg:ml-72' : 'lg:ml-18']"
+      class="flex-1 flex flex-col transition-all duration-300 ease-in-out"
+      :class="[sidebarOpen ? 'lg:ml-72' : 'lg:ml-16']"
     >
-      
-
       <!-- Main Content -->
-      <main class="flex-1 p-8 overflow-auto">
+      <main class="flex-1 overflow-auto">
         <div class="mx-auto max-w-full">
           <slot />
         </div>

@@ -40,27 +40,6 @@
       "clear_search": "Wyczyść Wyszukiwanie",
       "browse_all_templates": "Przeglądaj Wszystkie Szablony"
     },
-    "analytics": {
-      "subtitle": "Śledź i analizuj wydajność swoich promptów AI",
-      "export": "Eksportuj",
-      "usage_trends": "Trendy użycia",
-      "chart_placeholder": "Tutaj zostanie wyświetlona wizualizacja wykresu",
-      "top_prompts": "Najlepsze prompty",
-      "uses": "użyć",
-      "performance": "Metryki wydajności",
-      "metric": "Metryka",
-      "current": "Obecne",
-      "previous": "Poprzednie",
-      "change": "Zmiana",
-      "total_prompts": "Łączna liczba promptów",
-      "total_uses": "Łączna liczba użyć",
-      "success_rate": "Wskaźnik sukcesu",
-      "avg_response": "Średni czas odpowiedzi",
-      "avg_tokens": "Średnia liczba tokenów",
-      "response_time": "Czas odpowiedzi",
-      "error_rate": "Wskaźnik błędów",
-      "user_satisfaction": "Zadowolenie użytkowników"
-    },
     "templates": {
       "subtitle": "Gotowe szablony promptów do użycia",
       "search": "Szukaj szablonów...",
@@ -123,7 +102,20 @@
       "model_singular": "model dostępny",
       "model_plural": "modeli dostępnych",
       "search": "Szukaj",
-      "clear": "Wyczyść"
+      "clear": "Wyczyść",
+      "add": "Dodaj",
+      "apply": "",
+      "back": "",
+      "cancel": "",
+      "close": "",
+      "error": "",
+      "filter": "",
+      "next": "",
+      "previous": "",
+      "reset": "",
+      "save": "",
+      "sort": "",
+      "success": ""
     }
   },
   "app": {
@@ -609,7 +601,22 @@
         "badges": {
           "pl": "PL",
           "en": "EN"
-        }
+        },
+        "cancel": "",
+        "descriptionEN": "",
+        "descriptionEnPlaceholder": "",
+        "descriptionPL": "",
+        "descriptionPlaceholder": "",
+        "nameEN": "",
+        "nameEnPlaceholder": "",
+        "namePL": "",
+        "namePlaceholder": "",
+        "save": "",
+        "saveNote": "",
+        "templateEN": "",
+        "templateEnPlaceholder": "",
+        "templatePL": "",
+        "templatePlaceholder": ""
       },
       "addToCollection": {
         "title": "Dodaj do Kolekcji",
@@ -645,7 +652,7 @@
     "no_options_found": "Nie znaleziono opcji",
     "summary": "Podsumowanie",
     "categories_used": "kategorii",
-    "total_tags": "tagów",
+    "total_tags": "T",
     "no_selections_yet": "Nie dokonano jeszcze żadnych wyborów",
     "positive_prompt": "Prompt pozytywny",
     "negative_prompt": "Prompt negatywny",
@@ -654,7 +661,6 @@
     "save_prompt": "Zapisz prompt",
     "prompt_name": "Nazwa promptu",
     "prompt_name_placeholder": "np. Cyberpunk Girl Portrait",
-    "description": "Opis",
     "description_placeholder": "Opisz swój prompt...",
     "tags_included": "tagów",
     "step": "Krok",
@@ -662,12 +668,17 @@
     "results": "wyników",
     "no_results": "Nie znaleziono tagów",
     "your_progress": "Twój postęp",
-    "categories": "Kategorie",
+    "categories": "K",
     "completion": "Ukończenie",
     "selected_categories": "Wybrane kategorie",
     "no_selections": "Brak wyborów",
     "prompts": "Wygenerowane prompty",
     "positive": "Pozytywny",
-    "negative": "Negatywny"
+    "negative": "Negatywny",
+    "add_custom_tag": "Dodaj własny tag",
+    "tag_name": "Nazwa tagu",
+    "favorites": "Ulubione",
+    "selected_tags": "Wybrane tagi",
+    "fill_required_fields": "Wypełnij wymagane pola"
   }
 }
