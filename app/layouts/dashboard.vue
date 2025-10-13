@@ -4,7 +4,7 @@
 
     <div
       class="flex-1 flex flex-col transition-all duration-300 ease-in-out"
-      :class="[sidebarOpen ? 'lg:ml-72' : 'lg:ml-16']"
+      :class="sidebarOpen ? 'lg:ml-72' : 'lg:ml-16'"
     >
       <!-- Main Content -->
       <main class="flex-1 overflow-auto">

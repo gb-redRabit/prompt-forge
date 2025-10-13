@@ -5,7 +5,7 @@
       <aside
         :class="[
           'bg-white dark:bg-gray-800 border-r border-l border-gray-200 dark:border-gray-700 transition-all duration-200',
-          sidebarExpanded ? 'w-72' : 'w-16 ',
+          sidebarExpanded ? 'w-72' : 'w-16',
         ]"
       >
         <!-- Toggle Button -->
@@ -17,7 +17,7 @@
             v-if="sidebarExpanded"
             class="font-bold text-gray-900 dark:text-white pl-2"
           >
-            {{ $t("prompt_creator.categories") }}
+            {{ $t("prompt_creator.categories_name") }}
           </h2>
           <button
             @click="sidebarExpanded = !sidebarExpanded"
@@ -38,7 +38,7 @@
         <div class="overflow-y-auto h-[calc(100vh-72px)] custom-scrollbar">
           <div
             :class="[
-              'p-2',
+              'p-1',
               sidebarExpanded
                 ? 'space-y-1'
                 : 'space-y-2 flex flex-col items-center',
@@ -49,7 +49,7 @@
               :key="category"
               @click="currentStep = index"
               :class="[
-                'group w-full flex items-center  gap-1 p-2  rounded-xl transition-all',
+                'group w-full flex items-center   p-2  rounded-xl transition-all',
                 currentStep === index
                   ? ' text-primary-600 dark:text-primary-400 '
                   : 'text-gray-700 dark:text-gray-300 ',
@@ -57,24 +57,25 @@
             >
               <div
                 :class="[
-                  'flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center',
+                  'flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center relative',
                   currentStep === index
                     ? 'bg-primary-500 text-white group-hover:text-primary-600'
                     : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 group-hover:text-primary-600',
                 ]"
               >
                 <UIcon :name="getCategoryIcon(category)" class="w-7 h-7" />
-              </div>
-              <div v-if="sidebarExpanded" class="flex-1 text-left">
-                <p class="text-sm font-semibold group-hover:text-primary-600">
-                  {{ category }}
-                </p>
-                <p
-                  v-if="selectedTags[category]?.length"
-                  class="text-xs opacity-70"
+                <div
+                  v-if="selectedTags[category]?.length && !sidebarExpanded"
+                  class="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-primary-500 text-white text-xs flex items-center justify-center border-3 border-gray-800"
                 >
                   {{ selectedTags[category].length }}
-                  {{ $t("prompt_creator.selected") }}
+                </div>
+              </div>
+              <div v-if="sidebarExpanded" class="flex-1 text-left">
+                <p
+                  class="text-sm font-semibold group-hover:text-primary-600 ml-2"
+                >
+                  {{ category }}
                 </p>
               </div>
               <div
@@ -107,11 +108,21 @@
                   </p>
                 </div>
                 <div class="flex items-center gap-3">
+                  <!-- NSFW Toggle -->
+                  <USwitch
+                    v-model="showNsfw"
+                    color="error"
+                    size="md"
+                    :label="$t('prompt_creator.show_nsfw')"
+                    :checked-icon="'i-heroicons-eye'"
+                    :unchecked-icon="'i-heroicons-eye-slash'"
+                  />
+
                   <!-- Add Custom Tag -->
                   <UButton
                     color="neutral"
                     variant="outline"
-                    size="xl"
+                    size="md"
                     @click="showAddTagModal = true"
                   >
                     <UIcon name="i-heroicons-plus" class="mr-2" />
@@ -120,7 +131,7 @@
 
                   <!-- Stats -->
                   <div
-                    class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 px-4 py-1 flex justify-center items-center gap-3"
+                    class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 px-4 py-2 flex items-center gap-2"
                   >
                     <div
                       class="text-2xl font-bold text-primary-600 dark:text-primary-400"
@@ -150,7 +161,7 @@
             </div>
 
             <div
-              class="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[calc(100vh-170px)]"
+              class="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[calc(100vh-220px)]"
             >
               <!-- Tags Selection -->
               <div
@@ -213,20 +224,100 @@
                     </span>
                   </div>
                   <div class="flex flex-wrap gap-2">
-                    <button
+                    <div
                       v-for="tagObj in selectedTagsForCurrentCategory"
                       :key="getTagText(tagObj)"
-                      @click="toggleTag(tagObj)"
-                      :class="[
-                        'px-2 py-1 rounded-lg text-xs font-medium transition-all',
-                        'border-2 hover:scale-105',
-                        tagObj.nsfw
-                          ? 'bg-red-50 dark:bg-red-900/20 border-red-500 text-red-700 dark:text-red-300'
-                          : 'bg-white dark:bg-gray-800 border-primary-500 text-gray-900 dark:text-white',
-                      ]"
+                      class="relative group"
                     >
-                      {{ getTagText(tagObj) }}
-                    </button>
+                      <button
+                        @click="toggleTag(tagObj)"
+                        :class="[
+                          'px-2 py-1.5 rounded-lg text-xs font-medium transition-all border-2 hover:scale-105',
+                          tagObj.nsfw
+                            ? 'bg-red-50 dark:bg-red-900/20 border-red-500 text-red-700 dark:text-red-300'
+                            : 'bg-white dark:bg-gray-800 border-primary-500 text-gray-900 dark:text-white',
+                        ]"
+                      >
+                        {{ getTagText(tagObj) }}
+                        <span
+                          v-if="tagObj.weight && tagObj.weight !== 1.0"
+                          class="ml-1 text-xs opacity-70"
+                        >
+                          :{{ tagObj.weight.toFixed(1) }}
+                        </span>
+                        <span
+                          v-if="tagObj.emphasis && tagObj.emphasis > 0"
+                          class="ml-1 text-xs opacity-70"
+                        >
+                          {{ "(".repeat(tagObj.emphasis) }}
+                        </span>
+                      </button>
+
+                      <!-- Popup controls -->
+                      <div
+                        class="absolute top-full mt-1 left-0 bg-white dark:bg-gray-800 rounded-lg shadow-xl border-2 border-gray-200 dark:border-gray-700 p-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50"
+                      >
+                        <div class="space-y-3 min-w-[220px]">
+                          <!-- Weight slider -->
+                          <div>
+                            <div class="flex items-center justify-between mb-2">
+                              <label
+                                class="text-xs font-medium text-gray-700 dark:text-gray-300"
+                              >
+                                {{ $t("prompt_creator.weight") }}
+                              </label>
+                              <span
+                                class="text-sm font-bold text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 px-2 py-0.5 rounded"
+                              >
+                                {{ (tagObj.weight || 1.0).toFixed(1) }}
+                              </span>
+                            </div>
+                            <USlider
+                              :model-value="tagObj.weight || 1.0"
+                              @update:model-value="
+                                (value) => updateWeight(tagObj, value as number)
+                              "
+                              :min="0"
+                              :max="3"
+                              :step="0.1"
+                              color="primary"
+                              size="md"
+                            />
+                            <div
+                              class="flex justify-between text-xs text-gray-500 mt-1"
+                            >
+                              <span>0.0</span>
+                              <span>1.5</span>
+                              <span>3.0</span>
+                            </div>
+                          </div>
+
+                          <!-- Emphasis buttons -->
+                          <div>
+                            <label
+                              class="text-xs font-medium text-gray-700 dark:text-gray-300 block mb-2"
+                            >
+                              {{ $t("prompt_creator.emphasis") }}
+                            </label>
+                            <div class="grid grid-cols-4 gap-1">
+                              <button
+                                v-for="n in [0, 1, 2, 3]"
+                                :key="n"
+                                @click.stop="updateEmphasis(tagObj, n)"
+                                :class="[
+                                  'px-2 py-1.5 text-xs rounded-lg font-medium transition-all',
+                                  (tagObj.emphasis || 0) === n
+                                    ? 'bg-primary-500 text-white shadow-md scale-105'
+                                    : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600',
+                                ]"
+                              >
+                                {{ n === 0 ? "None" : "(".repeat(n) }}
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -357,7 +448,7 @@
                   <div class="flex gap-2">
                     <div class="flex justify-center items-center gap-1">
                       <span class="text-sm opacity-90"
-                        >{{ $t("prompt_creator.categories") }}:
+                        >{{ $t("prompt_creator.categories_name").slice(0, 1) }}:
                       </span>
                       <span class="text-sm font-bold">{{
                         Object.keys(selectedTags).length
@@ -612,10 +703,10 @@
               variant="outline"
               @click="showAddTagModal = false"
             >
-              {{ $t("common.cancel") }}
+              {{ $t("pages.common.cancel") }}
             </UButton>
             <UButton type="submit" color="primary">
-              {{ $t("common.add") }}
+              {{ $t("pages.common.add") }}
             </UButton>
           </div>
         </form>
@@ -633,6 +724,8 @@ interface TagObject {
   category: string;
   nsfw: boolean;
   custom?: boolean;
+  weight?: number; // 0.0 - 3.0
+  emphasis?: number; // 0-3 (nawiasy)
 }
 
 import SavePromptModal from "~/components/editor/SavePromptModal.vue";
@@ -707,6 +800,7 @@ const sidebarExpanded = ref(false);
 const showOnlyFavorites = ref(false);
 const favorites = ref<Set<string>>(new Set());
 const customTags = ref<TagObject[]>([]);
+const showNsfw = ref(false);
 
 const customTag = ref({
   pl: "",
@@ -820,6 +914,11 @@ const tagsForCurrentCategory = computed(() => {
 const filteredTagsForCategory = computed(() => {
   let tags = tagsForCurrentCategory.value;
 
+  // Filter NSFW if toggle is off
+  if (!showNsfw.value) {
+    tags = tags.filter((tag) => !tag.nsfw);
+  }
+
   if (showOnlyFavorites.value) {
     tags = tags.filter((tag) => isFavorite(tag));
   }
@@ -869,8 +968,44 @@ const generatedPrompt = computed(() => {
   categories.forEach((category) => {
     const tagObjs = selectedTags.value[category];
     if (tagObjs && tagObjs.length > 0) {
-      const positiveTexts = tagObjs.map(getTagText);
-      const negativeTexts = tagObjs.map(getNegativeTagText).filter((t) => t);
+      const positiveTexts = tagObjs.map((tagObj) => {
+        let text = getTagText(tagObj);
+
+        // Add emphasis (parentheses)
+        if (tagObj.emphasis && tagObj.emphasis > 0) {
+          text =
+            "(".repeat(tagObj.emphasis) + text + ")".repeat(tagObj.emphasis);
+        }
+
+        // Add weight
+        if (tagObj.weight && tagObj.weight !== 1.0) {
+          text = `(${text}:${tagObj.weight.toFixed(1)})`;
+        }
+
+        return text;
+      });
+
+      const negativeTexts = tagObjs
+        .map((tagObj) => {
+          const negText = getNegativeTagText(tagObj);
+          if (!negText) return "";
+
+          let text = negText;
+
+          // Add emphasis for negative too
+          if (tagObj.emphasis && tagObj.emphasis > 0) {
+            text =
+              "(".repeat(tagObj.emphasis) + text + ")".repeat(tagObj.emphasis);
+          }
+
+          // Add weight for negative
+          if (tagObj.weight && tagObj.weight !== 1.0) {
+            text = `(${text}:${tagObj.weight.toFixed(1)})`;
+          }
+
+          return text;
+        })
+        .filter((t) => t);
 
       if (positiveTexts.length > 0) {
         positiveParts.push(positiveTexts.join(", "));
@@ -911,7 +1046,13 @@ const toggleTag = (tagObj: TagObject) => {
       delete selectedTags.value[category];
     }
   } else {
-    selectedTags.value[category].push(tagObj);
+    // Initialize with default values
+    const newTag = {
+      ...tagObj,
+      weight: 1.0,
+      emphasis: 0,
+    };
+    selectedTags.value[category].push(newTag);
   }
 };
 
@@ -1050,6 +1191,47 @@ const usePrompt = () => {
   });
 };
 
+// Weight and Emphasis management
+const updateWeight = (tagObj: TagObject, value: number | number[]) => {
+  const category = currentCategory.value;
+  if (!category || !selectedTags.value[category]) return;
+
+  // Handle array (for multiple thumbs) or single value
+  const weightValue = Array.isArray(value) ? value[0] : value;
+
+  const index = selectedTags.value[category].findIndex(
+    (selected) => getTagText(selected) === getTagText(tagObj)
+  );
+
+  if (index > -1 && selectedTags.value[category]?.[index]) {
+    selectedTags.value[category][index].weight = weightValue;
+  }
+};
+
+const updateEmphasis = (tagObj: TagObject, emphasis: number) => {
+  const category = currentCategory.value;
+  if (!category || !selectedTags.value[category]) return;
+
+  const index = selectedTags.value[category].findIndex(
+    (selected) => getTagText(selected) === getTagText(tagObj)
+  );
+
+  if (index > -1 && selectedTags.value[category]?.[index]) {
+    selectedTags.value[category][index].emphasis = emphasis;
+  }
+};
+
+// Update tagClasses computed
+const tagClasses = computed(() => {
+  return (tagObj: TagObject) => [
+    "px-2 py-1.5 rounded-lg text-xs font-medium transition-all",
+    "border-2 hover:scale-105",
+    tagObj.nsfw
+      ? "bg-red-50 dark:bg-red-900/20 border-red-500 text-red-700 dark:text-red-300"
+      : "bg-white dark:bg-gray-800 border-primary-500 text-gray-900 dark:text-white",
+  ];
+});
+
 // SEO
 useHead({
   title: t("prompt_creator.page_title"),
@@ -1103,5 +1285,40 @@ useHead({
   line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* Custom range slider */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgb(var(--color-primary-600));
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgb(var(--color-primary-600));
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+  transform: scale(1.2);
 }
 </style>

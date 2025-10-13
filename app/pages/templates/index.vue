@@ -1,5 +1,5 @@
 <template>
-  <div class="flex gap-6">
+  <div class="flex gap-6 p-8">
     <!-- LEFT COLUMN: Filters -->
     <aside
       class="w-90 flex-shrink-0 overflow-y-auto space-y-4 h-[calc(100vh-6rem)]"
