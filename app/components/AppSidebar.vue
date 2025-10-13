@@ -342,6 +342,11 @@ const navigation = [
   },
   {
     name: "chat.title",
+    href: "/fukcje/tags",
+    icon: "i-heroicons-h2",
+  },
+  {
+    name: "chat.title",
     href: "/chat",
     icon: "i-heroicons-cpu-chip",
   },

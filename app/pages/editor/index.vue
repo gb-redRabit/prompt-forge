@@ -40,51 +40,83 @@
             :class="[
               'p-1',
               sidebarExpanded
-                ? 'space-y-1'
+                ? 'space-y-2'
                 : 'space-y-2 flex flex-col items-center',
             ]"
           >
-            <button
-              v-for="(category, index) in categories"
-              :key="category"
-              @click="currentStep = index"
-              :class="[
-                'group w-full flex items-center   p-2  rounded-xl transition-all',
-                currentStep === index
-                  ? ' text-primary-600 dark:text-primary-400 '
-                  : 'text-gray-700 dark:text-gray-300 ',
-              ]"
+            <!-- Pogrupowane kategorie -->
+            <div
+              v-for="group in categoryGroupsUI"
+              :key="group.key"
+              class="space-y-1 w-full"
             >
+              <!-- Nagłówek grupy -->
               <div
+                v-if="sidebarExpanded"
+                class="px-2 py-1 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide"
+              >
+                {{ group.title }}
+              </div>
+              <div
+                v-else-if="group.key !== `basics`"
+                class="px-2 border-b border-gray-700 w-3/4 mx-auto"
+              ></div>
+              <div v-else class="none"></div>
+
+              <!-- Kategorie w grupie -->
+              <button
+                v-for="category in group.items"
+                :key="category"
+                @click="category && (currentStep = getIndexByLabel(category))"
                 :class="[
-                  'flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center relative',
-                  currentStep === index
-                    ? 'bg-primary-500 text-white group-hover:text-primary-600'
-                    : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 group-hover:text-primary-600',
+                  'group w-full flex items-center p-2 rounded-xl transition-all',
+                  category && currentStep === getIndexByLabel(category)
+                    ? 'text-primary-600 dark:text-primary-400'
+                    : 'text-gray-700 dark:text-gray-300',
                 ]"
               >
-                <UIcon :name="getCategoryIcon(category)" class="w-7 h-7" />
                 <div
-                  v-if="selectedTags[category]?.length && !sidebarExpanded"
-                  class="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-primary-500 text-white text-xs flex items-center justify-center border-3 border-gray-800"
+                  :class="[
+                    'flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center relative',
+                    category && currentStep === getIndexByLabel(category)
+                      ? 'bg-primary-500 text-white group-hover:text-primary-600'
+                      : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 group-hover:text-primary-600',
+                  ]"
+                >
+                  <UIcon
+                    :name="getCategoryIcon(category ?? '') || 'i-heroicons-tag'"
+                    class="w-7 h-7"
+                  />
+                  <div
+                    v-if="
+                      category &&
+                      selectedTags[category]?.length &&
+                      !sidebarExpanded
+                    "
+                    class="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-primary-500 text-white text-xs flex items-center justify-center border-3 border-gray-800"
+                  >
+                    {{ selectedTags[category].length }}
+                  </div>
+                </div>
+                <div v-if="sidebarExpanded" class="flex-1 text-left">
+                  <p
+                    class="text-sm font-semibold group-hover:text-primary-600 ml-2"
+                  >
+                    {{ getCategoryNameByLabel(category || "") }}
+                  </p>
+                </div>
+                <div
+                  v-if="
+                    category &&
+                    selectedTags[category]?.length &&
+                    sidebarExpanded
+                  "
+                  class="flex-shrink-0 w-6 h-6 rounded-full bg-primary-500 text-white text-xs flex items-center justify-center font-bold"
                 >
                   {{ selectedTags[category].length }}
                 </div>
-              </div>
-              <div v-if="sidebarExpanded" class="flex-1 text-left">
-                <p
-                  class="text-sm font-semibold group-hover:text-primary-600 ml-2"
-                >
-                  {{ category }}
-                </p>
-              </div>
-              <div
-                v-if="selectedTags[category]?.length && sidebarExpanded"
-                class="flex-shrink-0 w-6 h-6 rounded-full bg-primary-500 text-white text-xs flex items-center justify-center font-bold"
-              >
-                {{ selectedTags[category].length }}
-              </div>
-            </button>
+              </button>
+            </div>
           </div>
         </div>
       </aside>
@@ -94,13 +126,13 @@
         <div class="flex-1 overflow-y-auto custom-scrollbar">
           <div class="container p-6 mx-auto">
             <!-- Header -->
-            <div class="mb-6">
-              <div class="flex items-center justify-between mb-4">
+            <div class="mb-3">
+              <div class="flex items-center justify-between mb-2">
                 <div>
                   <h1
                     class="text-3xl font-bold bg-gradient-to-r from-primary-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-1"
                   >
-                    {{ currentCategory }}
+                    {{ getCategoryNameByLabel(currentCategory || "") }}
                   </h1>
                   <p class="text-sm text-gray-600 dark:text-gray-400">
                     {{ $t("prompt_creator.step") }} {{ currentStep + 1 }} /
@@ -108,33 +140,12 @@
                   </p>
                 </div>
                 <div class="flex items-center gap-3">
-                  <!-- NSFW Toggle -->
-                  <USwitch
-                    v-model="showNsfw"
-                    color="error"
-                    size="md"
-                    :label="$t('prompt_creator.show_nsfw')"
-                    :checked-icon="'i-heroicons-eye'"
-                    :unchecked-icon="'i-heroicons-eye-slash'"
-                  />
-
-                  <!-- Add Custom Tag -->
-                  <UButton
-                    color="neutral"
-                    variant="outline"
-                    size="md"
-                    @click="showAddTagModal = true"
-                  >
-                    <UIcon name="i-heroicons-plus" class="mr-2" />
-                    {{ $t("prompt_creator.add_custom_tag") }}
-                  </UButton>
-
                   <!-- Stats -->
                   <div
-                    class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 px-4 py-2 flex items-center gap-2"
+                    class="bg-white dark:bg-gray-800 rounded-xs border border-gray-200 dark:border-gray-700 px-4 py-1 flex items-center gap-2"
                   >
                     <div
-                      class="text-2xl font-bold text-primary-600 dark:text-primary-400"
+                      class="text-xl font-bold text-primary-600 dark:text-primary-400"
                     >
                       {{ Math.round(((currentStep + 1) / totalSteps) * 100) }}%
                     </div>
@@ -161,7 +172,7 @@
             </div>
 
             <div
-              class="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[calc(100vh-220px)]"
+              class="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[calc(100vh-170px)]"
             >
               <!-- Tags Selection -->
               <div
@@ -414,6 +425,7 @@
                     color="neutral"
                     variant="soft"
                     @click="skipCategory"
+                    class="w-1/5 flex justify-center"
                   >
                     {{ $t("common.skip") }}
                   </UButton>
@@ -422,7 +434,7 @@
                     size="lg"
                     color="primary"
                     @click="nextStep"
-                    class="flex-1 shadow-lg shadow-primary-500/30"
+                    class="flex-1 shadow-lg shadow-primary-500/30 justify-end"
                   >
                     {{
                       currentStep === totalSteps - 1
@@ -440,29 +452,27 @@
               >
                 <!-- Stats Card -->
                 <div
-                  class="bg-gradient-to-br from-primary-500 flex justify-between items-center to-purple-600 rounded-2xl p-4 text-white flex-shrink-0"
+                  class="flex items-center rounded-xl p-2 gap-2 flex-shrink-0 border-1 border-gray-700"
                 >
-                  <h3 class="text-base font-bold">
-                    {{ $t("prompt_creator.summary") }}
-                  </h3>
-                  <div class="flex gap-2">
-                    <div class="flex justify-center items-center gap-1">
-                      <span class="text-sm opacity-90"
-                        >{{ $t("prompt_creator.categories_name").slice(0, 1) }}:
-                      </span>
-                      <span class="text-sm font-bold">{{
-                        Object.keys(selectedTags).length
-                      }}</span>
-                    </div>
-                    <div class="flex justify-center items-center gap-1">
-                      <span class="text-sm opacity-90"
-                        >{{ $t("prompt_creator.total_tags") }}:
-                      </span>
-                      <span class="text-sm font-bold">{{
-                        totalSelectedTags
-                      }}</span>
-                    </div>
-                  </div>
+                  <!-- NSFW Toggle -->
+                  <USwitch
+                    v-model="showNsfw"
+                    color="error"
+                    size="xl"
+                    :checked-icon="'i-heroicons-eye'"
+                    :unchecked-icon="'i-heroicons-eye-slash'"
+                  />
+
+                  <!-- Add Custom Tag -->
+                  <UButton
+                    color="neutral"
+                    variant="outline"
+                    size="sm"
+                    @click="showAddTagModal = true"
+                    icon="i-heroicons-plus"
+                  >
+                    {{ $t("prompt_creator.add_custom_tag") }}
+                  </UButton>
                 </div>
 
                 <!-- Selected Summary -->
@@ -473,11 +483,31 @@
                   ]"
                 >
                   <div
-                    class="bg-gray-50 dark:bg-gray-900/50 px-4 py-2 border-b border-gray-200 dark:border-gray-700 flex-shrink-0"
+                    class="bg-gray-50 flex justify-between dark:bg-gray-900/50 px-4 py-2 border-b border-gray-200 dark:border-gray-700 flex-shrink-0"
                   >
                     <h3 class="font-bold text-gray-900 dark:text-white text-sm">
                       {{ $t("prompt_creator.selected_tags") }}
                     </h3>
+                    <div class="flex gap-2">
+                      <div class="flex justify-center items-center gap-1">
+                        <span class="text-sm opacity-90"
+                          >{{
+                            $t("prompt_creator.categories_name").slice(0, 1)
+                          }}:
+                        </span>
+                        <span class="text-sm font-bold">{{
+                          Object.keys(selectedTags).length
+                        }}</span>
+                      </div>
+                      <div class="flex justify-center items-center gap-1">
+                        <span class="text-sm opacity-90"
+                          >{{ $t("prompt_creator.total_tags") }}:
+                        </span>
+                        <span class="text-sm font-bold">{{
+                          totalSelectedTags
+                        }}</span>
+                      </div>
+                    </div>
                   </div>
                   <div class="p-3 overflow-y-auto flex-1 custom-scrollbar">
                     <div
@@ -491,7 +521,9 @@
                         <div
                           class="text-xs font-bold text-gray-500 dark:text-gray-400 mb-1"
                         >
-                          {{ category }} ({{ tagObjs.length }})
+                          {{ getCategoryNameByLabel(category) }} ({{
+                            tagObjs.length
+                          }})
                         </div>
                         <div class="flex flex-wrap gap-1">
                           <button
@@ -740,6 +772,125 @@ const router = useRouter();
 // Preloaded content
 const { tags, isLoaded: isContentLoaded } = usePreloadedContent();
 
+// Mapowanie: klucz i18n -> obecna etykieta kategorii (z content/tagów)
+const categoryKeyMap: Record<string, string> = {
+  subject: "Subject",
+  art_style: "Art Style",
+  medium: "Medium",
+  quality: "Quality",
+  characters: "Characters",
+  character_traits: "Character Traits",
+  facial_features: "Facial Features",
+  eyes: "Eyes",
+  hair: "Hair",
+  body_features: "Body Features",
+  breasts: "Breasts",
+  genitals: "Genitals",
+  anatomy_details: "Anatomy Details",
+  hand_details: "Hand Details",
+  expression_pose: "Expression/Pose",
+  posture: "Posture",
+  clothing: "Clothing",
+  accessories: "Accessories",
+  setting: "Setting",
+  environment_details: "Environment Details",
+  background_elements: "Background Elements",
+  time_of_day: "Time of Day",
+  weather: "Weather",
+  lighting_effects: "Lighting/Effects",
+  themes_moods: "Themes/Moods",
+  color_palettes: "Color Palettes",
+  camera_angles: "Camera Angles",
+  perspectives: "Perspectives",
+  camera_settings: "Camera Settings",
+  lens_type: "Lens Type",
+  composition_rules: "Composition Rules",
+  motion_effects: "Motion Effects",
+  rendering_engine: "Rendering Engine",
+  post_processing: "Post Processing",
+  texture_materials: "Texture Materials",
+  technology_objects: "Technology/Objects",
+  other: "Other",
+};
+
+// Odwrotna mapa: etykieta -> klucz i18n (do tłumaczenia UI)
+const labelToKey: Record<string, string> = Object.entries(
+  categoryKeyMap
+).reduce(
+  (acc, [key, label]) => {
+    acc[label] = key;
+    return acc;
+  },
+  {} as Record<string, string>
+);
+
+// Kolejność logiczna kategorii (klucze i18n)
+const categoryOrderKeys: string[] = [
+  // 🎯 Podstawy
+  "subject",
+  "quality",
+
+  // 👤 Postać
+  "characters",
+  "character_traits",
+  "facial_features",
+  "eyes",
+  "hair",
+  "body_features",
+  "breasts",
+  "genitals",
+  "anatomy_details",
+  "hand_details",
+
+  // 💃 Poza
+  "expression_pose",
+  "posture",
+
+  // 👗 Ubranie
+  "clothing",
+  "accessories",
+
+  // 🎨 Styl
+  "art_style",
+  "medium",
+
+  // 📷 Kamera
+  "camera_angles",
+  "perspectives",
+  "camera_settings",
+  "lens_type",
+  "composition_rules",
+  "motion_effects",
+
+  // 🌍 Środowisko
+  "setting",
+  "environment_details",
+  "background_elements",
+  "time_of_day",
+  "weather",
+
+  // ✨ Atmosfera
+  "lighting_effects",
+  "themes_moods",
+  "color_palettes",
+
+  // ⚙️ Techniczne
+  "rendering_engine",
+  "post_processing",
+  "texture_materials",
+  "technology_objects",
+
+  // 📦 Inne
+  "other",
+];
+
+// HELPERY UI: tłumaczenie nazwy kategorii po etykiecie
+const getI18nKeyFromLabel = (label: string) => labelToKey[label] || null;
+const getCategoryNameByLabel = (label: string) => {
+  const key = getI18nKeyFromLabel(label);
+  return key ? t(`prompt_creator.categories.${key}`) : label;
+};
+
 // Category Icons Map
 const categoryIcons: Record<string, string> = {
   Subject: "i-heroicons-user",
@@ -786,7 +937,80 @@ const getCategoryIcon = (category: string) => {
 };
 
 // Wszystkie kategorie
-const categories = Object.keys(categoryIcons);
+const categories = categoryOrderKeys
+  .map((key) => categoryKeyMap[key])
+  .filter((label) => !!label && !!categoryIcons[label as string]);
+
+// Definicja grup (klucze i18n zgodne z categoryOrderKeys)
+const categoryGroupsDef = [
+  { key: "basics", items: ["subject", "quality"] },
+  {
+    key: "character",
+    items: [
+      "characters",
+      "character_traits",
+      "facial_features",
+      "eyes",
+      "hair",
+      "body_features",
+      "breasts",
+      "genitals",
+      "anatomy_details",
+      "hand_details",
+    ],
+  },
+  { key: "pose", items: ["expression_pose", "posture"] },
+  { key: "clothing", items: ["clothing", "accessories"] },
+  { key: "style", items: ["art_style", "medium"] },
+  {
+    key: "camera",
+    items: [
+      "camera_angles",
+      "perspectives",
+      "camera_settings",
+      "lens_type",
+      "composition_rules",
+      "motion_effects",
+    ],
+  },
+  {
+    key: "environment",
+    items: [
+      "setting",
+      "environment_details",
+      "background_elements",
+      "time_of_day",
+      "weather",
+    ],
+  },
+  {
+    key: "atmosphere",
+    items: ["lighting_effects", "themes_moods", "color_palettes"],
+  },
+  {
+    key: "technical",
+    items: [
+      "rendering_engine",
+      "post_processing",
+      "texture_materials",
+      "technology_objects",
+    ],
+  },
+  { key: "other", items: ["other"] },
+];
+
+// UI: grupy zamienione na etykiety (logika nadal używa categories = flat labels)
+const categoryGroupsUI = computed(() =>
+  categoryGroupsDef.map((g) => ({
+    key: g.key,
+    title: t(`prompt_creator.groups.${g.key}`),
+    // items jako LABELS (np. "Subject"), zgodne z selectedTags i resztą logiki
+    items: g.items.map((k) => categoryKeyMap[k]).filter((label) => !!label),
+  }))
+);
+
+// Globalny indeks na podstawie etykiety
+const getIndexByLabel = (label: string) => categories.indexOf(label);
 
 // State
 const currentStep = ref(0);
@@ -966,9 +1190,10 @@ const generatedPrompt = computed(() => {
   const negativeParts: string[] = [];
 
   categories.forEach((category) => {
+    if (!category) return;
     const tagObjs = selectedTags.value[category];
     if (tagObjs && tagObjs.length > 0) {
-      const positiveTexts = tagObjs.map((tagObj) => {
+      const positiveTexts = tagObjs.map((tagObj: TagObject) => {
         let text = getTagText(tagObj);
 
         // Add emphasis (parentheses)
@@ -986,7 +1211,7 @@ const generatedPrompt = computed(() => {
       });
 
       const negativeTexts = tagObjs
-        .map((tagObj) => {
+        .map((tagObj: TagObject) => {
           const negText = getNegativeTagText(tagObj);
           if (!negText) return "";
 
@@ -1322,3 +1547,4 @@ input[type="range"]::-moz-range-thumb:hover {
   transform: scale(1.2);
 }
 </style>
+`
