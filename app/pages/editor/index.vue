@@ -450,11 +450,10 @@
               <div
                 class="lg:col-span-1 flex flex-col space-y-4 overflow-hidden"
               >
-                <!-- Stats Card -->
+                <!-- Card Settings-->
                 <div
                   class="flex items-center rounded-xl p-2 gap-2 flex-shrink-0 border-1 border-gray-700"
                 >
-                  <!-- NSFW Toggle -->
                   <USwitch
                     v-model="showNsfw"
                     color="error"
@@ -462,8 +461,6 @@
                     :checked-icon="'i-heroicons-eye'"
                     :unchecked-icon="'i-heroicons-eye-slash'"
                   />
-
-                  <!-- Add Custom Tag -->
                   <UButton
                     color="neutral"
                     variant="outline"
@@ -472,6 +469,15 @@
                     icon="i-heroicons-plus"
                   >
                     {{ $t("prompt_creator.add_custom_tag") }}
+                  </UButton>
+                  <UButton
+                    color="neutral"
+                    variant="outline"
+                    size="sm"
+                    @click="showNegativeTemplatesModal = true"
+                    icon="i-heroicons-exclamation-triangle"
+                  >
+                    {{ $t("prompt_creator.negative_templates") }}
                   </UButton>
                 </div>
 
@@ -744,6 +750,44 @@
         </form>
       </template>
     </UModal>
+    <!-- Negative Templates Modal -->
+    <UModal
+      v-model:open="showNegativeTemplatesModal"
+      :title="$t('prompt_creator.negative_templates')"
+    >
+      <template #description>
+        {{ $t("prompt_creator.negative_templates_description") }}
+      </template>
+      <template #body>
+        <div class="space-y-4">
+          <div
+            v-for="group in negativeTemplateGroups"
+            :key="group.label"
+            class="space-y-2"
+          >
+            <h4 class="text-sm font-semibold text-gray-900 dark:text-white">
+              {{ group.label }}
+            </h4>
+            <div class="grid grid-cols-2 gap-2">
+              <UButton
+                v-for="template in group.templates"
+                :key="template.label"
+                color="neutral"
+                variant="outline"
+                size="xs"
+                @click="
+                  addNegativeTemplate(template.text);
+                  showNegativeTemplatesModal = false;
+                "
+                class="text-xs"
+              >
+                {{ template.label }}
+              </UButton>
+            </div>
+          </div>
+        </div>
+      </template>
+    </UModal>
   </div>
 </template>
 
@@ -759,7 +803,7 @@ interface TagObject {
   weight?: number; // 0.0 - 3.0
   emphasis?: number; // 0-3 (nawiasy)
 }
-
+const showNegativeTemplatesModal = ref(false);
 import SavePromptModal from "~/components/editor/SavePromptModal.vue";
 
 definePageMeta({
@@ -1025,6 +1069,7 @@ const showOnlyFavorites = ref(false);
 const favorites = ref<Set<string>>(new Set());
 const customTags = ref<TagObject[]>([]);
 const showNsfw = ref(false);
+const additionalNegative = ref("");
 
 const customTag = ref({
   pl: "",
@@ -1033,6 +1078,43 @@ const customTag = ref({
   neg_en: "",
   nsfw: false,
 });
+
+// Negative templates grouped
+const negativeTemplateGroups = [
+  {
+    label: "Common Issues",
+    templates: [
+      { label: "Blurry", text: "blurry, low quality, deformed, ugly" },
+      { label: "Anatomy", text: "extra limbs, malformed hands, bad anatomy" },
+      { label: "Artifacts", text: "artifacts, watermark, signature, text" },
+    ],
+  },
+  {
+    label: "Art Style",
+    templates: [
+      { label: "Realistic", text: "cartoon, anime, illustration, painting" },
+      { label: "Anime", text: "realistic, photograph, 3d render" },
+      { label: "Painting", text: "photograph, realistic, 3d render" },
+    ],
+  },
+  {
+    label: "Composition",
+    templates: [
+      { label: "Centered", text: "asymmetric, off-center, cropped" },
+      { label: "Multiple", text: "solo, single subject" },
+      { label: "Background", text: "busy background, cluttered" },
+    ],
+  },
+];
+
+// Function to add template to negative prompt
+const addNegativeTemplate = (text: string) => {
+  if (additionalNegative.value) {
+    additionalNegative.value += ", " + text;
+  } else {
+    additionalNegative.value = text;
+  }
+};
 
 // Load favorites and custom tags from localStorage
 onMounted(() => {
@@ -1241,9 +1323,16 @@ const generatedPrompt = computed(() => {
     }
   });
 
+  let negative = negativeParts.join(", ");
+  if (additionalNegative.value) {
+    negative = negative
+      ? negative + ", " + additionalNegative.value
+      : additionalNegative.value;
+  }
+
   return {
     positive: positiveParts.join(", "),
-    negative: negativeParts.join(", "),
+    negative,
   };
 });
 
@@ -1351,6 +1440,7 @@ const clearCurrentCategory = () => {
 const clearAll = () => {
   if (confirm(t("prompt_creator.confirm_clear_all"))) {
     selectedTags.value = {};
+    additionalNegative.value = "";
     currentStep.value = 0;
   }
 };
@@ -1547,4 +1637,3 @@ input[type="range"]::-moz-range-thumb:hover {
   transform: scale(1.2);
 }
 </style>
-`

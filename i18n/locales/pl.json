@@ -639,6 +639,8 @@
     }
   },
   "prompt_creator": {
+    "negative_templates": "Szablony negatywne",
+    "negative_templates_description": "Wybierz szablony negatywne, aby wykluczyć niepożądane elementy z promptu",
     "title": "Kreator Promptów",
     "description": "Stwórz idealny prompt krok po kroku",
     "page_title": "Kreator Promptów - Prompt Forge",

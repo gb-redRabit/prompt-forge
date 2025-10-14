@@ -112,15 +112,15 @@
   <aside
     :class="[
       'hidden fixed lg:inset-y-0 lg:z-50 lg:flex lg:flex-col bg-white dark:bg-gray-800 shadow transition-all duration-200 overflow-hidden',
-      collapsed ? 'lg:w-16' : 'lg:w-72',
+      !sidebarOpen ? 'lg:w-16' : 'lg:w-72',
     ]"
   >
     <!-- desktop header -->
     <div
       class="flex h-16 items-center border-b border-gray-100 dark:border-gray-700"
-      :class="collapsed ? 'justify-center px-2' : 'justify-between px-4'"
+      :class="!sidebarOpen ? 'justify-center px-2' : 'justify-between px-4'"
     >
-      <NuxtLink v-if="!collapsed" to="/" class="flex items-center gap-2">
+      <NuxtLink v-if="sidebarOpen" to="/" class="flex items-center gap-2">
         <div
           class="h-8 w-8 bg-primary-600 rounded flex items-center justify-center text-white font-bold"
         >
@@ -140,7 +140,7 @@
       </NuxtLink>
 
       <button
-        v-if="!collapsed"
+        v-if="sidebarOpen"
         @click="toggleCollapsed"
         class="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
         title="Collapse sidebar"
@@ -160,7 +160,7 @@
             :to="item.href"
             class="group flex items-center rounded px-2 py-2 text-sm font-medium transition-colors relative"
             :class="[
-              collapsed ? 'justify-center' : 'gap-3',
+              !sidebarOpen ? 'justify-center' : 'gap-3',
               isActive(item.href)
                 ? 'bg-gray-100 dark:bg-gray-700 text-primary-600'
                 : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary-600',
@@ -170,13 +170,13 @@
               <UIcon :name="item.icon" class="h-5 w-5" />
             </div>
 
-            <span v-if="!collapsed" class="truncate flex-1">{{
+            <span v-if="sidebarOpen" class="truncate flex-1">{{
               $t(item.name)
             }}</span>
 
             <!-- tooltip when collapsed -->
             <div
-              v-if="collapsed"
+              v-if="!sidebarOpen"
               class="absolute left-full top-1/2 -translate-y-1/2 ml-3 z-50 whitespace-nowrap rounded-md bg-gray-900 dark:bg-gray-700 text-white text-xs px-2 py-1 opacity-0 pointer-events-none transition-opacity group-hover:opacity-100"
             >
               {{ $t(item.name) }}
@@ -189,9 +189,9 @@
     <!-- desktop footer -->
     <div
       class="border-t border-gray-100 dark:border-gray-700"
-      :class="collapsed ? 'px-2 py-3' : 'px-4 py-3'"
+      :class="!sidebarOpen ? 'px-2 py-3' : 'px-4 py-3'"
     >
-      <div v-if="collapsed" class="flex flex-col items-center gap-2">
+      <div v-if="!sidebarOpen" class="flex flex-col items-center gap-2">
         <button
           @click="toggleCollapsed"
           class="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -290,12 +290,30 @@ import { useI18n } from "vue-i18n";
 import { useColorMode } from "#imports";
 const { isSidebarOpen, close, open } = useSidebar();
 const isOpen = defineModel<boolean>("open", { default: true });
-// persisted collapsed state
-const collapsed = useState<boolean>("sidebarCollapsed", () => false);
+
+// Zamiast useState, użyj ref z localStorage (jak w dashboard.vue)
+const sidebarOpen = ref(true);
+
+// Zapisz stan sidebara w localStorage (jak w dashboard.vue)
+watch(sidebarOpen, (value) => {
+  if (process.client) {
+    localStorage.setItem("sidebar-open", JSON.stringify(value));
+  }
+});
+
+// Załaduj stan sidebara z localStorage (jak w dashboard.vue)
+onMounted(() => {
+  if (process.client) {
+    const saved = localStorage.getItem("sidebar-open");
+    if (saved !== null) {
+      sidebarOpen.value = JSON.parse(saved);
+    }
+  }
+});
 
 const toggleCollapsed = () => {
-  collapsed.value = !collapsed.value;
-  isOpen.value = !isOpen.value;
+  sidebarOpen.value = !sidebarOpen.value;
+  isOpen.value = !isOpen.value; // dla mobile (zachowaj synchronizację)
 };
 
 // Theme management - tylko po stronie klienta
