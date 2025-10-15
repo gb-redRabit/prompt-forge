@@ -479,6 +479,15 @@
                   >
                     {{ $t("prompt_creator.negative_templates") }}
                   </UButton>
+                  <UButton
+                    color="neutral"
+                    variant="outline"
+                    size="sm"
+                    @click="sharePrompt"
+                    icon="i-heroicons-share"
+                  >
+                    Udostępnij
+                  </UButton>
                 </div>
 
                 <!-- Selected Summary -->
@@ -815,7 +824,7 @@ const router = useRouter();
 
 // Preloaded content
 const { tags, isLoaded: isContentLoaded } = usePreloadedContent();
-
+let autoSaveInterval: NodeJS.Timeout | null = null;
 // Mapowanie: klucz i18n -> obecna etykieta kategorii (z content/tagów)
 const categoryKeyMap: Record<string, string> = {
   subject: "Subject",
@@ -1184,11 +1193,9 @@ const allTagsFlat = computed(() => {
 
   extractTags(tags.value);
 
-  // Add custom tags
+  // Add custom tags (bez warunku currentCategory)
   customTags.value.forEach((tag) => {
-    if (tag.category === currentCategory.value) {
-      allTags.push(tag);
-    }
+    allTags.push(tag);
   });
 
   return allTags;
@@ -1339,7 +1346,7 @@ const generatedPrompt = computed(() => {
 // Actions
 const isTagSelected = (tagObj: TagObject) => {
   return selectedTagsForCurrentCategory.value.some(
-    (selected) => getTagText(selected) === getTagText(tagObj)
+    (selected) => getTagId(selected) === getTagId(tagObj)
   );
 };
 
@@ -1556,6 +1563,162 @@ useHead({
       content: t("prompt_creator.page_description"),
     },
   ],
+});
+
+// Współdzielenie promptu
+const sharePrompt = () => {
+  const data = {
+    prompt: generatedPrompt.value,
+    tags: selectedTags.value,
+    step: currentStep.value,
+    additionalNegative: additionalNegative.value,
+  };
+  const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+  const url = `${window.location.origin}/editor?shared=${encoded}`;
+  navigator.clipboard.writeText(url);
+  // Toast: "Link skopiowany!"
+};
+
+// Ładowanie z query
+onMounted(() => {
+  const query = new URLSearchParams(window.location.search);
+  const shared = query.get("shared");
+
+  if (shared) {
+    try {
+      const data = JSON.parse(decodeURIComponent(escape(atob(shared))));
+
+      console.log("📦 Załadowane dane z linku:", data);
+
+      // KROK 1: Poczekaj na załadowanie tagów z usePreloadedContent
+      const waitForTags = () => {
+        if (!isContentLoaded.value || allTagsFlat.value.length === 0) {
+          console.log("⏳ Oczekiwanie na załadowanie tagów...");
+          setTimeout(waitForTags, 50); // Sprawdzaj co 50ms
+          return;
+        }
+
+        console.log("✅ Tagi załadowane:", allTagsFlat.value.length);
+
+        // KROK 2: Dodaj brakujące tagi do customTags
+        const tagsToAdd: TagObject[] = [];
+
+        Object.values(data.tags || {}).forEach((tagObjs: TagObject[]) => {
+          tagObjs.forEach((tagObj) => {
+            const tagId = `${tagObj.category}_${tagObj.pl}_${tagObj.en}`;
+
+            // Sprawdź czy tag istnieje w allTagsFlat
+            const existsInFlat = allTagsFlat.value.some(
+              (existing) =>
+                `${existing.category}_${existing.pl}_${existing.en}` === tagId
+            );
+
+            // Sprawdź czy już jest w customTags
+            const existsInCustom = customTags.value.some(
+              (existing) =>
+                `${existing.category}_${existing.pl}_${existing.en}` === tagId
+            );
+
+            // Dodaj tylko jeśli nie istnieje nigdzie
+            if (!existsInFlat && !existsInCustom) {
+              tagsToAdd.push({ ...tagObj, custom: true });
+            }
+          });
+        });
+
+        // Dodaj nowe tagi do customTags
+        if (tagsToAdd.length > 0) {
+          customTags.value.push(...tagsToAdd);
+          localStorage.setItem("custom_tags", JSON.stringify(customTags.value));
+          console.log("✅ Dodano nowe tagi do customTags:", tagsToAdd.length);
+        }
+
+        // KROK 3: Poczekaj na aktualizację allTagsFlat po dodaniu customTags
+        nextTick(() => {
+          console.log(
+            "🔄 Po nextTick - allTagsFlat zawiera:",
+            allTagsFlat.value.length,
+            "tagów"
+          );
+
+          // KROK 4: Ustaw selectedTags z REFERENCJAMI do tagów z allTagsFlat
+          const validatedTags: Record<string, TagObject[]> = {};
+
+          Object.entries(data.tags || {}).forEach(([category, tagObjs]) => {
+            validatedTags[category] = [];
+
+            (tagObjs as TagObject[]).forEach((tagObj) => {
+              // Znajdź tag w allTagsFlat
+              const foundTag = allTagsFlat.value.find(
+                (t) =>
+                  t.category === tagObj.category &&
+                  t.pl === tagObj.pl &&
+                  t.en === tagObj.en
+              );
+
+              if (foundTag) {
+                // Modyfikuj referencję (bez spread)
+                foundTag.weight = tagObj.weight ?? 1.0;
+                foundTag.emphasis = tagObj.emphasis ?? 0;
+                validatedTags[category].push(foundTag);
+              } else {
+                console.warn("⚠️ Nie znaleziono tagu w allTagsFlat:", tagObj);
+              }
+            });
+
+            // Usuń puste kategorie
+            if (validatedTags[category].length === 0) {
+              delete validatedTags[category];
+            }
+          });
+
+          console.log("✅ Załadowano selectedTags:", validatedTags);
+
+          selectedTags.value = validatedTags;
+          currentStep.value = data.step || 0;
+          additionalNegative.value = data.additionalNegative || "";
+
+          // Usuń query z URL
+          router.replace({ path: "/editor" });
+        });
+      };
+
+      // Uruchom oczekiwanie
+      waitForTags();
+    } catch (error) {
+      console.error("❌ Błąd ładowania shared prompt:", error);
+    }
+    return; // Nie ładuj postępu jeśli jest shared link
+  }
+
+  // Przywracanie postępu (tylko jeśli NIE ma shared query)
+  const savedProgress = localStorage.getItem("editor_progress");
+  if (savedProgress) {
+    try {
+      const progress = JSON.parse(savedProgress);
+      selectedTags.value = progress.tags || {};
+      currentStep.value = progress.step || 0;
+      additionalNegative.value = progress.additionalNegative || "";
+    } catch (error) {
+      console.error("Błąd ładowania postępu:", error);
+    }
+  }
+
+  // Start auto-save
+  autoSaveInterval = setInterval(() => {
+    const progress = {
+      tags: selectedTags.value,
+      step: currentStep.value,
+      additionalNegative: additionalNegative.value,
+    };
+    localStorage.setItem("editor_progress", JSON.stringify(progress));
+  }, 30000);
+});
+
+onUnmounted(() => {
+  if (autoSaveInterval) {
+    clearInterval(autoSaveInterval);
+  }
 });
 </script>
 
