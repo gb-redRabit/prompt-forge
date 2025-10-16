@@ -115,7 +115,8 @@
       "reset": "",
       "save": "",
       "sort": "",
-      "success": ""
+      "success": "",
+      "error_description": "Wystąpił błąd podczas przetwarzania żądania."
     }
   },
   "app": {
@@ -640,8 +641,14 @@
   },
   "prompt_creator": {
     "negative_templates": "Szablony negatywne",
+    "randomize": "Losuj",
+    "history_title": "Historia promptów",
+    "snapshot_name_prompt": "Nazwa wersji:",
+    "no_history": "Brak zapisanych wersji",
     "negative_templates_description": "Wybierz szablony negatywne, aby wykluczyć niepożądane elementy z promptu",
     "title": "Kreator Promptów",
+    "snapshot_saved": "Wersja zapisana!",
+    "link_copied": "Link skopiowany!",
     "description": "Stwórz idealny prompt krok po kroku",
     "page_title": "Kreator Promptów - Prompt Forge",
     "page_description": "Interaktywny kreator promptów z podziałem na kategorie",
@@ -736,6 +743,9 @@
       "atmosphere": "✨ Atmosfera",
       "technical": "⚙️ Techniczne",
       "other": "📦 Inne"
-    }
+    },
+    "history_description": "Przeglądaj i przywracaj zapisane wersje promptów.",
+    "add_custom_tag_description": "Dodaj własny tag do bieżącej kategorii.",
+    "negative_templates_description": "Wybierz szablon negatywny do dodania do promptu."
   }
 }

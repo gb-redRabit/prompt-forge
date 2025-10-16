@@ -4,24 +4,24 @@
       <!-- Sidebar z kategoriami -->
       <aside
         :class="[
-          'bg-white dark:bg-gray-800 border-r border-l border-gray-200 dark:border-gray-700 transition-all duration-200',
+          'bg-white dark:bg-gray-800 border-r border-l border-gray-200 dark:border-gray-700 transition-all duration-200 relative',
           sidebarExpanded ? 'w-72' : 'w-16',
         ]"
       >
         <!-- Toggle Button -->
         <div
-          class="p-1 h-16 border-b border-gray-200 dark:border-gray-700 flex items-center"
-          :class="[sidebarExpanded ? 'justify-between' : 'justify-center']"
+          class="absolute top-0 p-1 border-gray-200 dark:border-gray-700 flex items-center"
+          :class="[
+            sidebarExpanded
+              ? 'justify-between left-72'
+              : 'justify-center left-16',
+          ]"
         >
-          <h2
-            v-if="sidebarExpanded"
-            class="font-bold text-gray-900 dark:text-white pl-2"
-          >
-            {{ $t("prompt_creator.categories_name") }}
-          </h2>
-          <button
+          <UButton
+            variant="ghost"
+            size="md"
             @click="sidebarExpanded = !sidebarExpanded"
-            class="p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex justify-center items-center"
+            class="flex justify-center items-center"
           >
             <UIcon
               :name="
@@ -31,11 +31,11 @@
               "
               class="w-4 h-4 text-gray-600 dark:text-gray-400"
             />
-          </button>
+          </UButton>
         </div>
 
         <!-- Categories List -->
-        <div class="overflow-y-auto h-[calc(100vh-72px)] custom-scrollbar">
+        <div class="overflow-y-auto h-full custom-scrollbar">
           <div
             :class="[
               'p-1',
@@ -199,6 +199,15 @@
                       <UIcon name="i-heroicons-star-solid" class="mr-2" />
                       {{ $t("prompt_creator.favorites") }}
                     </UButton>
+                    <UButton
+                      color="primary"
+                      variant="outline"
+                      size="md"
+                      @click="randomizeCategory"
+                    >
+                      <UIcon name="i-heroicons-arrows-right-left" class="p-1" />
+                      {{ $t("prompt_creator.randomize") }}
+                    </UButton>
                   </div>
                   <div class="mt-2 flex items-center justify-between text-sm">
                     <span class="text-gray-600 dark:text-gray-400">
@@ -242,12 +251,7 @@
                     >
                       <button
                         @click="toggleTag(tagObj)"
-                        :class="[
-                          'px-2 py-1.5 rounded-lg text-xs font-medium transition-all border-2 hover:scale-105',
-                          tagObj.nsfw
-                            ? 'bg-red-50 dark:bg-red-900/20 border-red-500 text-red-700 dark:text-red-300'
-                            : 'bg-white dark:bg-gray-800 border-primary-500 text-gray-900 dark:text-white',
-                        ]"
+                        :class="tagClasses(tagObj)"
                       >
                         {{ getTagText(tagObj) }}
                         <span
@@ -672,6 +676,46 @@
                         <UIcon name="i-heroicons-trash" class="mr-2" />
                         {{ $t("common.clear_all") }}
                       </UButton>
+                      <div class="flex gap-2">
+                        <UButton
+                          color="neutral"
+                          variant="outline"
+                          size="sm"
+                          @click="undo"
+                          :disabled="!canUndo"
+                          icon="i-heroicons-arrow-uturn-left"
+                        >
+                          Cofnij
+                        </UButton>
+                        <UButton
+                          color="neutral"
+                          variant="outline"
+                          size="sm"
+                          @click="redo"
+                          :disabled="!canRedo"
+                          icon="i-heroicons-arrow-uturn-right"
+                        >
+                          Ponów
+                        </UButton>
+                        <UButton
+                          color="neutral"
+                          variant="outline"
+                          size="sm"
+                          @click="saveSnapshot"
+                          icon="i-heroicons-clock"
+                        >
+                          Zapisz wersję
+                        </UButton>
+                        <UButton
+                          color="neutral"
+                          variant="outline"
+                          size="sm"
+                          @click="showHistoryModal = true"
+                          icon="i-heroicons-queue-list"
+                        >
+                          Historia
+                        </UButton>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -696,6 +740,9 @@
       v-model:open="showAddTagModal"
       :title="$t('prompt_creator.add_custom_tag')"
     >
+      <template #description>{{
+        $t("prompt_creator.add_custom_tag_description")
+      }}</template>
       <template #body>
         <form @submit.prevent="addCustomTag" class="space-y-4 p-4">
           <div class="space-y-2">
@@ -764,9 +811,9 @@
       v-model:open="showNegativeTemplatesModal"
       :title="$t('prompt_creator.negative_templates')"
     >
-      <template #description>
-        {{ $t("prompt_creator.negative_templates_description") }}
-      </template>
+      <template #description>{{
+        $t("prompt_creator.negative_templates_description")
+      }}</template>
       <template #body>
         <div class="space-y-4">
           <div
@@ -797,6 +844,62 @@
         </div>
       </template>
     </UModal>
+    <!-- Modal historii -->
+    <UModal
+      v-model:open="showHistoryModal"
+      :title="$t('prompt_creator.history_title')"
+    >
+      <template #description>{{
+        $t("prompt_creator.history_description")
+      }}</template>
+      <template #body>
+        <div class="space-y-2 max-h-96 overflow-y-auto">
+          <div
+            v-for="(snapshot, index) in snapshots"
+            :key="index"
+            class="p-3 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer"
+            @click="restoreSnapshot(snapshot)"
+          >
+            <div class="flex justify-between items-start">
+              <div>
+                <h4 class="font-semibold">{{ snapshot.name }}</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  {{ new Date(snapshot.createdAt).toLocaleString() }}
+                </p>
+                <p class="text-xs text-gray-500">
+                  {{ snapshot.tagsCount }} tagów, krok {{ snapshot.step + 1 }}
+                </p>
+              </div>
+              <UButton
+                color="error"
+                variant="ghost"
+                size="xs"
+                @click.stop="deleteSnapshot(index)"
+                icon="i-heroicons-trash"
+              />
+            </div>
+          </div>
+          <div v-if="snapshots.length === 0" class="text-center py-8">
+            <UIcon
+              name="i-heroicons-clock"
+              class="w-12 h-12 mx-auto mb-2 text-gray-300"
+            />
+            <p class="text-gray-500">{{ $t("prompt_creator.no_history") }}</p>
+          </div>
+        </div>
+      </template>
+    </UModal>
+
+    <!-- Modal alertu -->
+    <UModal v-model:open="showAlertModal" :title="$t('common.error')">
+      <template #description>{{ $t("common.error_description") }}</template>
+      <template #body>
+        <p>{{ alertMessage }}</p>
+      </template>
+      <template #footer>
+        <UButton @click="showAlertModal = false">{{ $t("common.ok") }}</UButton>
+      </template>
+    </UModal>
   </div>
 </template>
 
@@ -812,7 +915,10 @@ interface TagObject {
   weight?: number; // 0.0 - 3.0
   emphasis?: number; // 0-3 (nawiasy)
 }
+const toast = useToast();
 const showNegativeTemplatesModal = ref(false);
+const showAlertModal = ref(false);
+const alertMessage = ref("");
 import SavePromptModal from "~/components/editor/SavePromptModal.vue";
 
 definePageMeta({
@@ -1170,35 +1276,42 @@ const toggleFavorite = (tagObj: TagObject) => {
 };
 
 // Extract all tags
+const allTagsFlatCache = ref<TagObject[]>([]);
+allTagsFlatCache.key = "";
+
 const allTagsFlat = computed(() => {
   if (!tags.value) return [];
 
-  const allTags: TagObject[] = [];
+  const cacheKey = JSON.stringify(tags.value) + customTags.value.length;
+  if (allTagsFlatCache.key !== cacheKey) {
+    const allTags: TagObject[] = [];
 
-  const extractTags = (obj: any) => {
-    if (Array.isArray(obj)) {
-      obj.forEach((item) => {
-        if (item && typeof item === "object") {
-          if (item.category && (item.pl || item.en)) {
-            allTags.push(item as TagObject);
-          } else {
-            extractTags(item);
+    const extractTags = (obj: any) => {
+      if (Array.isArray(obj)) {
+        obj.forEach((item) => {
+          if (item && typeof item === "object") {
+            if (item.category && (item.pl || item.en)) {
+              allTags.push(item as TagObject);
+            } else {
+              extractTags(item);
+            }
           }
-        }
-      });
-    } else if (obj && typeof obj === "object") {
-      Object.values(obj).forEach((value) => extractTags(value));
-    }
-  };
+        });
+      } else if (obj && typeof obj === "object") {
+        Object.values(obj).forEach((value) => extractTags(value));
+      }
+    };
 
-  extractTags(tags.value);
+    extractTags(tags.value);
+    customTags.value.forEach((tag) => {
+      allTags.push(tag);
+    });
 
-  // Add custom tags (bez warunku currentCategory)
-  customTags.value.forEach((tag) => {
-    allTags.push(tag);
-  });
+    allTagsFlatCache.value = allTags;
+    allTagsFlatCache.key = cacheKey;
+  }
 
-  return allTags;
+  return allTagsFlatCache.value;
 });
 
 // Tags for current category
@@ -1224,7 +1337,10 @@ const tagsForCurrentCategory = computed(() => {
 });
 
 // Filtered tags
-const filteredTagsForCategory = computed(() => {
+const filteredTagsForCategory = shallowRef<TagObject[]>([]);
+
+// Funkcja do aktualizacji filtrowanych tagów
+const updateFilteredTags = () => {
   let tags = tagsForCurrentCategory.value;
 
   // Filter NSFW if toggle is off
@@ -1244,8 +1360,15 @@ const filteredTagsForCategory = computed(() => {
     });
   }
 
-  return tags;
-});
+  filteredTagsForCategory.value = tags;
+};
+
+// Wywołaj przy zmianach
+watch(
+  [tagsForCurrentCategory, showNsfw, showOnlyFavorites, categorySearch],
+  updateFilteredTags,
+  { immediate: true }
+);
 
 const selectedTagsForCurrentCategory = computed(() => {
   const category = currentCategory.value;
@@ -1350,7 +1473,17 @@ const isTagSelected = (tagObj: TagObject) => {
   );
 };
 
-const toggleTag = (tagObj: TagObject) => {
+// Optymalizacja: Debounce dla ciężkich funkcji
+const debounce = (func: Function, delay: number) => {
+  let timeoutId: NodeJS.Timeout;
+  return (...args: any[]) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func.apply(null, args), delay);
+  };
+};
+
+// Optymalizuj toggleTag z debounce
+const toggleTagDebounced = debounce((tagObj: TagObject) => {
   const category = currentCategory.value;
   if (!category) return;
   if (!selectedTags.value[category]) {
@@ -1375,6 +1508,12 @@ const toggleTag = (tagObj: TagObject) => {
     };
     selectedTags.value[category].push(newTag);
   }
+  pushToHistory();
+}, 100); // 100ms debounce
+
+// Zastąp toggleTag
+const toggleTag = (tagObj: TagObject) => {
+  toggleTagDebounced(tagObj);
 };
 
 const removeTagFromSummary = (category: string, tagObj: TagObject) => {
@@ -1394,7 +1533,8 @@ const removeTagFromSummary = (category: string, tagObj: TagObject) => {
 
 const addCustomTag = () => {
   if (!customTag.value.pl || !customTag.value.en) {
-    alert(t("prompt_creator.fill_required_fields"));
+    alertMessage.value = t("prompt_creator.fill_required_fields");
+    showAlertModal.value = true;
     return;
   }
 
@@ -1442,6 +1582,7 @@ const clearCurrentCategory = () => {
   if (category && selectedTags.value[category]) {
     delete selectedTags.value[category];
   }
+  pushToHistory();
 };
 
 const clearAll = () => {
@@ -1450,6 +1591,7 @@ const clearAll = () => {
     additionalNegative.value = "";
     currentStep.value = 0;
   }
+  pushToHistory();
 };
 
 const copyPrompt = async (type: "positive" | "negative") => {
@@ -1500,7 +1642,12 @@ const handleSavePrompt = (data: { name: string; description: string }) => {
   localStorage.setItem("custom_prompts", JSON.stringify(prompts));
 
   showSaveModal.value = false;
-  alert(t("prompt_creator.saved_successfully"));
+
+  // Zastąp alert toastem
+  toast.add({
+    title: t("prompt_creator.saved_successfully"),
+    color: "success",
+  });
 };
 
 const usePrompt = () => {
@@ -1512,7 +1659,28 @@ const usePrompt = () => {
     },
   });
 };
+const randomizeCategory = () => {
+  const category = currentCategory.value;
+  if (!category) return;
 
+  // Pobierz dostępne tagi (filtrowane, bez już wybranych)
+  const availableTags = filteredTagsForCategory.value.filter(
+    (tag) => !isTagSelected(tag)
+  );
+  if (availableTags.length === 0) return;
+
+  // Wybierz losowo 1-3 tagi
+  const numToSelect = Math.min(3, availableTags.length);
+  const selectedIndices = new Set<number>();
+  while (selectedIndices.size < numToSelect) {
+    selectedIndices.add(Math.floor(Math.random() * availableTags.length));
+  }
+
+  // Dodaj wybrane tagi
+  selectedIndices.forEach((index) => {
+    toggleTag(availableTags[index]);
+  });
+};
 // Weight and Emphasis management
 const updateWeight = (tagObj: TagObject, value: number | number[]) => {
   const category = currentCategory.value;
@@ -1528,6 +1696,7 @@ const updateWeight = (tagObj: TagObject, value: number | number[]) => {
   if (index > -1 && selectedTags.value[category]?.[index]) {
     selectedTags.value[category][index].weight = weightValue;
   }
+  pushToHistory();
 };
 
 const updateEmphasis = (tagObj: TagObject, emphasis: number) => {
@@ -1541,6 +1710,7 @@ const updateEmphasis = (tagObj: TagObject, emphasis: number) => {
   if (index > -1 && selectedTags.value[category]?.[index]) {
     selectedTags.value[category][index].emphasis = emphasis;
   }
+  pushToHistory();
 };
 
 // Update tagClasses computed
@@ -1565,7 +1735,7 @@ useHead({
   ],
 });
 
-// Współdzielenie promptu
+// W funkcji sharePrompt
 const sharePrompt = () => {
   const data = {
     prompt: generatedPrompt.value,
@@ -1576,7 +1746,12 @@ const sharePrompt = () => {
   const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
   const url = `${window.location.origin}/editor?shared=${encoded}`;
   navigator.clipboard.writeText(url);
-  // Toast: "Link skopiowany!"
+
+  // Zastąp komentarz toastem
+  toast.add({
+    title: t("prompt_creator.link_copied"),
+    color: "success",
+  });
 };
 
 // Ładowanie z query
@@ -1719,6 +1894,122 @@ onUnmounted(() => {
   if (autoSaveInterval) {
     clearInterval(autoSaveInterval);
   }
+});
+
+const historyStack = ref<
+  {
+    tags: Record<string, TagObject[]>;
+    step: number;
+    additionalNegative: string;
+  }[]
+>([]);
+const historyIndex = ref(-1);
+const snapshots = ref<
+  {
+    name: string;
+    tags: Record<string, TagObject[]>;
+    step: number;
+    additionalNegative: string;
+    createdAt: number;
+    tagsCount: number;
+  }[]
+>([]);
+const showHistoryModal = ref(false);
+
+// Załaduj snapshoty z localStorage
+onMounted(() => {
+  // ... istniejący kod ...
+  const savedSnapshots = localStorage.getItem("prompt_snapshots");
+  if (savedSnapshots) {
+    snapshots.value = JSON.parse(savedSnapshots);
+  }
+});
+
+// Funkcje undo/redo
+const pushToHistory = () => {
+  // Usuń przyszłe stany jeśli jesteśmy w środku historii
+  historyStack.value = historyStack.value.slice(0, historyIndex.value + 1);
+
+  // Dodaj aktualny stan
+  historyStack.value.push({
+    tags: JSON.parse(JSON.stringify(selectedTags.value)), // Deep copy
+    step: currentStep.value,
+    additionalNegative: additionalNegative.value,
+  });
+
+  historyIndex.value = historyStack.value.length - 1;
+
+  // Limit historii do 50 wpisów
+  if (historyStack.value.length > 50) {
+    historyStack.value.shift();
+    historyIndex.value--;
+  }
+};
+
+const canUndo = computed(() => historyIndex.value > 0);
+const canRedo = computed(
+  () => historyIndex.value < historyStack.value.length - 1
+);
+
+const undo = () => {
+  if (!canUndo.value) return;
+  historyIndex.value--;
+  const state = historyStack.value[historyIndex.value];
+  selectedTags.value = JSON.parse(JSON.stringify(state.tags));
+  currentStep.value = state.step;
+  additionalNegative.value = state.additionalNegative;
+};
+
+const redo = () => {
+  if (!canRedo.value) return;
+  historyIndex.value++;
+  const state = historyStack.value[historyIndex.value];
+  selectedTags.value = JSON.parse(JSON.stringify(state.tags));
+  currentStep.value = state.step;
+  additionalNegative.value = state.additionalNegative;
+};
+
+// W funkcji saveSnapshot
+const saveSnapshot = () => {
+  const name = prompt($t("prompt_creator.snapshot_name_prompt"));
+  if (!name) return;
+
+  const snapshot = {
+    name,
+    tags: JSON.parse(JSON.stringify(selectedTags.value)),
+    step: currentStep.value,
+    additionalNegative: additionalNegative.value,
+    createdAt: Date.now(),
+    tagsCount: totalSelectedTags.value,
+  };
+
+  snapshots.value.unshift(snapshot);
+  localStorage.setItem("prompt_snapshots", JSON.stringify(snapshots.value));
+
+  // Zastąp komentarz toastem
+  toast.add({
+    title: t("prompt_creator.snapshot_saved"),
+    color: "success",
+  });
+};
+
+const restoreSnapshot = (snapshot: any) => {
+  selectedTags.value = JSON.parse(JSON.stringify(snapshot.tags));
+  currentStep.value = snapshot.step;
+  additionalNegative.value = snapshot.additionalNegative;
+  showHistoryModal.value = false;
+  pushToHistory(); // Dodaj do historii undo
+};
+
+const deleteSnapshot = (index: number) => {
+  snapshots.value.splice(index, 1);
+  localStorage.setItem("prompt_snapshots", JSON.stringify(snapshots.value));
+};
+
+// Inicjalizuj historię przy pierwszym ładowaniu
+onMounted(() => {
+  // ... istniejący kod ...
+  pushToHistory(); // Dodaj początkowy stan
 });
 </script>
 
