@@ -4,41 +4,55 @@
       <!-- Sidebar z kategoriami -->
       <aside
         :class="[
-          'bg-white dark:bg-gray-800 border-r border-l border-gray-200 dark:border-gray-700 transition-all duration-200 relative',
+          'bg-white dark:bg-gray-800 border-r border-l border-gray-200 dark:border-gray-700 transition-all duration-200 relative gooey-sidebar',
           sidebarExpanded ? 'w-72' : 'w-16',
         ]"
       >
-        <!-- Toggle Button -->
+        <!-- Toggle Button with Gooey Effect -->
         <div
-          class="absolute top-0 p-1 border-gray-200 dark:border-gray-700 flex items-center"
-          :class="[
-            sidebarExpanded
-              ? 'justify-between left-72'
-              : 'justify-center left-16',
-          ]"
+          v-if="buttonVisible"
+          class="gooey-container"
+          :style="{
+            position: 'fixed',
+            left: `${buttonLeft}px`,
+            top: `${buttonTop}px`,
+
+            pointerEvents: 'none',
+          }"
         >
-          <UButton
-            variant="ghost"
-            size="md"
-            @click="sidebarExpanded = !sidebarExpanded"
-            class="flex justify-center items-center"
-          >
-            <UIcon
-              :name="
-                sidebarExpanded
-                  ? 'i-heroicons-chevron-left'
-                  : 'i-heroicons-chevron-right'
-              "
-              class="w-4 h-4 text-gray-600 dark:text-gray-400"
-            />
-          </UButton>
+          <div class="gooey-blob blob-bg flex items-center justify-center">
+            <UButton
+              ref="toggleButtonRef"
+              variant="ghost"
+              size="md"
+              @click="sidebarExpanded = !sidebarExpanded"
+              class="gooey-button hover:bg-transparent focus:bg-transparent active:bg-transparent"
+              :style="{ pointerEvents: 'auto' }"
+            >
+              <UIcon
+                :name="
+                  sidebarExpanded
+                    ? 'i-heroicons-chevron-left'
+                    : 'i-heroicons-chevron-right'
+                "
+                :style="{
+                  display:
+                    (!sidebarExpanded && buttonLeft >= 53) ||
+                    (sidebarExpanded && buttonLeft >= 277)
+                      ? 'block'
+                      : 'none',
+                }"
+                class="w-4 h-4 transition-all duration-300"
+              />
+            </UButton>
+          </div>
         </div>
 
         <!-- Categories List -->
         <div class="overflow-y-auto h-full custom-scrollbar">
           <div
             :class="[
-              'p-1',
+              'p-1 ',
               sidebarExpanded
                 ? 'space-y-2'
                 : 'space-y-2 flex flex-col items-center',
@@ -726,6 +740,22 @@
       </main>
     </div>
 
+    <!-- SVG for Gooey Effect -->
+    <svg class="hidden">
+      <defs>
+        <filter id="goo">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+          <feColorMatrix
+            in="blur"
+            mode="matrix"
+            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7"
+            result="goo"
+          />
+          <feBlend in="SourceGraphic" in2="goo" />
+        </filter>
+      </defs>
+    </svg>
+
     <!-- Save Modal -->
     <SavePromptModal
       v-model:open="showSaveModal"
@@ -892,18 +922,29 @@
 
     <!-- Modal alertu -->
     <UModal v-model:open="showAlertModal" :title="$t('common.error')">
-      <template #description>{{ $t("common.error_description") }}</template>
+      <template #description>{{
+        $t("pages.common.error_description")
+      }}</template>
       <template #body>
         <p>{{ alertMessage }}</p>
       </template>
       <template #footer>
-        <UButton @click="showAlertModal = false">{{ $t("common.ok") }}</UButton>
+        <UButton @click="showAlertModal = false">{{
+          $t("common.save")
+        }}</UButton>
       </template>
     </UModal>
   </div>
 </template>
 
 <script setup lang="ts">
+// Extend Window type for custom properties
+declare global {
+  interface Window {
+    mouseX?: number;
+    mouseY?: number;
+  }
+}
 interface TagObject {
   pl: string;
   en: string;
@@ -1277,13 +1318,13 @@ const toggleFavorite = (tagObj: TagObject) => {
 
 // Extract all tags
 const allTagsFlatCache = ref<TagObject[]>([]);
-allTagsFlatCache.key = "";
+let allTagsFlatCacheKey = "";
 
 const allTagsFlat = computed(() => {
   if (!tags.value) return [];
 
   const cacheKey = JSON.stringify(tags.value) + customTags.value.length;
-  if (allTagsFlatCache.key !== cacheKey) {
+  if (allTagsFlatCacheKey !== cacheKey) {
     const allTags: TagObject[] = [];
 
     const extractTags = (obj: any) => {
@@ -1308,7 +1349,7 @@ const allTagsFlat = computed(() => {
     });
 
     allTagsFlatCache.value = allTags;
-    allTagsFlatCache.key = cacheKey;
+    allTagsFlatCacheKey = cacheKey;
   }
 
   return allTagsFlatCache.value;
@@ -1678,7 +1719,10 @@ const randomizeCategory = () => {
 
   // Dodaj wybrane tagi
   selectedIndices.forEach((index) => {
-    toggleTag(availableTags[index]);
+    const tag = availableTags[index];
+    if (tag) {
+      toggleTag(tag);
+    }
   });
 };
 // Weight and Emphasis management
@@ -1778,8 +1822,8 @@ onMounted(() => {
         // KROK 2: Dodaj brakujące tagi do customTags
         const tagsToAdd: TagObject[] = [];
 
-        Object.values(data.tags || {}).forEach((tagObjs: TagObject[]) => {
-          tagObjs.forEach((tagObj) => {
+        Object.values(data.tags || {}).forEach((tagObjs) => {
+          (tagObjs as TagObject[]).forEach((tagObj) => {
             const tagId = `${tagObj.category}_${tagObj.pl}_${tagObj.en}`;
 
             // Sprawdź czy tag istnieje w allTagsFlat
@@ -1820,7 +1864,9 @@ onMounted(() => {
           const validatedTags: Record<string, TagObject[]> = {};
 
           Object.entries(data.tags || {}).forEach(([category, tagObjs]) => {
-            validatedTags[category] = [];
+            if (!validatedTags[category]) {
+              validatedTags[category] = [];
+            }
 
             (tagObjs as TagObject[]).forEach((tagObj) => {
               // Znajdź tag w allTagsFlat
@@ -1835,6 +1881,9 @@ onMounted(() => {
                 // Modyfikuj referencję (bez spread)
                 foundTag.weight = tagObj.weight ?? 1.0;
                 foundTag.emphasis = tagObj.emphasis ?? 0;
+                if (!validatedTags[category]) {
+                  validatedTags[category] = [];
+                }
                 validatedTags[category].push(foundTag);
               } else {
                 console.warn("⚠️ Nie znaleziono tagu w allTagsFlat:", tagObj);
@@ -1842,7 +1891,10 @@ onMounted(() => {
             });
 
             // Usuń puste kategorie
-            if (validatedTags[category].length === 0) {
+            if (
+              validatedTags[category] &&
+              validatedTags[category].length === 0
+            ) {
               delete validatedTags[category];
             }
           });
@@ -1955,15 +2007,16 @@ const undo = () => {
   if (!canUndo.value) return;
   historyIndex.value--;
   const state = historyStack.value[historyIndex.value];
+  if (!state) return;
   selectedTags.value = JSON.parse(JSON.stringify(state.tags));
   currentStep.value = state.step;
   additionalNegative.value = state.additionalNegative;
 };
-
 const redo = () => {
   if (!canRedo.value) return;
   historyIndex.value++;
   const state = historyStack.value[historyIndex.value];
+  if (!state) return;
   selectedTags.value = JSON.parse(JSON.stringify(state.tags));
   currentStep.value = state.step;
   additionalNegative.value = state.additionalNegative;
@@ -2010,6 +2063,66 @@ const deleteSnapshot = (index: number) => {
 onMounted(() => {
   // ... istniejący kod ...
   pushToHistory(); // Dodaj początkowy stan
+});
+
+// Dragging functionality for toggle button
+const toggleButtonRef = ref<HTMLElement | null>(null);
+const buttonVisible = ref(false);
+const buttonTop = ref(0);
+const buttonLeft = ref(0);
+const mouseY = ref(0);
+const buttonOffset = ref(-30); // domyślny offset
+
+const handleMouseMove = (e: MouseEvent) => {
+  mouseY.value = e.clientY;
+  const sidebarWidth = sidebarExpanded.value ? 288 : 64;
+  const distance = e.clientX - sidebarWidth;
+
+  if (distance >= 0 && distance < 170) {
+    buttonVisible.value = true;
+    buttonTop.value = e.clientY;
+
+    if (distance < 60) {
+      buttonOffset.value = -30;
+    } else if (distance < 70) {
+      buttonOffset.value = -10;
+    } else if (distance < 90) {
+      buttonOffset.value = 4;
+    } else {
+      // Płynne przesuwanie od 100 do 170px
+      // Od offsetu 7 do 80
+      const minDist = 100;
+      const maxDist = 170;
+      const minOffset = 4;
+      const maxOffset = 80;
+      const percent = (distance - minDist) / (maxDist - minDist);
+      buttonOffset.value = minOffset + percent * (maxOffset - minOffset) + 12;
+    }
+
+    buttonLeft.value = sidebarWidth + buttonOffset.value;
+  } else {
+    buttonVisible.value = false;
+    buttonOffset.value = -30;
+  }
+};
+watch(sidebarExpanded, () => {
+  // Symuluj ruch myszki w ostatniej pozycji
+  handleMouseMove({
+    clientX: window.mouseX ?? 0,
+    clientY: window.mouseY ?? 0,
+  } as MouseEvent);
+});
+// Event listeners
+onMounted(() => {
+  window.addEventListener("mousemove", (e) => {
+    window.mouseX = e.clientX;
+    window.mouseY = e.clientY;
+    handleMouseMove(e);
+  });
+});
+
+onUnmounted(() => {
+  window.removeEventListener("mousemove", handleMouseMove);
 });
 </script>
 
@@ -2089,5 +2202,49 @@ input[type="range"]::-moz-range-thumb {
 
 input[type="range"]::-moz-range-thumb:hover {
   transform: scale(1.2);
+}
+
+/* Gooey Effect - uproszczone */
+.gooey-sidebar {
+  filter: url(#goo);
+  z-index: 50;
+  position: relative;
+}
+
+.gooey-container {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease-out;
+  z-index: -50;
+}
+
+.gooey-button {
+  position: relative;
+  background: rgb(9, 57, 134); /* primary-500 */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  transition: all 0.2s ease-out;
+  color: white;
+}
+
+/* Gooey blob - tło */
+.gooey-blob {
+  position: absolute;
+  background: #1e2939;
+  border-radius: 50%;
+  opacity: 1;
+}
+
+.blob-bg {
+  width: 35px;
+  height: 35px;
+  left: -7px;
 }
 </style>

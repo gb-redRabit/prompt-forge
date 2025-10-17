@@ -645,7 +645,6 @@
     "history_title": "Historia promptów",
     "snapshot_name_prompt": "Nazwa wersji:",
     "no_history": "Brak zapisanych wersji",
-    "negative_templates_description": "Wybierz szablony negatywne, aby wykluczyć niepożądane elementy z promptu",
     "title": "Kreator Promptów",
     "snapshot_saved": "Wersja zapisana!",
     "link_copied": "Link skopiowany!",
