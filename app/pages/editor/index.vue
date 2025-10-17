@@ -42,7 +42,7 @@
                       ? 'block'
                       : 'none',
                 }"
-                class="w-4 h-4 transition-all duration-300"
+                class="w-4 h-4 border-b border-gray-700"
               />
             </UButton>
           </div>
