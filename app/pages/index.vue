@@ -1,52 +1,36 @@
 <template>
   <div class="relative min-h-screen w-full overflow-hidden">
-    <!-- Animated gradient background -->
-    <div class="fixed inset-0 -z-10">
-      <div
-        class="absolute inset-0 bg-gradient-to-br from-primary-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-primary-900/20"
-      />
-      <div
-        class="absolute inset-0 bg-grid-pattern opacity-[0.02] dark:opacity-[0.05]"
-      />
-
-      <!-- Animated gradient orbs -->
-      <div class="absolute inset-0 overflow-hidden">
-        <div class="gradient-orb gradient-orb-1"></div>
-        <div class="gradient-orb gradient-orb-2"></div>
-        <div class="gradient-orb gradient-orb-3"></div>
-      </div>
-    </div>
-
     <UContainer class="py-8 lg:py-16 space-y-24 lg:space-y-32">
       <LandingHero
         :is-content-loaded="isContentLoaded"
         :prompts-count="promptsCount"
         :options-count="optionsCount"
         :tags-count="tagsCount"
-        @get-started="handleGetStarted"
         @learn-more="handleLearnMore"
       />
-
       <LandingFeatures />
-
-      <!-- Nowa sekcja: Interactive Demo -->
-      <!-- popraw jak już zrobie reszte -->
       <LandingInteractiveDemo />
-
       <LandingHowItWorks />
-
-      <!-- Nowa sekcja: FAQ -->
       <LandingFAQ />
-
       <LandingCTA @get-started="handleGetStarted" />
     </UContainer>
+    <LoadingOverlay v-if="!isContentLoaded" />
   </div>
 </template>
 
 <script setup lang="ts">
 definePageMeta({ layout: "dashboard" });
 
-// Preload content
+useHead({
+  title: "Prompt Forge – Twórz prompty AI szybciej",
+  meta: [
+    {
+      name: "description",
+      content: "Nowoczesny edytor promptów AI z Nuxt, Vue i Nuxt UI.",
+    },
+  ],
+});
+
 const {
   options,
   prompts,
@@ -54,31 +38,17 @@ const {
   isLoaded: isContentLoaded,
 } = usePreloadedContent();
 
-// Stats z preloadowanych danych
 const promptsCount = computed(() => prompts.value?.length || 0);
 const optionsCount = computed(() => Object.keys(options.value || {}).length);
 const tagsCount = computed(() => Object.keys(tags.value || {}).length);
 
-// Handlers
 const handleGetStarted = async () => {
-  await navigateTo("/prompts");
+  await navigateTo("/editor");
 };
 
 const handleLearnMore = async () => {
-  await navigateTo("/fukcje/options");
+  await navigateTo("/about");
 };
-
-// SEO
-useHead({
-  title: "Prompt Forge - Buduj lepsze AI prompty",
-  meta: [
-    {
-      name: "description",
-      content:
-        "Organizuj, wersjonuj i współtwórz prompt engineering w jednym miejscu.",
-    },
-  ],
-});
 </script>
 
 <style scoped>
