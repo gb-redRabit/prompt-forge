@@ -3,7 +3,7 @@
   <button
     v-if="!isSidebarOpen"
     @click="open"
-    class="fixed top-4 left-4 z-50 lg:hidden p-2 rounded-lg bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700"
+    class="fixed top-4 right-4 z-50 lg:hidden p-2 rounded-lg bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 flex items-center justify-center"
     aria-label="Open menu"
   >
     <UIcon
@@ -13,7 +13,7 @@
   </button>
 
   <!-- mobile overlay -->
-  <div v-if="isSidebarOpen" class="fixed inset-0 z-40 lg:hidden">
+  <div v-if="isSidebarOpen" class="fixed inset-0 z-50 lg:hidden">
     <div class="fixed inset-0 bg-black/50" @click="close" />
     <aside
       class="fixed inset-y-0 left-0 w-64 bg-white dark:bg-gray-800 overflow-hidden flex flex-col"

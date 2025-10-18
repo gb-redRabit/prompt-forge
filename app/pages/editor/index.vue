@@ -20,7 +20,9 @@
             pointerEvents: 'none',
           }"
         >
-          <div class="gooey-blob blob-bg flex items-center justify-center">
+          <div
+            class="gooey-blob blob-bg items-center justify-center hidden md:flex"
+          >
             <UButton
               ref="toggleButtonRef"
               variant="ghost"
@@ -42,7 +44,7 @@
                       ? 'block'
                       : 'none',
                 }"
-                class="w-4 h-4 border-b border-gray-700"
+                class="w-4 h-4"
               />
             </UButton>
           </div>
@@ -511,9 +513,6 @@
                 <!-- Selected Summary -->
                 <div
                   class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 flex-1 overflow-hidden flex flex-col"
-                  :class="[
-                    totalSelectedTags === 0 ? 'opacity-0' : 'opacity-100 ',
-                  ]"
                 >
                   <div
                     class="bg-gray-50 flex justify-between dark:bg-gray-900/50 px-4 py-2 border-b border-gray-200 dark:border-gray-700 flex-shrink-0"
@@ -591,7 +590,6 @@
 
                 <!-- Generated Prompts -->
                 <div
-                  v-if="generatedPrompt.positive"
                   class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 flex-shrink-0"
                 >
                   <div
@@ -609,7 +607,7 @@
                   </div>
                   <div class="p-3 space-y-2">
                     <!-- Positive -->
-                    <div>
+                    <div v-if="generatedPrompt.positive">
                       <div class="flex items-center justify-between mb-1">
                         <span
                           class="text-xs font-bold text-green-600 dark:text-green-400"
@@ -861,13 +859,21 @@
                 color="neutral"
                 variant="outline"
                 size="xs"
-                @click="
-                  addNegativeTemplate(template.text);
-                  showNegativeTemplatesModal = false;
-                "
+                @click="addNegativeTemplate(template.text)"
                 class="text-xs"
+                :class="{
+                  'bg-primary-500 text-white border-primary-600':
+                    activeNegativeTemplates.includes(template.text),
+                  'bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200':
+                    !activeNegativeTemplates.includes(template.text),
+                }"
               >
                 {{ template.label }}
+                <span
+                  v-if="activeNegativeTemplates.includes(template.text)"
+                  class="ml-1"
+                  >✓</span
+                >
               </UButton>
             </div>
           </div>
@@ -960,6 +966,46 @@ const toast = useToast();
 const showNegativeTemplatesModal = ref(false);
 const showAlertModal = ref(false);
 const alertMessage = ref("");
+const activeNegativeTemplates = ref<string[]>([]);
+const addNegativeTemplate = (text: string) => {
+  // Rozbij szablon na frazy (np. "blurry, low quality, ugly" → ["blurry", "low quality", "ugly"])
+  const templateParts = text
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+  if (activeNegativeTemplates.value.includes(text)) {
+    // Usuń z aktywnych
+    activeNegativeTemplates.value = activeNegativeTemplates.value.filter(
+      (t) => t !== text
+    );
+
+    // Usuń WSZYSTKIE frazy szablonu z additionalNegative
+    const currentParts = (additionalNegative.value || "")
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean)
+      .filter((s) => !templateParts.includes(s));
+    additionalNegative.value = currentParts.join(", ");
+  } else {
+    // Dodaj do aktywnych
+    activeNegativeTemplates.value.push(text);
+
+    // Dodaj frazy szablonu do additionalNegative (unikaj duplikatów)
+    const currentParts = (additionalNegative.value || "")
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
+
+    // Dodaj tylko te, których jeszcze nie ma
+    templateParts.forEach((part) => {
+      if (!currentParts.includes(part)) {
+        currentParts.push(part);
+      }
+    });
+    additionalNegative.value = currentParts.join(", ");
+  }
+};
 import SavePromptModal from "~/components/editor/SavePromptModal.vue";
 
 definePageMeta({
@@ -1262,15 +1308,6 @@ const negativeTemplateGroups = [
     ],
   },
 ];
-
-// Function to add template to negative prompt
-const addNegativeTemplate = (text: string) => {
-  if (additionalNegative.value) {
-    additionalNegative.value += ", " + text;
-  } else {
-    additionalNegative.value = text;
-  }
-};
 
 // Load favorites and custom tags from localStorage
 onMounted(() => {
@@ -2078,25 +2115,48 @@ const handleMouseMove = (e: MouseEvent) => {
   const sidebarWidth = sidebarExpanded.value ? 288 : 64;
   const distance = e.clientX - sidebarWidth;
 
-  if (distance >= 0 && distance < 170) {
+  // Konfiguracja dla lg i mobile
+  const config = isLg.value
+    ? {
+        min: 0,
+        max: 170,
+        steps: [
+          { to: 60, offset: -30 },
+          { to: 70, offset: -10 },
+          { to: 90, offset: 4 },
+        ],
+        smooth: { from: 100, to: 170, minOffset: 7, maxOffset: 80, extra: 12 },
+      }
+    : {
+        min: -10,
+        max: 120,
+        steps: [
+          { to: 0, offset: -10 },
+          { to: 25, offset: 4 },
+        ],
+        smooth: { from: 25, to: 120, minOffset: 7, maxOffset: 80, extra: 25 },
+      };
+
+  if (distance >= config.min && distance < config.max) {
     buttonVisible.value = true;
     buttonTop.value = e.clientY;
 
-    if (distance < 60) {
-      buttonOffset.value = -30;
-    } else if (distance < 70) {
-      buttonOffset.value = -10;
-    } else if (distance < 90) {
-      buttonOffset.value = 4;
-    } else {
-      // Płynne przesuwanie od 100 do 170px
-      // Od offsetu 7 do 80
-      const minDist = 100;
-      const maxDist = 170;
-      const minOffset = 4;
-      const maxOffset = 80;
-      const percent = (distance - minDist) / (maxDist - minDist);
-      buttonOffset.value = minOffset + percent * (maxOffset - minOffset) + 12;
+    // Sprawdź progi
+    let foundStep = false;
+    for (const step of config.steps) {
+      if (distance < step.to) {
+        buttonOffset.value = step.offset;
+        foundStep = true;
+        break;
+      }
+    }
+
+    // Jeśli nie znaleziono progu, płynny offset
+    if (!foundStep) {
+      const { from, to, minOffset, maxOffset, extra } = config.smooth;
+      const percent = Math.min(Math.max((distance - from) / (to - from), 0), 1);
+      buttonOffset.value =
+        minOffset + percent * (maxOffset - minOffset) + (extra || 0);
     }
 
     buttonLeft.value = sidebarWidth + buttonOffset.value;
@@ -2123,6 +2183,20 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener("mousemove", handleMouseMove);
+});
+
+const isLg = ref(window.innerWidth >= 1024);
+
+const handleResize = () => {
+  isLg.value = window.innerWidth >= 1024;
+};
+
+onMounted(() => {
+  window.addEventListener("resize", handleResize);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("resize", handleResize);
 });
 </script>
 
@@ -2207,7 +2281,7 @@ input[type="range"]::-moz-range-thumb:hover {
 /* Gooey Effect - uproszczone */
 .gooey-sidebar {
   filter: url(#goo);
-  z-index: 50;
+  z-index: 40;
   position: relative;
 }
 
