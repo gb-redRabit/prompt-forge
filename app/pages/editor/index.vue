@@ -2185,15 +2185,16 @@ onUnmounted(() => {
   window.removeEventListener("mousemove", handleMouseMove);
 });
 
-const isLg = ref(window.innerWidth >= 1024);
+const isLg = ref(false);
+
+onMounted(() => {
+  isLg.value = window.innerWidth >= 1024;
+  window.addEventListener("resize", handleResize);
+});
 
 const handleResize = () => {
   isLg.value = window.innerWidth >= 1024;
 };
-
-onMounted(() => {
-  window.addEventListener("resize", handleResize);
-});
 
 onUnmounted(() => {
   window.removeEventListener("resize", handleResize);
