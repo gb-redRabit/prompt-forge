@@ -1,2 +1,48 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
+
+/* Full-page scroll-snap for landing sections */
+#fullpage-container,
+.fullpage-viewport {
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  overscroll-behavior-y: contain;
+}
+
+[data-fullpage-section] {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  min-height: 100vh;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    scroll-behavior: auto;
+  }
+}
+
+/* Hide native scrollbars for the fullpage viewport but keep scrolling usable */
+@media (pointer: fine) {
+  /* Hide native scrollbars for the fullpage viewport on non-touch devices */
+  #fullpage-container::-webkit-scrollbar,
+  .fullpage-viewport::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  /* Firefox */
+  #fullpage-container,
+  .fullpage-viewport {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+  }
+}
+
+/* ensure focus outline still visible for keyboard users */
+#fullpage-container:focus,
+.fullpage-viewport:focus {
+  outline: none;
+}

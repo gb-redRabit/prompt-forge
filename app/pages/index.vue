@@ -1,19 +1,104 @@
 <template>
   <div class="relative min-h-screen w-full overflow-hidden">
-    <UContainer class="py-8 lg:py-16 space-y-24 lg:space-y-32">
-      <LandingHero
-        :is-content-loaded="isContentLoaded"
-        :prompts-count="promptsCount"
-        :options-count="optionsCount"
-        :tags-count="tagsCount"
-        @learn-more="handleLearnMore"
-      />
-      <LandingFeatures />
-      <LandingInteractiveDemo />
-      <LandingHowItWorks />
-      <LandingFAQ />
-      <LandingCTA @get-started="handleGetStarted" />
-    </UContainer>
+    <!-- skip link for keyboard users -->
+    <a href="#hero" class="skip-link">Przejdź do zawartości</a>
+    <!-- fullpage viewport - no native scroll -->
+    <div
+      id="fullpage-container"
+      class="fullpage-viewport h-screen w-full overflow-hidden"
+      role="main"
+    >
+      <div id="fullpage-track" class="fullpage-track">
+        <section
+          id="hero"
+          data-fullpage-section
+          class="fullpage-section flex items-center"
+          role="region"
+          aria-label="Hero"
+        >
+          <UContainer class="py-8 lg:py-16 w-full">
+            <LandingHero
+              :is-content-loaded="isContentLoaded"
+              :prompts-count="promptsCount"
+              :options-count="optionsCount"
+              :tags-count="tagsCount"
+              @learn-more="handleLearnMore"
+            />
+          </UContainer>
+        </section>
+
+        <section
+          id="features"
+          data-fullpage-section
+          class="fullpage-section flex items-center"
+          role="region"
+          aria-label="Funkcje"
+        >
+          <UContainer class="py-8 lg:py-16 w-full">
+            <LandingFeatures />
+          </UContainer>
+        </section>
+
+        <section
+          id="demo"
+          data-fullpage-section
+          class="fullpage-section flex items-center"
+          role="region"
+          aria-label="Demo"
+        >
+          <UContainer class="py-8 lg:py-16 w-full">
+            <LandingInteractiveDemo />
+          </UContainer>
+        </section>
+
+        <section
+          id="how"
+          data-fullpage-section
+          class="fullpage-section flex items-center"
+          role="region"
+          aria-label="Jak to działa"
+        >
+          <UContainer class="py-8 lg:py-16 w-full">
+            <LandingHowItWorks />
+          </UContainer>
+        </section>
+
+        <section
+          id="faq"
+          data-fullpage-section
+          class="fullpage-section flex items-center"
+          role="region"
+          aria-label="FAQ"
+        >
+          <UContainer class="py-8 lg:py-16 w-full">
+            <LandingFAQ />
+          </UContainer>
+        </section>
+
+        <section
+          id="cta"
+          data-fullpage-section
+          class="fullpage-section flex items-center"
+          role="region"
+          aria-label="Start"
+        >
+          <UContainer class="py-8 lg:py-16 w-full">
+            <LandingCTA @get-started="handleGetStarted" />
+          </UContainer>
+        </section>
+      </div>
+    </div>
+
+    <FullPageDots
+      :items="dotItems"
+      @change="onDotChange"
+      :wheel-trigger="140"
+      :wheel-decay-ms="300"
+      :duration-ms="600"
+      :enable-mouse-drag="true"
+      :wheel-immediate-threshold="20"
+    />
+
     <LoadingOverlay v-if="!isContentLoaded" />
   </div>
 </template>
@@ -42,6 +127,19 @@ const promptsCount = computed(() => prompts.value?.length || 0);
 const optionsCount = computed(() => Object.keys(options.value || {}).length);
 const tagsCount = computed(() => Object.keys(tags.value || {}).length);
 
+const dotItems = [
+  { id: "hero", label: "Hero" },
+  { id: "features", label: "Funkcje" },
+  { id: "demo", label: "Demo" },
+  { id: "how", label: "Jak to działa" },
+  { id: "faq", label: "FAQ" },
+  { id: "cta", label: "Start" },
+];
+
+const onDotChange = (idx: number) => {
+  // można obsłużyć dodatkowo — aktualnie wszystko robi komponent FullPageDots
+};
+
 const handleGetStarted = async () => {
   await navigateTo("/editor");
 };
@@ -49,6 +147,12 @@ const handleGetStarted = async () => {
 const handleLearnMore = async () => {
   await navigateTo("/about");
 };
+
+// upewnij się że scroll container ma focus by działały klawisze pgup/pagedown jeśli potrzebne
+onMounted(() => {
+  const container = document.getElementById("fullpage-container");
+  if (container) container.tabIndex = -1;
+});
 </script>
 
 <style scoped>
@@ -163,5 +267,52 @@ const handleLearnMore = async () => {
   transition-property: transform, box-shadow, border-color;
   transition-duration: 200ms;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Fullpage styles */
+.fullpage-viewport {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  /* allow native scrolling so scroll-snap can work */
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.fullpage-track {
+  width: 100%;
+  /* wysokość nie musi być ustawiona; sections używają 100vh */
+  transform: translateY(0);
+}
+
+.fullpage-section {
+  height: 100vh;
+  width: 100%;
+  /* ensure sections participate in scroll snapping */
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.skip-link:focus {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  width: auto;
+  height: auto;
+  padding: 0.5rem 0.75rem;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  z-index: 60;
+  border-radius: 6px;
 }
 </style>

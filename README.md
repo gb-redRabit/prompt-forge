@@ -144,6 +144,54 @@ Upewnij się, że JSONy są poprawne (bez przecinków końcowych i komentarzy). 
 - Jeśli pliki content/\*.json nie są poprawnym JSON, należy je naprawić pod schematy z content.config.ts.
 - Przy pierwszym uruchomieniu warto wczytać zawartość (usePreloadedContent) lub odwiedzić stronę główną, która triggeruje preload.
 
+## Instrukcja: dodawanie i konfiguracja full-page sekcji (landing)
+
+W projekcie landing page (`app/pages/index.vue`) jest zrealizowany jako zestaw sekcji pełnoekranowych sterowanych komponentem `FullPageDots`.
+
+Jak dodać nową sekcję:
+
+1. Dodaj nowy element `section` wewnątrz `#fullpage-track`:
+
+```html
+<section
+  id="nowa"
+  data-fullpage-section
+  class="fullpage-section"
+  role="region"
+  aria-label="Nowa sekcja"
+>
+  <UContainer class="py-8 lg:py-16 w-full">
+    <!-- treść -->
+  </UContainer>
+</section>
+```
+
+2. Dodaj odpowiadający element do `dotItems` w `app/pages/index.vue`, np.:
+
+```ts
+const dotItems = [
+  { id: "hero", label: "Hero" },
+  // ...
+  { id: "nowa", label: "Nowa sekcja" },
+];
+```
+
+Uwagi dotyczące przewijania wewnętrznego (passthrough wheel):
+
+- Mechanizm sprawdza, czy element pod kursorem (lub jego przodek) ma wewnętrzny overflow i czy może przewinąć się w danym kierunku. Jeśli tak, pozwala na normalne przewijanie wewnątrz tego elementu zamiast przełączać sekcje.
+- Jeśli chcesz, aby dana sekcja zawsze przewijała wewnętrznie, upewnij się, że jej kontener ma `overflow-y: auto` oraz ograniczoną wysokość (np. max-height wewnątrz sekcji).
+
+Reduced motion i accessibility:
+
+- Strona honoruje preferencję `prefers-reduced-motion` — animacje przejść są skracane/wyłączane, jeśli użytkownik preferuje zmniejszoną animację.
+- Dodano `skip link` (link pomijający na początku strony), `role="main"` oraz `role="region"` i `aria-label` dla poszczególnych sekcji.
+- `FullPageDots` posiada `aria-live` (polite) i aktualizuje komunikat dla czytników ekranu przy zmianie sekcji.
+
+Dodatkowe tipy:
+
+- Jeśli sekcja zawiera długą, przewijaną zawartość (np. listę), lepiej dopasować wewnętrzny kontener z `overflow-auto` i paddingami, aby użytkownicy mogli przewijać zawartość bez wywoływania przejścia sekcji.
+- Możesz dostosować prędkość i czułość wheel poprzez zmienne `WHEEL_TRIGGER` oraz `WHEEL_DECAY_MS` w `app/components/FullPageDots.vue`.
+
 ## Licencja
 
 MIT
