@@ -1710,6 +1710,13 @@ const handleSavePrompt = (data: { name: string; description: string }) => {
     positivePrompt: generatedPrompt.value.positive,
     negativePrompt: generatedPrompt.value.negative,
     tags: allSelectedTagsList.value,
+    // Dodaj link do prompta (shared URL)
+    link: generateSharedUrl({
+      prompt: generatedPrompt.value,
+      tags: selectedTags.value,
+      step: currentStep.value,
+      additionalNegative: additionalNegative.value,
+    }),
     createdAt: Date.now(),
     updatedAt: Date.now(),
   };
@@ -1816,6 +1823,17 @@ useHead({
   ],
 });
 
+// Helper: generate shared URL for a given payload
+const generateSharedUrl = (data: any) => {
+  try {
+    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+    return `${window.location.origin}/editor?shared=${encoded}`;
+  } catch (e) {
+    console.error("Error generating shared URL:", e);
+    return "";
+  }
+};
+
 // W funkcji sharePrompt
 const sharePrompt = () => {
   const data = {
@@ -1824,15 +1842,21 @@ const sharePrompt = () => {
     step: currentStep.value,
     additionalNegative: additionalNegative.value,
   };
-  const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
-  const url = `${window.location.origin}/editor?shared=${encoded}`;
-  navigator.clipboard.writeText(url);
+  const url = generateSharedUrl(data);
+  if (url) {
+    navigator.clipboard.writeText(url);
 
-  // Zastąp komentarz toastem
-  toast.add({
-    title: t("prompt_creator.link_copied"),
-    color: "success",
-  });
+    // Zastąp komentarz toastem
+    toast.add({
+      title: t("prompt_creator.link_copied"),
+      color: "success",
+    });
+  } else {
+    toast.add({
+      title: t("common.error"),
+      color: "error",
+    });
+  }
 };
 
 // Ładowanie z query
