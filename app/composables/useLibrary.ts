@@ -6,6 +6,7 @@ export interface SavedPrompt {
   result: string;
   placeholderValues: Record<string, string>;
   timestamp: number;
+  link?: string;
   name?: { pl: string; en: string };
   description?: { pl: string; en: string };
   template?: { pl: string; en: string };
@@ -34,17 +35,27 @@ interface LibraryData {
 export const useLibrary = () => {
   const savedPrompts = useState<SavedPrompt[]>("library-saved", () => []);
   const customPrompts = useState<SavedPrompt[]>("library-custom", () => []);
+  // Editor (legacy) custom prompts stored under 'custom_prompts' in localStorage
+  const editorCustomPrompts = useState<SavedPrompt[]>(
+    "editor-custom-prompts",
+    () => []
+  );
   const collections = useState<PromptCollection[]>(
     "library-collections",
     () => []
   );
   const promptHistory = useState<SavedPrompt[]>("library-history", () => []);
+  // Favorites for tags (editor stores as array of strings under 'tag_favorites')
+  const tagFavorites = useState<string[]>("tag-favorites", () => []);
 
   const stats = computed(() => ({
     totalSaved: savedPrompts.value.length,
     totalCustom: customPrompts.value.length,
     totalCollections: collections.value.length,
     totalHistory: promptHistory.value.length,
+    // New counts for UI
+    totalTagFavorites: tagFavorites.value.length,
+    totalEditorPrompts: editorCustomPrompts.value.length,
   }));
 
   const loadLibrary = () => {
@@ -57,6 +68,75 @@ export const useLibrary = () => {
           customPrompts.value = parsed.custom || [];
           collections.value = parsed.collections || [];
           promptHistory.value = parsed.history || [];
+        }
+        // Legacy: some pages (editor) save custom prompts under 'custom_prompts'
+        const legacyCustom = localStorage.getItem("custom_prompts");
+        if (legacyCustom) {
+          try {
+            const parsed = JSON.parse(legacyCustom);
+            if (Array.isArray(parsed) && parsed.length) {
+              // Map editor custom prompt shape to SavedPrompt
+              parsed.forEach((p: any) => {
+                const id = p.id || p.promptId || `custom_${Date.now()}`;
+                const savedId = id;
+
+                // Avoid duplicates in editorCustomPrompts
+                if (
+                  editorCustomPrompts.value.find((x) => x.savedId === savedId)
+                )
+                  return;
+
+                const newPrompt: SavedPrompt = {
+                  savedId,
+                  promptId: id,
+                  result: p.positivePrompt || p.result || "",
+                  placeholderValues: {},
+                  timestamp: p.createdAt || p.updatedAt || Date.now(),
+                  name:
+                    typeof p.name === "string"
+                      ? { pl: p.name, en: p.name }
+                      : p.name,
+                  description:
+                    typeof p.description === "string"
+                      ? { pl: p.description, en: p.description }
+                      : p.description,
+                  template:
+                    p.positivePrompt || p.result
+                      ? {
+                          pl: p.positivePrompt || p.result,
+                          en: p.positivePrompt || p.result,
+                        }
+                      : p.template,
+                  link: p.link,
+                  isCustom: true,
+                  tags: Array.isArray(p.tags) ? p.tags : [],
+                  savedAt: p.updatedAt || p.createdAt || Date.now(),
+                };
+
+                // Add to the beginning to preserve editor behaviour (unshift)
+                editorCustomPrompts.value.unshift(newPrompt);
+              });
+              console.log(
+                "📥 Załadowano legacy custom_prompts:",
+                parsed.length
+              );
+            }
+          } catch (e) {
+            console.error("Error parsing legacy custom_prompts:", e);
+          }
+        }
+
+        // Legacy: load tag favorites saved by editor under 'tag_favorites'
+        const savedFavorites = localStorage.getItem("tag_favorites");
+        if (savedFavorites) {
+          try {
+            const parsed = JSON.parse(savedFavorites);
+            if (Array.isArray(parsed)) {
+              tagFavorites.value = parsed;
+            }
+          } catch (e) {
+            console.error("Error parsing tag_favorites:", e);
+          }
         }
       } catch (e) {
         console.error("Error loading library:", e);
@@ -80,6 +160,8 @@ export const useLibrary = () => {
 
       localStorage.setItem("prompt-library", JSON.stringify(data));
 
+      // Note: tag favorites and editor's custom_prompts are managed by editor page.
+      // We don't overwrite them here to avoid clobbering editor state.
       // Weryfikacja zapisu
       const saved = localStorage.getItem("prompt-library");
       if (saved) {
@@ -365,5 +447,9 @@ export const useLibrary = () => {
     importLibrary,
     downloadLibrary,
     getPromptById,
+    // Expose legacy tag favorites (if present)
+    tagFavorites,
+    // Editor (legacy) custom prompts loaded from localStorage 'custom_prompts'
+    editorCustomPrompts,
   };
 };

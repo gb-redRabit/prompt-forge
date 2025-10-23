@@ -129,6 +129,20 @@
       "saved_in_library": "In library",
       "save_to_library": "Save to library"
     },
+    "library": {
+      "actions": {
+        "confirmRemoveTagTitle": "Remove tag",
+        "confirmRemoveTag": "Are you sure you want to remove this tag?",
+        "filterSet": "Filter set",
+        "filterCleared": "Filter cleared",
+        "tagRemoved": "Tag removed",
+        "saveFailed": "Save failed",
+        "previewOpened": "Preview opened"
+      },
+      "tags": {
+        "uncategorized": "Other"
+      }
+    },
     "common": {
       "loading": "Loading...",
       "edit": "Edit",
@@ -137,6 +151,11 @@
       "model_singular": "model available",
       "model_plural": "models available",
       "search": "Search",
+      "share": "Share",
+      "preview": "Preview",
+      "confirm": "Confirm",
+      "no_link": "No link",
+      "copy_failed": "Copy failed",
       "error": "Error",
       "success": "Success",
       "cancel": "Cancel",
@@ -264,7 +283,9 @@
       "possibilities": "∞",
       "possibilities_label": "Possibilities",
       "prompts": "Prompts",
-      "tags": "Tags"
+      "tags": "Tags",
+      "editorPrompts": "Editor prompts",
+      "tagFavorites": "Favorite tags"
     },
     "testimonials": {
       "testimonial1_name": "Anna Kowalska",
@@ -562,6 +583,15 @@
         "submit": "Import",
         "success": "Library imported successfully!",
         "error": "Import error. Check file format."
+      },
+      "actions": {
+        "confirmRemoveTagTitle": "Remove tag",
+        "confirmRemoveTag": "Are you sure you want to remove this tag?",
+        "filterSet": "Filter set",
+        "filterCleared": "Filter cleared",
+        "tagRemoved": "Tag removed",
+        "saveFailed": "Save failed",
+        "previewOpened": "Preview opened"
       },
       "collection": {
         "title": "New Collection",

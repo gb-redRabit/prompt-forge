@@ -1336,7 +1336,7 @@ const getNegativeTagText = (tagObj: TagObject): string => {
 };
 
 const getTagId = (tagObj: TagObject): string => {
-  return `${tagObj.category}_${tagObj.pl}_${tagObj.en}`;
+  return `${tagObj.category}__${tagObj.pl}__${tagObj.en}`;
 };
 
 const isFavorite = (tagObj: TagObject): boolean => {
@@ -1345,6 +1345,7 @@ const isFavorite = (tagObj: TagObject): boolean => {
 
 const toggleFavorite = (tagObj: TagObject) => {
   const id = getTagId(tagObj);
+  console.log("asdid", id);
   if (favorites.value.has(id)) {
     favorites.value.delete(id);
   } else {

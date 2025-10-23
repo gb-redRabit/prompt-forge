@@ -17,6 +17,20 @@
     "about": "O aplikacji"
   },
   "pages": {
+    "library": {
+      "actions": {
+        "confirmRemoveTagTitle": "Usuń tag",
+        "confirmRemoveTag": "Czy na pewno chcesz usunąć ten tag?",
+        "filterSet": "Filtr ustawiony",
+        "filterCleared": "Filtr wyczyszczono",
+        "tagRemoved": "Usunięto tag",
+        "saveFailed": "Błąd zapisu",
+        "previewOpened": "Otworzono podgląd"
+      },
+      "tags": {
+        "uncategorized": "Inne"
+      }
+    },
     "prompts": {
       "subtitle": "Zarządzaj swoimi promptami AI",
       "create": "Utwórz Prompt",
@@ -456,6 +470,11 @@
     "error": "Błąd",
     "success": "Sukces",
     "cancel": "Anuluj",
+    "confirm": "Potwierdź",
+    "share": "Udostępnij",
+    "preview": "Podgląd",
+    "no_link": "Brak linku",
+    "copy_failed": "Nie udało się skopiować",
     "save": "Zapisz",
     "delete": "Usuń",
     "edit": "Edytuj",
@@ -487,8 +506,11 @@
       "saved": "Zapisane",
       "custom": "Własne",
       "collections": "Kolekcje",
-      "history": "Historia"
+      "history": "Historia",
+      "editorPrompts": "Prompty (editor)",
+      "tagFavorites": "Ulubione tagi"
     },
+
     "tabs": {
       "saved": "Zapisane",
       "custom": "Własne",
@@ -536,6 +558,15 @@
         "submit": "Importuj",
         "success": "Biblioteka została pomyślnie zaimportowana!",
         "error": "Błąd importu. Sprawdź format pliku."
+      },
+      "actions": {
+        "confirmRemoveTagTitle": "Usuń tag",
+        "confirmRemoveTag": "Czy na pewno chcesz usunąć ten tag?",
+        "filterSet": "Filtr ustawiony",
+        "filterCleared": "Filtr wyczyszczony",
+        "tagRemoved": "Usunięto tag",
+        "saveFailed": "Błąd zapisu",
+        "previewOpened": "Otwarto podgląd"
       },
       "collection": {
         "title": "Nowa Kolekcja",
