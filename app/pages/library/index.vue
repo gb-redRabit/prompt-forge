@@ -58,7 +58,7 @@
           <UCard
             v-for="prompt in filteredEditorPrompts"
             :key="prompt.savedId"
-            class="hover:shadow-lg transition-all flex flex-col justify-between"
+            class="group hover:shadow-lg transition-all flex flex-col justify-between"
           >
             <div>
               <div class="flex items-center justify-between mb-2">
@@ -90,7 +90,9 @@
               <span class="text-xs text-gray-500">{{
                 formattedDateFor(prompt)
               }}</span>
-              <div class="flex items-center gap-2">
+              <div
+                class="flex items-center gap-2 opacity-90 group-hover:opacity-100 transition-opacity"
+              >
                 <UButton
                   size="xs"
                   color="primary"
@@ -113,6 +115,15 @@
                   @click="() => openPreview(prompt)"
                   >{{ $t("common.preview") || "Podgląd" }}</UButton
                 >
+                <UButton
+                  size="xs"
+                  color="error"
+                  variant="ghost"
+                  icon="i-heroicons-trash"
+                  title="Usuń prompt"
+                  aria-label="Usuń prompt"
+                  @click="() => requestDeleteEditorPrompt(prompt.savedId)"
+                />
               </div>
             </div>
           </UCard>
@@ -136,7 +147,7 @@
                 >
                   {{
                     category === "_uncategorized"
-                      ? $t("library.tags.uncategorized") || "Inne"
+                      ? $t("pages.library.tags.uncategorized") || "Inne"
                       : category
                   }}
                 </h4>
@@ -232,11 +243,13 @@
             class="z-50 max-w-lg w-full p-6 transform transition-all duration-200"
           >
             <h3 class="text-lg font-semibold mb-2">
-              {{ t("library.actions.confirmRemoveTagTitle") || "Usuń tag" }}
+              {{
+                t("pages.library.actions.confirmRemoveTagTitle") || "Usuń tag"
+              }}
             </h3>
             <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
               {{
-                t("library.actions.confirmRemoveTag") ||
+                t("pages.library.actions.confirmRemoveTag") ||
                 `Czy na pewno chcesz usunąć tag "${tagToDelete}"?`
               }}
             </p>
@@ -253,8 +266,66 @@
       </div>
 
       <!-- Preview Modal component -->
+      <!-- Confirm delete editor prompt modal -->
+      <div
+        v-if="showConfirmDeleteEditorPrompt"
+        class="fixed inset-0 z-50 flex items-center justify-center"
+      >
+        <div
+          class="absolute inset-0 bg-black/60 backdrop-blur-sm"
+          @click="cancelDeleteEditorPrompt"
+        ></div>
+        <transition name="scale-fade">
+          <UCard
+            class="z-50 max-w-lg w-full p-6 transform transition-all duration-200"
+          >
+            <h3 class="text-lg font-semibold mb-2">
+              {{ t("library.actions.confirmDelete") || "Usuń prompt" }}
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+              {{
+                t("pages.library.actions.confirmDeletePrompt") ||
+                `Czy na pewno chcesz usunąć prompt "${editorPromptToDeleteName || ""}"?`
+              }}
+            </p>
+            <div class="flex justify-end gap-2">
+              <UButton
+                size="sm"
+                variant="ghost"
+                @click="cancelDeleteEditorPrompt"
+                >{{ t("common.cancel") || "Anuluj" }}</UButton
+              >
+              <UButton
+                size="sm"
+                color="error"
+                @click="confirmDeleteEditorPrompt"
+                >{{ t("common.confirm") || "Usuń" }}</UButton
+              >
+            </div>
+          </UCard>
+        </transition>
+      </div>
+
+      <!-- Preview Modal component -->
       <PreviewModal v-model:open="showPreviewModal" :prompt="previewPrompt" />
     </Teleport>
+
+    <!-- Undo snackbar for soft-deletes -->
+    <div
+      v-if="pendingDelete"
+      class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50"
+    >
+      <UCard class="px-4 py-2 flex items-center gap-4">
+        <div class="text-sm">
+          {{ t("pages.library.actions.promptRemoved") || "Usunięto prompt" }}
+        </div>
+        <div class="ml-2">
+          <UButton size="sm" variant="ghost" @click="undoSoftDelete">
+            {{ t("pages.library.common.undo") || "Cofnij" }}
+          </UButton>
+        </div>
+      </UCard>
+    </div>
   </div>
 </template>
 
@@ -299,6 +370,7 @@ const {
   addToHistory,
   tagFavorites,
   editorCustomPrompts,
+  removeEditorPrompt,
 } = useLibrary();
 
 const activeTab = ref(0);
@@ -360,17 +432,9 @@ const setTagFilter = (tag: string) => {
   activeTagFilter.value = localized;
   toast.add &&
     toast.add({
-      title: t("library.actions.filterSet") || `Filtr ustawiony: ${localized}`,
+      title:
+        t("pages.library.actions.filterSet") || `Filtr ustawiony: ${localized}`,
       color: "info",
-    });
-};
-
-const clearTagFilter = () => {
-  activeTagFilter.value = null;
-  toast.add &&
-    toast.add({
-      title: t("library.actions.filterCleared") || "Filtr wyczyszczono",
-      color: "success",
     });
 };
 
@@ -600,20 +664,147 @@ const confirmDeleteTag = () => {
     );
     toast.add &&
       toast.add({
-        title: t("library.actions.tagRemoved") || "Usunięto tag",
+        title: t("pages.library.actions.tagRemoved") || "Usunięto tag",
         color: "success",
       });
   } catch (e) {
     console.error("Failed to save tag_favorites:", e);
     toast.add &&
       toast.add({
-        title: t("library.actions.saveFailed") || "Błąd zapisu",
+        title: t("pages.library.actions.saveFailed") || "Błąd zapisu",
         color: "error",
       });
   }
 
   tagToDelete.value = null;
   showConfirmDeleteTag.value = false;
+};
+
+// Modal-based delete flow for editor (legacy) prompts
+const showConfirmDeleteEditorPrompt = ref(false);
+const editorPromptToDelete = ref<string | null>(null);
+const editorPromptToDeleteName = ref<string | null>(null);
+// Pending soft-delete state for undo
+const pendingDelete = ref<{
+  id: string;
+  prompt: SavedPrompt | null;
+  timeoutId: number | null;
+} | null>(null);
+
+const UNDO_TIMEOUT = 6000; // ms
+
+const requestDeleteEditorPrompt = (savedId: string) => {
+  // On small screens show confirm modal, on larger screens do soft-delete + undo
+  if (process.client && window.innerWidth <= 640) {
+    editorPromptToDelete.value = savedId;
+    // resolve a friendly name for the modal
+    const p = editorCustomPrompts.value.find((x) => x.savedId === savedId);
+    editorPromptToDeleteName.value = p
+      ? locale.value === "pl"
+        ? p.name?.pl || p.name?.en || p.result || null
+        : p.name?.en || p.name?.pl || p.result || null
+      : null;
+    showConfirmDeleteEditorPrompt.value = true;
+    return;
+  }
+
+  // Large screen: perform soft-delete immediately and offer undo
+  const p =
+    editorCustomPrompts.value.find((x) => x.savedId === savedId) || null;
+  scheduleSoftDelete(savedId, p);
+};
+
+const scheduleSoftDelete = (savedId: string, prompt: SavedPrompt | null) => {
+  // Remove from UI immediately
+  const index = editorCustomPrompts.value.findIndex(
+    (x) => x.savedId === savedId
+  );
+  let removedPrompt: SavedPrompt | null = null;
+  if (index !== -1) {
+    // splice returns an array; assert first element or null
+    const spliced = editorCustomPrompts.value.splice(index, 1);
+    removedPrompt = spliced && spliced[0] ? (spliced[0] as SavedPrompt) : null;
+  }
+
+  // Set pending delete with timeout to finalize
+  if (pendingDelete.value && pendingDelete.value.timeoutId) {
+    // if another pending exists, finalize it immediately
+    clearTimeout(pendingDelete.value.timeoutId as any);
+    // finalize previous
+    if (pendingDelete.value.id) removeEditorPrompt(pendingDelete.value.id);
+    pendingDelete.value = null;
+  }
+
+  const timeoutId = setTimeout(() => {
+    // finalize deletion in composable (update localStorage)
+    try {
+      removeEditorPrompt(savedId);
+    } catch (e) {
+      console.error("Finalize delete failed", e);
+    }
+    pendingDelete.value = null;
+  }, UNDO_TIMEOUT) as unknown as number;
+
+  pendingDelete.value = {
+    id: savedId,
+    prompt: prompt || removedPrompt,
+    timeoutId,
+  };
+
+  // show a toast as hint
+  toast.add &&
+    toast.add({
+      title: t("pages.library.actions.promptRemoved") || "Usunięto prompt",
+      color: "info",
+    });
+};
+
+const undoSoftDelete = () => {
+  if (!pendingDelete.value) return;
+  const pd = pendingDelete.value;
+  if (pd.timeoutId) clearTimeout(pd.timeoutId as any);
+
+  // restore the prompt into the beginning of the list (preserve editor behavior)
+  if (pd.prompt) {
+    editorCustomPrompts.value.unshift(pd.prompt);
+  }
+
+  // Remove pending marker
+  pendingDelete.value = null;
+
+  // feedback
+  toast.add &&
+    toast.add({ title: t("common.undo") || "Cofnij", color: "success" });
+};
+
+const cancelDeleteEditorPrompt = () => {
+  editorPromptToDelete.value = null;
+  showConfirmDeleteEditorPrompt.value = false;
+};
+
+const confirmDeleteEditorPrompt = () => {
+  const id = editorPromptToDelete.value;
+  if (!id) return cancelDeleteEditorPrompt();
+
+  try {
+    removeEditorPrompt(id);
+    toast.add &&
+      toast.add({
+        title: t("pages.library.actions.promptRemoved") || "Usunięto prompt",
+        color: "success",
+      });
+  } catch (e) {
+    console.error("Failed to remove editor prompt:", e);
+    toast.add &&
+      toast.add({
+        title: t("pages.library.actions.saveFailed") || "Błąd",
+        color: "error",
+      });
+  }
+
+  editorPromptToDelete.value = null;
+  editorPromptToDeleteName.value = null;
+  showConfirmDeleteEditorPrompt.value = false;
 };
 
 const openLink = (link?: string) => {
@@ -634,37 +825,9 @@ const openPreview = (prompt: SavedPrompt) => {
   // Toast to indicate preview opened
   toast.add &&
     toast.add({
-      title: t("library.actions.previewOpened") || "Otworzono podgląd",
+      title: t("pages.library.actions.previewOpened") || "Otworzono podgląd",
       color: "info",
     });
-};
-
-const copyResult = async () => {
-  const text = previewPrompt.value?.result;
-  if (!text) {
-    toast.add &&
-      toast.add({
-        title: t("common.no_link") || "Brak treści",
-        color: "warning",
-      });
-    return;
-  }
-
-  try {
-    await navigator.clipboard.writeText(text);
-    toast.add &&
-      toast.add({
-        title: t("common.copied") || "Skopiowano!",
-        color: "success",
-      });
-  } catch (e) {
-    console.error("Copy failed:", e);
-    toast.add &&
-      toast.add({
-        title: t("common.copy_failed") || "Nie udało się skopiować",
-        color: "error",
-      });
-  }
 };
 
 const handleImport = async (file: File, mode: "merge" | "replace") => {

@@ -25,7 +25,9 @@
         "filterCleared": "Filtr wyczyszczono",
         "tagRemoved": "Usunięto tag",
         "saveFailed": "Błąd zapisu",
-        "previewOpened": "Otworzono podgląd"
+        "previewOpened": "Otworzono podgląd",
+        "promptRemoved": "Usunięto prompt",
+        "confirmDeletePrompt": "Czy na pewno chcesz usunąć ten prompt?"
       },
       "tags": {
         "uncategorized": "Inne"
@@ -121,6 +123,7 @@
       "apply": "",
       "back": "",
       "cancel": "Anuluj",
+      "undo": "Cofnij",
       "close": "",
       "error": "",
       "filter": "",
@@ -494,7 +497,9 @@
     "clear_all": "Wyczyść wszystko",
     "save_prompt": "Zapisz prompt",
     "use_prompt": "Użyj prompt",
-    "create": "Utwórz"
+    "create": "Utwórz",
+    "undo": "Cofnij",
+    "open": "Otwórz"
   },
   "library": {
     "title": "Biblioteka",
@@ -510,7 +515,6 @@
       "editorPrompts": "Prompty (editor)",
       "tagFavorites": "Ulubione tagi"
     },
-
     "tabs": {
       "saved": "Zapisane",
       "custom": "Własne",
@@ -667,7 +671,8 @@
       "confirmDeleteCustom": "Czy na pewno chcesz usunąć ten własny prompt?",
       "confirmDeleteCollection": "Czy na pewno chcesz usunąć tę kolekcję?",
       "confirmClearHistory": "Czy na pewno chcesz wyczyścić całą historię?",
-      "confirmRemoveFromCollection": "Czy na pewno chcesz usunąć ten prompt z kolekcji?"
+      "confirmRemoveFromCollection": "Czy na pewno chcesz usunąć ten prompt z kolekcji?",
+      "confirmDeletePrompt": "Czy na pewno chcesz usunąć ten prompt?"
     }
   },
   "prompt_creator": {

@@ -264,6 +264,32 @@ export const useLibrary = () => {
     saveLibrary();
   };
 
+  // Remove an editor (legacy) custom prompt and update legacy storage
+  const removeEditorPrompt = (savedId: string) => {
+    editorCustomPrompts.value = editorCustomPrompts.value.filter(
+      (p) => p.savedId !== savedId
+    );
+
+    // Try to keep legacy editor storage in sync if present
+    if (process.client) {
+      try {
+        const raw = localStorage.getItem("custom_prompts");
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) {
+            const filtered = parsed.filter((e: any) => {
+              const id = e.id || e.promptId || null;
+              return id !== savedId;
+            });
+            localStorage.setItem("custom_prompts", JSON.stringify(filtered));
+          }
+        }
+      } catch (e) {
+        console.error("Failed to update custom_prompts:", e);
+      }
+    }
+  };
+
   const addToHistory = (template: Prompt) => {
     // Konwertuj template.id na string dla porównania
     const templateId = template.id?.toString();
@@ -451,5 +477,7 @@ export const useLibrary = () => {
     tagFavorites,
     // Editor (legacy) custom prompts loaded from localStorage 'custom_prompts'
     editorCustomPrompts,
+    // Remove legacy editor prompt
+    removeEditorPrompt,
   };
 };

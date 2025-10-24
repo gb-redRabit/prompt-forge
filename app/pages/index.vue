@@ -98,8 +98,6 @@
       :enable-mouse-drag="true"
       :wheel-immediate-threshold="20"
     />
-
-    <LoadingOverlay v-if="!isContentLoaded" />
   </div>
 </template>
 
