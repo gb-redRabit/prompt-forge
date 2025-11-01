@@ -1,211 +1,265 @@
 <template>
-  <div class="space-y-6 p-8">
-    <!-- Header -->
-    <div class="flex items-center justify-between">
-      <div>
-        <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-          {{ $t("library.title") }}
-        </h1>
-        <p class="text-gray-600 dark:text-gray-400">
-          {{ $t("library.subtitle") }}
-        </p>
+  <div class="space-y-6 p-4 sm:p-6 lg:p-8 relative">
+    <!-- Decorative gradient orbs in background -->
+    <div
+      class="hidden lg:block gradient-orb gradient-orb-primary animate-pulse-slow fixed pointer-events-none"
+      style="
+        width: 450px;
+        height: 450px;
+        top: 5%;
+        right: -8%;
+        opacity: 0.1;
+        z-index: 0;
+      "
+    />
+    <div
+      class="hidden md:block gradient-orb gradient-orb-secondary animate-float fixed pointer-events-none"
+      style="
+        width: 350px;
+        height: 350px;
+        bottom: 10%;
+        left: -5%;
+        opacity: 0.08;
+        z-index: 0;
+        animation-delay: 4s;
+      "
+    />
+    <div
+      class="hidden lg:block gradient-orb gradient-orb-accent animate-gradient-shift fixed pointer-events-none"
+      style="
+        width: 400px;
+        height: 400px;
+        top: 50%;
+        left: 10%;
+        opacity: 0.06;
+        z-index: 0;
+        animation-delay: 8s;
+      "
+    />
+
+    <!-- Content with higher z-index -->
+    <div class="relative z-10">
+      <!-- Header -->
+      <div class="flex items-center justify-between animate-fade-in">
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-bold gradient-text-multi mb-2">
+            {{ $t("library.title") }}
+          </h1>
+          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400">
+            {{ $t("library.subtitle") }}
+          </p>
+        </div>
+
+        <!-- Actions -->
+        <div
+          class="flex items-center gap-2 animate-fade-in animation-delay-100"
+        >
+          <UButton
+            color="success"
+            variant="outline"
+            @click="showImportModal = true"
+            class="hover-scale transition-all-smooth hover-glow text-xs sm:text-sm"
+          >
+            <UIcon name="i-heroicons-arrow-up-tray" class="mr-1 sm:mr-2" />
+            <span class="hidden sm:inline">{{ $t("library.import") }}</span>
+          </UButton>
+          <UButton
+            color="primary"
+            variant="outline"
+            @click="handleExport"
+            class="hover-scale transition-all-smooth hover-glow text-xs sm:text-sm"
+          >
+            <UIcon name="i-heroicons-arrow-down-tray" class="mr-1 sm:mr-2" />
+            <span class="hidden sm:inline">{{ $t("library.export") }}</span>
+          </UButton>
+        </div>
       </div>
 
-      <!-- Actions -->
-      <div class="flex items-center gap-2">
-        <UButton
-          color="success"
-          variant="outline"
-          @click="showImportModal = true"
-        >
-          <UIcon name="i-heroicons-arrow-up-tray" class="mr-2" />{{
-            $t("library.import")
-          }}
-        </UButton>
-        <UButton color="primary" variant="outline" @click="handleExport">
-          <UIcon name="i-heroicons-arrow-down-tray" class="mr-2" />{{
-            $t("library.export")
-          }}
-        </UButton>
+      <!-- Stats -->
+      <div class="animate-fade-in animation-delay-200">
+        <LibraryStats :stats="stats" />
+      </div>
+
+      <!-- Tabs -->
+      <div class="animate-fade-in animation-delay-300">
+        <UTabs v-model="activeTab" :items="tabs">
+          <template #saved>
+            <LibrarySavedTab
+              :prompts="savedPrompts"
+              @use="usePrompt"
+              @delete="handleDeletePrompt"
+            />
+          </template>
+
+          <template #custom>
+            <LibraryCustomTab
+              :prompts="customPrompts"
+              @use="usePrompt"
+              @edit="handleEditPrompt"
+              @delete="handleDeleteCustomPrompt"
+              @create="createNewPrompt"
+            />
+          </template>
+
+          <template #promptsTags>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+              <UCard
+                v-for="prompt in filteredEditorPrompts"
+                :key="prompt.savedId"
+                class="card-interactive group animate-fade-in-up"
+              >
+                <div>
+                  <div class="flex items-center justify-between mb-2">
+                    <h3 class="font-semibold text-gray-900 dark:text-white">
+                      {{
+                        prompt.name
+                          ? locale === "pl"
+                            ? prompt.name.pl
+                            : prompt.name.en
+                          : prompt.result || "Prompt"
+                      }}
+                    </h3>
+                  </div>
+
+                  <p
+                    class="text-sm text-gray-600 dark:text-gray-400 line-clamp-3"
+                  >
+                    {{
+                      prompt.description
+                        ? locale === "pl"
+                          ? prompt.description.pl
+                          : prompt.description.en
+                        : prompt.result || ""
+                    }}
+                  </p>
+                </div>
+
+                <div
+                  class="flex items-center justify-between pt-3 border-t border-gray-200 dark:border-gray-700 mt-3"
+                >
+                  <span class="text-xs text-gray-500">{{
+                    formattedDateFor(prompt)
+                  }}</span>
+                  <div
+                    class="flex items-center gap-2 opacity-90 group-hover:opacity-100 transition-opacity"
+                  >
+                    <UButton
+                      size="xs"
+                      color="primary"
+                      variant="soft"
+                      icon="i-heroicons-play"
+                      @click="() => openLink(prompt.link)"
+                      >{{ $t("common.use") || "Użyj" }}</UButton
+                    >
+                    <UButton
+                      size="xs"
+                      color="neutral"
+                      variant="outline"
+                      @click="() => shareLink(prompt.link)"
+                      >{{ $t("common.share") || "Udostępnij" }}</UButton
+                    >
+                    <UButton
+                      size="xs"
+                      color="neutral"
+                      variant="ghost"
+                      @click="() => openPreview(prompt)"
+                      >{{ $t("common.preview") || "Podgląd" }}</UButton
+                    >
+                    <UButton
+                      size="xs"
+                      color="error"
+                      variant="ghost"
+                      icon="i-heroicons-trash"
+                      title="Usuń prompt"
+                      aria-label="Usuń prompt"
+                      @click="() => requestDeleteEditorPrompt(prompt.savedId)"
+                    />
+                  </div>
+                </div>
+              </UCard>
+            </div>
+          </template>
+
+          <template #tagFavorites>
+            <div class="mt-4">
+              <h3
+                class="text-lg font-medium text-gray-900 dark:text-white mb-2"
+              >
+                Ulubione tagi
+              </h3>
+              <div class="space-y-4">
+                <template v-if="Object.keys(groupedTagFavorites).length">
+                  <div
+                    v-for="(items, category) in groupedTagFavorites"
+                    :key="category"
+                    class=""
+                  >
+                    <h4
+                      class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
+                    >
+                      {{
+                        category === "_uncategorized"
+                          ? $t("pages.library.tags.uncategorized") || "Inne"
+                          : category
+                      }}
+                    </h4>
+                    <div class="flex flex-wrap gap-2">
+                      <template v-for="(tagObj, i) in items" :key="tagObj.raw">
+                        <div
+                          class="inline-flex items-center bg-gray-100 dark:bg-gray-800 rounded-full px-3 py-1 text-sm text-gray-700 dark:text-gray-200"
+                        >
+                          <button
+                            class="mr-2 text-xs text-gray-500"
+                            @click="() => setTagFilter(tagObj.raw)"
+                          >
+                            {{
+                              locale === "pl"
+                                ? tagObj.pl || tagObj.en
+                                : tagObj.en || tagObj.pl
+                            }}
+                          </button>
+                          <UButton
+                            size="xs"
+                            variant="ghost"
+                            color="error"
+                            icon="i-heroicons-trash"
+                            @click="() => requestDeleteTag(tagObj.raw)"
+                          />
+                        </div>
+                      </template>
+                    </div>
+                  </div>
+                </template>
+                <template v-else>
+                  <p class="text-sm text-gray-500">Brak ulubionych tagów.</p>
+                </template>
+              </div>
+            </div>
+          </template>
+
+          <template #history>
+            <LibraryHistoryTab
+              :prompts="promptHistory"
+              @use="usePrompt"
+              @clear="handleClearHistory"
+            />
+          </template>
+
+          <template #collections>
+            <LibraryCollectionsTab
+              :collections="collections"
+              :all-prompts="allPrompts"
+              @create="showCreateCollectionModal = true"
+              @view="viewCollection"
+              @delete="handleDeleteCollection"
+              @add-prompts="handleAddPromptsDialog"
+              @use-prompt="usePrompt"
+              @remove-prompt="handleRemoveFromCollection"
+            />
+          </template>
+        </UTabs>
       </div>
     </div>
-
-    <!-- Stats -->
-    <LibraryStats :stats="stats" />
-
-    <!-- Tabs -->
-    <UTabs v-model="activeTab" :items="tabs">
-      <template #saved>
-        <LibrarySavedTab
-          :prompts="savedPrompts"
-          @use="usePrompt"
-          @delete="handleDeletePrompt"
-        />
-      </template>
-
-      <template #custom>
-        <LibraryCustomTab
-          :prompts="customPrompts"
-          @use="usePrompt"
-          @edit="handleEditPrompt"
-          @delete="handleDeleteCustomPrompt"
-          @create="createNewPrompt"
-        />
-      </template>
-
-      <template #promptsTags>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-          <UCard
-            v-for="prompt in filteredEditorPrompts"
-            :key="prompt.savedId"
-            class="group hover:shadow-lg transition-all flex flex-col justify-between"
-          >
-            <div>
-              <div class="flex items-center justify-between mb-2">
-                <h3 class="font-semibold text-gray-900 dark:text-white">
-                  {{
-                    prompt.name
-                      ? locale === "pl"
-                        ? prompt.name.pl
-                        : prompt.name.en
-                      : prompt.result || "Prompt"
-                  }}
-                </h3>
-              </div>
-
-              <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-3">
-                {{
-                  prompt.description
-                    ? locale === "pl"
-                      ? prompt.description.pl
-                      : prompt.description.en
-                    : prompt.result || ""
-                }}
-              </p>
-            </div>
-
-            <div
-              class="flex items-center justify-between pt-3 border-t border-gray-200 dark:border-gray-700 mt-3"
-            >
-              <span class="text-xs text-gray-500">{{
-                formattedDateFor(prompt)
-              }}</span>
-              <div
-                class="flex items-center gap-2 opacity-90 group-hover:opacity-100 transition-opacity"
-              >
-                <UButton
-                  size="xs"
-                  color="primary"
-                  variant="soft"
-                  icon="i-heroicons-play"
-                  @click="() => openLink(prompt.link)"
-                  >{{ $t("common.use") || "Użyj" }}</UButton
-                >
-                <UButton
-                  size="xs"
-                  color="neutral"
-                  variant="outline"
-                  @click="() => shareLink(prompt.link)"
-                  >{{ $t("common.share") || "Udostępnij" }}</UButton
-                >
-                <UButton
-                  size="xs"
-                  color="neutral"
-                  variant="ghost"
-                  @click="() => openPreview(prompt)"
-                  >{{ $t("common.preview") || "Podgląd" }}</UButton
-                >
-                <UButton
-                  size="xs"
-                  color="error"
-                  variant="ghost"
-                  icon="i-heroicons-trash"
-                  title="Usuń prompt"
-                  aria-label="Usuń prompt"
-                  @click="() => requestDeleteEditorPrompt(prompt.savedId)"
-                />
-              </div>
-            </div>
-          </UCard>
-        </div>
-      </template>
-
-      <template #tagFavorites>
-        <div class="mt-4">
-          <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">
-            Ulubione tagi
-          </h3>
-          <div class="space-y-4">
-            <template v-if="Object.keys(groupedTagFavorites).length">
-              <div
-                v-for="(items, category) in groupedTagFavorites"
-                :key="category"
-                class=""
-              >
-                <h4
-                  class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
-                >
-                  {{
-                    category === "_uncategorized"
-                      ? $t("pages.library.tags.uncategorized") || "Inne"
-                      : category
-                  }}
-                </h4>
-                <div class="flex flex-wrap gap-2">
-                  <template v-for="(tagObj, i) in items" :key="tagObj.raw">
-                    <div
-                      class="inline-flex items-center bg-gray-100 dark:bg-gray-800 rounded-full px-3 py-1 text-sm text-gray-700 dark:text-gray-200"
-                    >
-                      <button
-                        class="mr-2 text-xs text-gray-500"
-                        @click="() => setTagFilter(tagObj.raw)"
-                      >
-                        {{
-                          locale === "pl"
-                            ? tagObj.pl || tagObj.en
-                            : tagObj.en || tagObj.pl
-                        }}
-                      </button>
-                      <UButton
-                        size="xs"
-                        variant="ghost"
-                        color="error"
-                        icon="i-heroicons-trash"
-                        @click="() => requestDeleteTag(tagObj.raw)"
-                      />
-                    </div>
-                  </template>
-                </div>
-              </div>
-            </template>
-            <template v-else>
-              <p class="text-sm text-gray-500">Brak ulubionych tagów.</p>
-            </template>
-          </div>
-        </div>
-      </template>
-
-      <template #history>
-        <LibraryHistoryTab
-          :prompts="promptHistory"
-          @use="usePrompt"
-          @clear="handleClearHistory"
-        />
-      </template>
-
-      <template #collections>
-        <LibraryCollectionsTab
-          :collections="collections"
-          :all-prompts="allPrompts"
-          @create="showCreateCollectionModal = true"
-          @view="viewCollection"
-          @delete="handleDeleteCollection"
-          @add-prompts="handleAddPromptsDialog"
-          @use-prompt="usePrompt"
-          @remove-prompt="handleRemoveFromCollection"
-        />
-      </template>
-    </UTabs>
 
     <!-- Modals - Teleport to body ONLY on client -->
     <Teleport v-if="isMounted" to="body">
@@ -321,7 +375,7 @@
         </div>
         <div class="ml-2">
           <UButton size="sm" variant="ghost" @click="undoSoftDelete">
-            {{ t("pages.library.common.undo") || "Cofnij" }}
+            {{ t("common.undo") || "Cofnij" }}
           </UButton>
         </div>
       </UCard>
