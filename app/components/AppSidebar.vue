@@ -350,21 +350,6 @@ const navigation = [
   { name: "nav.settings", href: "/settings", icon: "i-heroicons-cog-6-tooth" },
   {
     name: "chat.title",
-    href: "/fukcje/options",
-    icon: "i-heroicons-h1",
-  },
-  {
-    name: "chat.title",
-    href: "/fukcje/prompt",
-    icon: "i-heroicons-h2",
-  },
-  {
-    name: "chat.title",
-    href: "/fukcje/tags",
-    icon: "i-heroicons-h2",
-  },
-  {
-    name: "chat.title",
     href: "/chat",
     icon: "i-heroicons-cpu-chip",
   },
