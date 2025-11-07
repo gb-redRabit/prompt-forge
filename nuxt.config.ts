@@ -62,6 +62,14 @@ export default defineNuxtConfig({
     checker: false,
   },
 
+  // Components auto-import configuration
+  components: [
+    {
+      path: "~/components",
+      pathPrefix: false, // Wyłącz prefix dla zagnieżdżonych folderów (ui/GlassCard.vue → GlassCard zamiast UiGlassCard)
+    },
+  ],
+
   // Vite / eksperymenty
   vite: {
     build: { target: "esnext" },

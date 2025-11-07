@@ -1,11 +1,25 @@
 <template>
-  <div class="relative min-h-screen w-full overflow-hidden">
+  <div
+    class="relative min-h-screen w-full overflow-hidden bg-gray-50 dark:bg-gray-900"
+  >
+    <!-- Background Effects with enhanced orbs - client only to avoid hydration mismatch -->
+    <ClientOnly>
+      <BackgroundEffects
+        :orb-count="8"
+        intensity="medium"
+        :colors="['primary', 'purple', 'pink', 'blue', 'green']"
+        :enable-mouse-follow="true"
+        :animated="true"
+      />
+    </ClientOnly>
+
     <!-- skip link for keyboard users -->
     <a href="#hero" class="skip-link">Przejdź do zawartości</a>
-    <!-- fullpage viewport - no native scroll -->
+
+    <!-- fullpage viewport - native scroll with snap -->
     <div
       id="fullpage-container"
-      class="fullpage-viewport h-screen w-full overflow-hidden"
+      class="fullpage-viewport h-screen w-full relative z-10"
       role="main"
     >
       <div id="fullpage-track" class="fullpage-track">
@@ -71,7 +85,7 @@
           aria-label="FAQ"
         >
           <UContainer class="py-8 lg:py-16 w-full">
-            <LandingFAQ />
+            <LazyLandingFAQ />
           </UContainer>
         </section>
 
@@ -83,7 +97,7 @@
           aria-label="Start"
         >
           <UContainer class="py-8 lg:py-16 w-full">
-            <LandingCTA @get-started="handleGetStarted" />
+            <LazyLandingCTA @get-started="handleGetStarted" />
           </UContainer>
         </section>
       </div>

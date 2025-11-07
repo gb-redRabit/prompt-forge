@@ -46,41 +46,32 @@
           </div>
 
           <!-- Send button -->
-          <UButton
+          <GlassButton
             type="submit"
             color="primary"
-            size="lg"
+            size="xl"
             :disabled="!canSend"
             :loading="disabled"
+            :icon="disabled ? undefined : 'i-heroicons-paper-airplane'"
             :title="$t('chat.input.send_message')"
-            class="self-end"
-          >
-            <UIcon
-              :name="
-                disabled
-                  ? 'i-heroicons-arrow-path'
-                  : 'i-heroicons-paper-airplane'
-              "
-              class="w-5 h-5"
-              :class="{ 'animate-spin': disabled, hidden: disabled }"
-            />
-          </UButton>
+            class="self-center m-auto"
+          />
         </div>
 
         <!-- Quick actions -->
         <div class="flex items-center justify-between mt-3">
           <div class="flex gap-2">
-            <UButton
+            <GlassButton
               v-for="action in quickActions"
               :key="action.labelKey"
               variant="ghost"
               size="xs"
+              :icon="action.icon"
               :title="$t(action.labelKey)"
               @click="insertQuickAction(action.text)"
             >
-              <UIcon :name="action.icon" class="mr-1" />
               {{ $t(action.labelKey) }}
-            </UButton>
+            </GlassButton>
           </div>
 
           <div class="text-xs text-gray-500 dark:text-gray-400">

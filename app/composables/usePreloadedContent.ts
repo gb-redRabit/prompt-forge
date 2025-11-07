@@ -100,7 +100,10 @@ export const usePreloadedContent = () => {
 
   // Auto-load gdy composable jest używany po stronie klienta
   if (process.client && !isContentLoaded.value && !isContentLoading.value) {
-    loadContent();
+    // Wykonaj ładowanie asynchronicznie
+    nextTick(() => {
+      loadContent();
+    });
   }
 
   return {

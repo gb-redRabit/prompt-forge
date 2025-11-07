@@ -7,7 +7,7 @@
           <label
             class="block text-sm font-medium text-gray-700 dark:text-gray-300"
           >
-            {{ $t("prompt_creator.prompt_name") }}
+            <span v-once>{{ $t("prompt_creator.prompt_name") }}</span>
             <span class="text-red-500">*</span>
           </label>
           <UInput
@@ -22,7 +22,7 @@
           <label
             class="block text-sm font-medium text-gray-700 dark:text-gray-300"
           >
-            {{ $t("prompt_creator.description") }}
+            <span v-once>{{ $t("prompt_creator.prompt_description") }}</span>
           </label>
           <UTextarea
             v-model="form.description"
@@ -36,7 +36,7 @@
           <label
             class="block text-sm font-medium text-green-700 dark:text-green-400"
           >
-            {{ $t("prompt_creator.positive_prompt") }}
+            <span v-once>{{ $t("prompt_creator.positive_prompt") }}</span>
           </label>
           <div
             class="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3"
@@ -53,7 +53,7 @@
           <label
             class="block text-sm font-medium text-red-700 dark:text-red-400"
           >
-            {{ $t("prompt_creator.negative_prompt") }}
+            <span v-once>{{ $t("prompt_creator.negative_prompt") }}</span>
           </label>
           <div
             class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3"
@@ -69,7 +69,8 @@
         <div class="flex items-center gap-2">
           <UIcon name="i-heroicons-tag" class="w-4 h-4 text-gray-500" />
           <span class="text-sm text-gray-600 dark:text-gray-400">
-            {{ tags.length }} {{ $t("prompt_creator.tags_included") }}
+            {{ tags.length }}
+            <span v-once>{{ $t("prompt_creator.tags_included") }}</span>
           </span>
         </div>
 
@@ -77,13 +78,17 @@
         <div
           class="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700"
         >
-          <UButton color="neutral" variant="outline" @click="handleCancel">
-            {{ $t("common.cancel") }}
-          </UButton>
-          <UButton type="submit" color="primary" :disabled="!form.name.trim()">
-            <UIcon name="i-heroicons-bookmark" class="mr-2" />
-            {{ $t("common.save") }}
-          </UButton>
+          <GlassButton color="neutral" variant="outline" @click="handleCancel">
+            <span v-once>{{ $t("common.cancel") }}</span>
+          </GlassButton>
+          <GlassButton
+            type="submit"
+            color="primary"
+            :disabled="!form.name.trim()"
+            icon="i-heroicons-bookmark"
+          >
+            <span v-once>{{ $t("common.save") }}</span>
+          </GlassButton>
         </div>
       </form>
     </template>

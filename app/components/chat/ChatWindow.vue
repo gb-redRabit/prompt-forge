@@ -32,16 +32,17 @@
 
           <!-- Quick prompts -->
           <div class="grid grid-cols-1 gap-2 pt-4">
-            <UButton
+            <GlassButton
               v-for="(prompt, index) in quickPrompts"
               :key="index"
               variant="outline"
-              block
+              full-width
+              :icon="prompt.icon"
               @click="sendQuickPrompt(prompt.text)"
             >
               <UIcon :name="prompt.icon" class="mr-2" />
               {{ prompt.text }}
-            </UButton>
+            </GlassButton>
           </div>
         </div>
       </div>

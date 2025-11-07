@@ -48,7 +48,7 @@
           name="i-heroicons-information-circle"
           class="w-4 h-4 inline mr-1"
         />
-        {{ $t("settings.language.change_notice") }}
+        <span v-once>{{ $t("settings.language.change_notice") }}</span>
       </p>
     </div>
   </div>

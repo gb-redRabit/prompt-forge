@@ -18,12 +18,12 @@
       class="w-16 h-16 mx-auto text-gray-400 mb-4"
     />
     <p class="text-gray-600 dark:text-gray-400">
-      {{ $t("library.saved.empty") }}
+      <span v-once>{{ $t("library.saved.empty") }}</span>
     </p>
-    <UButton color="primary" class="mt-4" @click="navigateTo('/templates')">
+    <GlassButton color="primary" class="mt-4" @click="navigateTo('/templates')">
       <UIcon name="i-heroicons-squares-2x2" class="mr-2" />
-      {{ $t("library.saved.browse") }}
-    </UButton>
+      <span v-once>{{ $t("library.saved.browse") }}</span>
+    </GlassButton>
   </div>
 </template>
 

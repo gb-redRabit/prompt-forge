@@ -9,7 +9,7 @@
       <div class="space-y-4">
         <div>
           <label for="file-input" class="block text-sm font-medium mb-2">
-            {{ $t("library.modals.import.selectFile") }}
+            <span v-once>{{ $t("library.modals.import.selectFile") }}</span>
           </label>
           <input
             id="file-input"
@@ -22,35 +22,39 @@
 
         <div>
           <label class="block text-sm font-medium mb-2">
-            {{ $t("library.modals.import.mode") }}
+            <span v-once>{{ $t("library.modals.import.mode") }}</span>
           </label>
           <div class="flex gap-2" role="group" aria-label="Import mode">
-            <UButton
+            <GlassButton
               :color="importMode === 'merge' ? 'primary' : 'neutral'"
               :variant="importMode === 'merge' ? 'solid' : 'outline'"
               @click="importMode = 'merge'"
             >
-              {{ $t("library.modals.import.merge") }}
-            </UButton>
-            <UButton
+              <span v-once>{{ $t("library.modals.import.merge") }}</span>
+            </GlassButton>
+            <GlassButton
               :color="importMode === 'replace' ? 'primary' : 'neutral'"
               :variant="importMode === 'replace' ? 'solid' : 'outline'"
               @click="importMode = 'replace'"
             >
-              {{ $t("library.modals.import.replace") }}
-            </UButton>
+              <span v-once>{{ $t("library.modals.import.replace") }}</span>
+            </GlassButton>
           </div>
         </div>
       </div>
     </template>
 
     <template #footer="{ close }">
-      <UButton color="neutral" variant="ghost" @click="close">
-        {{ $t("library.modals.import.cancel") }}
-      </UButton>
-      <UButton color="primary" :disabled="!selectedFile" @click="handleImport">
-        {{ $t("library.modals.import.submit") }}
-      </UButton>
+      <GlassButton color="neutral" variant="ghost" @click="close">
+        <span v-once>{{ $t("library.modals.import.cancel") }}</span>
+      </GlassButton>
+      <GlassButton
+        color="primary"
+        :disabled="!selectedFile"
+        @click="handleImport"
+      >
+        <span v-once>{{ $t("library.modals.import.submit") }}</span>
+      </GlassButton>
     </template>
   </UModal>
 </template>

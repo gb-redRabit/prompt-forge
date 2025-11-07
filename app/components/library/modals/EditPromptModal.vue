@@ -20,7 +20,7 @@
               name="i-heroicons-information-circle"
               class="w-5 h-5 text-primary-500"
             />
-            <span>{{ $t("library.modals.edit.sections.basic") }}</span>
+            <span v-once>{{ $t("library.modals.edit.sections.basic") }}</span>
           </div>
 
           <div class="grid md:grid-cols-2 gap-6">
@@ -30,10 +30,12 @@
                 class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
               >
                 <UIcon name="i-heroicons-language" class="w-4 h-4" />
-                <span>{{ $t("library.modals.edit.fields.namePL") }}</span>
-                <UBadge color="primary" variant="subtle" size="xs">
-                  {{ $t("library.modals.edit.badges.pl") }}
-                </UBadge>
+                <span v-once>{{
+                  $t("library.modals.edit.fields.namePL")
+                }}</span>
+                <GlassBadge color="primary" variant="soft" size="xs">
+                  <span v-once>{{ $t("library.modals.edit.badges.pl") }}</span>
+                </GlassBadge>
               </label>
               <UInput
                 v-model="editData.name.pl"
@@ -50,10 +52,12 @@
                 class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
               >
                 <UIcon name="i-heroicons-language" class="w-4 h-4" />
-                <span>{{ $t("library.modals.edit.fields.nameEN") }}</span>
-                <UBadge color="info" variant="subtle" size="xs">
-                  {{ $t("library.modals.edit.badges.en") }}
-                </UBadge>
+                <span v-once>{{
+                  $t("library.modals.edit.fields.nameEN")
+                }}</span>
+                <GlassBadge color="secondary" variant="soft" size="xs">
+                  <span v-once>{{ $t("library.modals.edit.badges.en") }}</span>
+                </GlassBadge>
               </label>
               <UInput
                 v-model="editData.name.en"
@@ -70,12 +74,12 @@
                 class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
               >
                 <UIcon name="i-heroicons-document-text" class="w-4 h-4" />
-                <span>{{
+                <span v-once>{{
                   $t("library.modals.edit.fields.descriptionPL")
                 }}</span>
-                <UBadge color="primary" variant="subtle" size="xs">
-                  {{ $t("library.modals.edit.badges.pl") }}
-                </UBadge>
+                <GlassBadge color="primary" variant="soft" size="xs">
+                  <span v-once>{{ $t("library.modals.edit.badges.pl") }}</span>
+                </GlassBadge>
               </label>
               <UTextarea
                 v-model="editData.description.pl"
@@ -93,12 +97,12 @@
                 class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
               >
                 <UIcon name="i-heroicons-document-text" class="w-4 h-4" />
-                <span>{{
+                <span v-once>{{
                   $t("library.modals.edit.fields.descriptionEN")
                 }}</span>
-                <UBadge color="info" variant="subtle" size="xs">
-                  {{ $t("library.modals.edit.badges.en") }}
-                </UBadge>
+                <GlassBadge color="secondary" variant="soft" size="xs">
+                  <span v-once>{{ $t("library.modals.edit.badges.en") }}</span>
+                </GlassBadge>
               </label>
               <UTextarea
                 v-model="editData.description.en"
@@ -130,10 +134,12 @@
               <label
                 class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
               >
-                <span>{{ $t("library.modals.edit.fields.templatePL") }}</span>
-                <UBadge color="primary" variant="subtle" size="xs">
-                  {{ $t("library.modals.edit.badges.pl") }}
-                </UBadge>
+                <span v-once>{{
+                  $t("library.modals.edit.fields.templatePL")
+                }}</span>
+                <GlassBadge color="primary" variant="soft" size="xs">
+                  <span v-once>{{ $t("library.modals.edit.badges.pl") }}</span>
+                </GlassBadge>
               </label>
               <UTextarea
                 v-model="editData.template.pl"
@@ -148,10 +154,12 @@
               <label
                 class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
               >
-                <span>{{ $t("library.modals.edit.fields.templateEN") }}</span>
-                <UBadge color="info" variant="subtle" size="xs">
-                  {{ $t("library.modals.edit.badges.en") }}
-                </UBadge>
+                <span v-once>{{
+                  $t("library.modals.edit.fields.templateEN")
+                }}</span>
+                <GlassBadge color="secondary" variant="soft" size="xs">
+                  <span v-once>{{ $t("library.modals.edit.badges.en") }}</span>
+                </GlassBadge>
               </label>
               <UTextarea
                 v-model="editData.template.en"
@@ -198,7 +206,7 @@
                   v-for="(cat, i) in editData.categories"
                   :key="`cat-${i}`"
                 >
-                  <UBadge
+                  <GlassBadge
                     color="primary"
                     variant="solid"
                     size="lg"
@@ -207,7 +215,7 @@
                   >
                     {{ cat }}
                     <UIcon name="i-heroicons-x-mark" class="w-3 h-3 ml-1" />
-                  </UBadge>
+                  </GlassBadge>
                 </template>
               </div>
 
@@ -224,9 +232,9 @@
                     @keydown.enter="addCategory()"
                   >
                     <template v-if="newCategory.trim()" #trailing>
-                      <UButton
+                      <GlassButton
                         color="neutral"
-                        variant="link"
+                        variant="ghost"
                         size="sm"
                         icon="i-heroicons-x-mark"
                         :aria-label="$t('library.modals.edit.actions.clear')"
@@ -234,14 +242,16 @@
                       />
                     </template>
                   </UInput>
-                  <UButton
+                  <GlassButton
                     icon="i-heroicons-plus"
                     color="primary"
                     @click="addCategory()"
                     :disabled="!newCategory.trim()"
                   >
-                    {{ $t("library.modals.edit.actions.add") }}
-                  </UButton>
+                    <span v-once>{{
+                      $t("library.modals.edit.actions.add")
+                    }}</span>
+                  </GlassButton>
                 </div>
 
                 <!-- Sugestie kategorii -->
@@ -288,7 +298,7 @@
                 class="flex flex-wrap gap-2 min-h-[2.5rem] p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900"
               >
                 <template v-for="(tag, i) in editData.tags" :key="`tag-${i}`">
-                  <UBadge
+                  <GlassBadge
                     color="secondary"
                     variant="solid"
                     size="lg"
@@ -297,7 +307,7 @@
                   >
                     {{ tag }}
                     <UIcon name="i-heroicons-x-mark" class="w-3 h-3 ml-1" />
-                  </UBadge>
+                  </GlassBadge>
                 </template>
               </div>
 
@@ -312,9 +322,9 @@
                     @keydown.enter="addTag()"
                   >
                     <template v-if="newTag.trim()" #trailing>
-                      <UButton
+                      <GlassButton
                         color="neutral"
-                        variant="link"
+                        variant="ghost"
                         size="sm"
                         icon="i-heroicons-x-mark"
                         :aria-label="$t('library.modals.edit.actions.clear')"
@@ -322,14 +332,16 @@
                       />
                     </template>
                   </UInput>
-                  <UButton
+                  <GlassButton
                     icon="i-heroicons-plus"
                     color="secondary"
                     @click="addTag()"
                     :disabled="!newTag.trim()"
                   >
-                    {{ $t("library.modals.edit.actions.add") }}
-                  </UButton>
+                    <span v-once>{{
+                      $t("library.modals.edit.actions.add")
+                    }}</span>
+                  </GlassButton>
                 </div>
 
                 <!-- Sugestie tagów -->
@@ -418,7 +430,7 @@
                     />
                   </div>
                 </div>
-                <UButton
+                <GlassButton
                   icon="i-heroicons-trash"
                   color="error"
                   variant="ghost"
@@ -453,9 +465,9 @@
                 @keydown.enter="addPlaceholder"
               >
                 <template v-if="newPlaceholderKey.trim()" #trailing>
-                  <UButton
+                  <GlassButton
                     color="neutral"
-                    variant="link"
+                    variant="ghost"
                     size="sm"
                     icon="i-heroicons-x-mark"
                     :aria-label="$t('library.modals.edit.actions.clear')"
@@ -474,9 +486,9 @@
                 @keydown.enter="addPlaceholder"
               >
                 <template v-if="newPlaceholderValue.trim()" #trailing>
-                  <UButton
+                  <GlassButton
                     color="neutral"
-                    variant="link"
+                    variant="ghost"
                     size="sm"
                     icon="i-heroicons-x-mark"
                     :aria-label="$t('library.modals.edit.actions.clear')"
@@ -484,14 +496,14 @@
                   />
                 </template>
               </UInput>
-              <UButton
+              <GlassButton
                 icon="i-heroicons-plus"
                 color="primary"
                 @click="addPlaceholder"
                 :disabled="!newPlaceholderKey.trim()"
               >
-                {{ $t("library.modals.edit.actions.add") }}
-              </UButton>
+                <span v-once>{{ $t("library.modals.edit.actions.add") }}</span>
+              </GlassButton>
             </div>
           </div>
         </div>
@@ -509,22 +521,22 @@
     <template #footer>
       <div class="text-xs text-gray-500 flex items-center">
         <UIcon name="i-heroicons-information-circle" class="w-4 h-4 mr-1" />
-        {{ $t("library.modals.edit.hints.saveNote") }}
+        <span v-once>{{ $t("library.modals.edit.hints.saveNote") }}</span>
       </div>
       <div class="flex items-center gap-3">
-        <UButton color="neutral" variant="outline" @click="close" size="lg">
+        <GlassButton color="neutral" variant="outline" @click="close" size="lg">
           <UIcon name="i-heroicons-x-mark" class="mr-2" />
-          {{ $t("common.cancel") }}
-        </UButton>
-        <UButton
+          <span v-once>{{ $t("common.cancel") }}</span>
+        </GlassButton>
+        <GlassButton
           color="primary"
           @click="handleSave"
           :disabled="!canSave"
           size="lg"
         >
           <UIcon name="i-heroicons-check" class="mr-2" />
-          {{ $t("common.save") }}
-        </UButton>
+          <span v-once>{{ $t("common.save") }}</span>
+        </GlassButton>
       </div>
     </template>
   </UModal>

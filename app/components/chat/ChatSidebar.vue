@@ -4,10 +4,12 @@
   >
     <!-- Header -->
     <div class="p-4 border-b border-gray-200 dark:border-gray-800">
-      <UButton color="primary" block @click="createNew">
-        <UIcon name="i-heroicons-plus" class="mr-2" />
+      <GlassButton color="primary" full-width @click="createNew">
+        <template #icon>
+          <UIcon name="i-heroicons-plus" />
+        </template>
         {{ $t("chat.sidebar.new_conversation") }}
-      </UButton>
+      </GlassButton>
     </div>
 
     <!-- Conversations list -->
@@ -44,16 +46,15 @@
           </div>
 
           <!-- Delete button -->
-          <UButton
+          <GlassButton
             color="neutral"
             variant="ghost"
             size="xs"
+            icon="i-heroicons-trash"
             :title="$t('chat.sidebar.delete_conversation')"
             class="opacity-0 group-hover:opacity-100 transition-opacity"
             @click.stop="deleteConv(conv.id)"
-          >
-            <UIcon name="i-heroicons-trash" class="w-4 h-4" />
-          </UButton>
+          />
         </div>
       </button>
 

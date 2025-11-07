@@ -20,10 +20,14 @@
 
         <!-- Model info -->
         <div v-if="currentModel" class="flex items-center gap-2 mt-1">
-          <UBadge color="primary" variant="subtle" size="xs">
-            <UIcon name="i-heroicons-cpu-chip" class="w-3 h-3 mr-1" />
+          <GlassBadge
+            color="primary"
+            variant="soft"
+            size="xs"
+            icon="i-heroicons-cpu-chip"
+          >
             {{ currentModel }}
-          </UBadge>
+          </GlassBadge>
           <span class="text-xs text-gray-500 dark:text-gray-400">
             |
             {{
@@ -38,7 +42,7 @@
       <!-- Actions -->
       <div class="flex items-center gap-2">
         <!-- Rename button -->
-        <UButton
+        <GlassButton
           v-if="activeConversation"
           color="success"
           variant="ghost"

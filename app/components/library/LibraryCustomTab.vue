@@ -10,7 +10,7 @@
       @delete="$emit('delete', prompt)"
     />
 
-    <UCard
+    <GlassCard
       class="hover:shadow-lg transition-all cursor-pointer border-2 border-dashed border-gray-300 dark:border-gray-700 hover:border-primary-500 dark:hover:border-primary-500 bg-gray-50 dark:bg-gray-900 flex items-center justify-center min-h-[200px]"
       @click="$emit('create')"
     >
@@ -20,13 +20,13 @@
           class="w-12 h-12 mx-auto text-gray-400 mb-3"
         />
         <p class="text-sm font-medium text-gray-600 dark:text-gray-400">
-          {{ $t("library.custom.addNew") }}
+          <span v-once>{{ $t("library.custom.addNew") }}</span>
         </p>
         <p class="text-xs text-gray-500 mt-1">
-          {{ $t("library.custom.clickToCreate") }}
+          <span v-once>{{ $t("library.custom.clickToCreate") }}</span>
         </p>
       </div>
-    </UCard>
+    </GlassCard>
   </div>
 </template>
 

@@ -7,7 +7,7 @@
           class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4"
         ></div>
         <p class="text-gray-600 dark:text-gray-400">
-          {{ $t("pages.common.loading") }}
+          <span v-once>{{ $t("pages.shared.loading") }}</span>
         </p>
       </div>
     </div>
@@ -19,18 +19,18 @@
         class="w-16 h-16 mx-auto text-red-500 mb-4"
       />
       <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">
-        {{ $t("pages.templates.error_loading") }}
+        <span v-once>{{ $t("pages.templates.error_loading") }}</span>
       </h3>
       <p class="text-gray-600 dark:text-gray-400 mb-4">
         {{ error }}
       </p>
       <div class="flex gap-2 justify-center">
-        <UButton color="primary" @click="loadTemplate">
-          {{ $t("pages.templates.try_again") }}
-        </UButton>
-        <UButton color="neutral" variant="outline" @click="handleClose">
-          {{ $t("common.back") }}
-        </UButton>
+        <GlassButton color="primary" @click="loadTemplate">
+          <span v-once>{{ $t("pages.templates.try_again") }}</span>
+        </GlassButton>
+        <GlassButton color="neutral" variant="outline" @click="handleClose">
+          <span v-once>{{ $t("common.back") }}</span>
+        </GlassButton>
       </div>
     </div>
 
@@ -46,10 +46,12 @@
       <!-- Header -->
       <div class="text-center mb-8">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-          {{ $t("pages.prompts.choose_template") }}
+          <span v-once>{{ $t("pages.prompts.choose_template") }}</span>
         </h2>
         <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-          {{ $t("pages.prompts.choose_template_description") }}
+          <span v-once>{{
+            $t("pages.prompts.choose_template_description")
+          }}</span>
         </p>
       </div>
 
@@ -63,7 +65,7 @@
           class="w-2xl"
         >
           <template #trailing>
-            <UButton
+            <GlassButton
               v-if="searchQuery"
               color="neutral"
               variant="ghost"
@@ -84,7 +86,7 @@
             {{ totalPrompts }}
           </div>
           <div class="text-xs text-gray-600 dark:text-gray-400 mt-1">
-            {{ $t("pages.prompts.total_templates") }}
+            <span v-once>{{ $t("pages.prompts.total_templates") }}</span>
           </div>
         </div>
         <div class="text-center p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
@@ -94,7 +96,7 @@
             {{ filteredPromptsCount }}
           </div>
           <div class="text-xs text-gray-600 dark:text-gray-400 mt-1">
-            {{ $t("pages.prompts.matching") }}
+            <span v-once>{{ $t("pages.prompts.matching") }}</span>
           </div>
         </div>
         <div class="text-center p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
@@ -166,28 +168,32 @@
           class="w-12 h-12 mx-auto text-gray-400 dark:text-gray-600 mb-3"
         />
         <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">
-          {{ $t("pages.prompts.no_results") }}
+          <span v-once>{{ $t("pages.prompts.no_results") }}</span>
         </h3>
         <p class="text-gray-600 dark:text-gray-400 mb-4">
-          {{ $t("pages.prompts.try_different_search") }}
+          <span v-once>{{ $t("pages.prompts.try_different_search") }}</span>
         </p>
-        <UButton color="neutral" variant="ghost" @click="searchQuery = ''">
-          <UIcon name="i-heroicons-x-mark" class="mr-2" />
-          {{ $t("pages.prompts.clear_search") }}
-        </UButton>
+        <GlassButton
+          color="neutral"
+          variant="ghost"
+          @click="searchQuery = ''"
+          icon="i-heroicons-x-mark"
+        >
+          <span v-once>{{ $t("pages.prompts.clear_search") }}</span>
+        </GlassButton>
       </div>
 
       <!-- Browse All Link -->
       <div class="text-center mt-6">
-        <UButton
+        <GlassButton
           color="primary"
           variant="outline"
           size="lg"
           @click="navigateTo('/templates')"
+          icon="i-heroicons-squares-2x2"
         >
-          <UIcon name="i-heroicons-squares-2x2" class="mr-2" />
-          {{ $t("pages.prompts.browse_all_templates") }}
-        </UButton>
+          <span v-once>{{ $t("pages.prompts.browse_all_templates") }}</span>
+        </GlassButton>
       </div>
     </div>
   </div>

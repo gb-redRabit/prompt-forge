@@ -35,15 +35,15 @@
           </span>
 
           <!-- Model badge for AI messages -->
-          <UBadge
+          <GlassBadge
             v-if="message.role === 'assistant' && message.model"
             color="neutral"
-            variant="subtle"
+            variant="soft"
             size="xs"
+            icon="i-heroicons-cpu-chip"
           >
-            <UIcon name="i-heroicons-cpu-chip" class="w-3 h-3 mr-1" />
             {{ message.model }}
-          </UBadge>
+          </GlassBadge>
 
           <span class="text-xs text-gray-500 dark:text-gray-400">
             {{ formatTime(message.timestamp) }}
@@ -63,7 +63,7 @@
         <div
           class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity"
         >
-          <UButton
+          <GlassButton
             color="success"
             variant="ghost"
             size="xs"
@@ -71,7 +71,7 @@
             @click="copyMessage"
           >
             {{ copied ? $t("common.copied") : $t("common.copy") }}
-          </UButton>
+          </GlassButton>
         </div>
       </div>
     </div>

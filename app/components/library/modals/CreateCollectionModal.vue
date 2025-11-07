@@ -9,7 +9,7 @@
       <div class="space-y-4">
         <div>
           <label for="collection-name" class="block text-sm font-medium mb-2">
-            {{ $t("library.modals.collection.name") }}
+            <span v-once>{{ $t("library.modals.collection.name") }}</span>
           </label>
           <UInput
             id="collection-name"
@@ -20,7 +20,9 @@
         </div>
         <div>
           <label for="collection-desc" class="block text-sm font-medium mb-2">
-            {{ $t("library.modals.collection.description") }}
+            <span v-once>{{
+              $t("library.modals.collection.description")
+            }}</span>
           </label>
           <UTextarea
             id="collection-desc"
@@ -36,12 +38,12 @@
     </template>
 
     <template #footer="{ close }">
-      <UButton color="neutral" variant="ghost" @click="close">
-        {{ $t("library.modals.collection.cancel") }}
-      </UButton>
-      <UButton color="primary" :disabled="!name" @click="handleCreate">
-        {{ $t("library.modals.collection.create") }}
-      </UButton>
+      <GlassButton color="neutral" variant="ghost" @click="close">
+        <span v-once>{{ $t("library.modals.collection.cancel") }}</span>
+      </GlassButton>
+      <GlassButton color="primary" :disabled="!name" @click="handleCreate">
+        <span v-once>{{ $t("library.modals.collection.create") }}</span>
+      </GlassButton>
     </template>
   </UModal>
 </template>

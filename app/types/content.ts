@@ -35,6 +35,8 @@ export interface TagItem {
   neg_en: string;
   category: string;
   nsfw: boolean;
+  weight?: number; // Optional: tag weight (0-3)
+  emphasis?: number; // Optional: emphasis level (0-3)
 }
 
 export type Options = Record<string, OptionItem[]>;

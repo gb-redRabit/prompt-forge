@@ -1,22 +1,25 @@
 <template>
-  <div
-    class="p-6 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-200 cursor-pointer group"
+  <GlassCard
+    hover
+    shadow
+    class="cursor-pointer group transition-all duration-200"
+    padding="lg"
     @click="$emit('select', template)"
   >
     <!-- Typ i ID -->
     <div class="flex items-center justify-between mb-3">
       <div class="flex items-center gap-2">
-        <UBadge
+        <GlassBadge
           v-if="template.type"
           color="secondary"
-          variant="subtle"
+          variant="soft"
           size="xs"
         >
           {{ template.type }}
-        </UBadge>
-        <UBadge v-if="template.id" color="neutral" variant="subtle" size="xs">
+        </GlassBadge>
+        <GlassBadge v-if="template.id" color="neutral" variant="soft" size="xs">
           #{{ template.id }}
-        </UBadge>
+        </GlassBadge>
       </div>
     </div>
 
@@ -34,28 +37,28 @@
 
     <!-- Kategorie - dynamiczne, znikają gdy brak -->
     <div v-if="visibleCategories.length > 0" class="flex flex-wrap gap-1 mb-3">
-      <UBadge
+      <GlassBadge
         v-for="category in visibleCategories"
         :key="category"
         color="primary"
-        variant="subtle"
+        variant="soft"
         size="xs"
       >
         {{ category }}
-      </UBadge>
-      <UBadge
+      </GlassBadge>
+      <GlassBadge
         v-if="hasMoreCategories"
         color="primary"
-        variant="subtle"
+        variant="soft"
         size="xs"
       >
         +{{ remainingCategoriesCount }}
-      </UBadge>
+      </GlassBadge>
     </div>
 
     <!-- Tagi - dynamiczne, znikają gdy brak -->
     <div v-if="visibleTags.length > 0" class="flex flex-wrap gap-1 mb-4">
-      <UBadge
+      <GlassBadge
         v-for="tag in visibleTags"
         :key="tag"
         color="neutral"
@@ -63,10 +66,15 @@
         size="xs"
       >
         #{{ tag }}
-      </UBadge>
-      <UBadge v-if="hasMoreTags" color="neutral" variant="outline" size="xs">
+      </GlassBadge>
+      <GlassBadge
+        v-if="hasMoreTags"
+        color="neutral"
+        variant="outline"
+        size="xs"
+      >
         +{{ remainingTagsCount }}
-      </UBadge>
+      </GlassBadge>
     </div>
 
     <!-- Preview - dynamiczny, znika gdy brak template -->
@@ -74,7 +82,10 @@
       v-if="showPreview && hasTemplate"
       class="bg-gray-50 dark:bg-gray-900/50 rounded p-3 mb-4 border border-gray-200 dark:border-gray-700"
     >
-      <p class="text-xs text-gray-500 dark:text-gray-400 mb-1 font-medium">
+      <p
+        v-once
+        class="text-xs text-gray-500 dark:text-gray-400 mb-1 font-medium"
+      >
         {{ $t("pages.templates.preview") }}
       </p>
       <p
@@ -86,27 +97,30 @@
 
     <!-- Placeholder keys - dynamiczne, znikają gdy brak -->
     <div v-if="visiblePlaceholders.length > 0" class="mb-4">
-      <p class="text-xs text-gray-500 dark:text-gray-400 mb-1 font-medium">
+      <p
+        v-once
+        class="text-xs text-gray-500 dark:text-gray-400 mb-1 font-medium"
+      >
         {{ $t("pages.templates.placeholders") }}
       </p>
       <div class="flex flex-wrap gap-1">
-        <UBadge
+        <GlassBadge
           v-for="key in visiblePlaceholders"
           :key="key"
-          color="info"
+          color="primary"
           variant="soft"
           size="xs"
         >
           {{ key }}
-        </UBadge>
-        <UBadge
+        </GlassBadge>
+        <GlassBadge
           v-if="hasMorePlaceholders"
-          color="info"
+          color="primary"
           variant="soft"
           size="xs"
         >
           +{{ remainingPlaceholdersCount }}
-        </UBadge>
+        </GlassBadge>
       </div>
     </div>
 
@@ -114,7 +128,7 @@
     <div
       class="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700"
     >
-      <div class="text-xs text-gray-500 dark:text-gray-500">
+      <div v-once class="text-xs text-gray-500 dark:text-gray-500">
         {{ $t("pages.templates.use_template") }}
       </div>
       <UIcon
@@ -122,7 +136,7 @@
         class="w-5 h-5 text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 group-hover:translate-x-1 transition-all"
       />
     </div>
-  </div>
+  </GlassCard>
 </template>
 
 <script setup lang="ts">

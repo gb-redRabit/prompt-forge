@@ -1,7 +1,266 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
-/* Full-page scroll-snap for landing sections */
+/* ===================================
+   Performance Optimizations
+   =================================== */
+/* Prevent forced reflow on animations */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Optimize will-change for frequently animated elements */
+.glass-card,
+.glass-button,
+.glass-panel,
+[class*="animate-"] {
+  will-change: transform;
+}
+
+/* Use CSS containment for isolated components */
+nav,
+aside,
+.modal,
+.sidebar {
+  contain: layout style;
+}
+
+/* ===================================
+   CSS Variables - Design System
+   =================================== */
+:root {
+  /* Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+  --glass-blur: 10px;
+
+  /* Gooey Effect */
+  --gooey-blur: 10px;
+  --gooey-contrast: 20;
+
+  /* Transitions */
+  --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.dark {
+  --glass-bg: rgba(17, 24, 39, 0.5);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* ===================================
+   Glassmorphism Utilities
+   =================================== */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  transition: all 0.3s var(--transition-smooth);
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+  transform: translateY(-2px);
+}
+
+.dark .glass-card:hover {
+  background: rgba(17, 24, 39, 0.7);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+}
+
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+}
+
+.glass-button {
+  background: var(--glass-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--glass-border);
+  transition: all 0.2s var(--transition-smooth);
+}
+
+.glass-button:hover {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.dark .glass-button:hover {
+  background: rgba(17, 24, 39, 0.8);
+}
+
+/* ===================================
+   Gooey Effect Filter
+   =================================== */
+.gooey-effect {
+  filter: url(#gooey);
+}
+
+/* SVG Filter for Gooey Effect */
+svg.gooey-svg {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+/* ===================================
+   Gradient Text
+   =================================== */
+.gradient-text {
+  background: linear-gradient(
+    135deg,
+    #667eea 0%,
+    #764ba2 25%,
+    #f093fb 50%,
+    #4facfe 75%,
+    #00f2fe 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* ===================================
+   Custom Scrollbar
+   =================================== */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.3);
+  border-radius: 10px;
+  transition: background 0.2s;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.5);
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.3);
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.5);
+}
+
+/* Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(99, 102, 241, 0.3) rgba(0, 0, 0, 0.05);
+}
+
+.dark .custom-scrollbar {
+  scrollbar-color: rgba(139, 92, 246, 0.3) rgba(255, 255, 255, 0.05);
+}
+
+/* ===================================
+   Smooth Transitions
+   =================================== */
+.transition-smooth {
+  transition: all 0.3s var(--transition-smooth);
+}
+
+.transition-bounce {
+  transition: all 0.5s var(--transition-bounce);
+}
+
+/* ===================================
+   Animations
+   =================================== */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(99, 102, 241, 0.8);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s var(--transition-smooth) forwards;
+}
+
+/* Animation Delays */
+.animation-delay-100 {
+  animation-delay: 0.1s;
+}
+.animation-delay-200 {
+  animation-delay: 0.2s;
+}
+.animation-delay-300 {
+  animation-delay: 0.3s;
+}
+.animation-delay-400 {
+  animation-delay: 0.4s;
+}
+
+/* ===================================
+   Full-page scroll-snap for landing sections
+   =================================== */
 #fullpage-container,
 .fullpage-viewport {
   height: 100vh;
@@ -22,27 +281,49 @@
   :root {
     scroll-behavior: auto;
   }
+
+  .animate-float,
+  .animate-pulse-glow,
+  .animate-fade-in-up,
+  .gradient-text {
+    animation: none;
+  }
 }
 
 /* Hide native scrollbars for the fullpage viewport but keep scrolling usable */
 @media (pointer: fine) {
-  /* Hide native scrollbars for the fullpage viewport on non-touch devices */
   #fullpage-container::-webkit-scrollbar,
   .fullpage-viewport::-webkit-scrollbar {
     width: 0;
     height: 0;
   }
 
-  /* Firefox */
   #fullpage-container,
   .fullpage-viewport {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE 10+ */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 }
 
-/* ensure focus outline still visible for keyboard users */
 #fullpage-container:focus,
 .fullpage-viewport:focus {
   outline: none;
+}
+
+/* ===================================
+   Skip Link for Accessibility
+   =================================== */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #000;
+  color: #fff;
+  padding: 8px;
+  text-decoration: none;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  top: 0;
 }

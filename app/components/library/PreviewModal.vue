@@ -9,7 +9,7 @@
         @click="close"
       ></div>
 
-      <UCard class="z-50 max-w-3xl w-full p-0 overflow-hidden">
+      <GlassCard class="z-50 max-w-3xl w-full p-0 overflow-hidden">
         <div
           class="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-800"
         >
@@ -20,30 +20,31 @@
             </p>
           </div>
           <div class="flex items-center gap-2">
-            <UButton
+            <GlassButton
               size="xs"
               variant="outline"
               :title="$t('common.share')"
               @click="shareLink(prompt?.link)"
             >
               <UIcon name="i-heroicons-arrow-up-tray" class="w-4 h-4 mr-1" />
-              <span class="sr-only">{{ $t("common.share") }}</span>
-            </UButton>
-            <UButton
+              <span class="sr-only" v-once>{{ $t("common.share") }}</span>
+            </GlassButton>
+            <GlassButton
               size="xs"
               variant="ghost"
+              icon="i-heroicons-x-mark"
               :title="$t('common.close')"
               @click="close"
-            >
-              <UIcon name="i-heroicons-x-mark" class="w-4 h-4" />
-            </UButton>
+            />
           </div>
         </div>
 
         <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <h4 class="text-sm font-medium mb-2">
-              {{ $t("library.modals.preview.template") || "Template" }}
+              <span v-once>{{
+                $t("library.modals.preview.template") || "Template"
+              }}</span>
             </h4>
             <div
               class="max-h-64 overflow-auto bg-gray-50 dark:bg-gray-900 p-3 rounded text-sm whitespace-pre-wrap"
@@ -69,7 +70,9 @@
 
           <div>
             <h4 class="text-sm font-medium mb-2">
-              {{ $t("library.modals.preview.result") || "Result" }}
+              <span v-once>{{
+                $t("library.modals.preview.result") || "Result"
+              }}</span>
             </h4>
             <div class="relative">
               <pre
@@ -77,14 +80,13 @@
                 >{{ prompt?.result || "" }}</pre
               >
               <div class="absolute top-2 right-2">
-                <UButton
+                <GlassButton
                   size="xs"
                   variant="outline"
+                  icon="i-heroicons-clipboard"
                   :title="$t('common.copy')"
                   @click="copyResult"
-                >
-                  <UIcon name="i-heroicons-clipboard" class="w-4 h-4" />
-                </UButton>
+                />
               </div>
             </div>
           </div>
@@ -93,7 +95,7 @@
         <div
           class="px-4 py-3 border-t border-gray-100 dark:border-gray-800 flex justify-end gap-2"
         >
-          <UButton
+          <GlassButton
             size="sm"
             color="primary"
             @click="openExternal(prompt?.link)"
@@ -102,13 +104,13 @@
               name="i-heroicons-arrow-top-right-on-square"
               class="w-4 h-4 mr-2"
             />
-            {{ $t("common.open") || "Otwórz" }}
-          </UButton>
-          <UButton size="sm" variant="ghost" @click="close">{{
-            $t("common.close") || "Zamknij"
-          }}</UButton>
+            <span v-once>{{ $t("common.open") || "Otwórz" }}</span>
+          </GlassButton>
+          <GlassButton size="sm" variant="ghost" @click="close">
+            <span v-once>{{ $t("common.close") || "Zamknij" }}</span>
+          </GlassButton>
         </div>
-      </UCard>
+      </GlassCard>
     </div>
   </transition>
 </template>

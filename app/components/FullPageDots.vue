@@ -1,11 +1,11 @@
 <template>
   <nav
-    class="fixed right-3 top-1/2 transform -translate-y-1/2 z-50"
+    class="fixed right-6 top-1/2 transform -translate-y-1/2 z-50 glass-panel rounded-full p-3 backdrop-blur-md"
     role="navigation"
     aria-label="Sekcje strony"
   >
-    <ul class="space-y-2">
-      <li v-for="(item, idx) in items" :key="idx">
+    <ul class="space-y-3">
+      <li v-for="(item, idx) in items" :key="idx" class="relative group">
         <button
           class="dot-btn"
           :class="activeIndex === idx ? 'active' : 'inactive'"
@@ -18,7 +18,12 @@
               focusSection(idx);
             }
           "
-        ></button>
+        >
+          <!-- Tooltip -->
+          <span class="dot-tooltip" role="tooltip">
+            {{ item.label }}
+          </span>
+        </button>
       </li>
     </ul>
 
@@ -140,6 +145,80 @@ const canScroll = (el: Element | null, deltaY: number): boolean => {
   return false;
 };
 
+// helper - czy element jest interaktywny (button, link, input, etc)
+const isInteractiveElement = (el: Element | null): boolean => {
+  if (!el) return false;
+  const tagName = el.tagName?.toLowerCase();
+  // interaktywne elementy HTML
+  if (
+    [
+      "button",
+      "a",
+      "input",
+      "textarea",
+      "select",
+      "label",
+      "video",
+      "audio",
+    ].includes(tagName)
+  ) {
+    return true;
+  }
+  // elementy z atrybutem contenteditable
+  if (
+    el.hasAttribute("contenteditable") &&
+    el.getAttribute("contenteditable") !== "false"
+  ) {
+    return true;
+  }
+  // elementy z role="button" lub podobnymi
+  const role = el.getAttribute("role");
+  if (
+    role &&
+    [
+      "button",
+      "link",
+      "checkbox",
+      "radio",
+      "slider",
+      "spinbutton",
+      "switch",
+      "tab",
+      "textbox",
+    ].includes(role)
+  ) {
+    return true;
+  }
+  // elementy z click handlerem (Vue/React components często mają @click/@onClick)
+  if (
+    el.hasAttribute("data-v-") ||
+    el.classList.contains("v-click") ||
+    el.hasAttribute("onclick")
+  ) {
+    return true;
+  }
+  return false;
+};
+
+// helper - czy event pochodzi z interaktywnego elementu lub jego rodzica
+const isFromInteractive = (e: Event): boolean => {
+  let node: Element | null = e.target as Element;
+  // sprawdź composedPath dla shadow DOM
+  try {
+    const path = (e as any).composedPath ? (e as any).composedPath() : null;
+    if (Array.isArray(path)) {
+      return path.some((n) => n instanceof Element && isInteractiveElement(n));
+    }
+  } catch (_) {}
+
+  // fallback: climb up DOM tree
+  while (node) {
+    if (isInteractiveElement(node)) return true;
+    node = node.parentElement;
+  }
+  return false;
+};
+
 // Granular wheel handling: akumuluj deltaY i triggeruj przejście dopiero po przekroczeniu progu.
 let wheelAccum = 0;
 let wheelLast = 0;
@@ -152,6 +231,11 @@ const onWheel = (e: WheelEvent) => {
     lastWheelTime = e.timeStamp;
   } catch (_) {}
   if (isScrolling) return;
+
+  // NIE BLOKUJ jeśli event pochodzi z interaktywnego elementu
+  if (isFromInteractive(e)) {
+    return; // pozwól na normalną interakcję
+  }
 
   // convert deltaMode to pixels for more consistent behavior across devices
   let deltaPx = e.deltaY;
@@ -247,6 +331,12 @@ let pointerAccum = 0;
 
 const onPointerDown = (e: PointerEvent) => {
   if (e.isPrimary === false) return;
+
+  // NIE BLOKUJ jeśli kliknięcie w interaktywny element
+  if (isFromInteractive(e)) {
+    return; // pozwól na normalną interakcję (kliknięcie buttona, linka, etc)
+  }
+
   e.preventDefault?.();
   pointerDown = true;
   pointerStartY = e.clientY;
@@ -393,17 +483,13 @@ onMounted(() => {
     }
   } catch (_) {}
   const targetForEvents = viewportEl || document.body;
-  if (enableWheel)
+
+  // TYLKO JEDEN listener wheel na viewport (nie window, nie document)
+  // To zapobiega blokowaniu eventów globalnie
+  if (enableWheel) {
     targetForEvents.addEventListener("wheel", onWheel, { passive: false });
-  // also listen on document as a fallback in case wheel events are dispatched outside viewport
-  if (enableWheel && targetForEvents !== document.body)
-    document.addEventListener("wheel", onWheel, { passive: false });
-  // fallback: listen on window in capture mode to catch events that may be stopped by other listeners
-  if (enableWheel)
-    window.addEventListener("wheel", onWheel, {
-      passive: false,
-      capture: true,
-    });
+  }
+
   targetForEvents.addEventListener("touchstart", onTouchStart, {
     passive: true,
   });
@@ -436,9 +522,9 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   const targetForEvents = viewportEl || document.body;
-  if (enableWheel) targetForEvents.removeEventListener("wheel", onWheel);
-  if (enableWheel) document.removeEventListener("wheel", onWheel);
-  if (enableWheel) window.removeEventListener("wheel", onWheel);
+  if (enableWheel) {
+    targetForEvents.removeEventListener("wheel", onWheel);
+  }
   targetForEvents.removeEventListener("touchstart", onTouchStart);
   targetForEvents.removeEventListener("touchend", onTouchEnd);
   try {
@@ -462,6 +548,7 @@ onBeforeUnmount(() => {
 
 /* dot styles: większy hit area z małą kropką w środku */
 .dot-btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -471,28 +558,85 @@ onBeforeUnmount(() => {
   background: transparent;
   border: none;
   cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .dot-btn::before {
   content: "";
   display: block;
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 9999px;
-  background: #d1d5db; /* gray-300 */
-  transition:
-    transform 200ms,
-    background-color 200ms;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 50%;
+  background: rgba(156, 163, 175, 0.6); /* gray-400 with opacity */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(4px);
 }
+
 .dot-btn.active::before {
-  background: #4f46e5;
-  transform: scale(1.2);
+  width: 0.875rem;
+  height: 0.875rem;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6); /* primary gradient */
+  box-shadow:
+    0 0 12px rgba(99, 102, 241, 0.6),
+    0 0 24px rgba(99, 102, 241, 0.3);
+  transform: scale(1);
 }
+
 .dot-btn.inactive::before {
-  background: #d1d5db;
+  background: rgba(156, 163, 175, 0.4);
 }
+
+.dot-btn.inactive:hover::before {
+  background: rgba(156, 163, 175, 0.7);
+  transform: scale(1.3);
+}
+
 .dot-btn:focus-visible {
-  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
   outline: none;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+}
+
+/* Tooltip styling */
+.dot-tooltip {
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+  background: var(--color-secondary);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  color: #1f2937; /* gray-800 */
+}
+
+.group:hover .dot-tooltip {
+  opacity: 1;
+  transform: translateY(-50%) translateX(-4px);
+}
+
+/* Dark mode */
+:global(.dark) .dot-tooltip {
+  background: rgba(17, 24, 39, 0.95);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #f9fafb; /* gray-50 */
+}
+
+:global(.dark) .dot-btn.inactive::before {
+  background: rgba(107, 114, 128, 0.5); /* gray-500 in dark */
+}
+
+:global(.dark) .dot-btn.inactive:hover::before {
+  background: rgba(156, 163, 175, 0.8);
 }
 
 /* ukryj menu kropkowe na małych ekranach */

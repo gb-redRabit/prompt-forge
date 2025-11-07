@@ -1,5 +1,5 @@
 <template>
-  <UCard class="hover:shadow-lg transition-all flex flex-col justify-between">
+  <GlassCard hover shadow padding="md" class="flex flex-col justify-between">
     <template #header>
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
@@ -8,14 +8,14 @@
             {{ promptName }}
           </h3>
         </div>
-        <UBadge
+        <GlassBadge
           v-if="prompt.isCustom"
           color="success"
-          variant="subtle"
+          variant="soft"
           size="xs"
         >
-          {{ $t("library.custom.badge") || "Własny" }}
-        </UBadge>
+          <span v-once>{{ $t("library.custom.badge") || "Własny" }}</span>
+        </GlassBadge>
       </div>
     </template>
 
@@ -32,17 +32,17 @@
         </span>
 
         <div class="flex items-center gap-1">
-          <UButton
+          <GlassButton
             icon="i-heroicons-play"
             size="xs"
             color="primary"
             variant="soft"
             @click="$emit('use', prompt)"
           >
-            {{ $t("common.use") || "Użyj" }}
-          </UButton>
+            <span v-once>{{ $t("common.use") || "Użyj" }}</span>
+          </GlassButton>
 
-          <UButton
+          <GlassButton
             v-if="showEdit"
             icon="i-heroicons-pencil"
             size="xs"
@@ -51,7 +51,7 @@
             @click="$emit('edit', prompt)"
           />
 
-          <UButton
+          <GlassButton
             icon="i-heroicons-trash"
             size="xs"
             color="error"
@@ -61,7 +61,7 @@
         </div>
       </div>
     </div>
-  </UCard>
+  </GlassCard>
 </template>
 
 <script setup lang="ts">

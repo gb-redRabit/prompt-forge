@@ -1,12 +1,17 @@
 <template>
   <section class="relative">
     <div class="text-center max-w-5xl mx-auto space-y-8">
-      <!-- Badge -->
+      <!-- Badge with Glass Effect -->
       <div class="flex justify-center">
-        <UBadge variant="subtle" size="lg" class="animate-fade-in-up">
-          <UIcon name="i-heroicons-sparkles" class="mr-2" />
+        <GlassBadge
+          variant="soft"
+          size="lg"
+          icon="i-heroicons-sparkles"
+          pill
+          class="animate-fade-in-up"
+        >
           {{ $t("app.tagline") }}
-        </UBadge>
+        </GlassBadge>
       </div>
 
       <!-- Main heading -->
@@ -27,84 +32,87 @@
         {{ $t("app.hero_sub") }}
       </p>
 
-      <!-- CTA Buttons -->
+      <!-- CTA Buttons with Glass Effect -->
       <div
         class="flex gap-4 justify-center pt-4 flex-wrap animate-fade-in-up animation-delay-300"
       >
-        <UButton
+        <GlassButton
           color="primary"
           size="xl"
+          icon="i-heroicons-arrow-right"
+          icon-position="right"
+          glow
           @click="$emit('get-started')"
-          class="group shadow-lg hover:shadow-xl transition-all"
         >
           {{ $t("app.cta_primary") }}
-          <UIcon
-            name="i-heroicons-arrow-right"
-            class="ml-2 group-hover:translate-x-1 transition-transform"
-          />
-        </UButton>
-        <UButton
+        </GlassButton>
+        <GlassButton
           variant="outline"
           size="xl"
+          icon="i-heroicons-play"
+          icon-position="right"
           @click="$emit('learn-more')"
-          class="group"
         >
           {{ $t("app.cta_secondary") }}
-          <UIcon
-            name="i-heroicons-play"
-            class="ml-2 group-hover:scale-110 transition-transform"
-          />
-        </UButton>
+        </GlassButton>
       </div>
 
-      <!-- Stats -->
+      <!-- Stats with Glass Cards -->
       <div
         v-if="isContentLoaded"
         class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-4xl mx-auto pt-12 animate-fade-in-up animation-delay-400"
       >
-        <LandingStatCard
-          :value="`${promptsCount}+`"
-          :label="$t('app.stats.prompts')"
-        />
-        <LandingStatCard
-          :value="`${optionsCount}+`"
-          :label="$t('app.stats.options')"
-        />
-        <LandingStatCard
-          :value="`${tagsCount}+`"
-          :label="$t('app.stats.tags')"
-        />
-        <LandingStatCard
-          :value="$t('app.stats.availability')"
-          :label="$t('app.stats.availability_label')"
-        />
-        <LandingStatCard
-          :value="$t('app.stats.possibilities')"
-          :label="$t('app.stats.possibilities_label')"
-        />
+        <GlassCard
+          v-for="(stat, index) in stats"
+          :key="index"
+          variant="subtle"
+          padding="md"
+          hover
+          shadow
+          class="text-center"
+        >
+          <div
+            class="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2"
+          >
+            {{ stat.value }}
+          </div>
+          <div class="text-sm text-gray-600 dark:text-gray-400">
+            {{ stat.label }}
+          </div>
+        </GlassCard>
       </div>
     </div>
 
     <!-- Floating elements -->
     <div
-      class="absolute top-20 -left-20 w-72 h-72 bg-primary-500/10 rounded-full blur-3xl animate-pulse"
+      class="absolute top-20 -left-20 w-72 h-72 bg-primary-500/10 rounded-full blur-3xl animate-pulse pointer-events-none"
     />
     <div
-      class="absolute bottom-20 -right-20 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl animate-pulse animation-delay-1000"
+      class="absolute bottom-20 -right-20 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl animate-pulse animation-delay-1000 pointer-events-none"
     />
   </section>
 </template>
 
 <script setup lang="ts">
-defineProps<{
-  isContentLoaded: boolean;
-  promptsCount: number;
-  optionsCount: number;
-  tagsCount: number;
-}>();
+import type { LandingHeroProps, LandingHeroEmits } from "~/types/landing";
 
-defineEmits<{
-  "get-started": [];
-  "learn-more": [];
-}>();
+const props = defineProps<LandingHeroProps>();
+
+defineEmits<LandingHeroEmits>();
+
+const { t } = useI18n();
+
+const stats = computed(() => [
+  { value: `${props.promptsCount}+`, label: t("app.stats.prompts") },
+  { value: `${props.optionsCount}+`, label: t("app.stats.options") },
+  { value: `${props.tagsCount}+`, label: t("app.stats.tags") },
+  {
+    value: t("app.stats.availability"),
+    label: t("app.stats.availability_label"),
+  },
+  {
+    value: t("app.stats.possibilities"),
+    label: t("app.stats.possibilities_label"),
+  },
+]);
 </script>

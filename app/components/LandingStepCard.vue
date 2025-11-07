@@ -1,29 +1,58 @@
 <template>
-  <div class="relative">
-    <UCard
-      class="text-center h-full hover:scale-105 transition-all duration-300 hover:shadow-xl relative z-10 bg-white dark:bg-gray-800"
-      :ui="{
-        body: 'p-8 ring-2 ring-primary-500/20',
-      }"
+  <div class="relative group">
+    <!-- Glass card with hover effects -->
+    <GlassCard
+      variant="subtle"
+      padding="lg"
+      hover
+      shadow
+      gradient
+      class="h-full transition-all duration-500 hover:-translate-y-2 overflow-hidden"
     >
-      <div class="space-y-4">
-        <div
-          class="w-16 h-16 rounded-full bg-gradient-to-br from-primary-500 to-blue-500 flex items-center justify-center mx-auto text-2xl font-bold text-white shadow-lg"
-        >
-          {{ number }}
+      <!-- Content -->
+      <div class="relative space-y-6 text-center">
+        <!-- Number badge with glow -->
+        <div class="relative inline-flex">
+          <div
+            class="w-20 h-20 rounded-full bg-gradient-to-br from-primary-500 via-purple-600 to-blue-600 flex items-center justify-center text-3xl font-black text-white shadow-xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500"
+          >
+            <!-- Glow effect -->
+            <div
+              class="absolute inset-0 rounded-full bg-gradient-to-br from-primary-500 to-purple-600 opacity-0 group-hover:opacity-70 blur-2xl transition-opacity duration-500"
+            ></div>
+            <span class="relative">{{ number }}</span>
+          </div>
+
+          <!-- Pulse ring animation -->
+          <div
+            class="absolute inset-0 rounded-full border-2 border-primary-500/30 opacity-0 group-hover:opacity-100 group-hover:scale-150 transition-all duration-700"
+          ></div>
         </div>
-        <h3 class="text-lg font-bold text-gray-900 dark:text-white">
+
+        <!-- Title -->
+        <h3
+          class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300"
+        >
           {{ title }}
         </h3>
-        <p class="text-gray-600 dark:text-gray-400">
+
+        <!-- Description -->
+        <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
           {{ description }}
         </p>
       </div>
-    </UCard>
+
+      <!-- Decorative corner accent -->
+      <div
+        class="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-primary-500/10 to-transparent rounded-tr-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+      ></div>
+    </GlassCard>
   </div>
 </template>
 
 <script setup lang="ts">
+import type { StepItem } from "~/types/landing";
+
 defineProps<{
   number: number;
   title: string;

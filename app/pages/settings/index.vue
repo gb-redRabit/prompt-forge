@@ -3,10 +3,10 @@
     <!-- Header -->
     <div>
       <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-        {{ $t("settings.title") }}
+        <span v-once>{{ $t("settings.title") }}</span>
       </h1>
       <p class="text-gray-600 dark:text-gray-400">
-        {{ $t("settings.subtitle") }}
+        <span v-once>{{ $t("settings.subtitle") }}</span>
       </p>
     </div>
 
@@ -51,9 +51,9 @@
           <div class="text-center">
             <div
               class="animate-spin rounded-full h-10 w-10 border-b-2 border-primary-600 mx-auto mb-4"
-            ></div>
+            </div>
             <p class="text-sm text-gray-600 dark:text-gray-400">
-              {{ $t("pages.common.loading") }}
+              <span v-once>{{ $t("pages.shared.loading") }}</span>
             </p>
           </div>
         </div>

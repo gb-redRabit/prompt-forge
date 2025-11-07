@@ -18,7 +18,7 @@
       />
 
       <!-- Configuration Form Card -->
-      <UCard :ui="{ body: 'p-4 space-y-4' }">
+      <GlassCard padding="md">
         <h3
           class="text-sm font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2"
         >
@@ -26,7 +26,7 @@
             name="i-heroicons-cog-6-tooth"
             class="w-4 h-4 text-purple-500"
           />
-          {{ $t("ai.config.title") }}
+          <span v-once>{{ $t("ai.config.title") }}</span>
         </h3>
 
         <!-- Server Endpoint -->
@@ -38,7 +38,7 @@
               name="i-heroicons-server"
               class="w-3.5 h-3.5 text-purple-500"
             />
-            {{ $t("ai.config.endpoint") }}
+            <span v-once>{{ $t("ai.config.endpoint") }}</span>
           </label>
           <UInput
             v-model="config.endpoint"
@@ -47,15 +47,16 @@
             icon="i-heroicons-link"
           >
             <template #trailing>
-              <UButton
+              <GlassButton
                 v-if="
                   config.endpoint !==
                   'http://localhost:1234/v1/chat/completions'
                 "
                 color="primary"
-                variant="link"
+                variant="ghost"
                 icon="i-heroicons-x-mark"
                 :padded="false"
+                size="xs"
                 @click="
                   config.endpoint = 'http://localhost:1234/v1/chat/completions'
                 "
@@ -74,9 +75,9 @@
                 name="i-heroicons-cpu-chip"
                 class="w-3.5 h-3.5 text-purple-500"
               />
-              {{ $t("ai.config.model_name") }}
+              <span v-once>{{ $t("ai.config.model_name") }}</span>
             </label>
-            <UButton
+            <GlassButton
               v-if="config.endpoint"
               color="primary"
               variant="ghost"
@@ -91,7 +92,7 @@
                   class="w-3.5 h-3.5"
                 />
               </template>
-            </UButton>
+            </GlassButton>
           </div>
 
           <USelectMenu
@@ -137,8 +138,8 @@
             {{ availableModels.length }}
             {{
               availableModels.length === 1
-                ? $t("pages.common.model_singular")
-                : $t("pages.common.model_plural")
+                ? $t("pages.shared.model_singular")
+                : $t("pages.shared.model_plural")
             }}
           </p>
           <p
@@ -149,18 +150,18 @@
               name="i-heroicons-information-circle"
               class="w-3 h-3 text-blue-500"
             />
-            {{ $t("ai.config.model_name_hint") }}
+            <span v-once>{{ $t("ai.config.model_name_hint") }}</span>
           </p>
         </div>
-      </UCard>
+      </GlassCard>
 
       <!-- Action Buttons Card -->
-      <UCard :ui="{ body: 'p-4' }">
+      <GlassCard padding="md">
         <div class="flex gap-3">
-          <UButton
+          <GlassButton
             color="primary"
             variant="soft"
-            block
+            full-width
             size="lg"
             :loading="isTesting"
             :disabled="!isConfigValid"
@@ -172,16 +173,16 @@
                 :class="{ 'animate-bounce': isTesting }"
               />
             </template>
-            {{
+            <span v-once>{{
               isTesting
                 ? $t("ai.actions.testing")
                 : $t("ai.actions.test_connection")
-            }}
-          </UButton>
+            }}</span>
+          </GlassButton>
 
-          <UButton
+          <GlassButton
             color="primary"
-            block
+            full-width
             size="lg"
             :loading="isSaving"
             :disabled="!isConfigValid"
@@ -193,8 +194,10 @@
                 :class="{ 'animate-pulse': isSaving }"
               />
             </template>
-            {{ isSaving ? $t("ai.actions.saving") : $t("ai.actions.save") }}
-          </UButton>
+            <span v-once>{{
+              isSaving ? $t("ai.actions.saving") : $t("ai.actions.save")
+            }}</span>
+          </GlassButton>
         </div>
 
         <!-- Last Connection Footer -->
@@ -204,28 +207,28 @@
         >
           <span class="flex items-center gap-1.5">
             <UIcon name="i-heroicons-clock" class="w-3.5 h-3.5" />
-            {{ $t("ai.actions.last_connection") }}:
+            <span v-once>{{ $t("ai.actions.last_connection") }}:</span>
             {{ formatDate(lastConnectionTime) }}
           </span>
-          <UButton
+          <GlassButton
             color="primary"
             variant="ghost"
             size="xs"
             @click="clearConfig"
           >
-            {{ $t("ai.actions.clear") }}
-          </UButton>
+            <span v-once>{{ $t("ai.actions.clear") }}</span>
+          </GlassButton>
         </div>
-      </UCard>
+      </GlassCard>
     </div>
 
     <!-- RIGHT COLUMN: Information & Help -->
     <div class="space-y-4">
       <!-- Quick Stats Card -->
-      <UCard
-        :ui="{
-          body: 'p-4 space-y-3 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20',
-        }"
+      <GlassCard
+        padding="md"
+        gradient
+        class="space-y-3 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20"
       >
         <div class="flex items-center gap-2 mb-3">
           <div
@@ -234,7 +237,7 @@
             <UIcon name="i-heroicons-chart-bar" class="w-4 h-4 text-white" />
           </div>
           <h3 class="font-semibold text-sm text-gray-900 dark:text-white">
-            {{ $t("ai.status_card.title") }}
+            <span v-once>{{ $t("ai.status_card.title") }}</span>
           </h3>
         </div>
 
@@ -243,7 +246,7 @@
             class="p-3 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm"
           >
             <div class="text-xs text-gray-600 dark:text-gray-400 mb-1">
-              {{ $t("ai.status_card.endpoint") }}
+              <span v-once>{{ $t("ai.status_card.endpoint") }}</span>
             </div>
             <div
               class="text-sm font-semibold text-gray-900 dark:text-white truncate"
@@ -260,14 +263,14 @@
             class="p-3 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm"
           >
             <div class="text-xs text-gray-600 dark:text-gray-400 mb-1">
-              {{ $t("ai.status_card.model") }}
+              <span v-once>{{ $t("ai.status_card.model") }}</span>
             </div>
             <div
               class="text-sm font-semibold text-gray-900 dark:text-white truncate"
               :title="config.modelId"
             >
               {{
-                config.modelId || $t("pages.common.model_plural", { count: 0 })
+                config.modelId || $t("pages.shared.model_plural", { count: 0 })
               }}
             </div>
           </div>
@@ -276,7 +279,7 @@
             class="p-3 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm"
           >
             <div class="text-xs text-gray-600 dark:text-gray-400 mb-1">
-              {{ $t("ai.status_card.models_available") }}
+              <span v-once>{{ $t("ai.status_card.models_available") }}</span>
             </div>
             <div class="text-sm font-semibold text-gray-900 dark:text-white">
               {{ availableModels.length || 0 }}
@@ -287,7 +290,7 @@
             class="p-3 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm"
           >
             <div class="text-xs text-gray-600 dark:text-gray-400 mb-1">
-              {{ $t("ai.status_card.status") }}
+              <span v-once>{{ $t("ai.status_card.status") }}</span>
             </div>
             <div class="text-sm font-semibold text-gray-900 dark:text-white">
               {{
@@ -298,20 +301,26 @@
             </div>
           </div>
         </div>
-      </UCard>
+      </GlassCard>
 
       <!-- Quick Guide -->
       <UAlert color="info" variant="soft" icon="i-heroicons-light-bulb">
         <template #title>
-          <span class="text-sm font-medium">{{
+          <span class="text-sm font-medium" v-once>{{
             $t("ai.quick_guide_title")
           }}</span>
         </template>
         <template #description>
           <ol class="text-xs space-y-1.5 mt-2 list-decimal list-inside">
-            <li>{{ $t("ai.config.endpoint_hint") }}</li>
-            <li>{{ $t("ai.config.model_name_hint") }}</li>
-            <li>{{ $t("ai.config.model_name_end") }}</li>
+            <li>
+              <span v-once>{{ $t("ai.config.endpoint_hint") }}</span>
+            </li>
+            <li>
+              <span v-once>{{ $t("ai.config.model_name_hint") }}</span>
+            </li>
+            <li>
+              <span v-once>{{ $t("ai.config.model_name_end") }}</span>
+            </li>
           </ol>
         </template>
       </UAlert>

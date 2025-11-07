@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
     <!-- Saved (bookmark, primary) -->
-    <UCard :ui="{ body: 'p-4' }">
+    <GlassCard padding="md">
       <div class="text-center">
         <UIcon
           name="i-heroicons-bookmark"
@@ -11,13 +11,13 @@
           {{ stats.totalSaved }}
         </div>
         <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-          {{ $t("library.stats.saved") }}
+          <span v-once>{{ $t("library.stats.saved") }}</span>
         </div>
       </div>
-    </UCard>
+    </GlassCard>
 
     <!-- Custom (pencil, success) -->
-    <UCard :ui="{ body: 'p-4' }">
+    <GlassCard padding="md">
       <div class="text-center">
         <UIcon
           name="i-heroicons-pencil"
@@ -27,13 +27,13 @@
           {{ stats.totalCustom }}
         </div>
         <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-          {{ $t("library.stats.custom") }}
+          <span v-once>{{ $t("library.stats.custom") }}</span>
         </div>
       </div>
-    </UCard>
+    </GlassCard>
 
     <!-- Editor Prompts (first, indigo) -->
-    <UCard :ui="{ body: 'p-4' }">
+    <GlassCard padding="md">
       <div class="text-center">
         <UIcon
           name="i-heroicons-sparkles"
@@ -43,13 +43,13 @@
           {{ stats.totalEditorPrompts }}
         </div>
         <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-          {{ $t("library.stats.editorPrompts") }}
+          <span v-once>{{ $t("library.stats.editorPrompts") }}</span>
         </div>
       </div>
-    </UCard>
+    </GlassCard>
 
     <!-- Tag Favorites (star, pink) -->
-    <UCard :ui="{ body: 'p-4' }">
+    <GlassCard padding="md">
       <div class="text-center">
         <UIcon
           name="i-heroicons-star"
@@ -59,13 +59,13 @@
           {{ stats.totalTagFavorites }}
         </div>
         <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-          {{ $t("library.stats.tagFavorites") }}
+          <span v-once>{{ $t("library.stats.tagFavorites") }}</span>
         </div>
       </div>
-    </UCard>
+    </GlassCard>
 
     <!-- History (clock, warning) -->
-    <UCard :ui="{ body: 'p-4' }">
+    <GlassCard padding="md">
       <div class="text-center">
         <UIcon
           name="i-heroicons-clock"
@@ -75,26 +75,26 @@
           {{ stats.totalHistory }}
         </div>
         <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-          {{ $t("library.stats.history") }}
+          <span v-once>{{ $t("library.stats.history") }}</span>
         </div>
       </div>
-    </UCard>
+    </GlassCard>
 
     <!-- Collections (folder, info) -->
-    <UCard :ui="{ body: 'p-4' }">
+    <GlassCard padding="md">
       <div class="text-center">
         <UIcon
           name="i-heroicons-folder"
-          class="mx-auto mb-1 text-info-500 w-6 h-6"
+          class="mx-auto mb-1 text-blue-500 w-6 h-6"
         />
-        <div class="text-3xl font-bold text-info-600 dark:text-info-400">
+        <div class="text-3xl font-bold text-blue-600 dark:text-blue-400">
           {{ stats.totalCollections }}
         </div>
         <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-          {{ $t("library.stats.collections") }}
+          <span v-once>{{ $t("library.stats.collections") }}</span>
         </div>
       </div>
-    </UCard>
+    </GlassCard>
   </div>
 </template>
 

@@ -2,19 +2,19 @@
   <div class="space-y-4 mt-4">
     <div class="flex justify-between items-center">
       <p class="text-sm text-gray-600 dark:text-gray-400">
-        {{ $t("library.collections.organize") }}
+        <span v-once>{{ $t("library.collections.organize") }}</span>
       </p>
-      <UButton color="primary" size="sm" @click="$emit('create')">
+      <GlassButton color="primary" size="sm" @click="$emit('create')">
         <UIcon name="i-heroicons-plus" class="mr-1" />
-        {{ $t("library.collections.new") }}
-      </UButton>
+        <span v-once>{{ $t("library.collections.new") }}</span>
+      </GlassButton>
     </div>
 
     <div
       v-if="collections.length > 0"
       class="grid md:grid-cols-2 lg:grid-cols-3 gap-4"
     >
-      <UCard
+      <GlassCard
         v-for="collection in collections"
         :key="collection.id"
         class="hover:shadow-lg transition-all cursor-pointer"
@@ -32,14 +32,14 @@
               </h3>
             </div>
             <div class="flex items-center gap-1">
-              <UButton
+              <GlassButton
                 color="primary"
                 variant="ghost"
                 size="xs"
                 icon="i-heroicons-plus"
                 @click.stop="$emit('add-prompts', collection)"
               />
-              <UButton
+              <GlassButton
                 color="error"
                 variant="ghost"
                 size="xs"
@@ -80,7 +80,7 @@
                 {{ getPromptName(prompt) }}
               </span>
               <div class="flex items-center gap-1 flex-shrink-0">
-                <UButton
+                <GlassButton
                   color="primary"
                   variant="ghost"
                   size="xs"
@@ -88,7 +88,7 @@
                   :title="$t('library.actions.use')"
                   @click.stop="$emit('use-prompt', prompt)"
                 />
-                <UButton
+                <GlassButton
                   color="error"
                   variant="ghost"
                   size="xs"
@@ -112,7 +112,7 @@
             </p>
           </div>
         </div>
-      </UCard>
+      </GlassCard>
     </div>
 
     <div v-else class="text-center py-12">

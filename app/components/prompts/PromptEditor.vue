@@ -13,71 +13,74 @@
 
       <div class="flex items-center gap-2">
         <!-- Copy button -->
-        <UButton color="primary" variant="outline" @click="copyResult">
-          <UIcon name="i-heroicons-clipboard" class="mr-2" />
+        <GlassButton
+          color="primary"
+          variant="outline"
+          @click="copyResult"
+          icon="i-heroicons-clipboard"
+        >
           {{ copied ? $t("common.copied") : $t("common.copy") }}
-        </UButton>
+        </GlassButton>
 
         <!-- Save to library button - with toggle state -->
-        <UButton
+        <GlassButton
           :color="isInLibrary ? 'success' : 'neutral'"
           :variant="isInLibrary ? 'solid' : 'outline'"
           @click="toggleLibrary"
+          :icon="
+            isInLibrary ? 'i-heroicons-bookmark-solid' : 'i-heroicons-bookmark'
+          "
         >
-          <UIcon
-            :name="
-              isInLibrary
-                ? 'i-heroicons-bookmark-solid'
-                : 'i-heroicons-bookmark'
-            "
-            class="mr-2"
-          />
           {{
             isInLibrary
               ? $t("pages.templates.saved_in_library")
               : $t("pages.templates.save_to_library")
           }}
-        </UButton>
+        </GlassButton>
 
         <!-- Close button -->
-        <UButton
+        <GlassButton
           color="neutral"
-          variant="subtle"
+          variant="soft"
           size="xl"
           @click="$emit('close')"
-        >
-          <UIcon name="i-heroicons-x-mark" />
-        </UButton>
+          icon="i-heroicons-x-mark"
+        />
       </div>
     </div>
 
     <!-- Metadata -->
     <div class="flex flex-wrap gap-2">
-      <UBadge v-if="template.type" color="secondary" size="lg" variant="subtle">
+      <GlassBadge
+        v-if="template.type"
+        color="secondary"
+        size="lg"
+        variant="soft"
+      >
         {{ template.type }}
-      </UBadge>
+      </GlassBadge>
 
       <!-- Kategorie -->
-      <UBadge
+      <GlassBadge
         v-for="category in template.categories?.slice(0, 3)"
         :key="category"
         color="primary"
-        variant="subtle"
+        variant="soft"
         size="md"
       >
         {{ category }}
-      </UBadge>
-      <UBadge
+      </GlassBadge>
+      <GlassBadge
         v-if="(template.categories?.length || 0) > 3"
         color="primary"
-        variant="subtle"
+        variant="soft"
         size="md"
       >
         +{{ (template.categories?.length || 0) - 3 }}
-      </UBadge>
+      </GlassBadge>
 
       <!-- Tagi -->
-      <UBadge
+      <GlassBadge
         v-for="tag in template.tags?.slice(0, 5)"
         :key="tag"
         color="neutral"
@@ -85,35 +88,35 @@
         size="md"
       >
         #{{ tag }}
-      </UBadge>
-      <UBadge
+      </GlassBadge>
+      <GlassBadge
         v-if="(template.tags?.length || 0) > 5"
         color="neutral"
         variant="outline"
         size="md"
       >
         +{{ (template.tags?.length || 0) - 5 }}
-      </UBadge>
+      </GlassBadge>
     </div>
 
     <div class="grid lg:grid-cols-2 gap-6">
       <!-- LEFT: Template Editor -->
       <div class="space-y-4">
-        <UCard :ui="{ body: 'p-4' }">
+        <GlassCard padding="md">
           <template #header>
             <div class="flex items-center justify-between">
               <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                {{ $t("pages.templates.template_editor") }}
+                <span v-once>{{ $t("pages.templates.template_editor") }}</span>
               </h3>
-              <UButton
+              <GlassButton
                 color="neutral"
-                variant="subtle"
+                variant="soft"
                 size="xs"
                 @click="resetTemplate"
+                icon="i-heroicons-arrow-path"
               >
-                <UIcon name="i-heroicons-arrow-path" class="mr-1" />
-                {{ $t("pages.templates.reset") }}
-              </UButton>
+                <span v-once>{{ $t("pages.templates.reset") }}</span>
+              </GlassButton>
             </div>
           </template>
 
@@ -138,21 +141,23 @@
               {{ $t("pages.templates.placeholders") }}
             </span>
           </div>
-        </UCard>
+        </GlassCard>
       </div>
 
       <!-- RIGHT: Placeholder Inputs as Tabs -->
       <div class="space-y-4">
-        <UCard :ui="{ body: 'p-4' }">
+        <GlassCard padding="md">
           <template #header>
             <div class="flex items-center justify-between">
               <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                {{ $t("pages.templates.placeholder_values") }}
+                <span v-once>{{
+                  $t("pages.templates.placeholder_values")
+                }}</span>
               </h3>
-              <UBadge color="primary" variant="subtle">
+              <GlassBadge color="primary" variant="soft">
                 {{ filledPlaceholders }}/{{ detectedPlaceholders.length }}
-                {{ $t("pages.templates.filled") }}
-              </UBadge>
+                <span v-once>{{ $t("pages.templates.filled") }}</span>
+              </GlassBadge>
             </div>
           </template>
 
@@ -219,7 +224,7 @@
                 </div>
 
                 <!-- Quick clear button -->
-                <UButton
+                <GlassButton
                   v-if="placeholderValues[selectedPlaceholderKey]"
                   color="neutral"
                   variant="ghost"
@@ -227,8 +232,8 @@
                   icon="i-heroicons-x-mark"
                   @click="clearPlaceholder(selectedPlaceholderKey)"
                 >
-                  {{ $t("pages.templates.clear") }}
-                </UButton>
+                  <span v-once>{{ $t("pages.templates.clear") }}</span>
+                </GlassButton>
               </div>
 
               <!-- Input with search -->
@@ -288,7 +293,7 @@
 
                 <!-- Options grid -->
                 <div class="flex flex-wrap gap-2 max-h-96 overflow-y-auto pr-2">
-                  <UButton
+                  <GlassButton
                     v-for="option in filteredVisibleOptions(
                       selectedPlaceholderKey
                     )"
@@ -308,17 +313,15 @@
                     size="sm"
                     class="flex-shrink-0"
                     @click="selectOption(selectedPlaceholderKey, option.value)"
+                    :icon="
+                      placeholderValues[selectedPlaceholderKey] ===
+                      getOptionValueForTemplate(option)
+                        ? 'i-heroicons-check'
+                        : undefined
+                    "
                   >
-                    <UIcon
-                      v-if="
-                        placeholderValues[selectedPlaceholderKey] ===
-                        getOptionValueForTemplate(option)
-                      "
-                      name="i-heroicons-check"
-                      class="mr-1 w-3 h-3"
-                    />
                     {{ getTranslatedLabel(option) }}
-                  </UButton>
+                  </GlassButton>
                 </div>
 
                 <!-- Load More / Show Less button -->
@@ -375,7 +378,7 @@
             <div
               class="flex items-center justify-between pt-3 border-t border-gray-200 dark:border-gray-700"
             >
-              <UButton
+              <GlassButton
                 :disabled="selectedPlaceholderIndex === 0"
                 color="neutral"
                 variant="ghost"
@@ -386,17 +389,17 @@
                     selectedPlaceholderIndex - 1
                   )
                 "
+                icon="i-heroicons-chevron-left"
               >
-                <UIcon name="i-heroicons-chevron-left" class="mr-1" />
-                {{ $t("pages.templates.previous") }}
-              </UButton>
+                <span v-once>{{ $t("pages.templates.previous") }}</span>
+              </GlassButton>
 
               <span class="text-xs text-gray-500">
                 {{ selectedPlaceholderIndex + 1 }} /
                 {{ detectedPlaceholders.length }}
               </span>
 
-              <UButton
+              <GlassButton
                 :disabled="
                   selectedPlaceholderIndex === detectedPlaceholders.length - 1
                 "
@@ -409,33 +412,33 @@
                     selectedPlaceholderIndex + 1
                   )
                 "
+                icon="i-heroicons-chevron-right"
+                icon-position="right"
               >
-                {{ $t("pages.templates.next") }}
-                <UIcon name="i-heroicons-chevron-right" class="ml-1" />
-              </UButton>
+                <span v-once>{{ $t("pages.templates.next") }}</span>
+              </GlassButton>
             </div>
           </div>
-        </UCard>
+        </GlassCard>
       </div>
     </div>
 
     <!-- RESULT: Final Prompt -->
-    <UCard
+    <GlassCard
       v-if="resultPrompt"
-      :ui="{
-        body: 'p-6 bg-gradient-to-br from-primary-50 to-blue-50 dark:from-primary-900/20 dark:to-blue-900/20',
-      }"
+      padding="lg"
+      class="bg-gradient-to-br from-primary-50 to-blue-50 dark:from-primary-900/20 dark:to-blue-900/20"
     >
       <template #header>
         <div class="flex items-center justify-between">
           <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-            {{ $t("pages.templates.final_prompt") }}
+            <span v-once>{{ $t("pages.templates.final_prompt") }}</span>
           </h3>
           <div class="flex items-center gap-2">
-            <UBadge color="success" variant="subtle">
+            <GlassBadge color="success" variant="soft">
               {{ filledPlaceholders }}/{{ detectedPlaceholders.length }}
-              {{ $t("pages.templates.filled") }}
-            </UBadge>
+              <span v-once>{{ $t("pages.templates.filled") }}</span>
+            </GlassBadge>
           </div>
         </div>
       </template>
@@ -479,7 +482,7 @@
           </div>
         </div>
       </div>
-    </UCard>
+    </GlassCard>
   </div>
 </template>
 

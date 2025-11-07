@@ -1,191 +1,33 @@
 <template>
   <div class="min-h-screen">
     <div class="flex h-screen overflow-hidden">
-      <!-- Sidebar z kategoriami -->
-      <aside
-        :class="[
-          'bg-white dark:bg-gray-800 border-r border-l border-gray-200 dark:border-gray-700 transition-all duration-200 relative gooey-sidebar',
-          sidebarExpanded ? 'w-72' : 'w-16',
-        ]"
-      >
-        <!-- Toggle Button with Gooey Effect -->
-        <div
-          v-if="buttonVisible"
-          class="gooey-container"
-          :style="{
-            position: 'fixed',
-            left: `${buttonLeft}px`,
-            top: `${buttonTop}px`,
-
-            pointerEvents: 'none',
-          }"
-        >
-          <div
-            class="gooey-blob blob-bg items-center justify-center hidden md:flex"
-          >
-            <UButton
-              ref="toggleButtonRef"
-              variant="ghost"
-              size="md"
-              @click="sidebarExpanded = !sidebarExpanded"
-              class="gooey-button hover:bg-transparent focus:bg-transparent active:bg-transparent"
-              :style="{ pointerEvents: 'auto' }"
-            >
-              <UIcon
-                :name="
-                  sidebarExpanded
-                    ? 'i-heroicons-chevron-left'
-                    : 'i-heroicons-chevron-right'
-                "
-                :style="{
-                  display:
-                    (!sidebarExpanded && buttonLeft >= 53) ||
-                    (sidebarExpanded && buttonLeft >= 277)
-                      ? 'block'
-                      : 'none',
-                }"
-                class="w-4 h-4"
-              />
-            </UButton>
-          </div>
-        </div>
-
-        <!-- Categories List -->
-        <div class="overflow-y-auto h-full custom-scrollbar">
-          <div
-            :class="[
-              'p-1 ',
-              sidebarExpanded
-                ? 'space-y-2'
-                : 'space-y-2 flex flex-col items-center',
-            ]"
-          >
-            <!-- Pogrupowane kategorie -->
-            <div
-              v-for="group in categoryGroupsUI"
-              :key="group.key"
-              class="space-y-1 w-full"
-            >
-              <!-- Nagłówek grupy -->
-              <div
-                v-if="sidebarExpanded"
-                class="px-2 py-1 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide"
-              >
-                {{ group.title }}
-              </div>
-              <div
-                v-else-if="group.key !== `basics`"
-                class="px-2 border-b border-gray-700 w-3/4 mx-auto"
-              ></div>
-              <div v-else class="none"></div>
-
-              <!-- Kategorie w grupie -->
-              <button
-                v-for="category in group.items"
-                :key="category"
-                @click="category && (currentStep = getIndexByLabel(category))"
-                :class="[
-                  'group w-full flex items-center p-2 rounded-xl transition-all',
-                  category && currentStep === getIndexByLabel(category)
-                    ? 'text-primary-600 dark:text-primary-400'
-                    : 'text-gray-700 dark:text-gray-300',
-                ]"
-              >
-                <div
-                  :class="[
-                    'flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center relative',
-                    category && currentStep === getIndexByLabel(category)
-                      ? 'bg-primary-500 text-white group-hover:text-primary-600'
-                      : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 group-hover:text-primary-600',
-                  ]"
-                >
-                  <UIcon
-                    :name="getCategoryIcon(category ?? '') || 'i-heroicons-tag'"
-                    class="w-7 h-7"
-                  />
-                  <div
-                    v-if="
-                      category &&
-                      selectedTags[category]?.length &&
-                      !sidebarExpanded
-                    "
-                    class="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-primary-500 text-white text-xs flex items-center justify-center border-3 border-gray-800"
-                  >
-                    {{ selectedTags[category].length }}
-                  </div>
-                </div>
-                <div v-if="sidebarExpanded" class="flex-1 text-left">
-                  <p
-                    class="text-sm font-semibold group-hover:text-primary-600 ml-2"
-                  >
-                    {{ getCategoryNameByLabel(category || "") }}
-                  </p>
-                </div>
-                <div
-                  v-if="
-                    category &&
-                    selectedTags[category]?.length &&
-                    sidebarExpanded
-                  "
-                  class="flex-shrink-0 w-6 h-6 rounded-full bg-primary-500 text-white text-xs flex items-center justify-center font-bold"
-                >
-                  {{ selectedTags[category].length }}
-                </div>
-              </button>
-            </div>
-          </div>
-        </div>
-      </aside>
+      <!-- Sidebar Component -->
+      <EditorSidebar
+        v-model:expanded="editorState.sidebarExpanded.value"
+        :current-category="currentCategory || ''"
+        :selected-tags="selectedTags"
+        :category-groups="categoryGroupsUI"
+        @select-category="handleCategorySelect"
+      />
 
       <!-- Main Content -->
       <main class="flex-1 overflow-hidden flex flex-col h-screen">
         <div class="flex-1 overflow-y-auto custom-scrollbar">
           <div class="container p-6 mx-auto">
-            <!-- Header -->
-            <div class="mb-3">
-              <div class="flex items-center justify-between mb-2">
-                <div>
-                  <h1
-                    class="text-3xl font-bold bg-gradient-to-r from-primary-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-1"
-                  >
-                    {{ getCategoryNameByLabel(currentCategory || "") }}
-                  </h1>
-                  <p class="text-sm text-gray-600 dark:text-gray-400">
-                    {{ $t("prompt_creator.step") }} {{ currentStep + 1 }} /
-                    {{ totalSteps }}
-                  </p>
-                </div>
-                <div class="flex items-center gap-3">
-                  <!-- Stats -->
-                  <div
-                    class="bg-white dark:bg-gray-800 rounded-xs border border-gray-200 dark:border-gray-700 px-4 py-1 flex items-center gap-2"
-                  >
-                    <div
-                      class="text-xl font-bold text-primary-600 dark:text-primary-400"
-                    >
-                      {{ Math.round(((currentStep + 1) / totalSteps) * 100) }}%
-                    </div>
-                    <div class="text-xs text-gray-500">
-                      {{ $t("prompt_creator.completed") }}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Progress Bar -->
-              <div
-                class="relative h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden"
-              >
-                <div
-                  class="absolute inset-y-0 left-0 bg-gradient-to-r from-primary-500 via-purple-500 to-pink-500 transition-all duration-500 rounded-full"
-                  :style="{
-                    width: `${((currentStep + 1) / totalSteps) * 100}%`,
-                  }"
-                >
-                  <div class="absolute inset-0 bg-white/20 animate-pulse"></div>
-                </div>
-              </div>
-            </div>
+            <!-- Header with Progress -->
+            <EditorProgressBar
+              :current-step="currentStep + 1"
+              :total-steps="totalSteps"
+              :category-name="getCategoryNameByLabel(currentCategory || '')"
+              class="mb-3"
+            >
+              <template #stats>
+                <EditorStatsCard
+                  :current-step="currentStep + 1"
+                  :total-steps="totalSteps"
+                />
+              </template>
+            </EditorProgressBar>
 
             <div
               class="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[calc(100vh-170px)]"
@@ -194,53 +36,15 @@
               <div
                 class="lg:col-span-2 flex flex-col space-y-4 overflow-hidden"
               >
-                <!-- Search & Filters -->
-                <div
-                  class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-3 flex-shrink-0"
-                >
-                  <div class="flex gap-3">
-                    <UInput
-                      v-model="categorySearch"
-                      :placeholder="$t('prompt_creator.search_placeholder')"
-                      icon="i-heroicons-magnifying-glass"
-                      size="md"
-                      class="flex-1"
-                    />
-                    <UButton
-                      :color="showOnlyFavorites ? 'primary' : 'neutral'"
-                      :variant="showOnlyFavorites ? 'solid' : 'outline'"
-                      size="md"
-                      @click="showOnlyFavorites = !showOnlyFavorites"
-                    >
-                      <UIcon name="i-heroicons-star-solid" class="mr-2" />
-                      {{ $t("prompt_creator.favorites") }}
-                    </UButton>
-                    <UButton
-                      color="primary"
-                      variant="outline"
-                      size="md"
-                      @click="randomizeCategory"
-                    >
-                      <UIcon name="i-heroicons-arrows-right-left" class="p-1" />
-                      {{ $t("prompt_creator.randomize") }}
-                    </UButton>
-                  </div>
-                  <div class="mt-2 flex items-center justify-between text-sm">
-                    <span class="text-gray-600 dark:text-gray-400">
-                      {{ filteredTagsForCategory.length }}
-                      {{ $t("prompt_creator.results") }}
-                    </span>
-                    <button
-                      v-if="selectedTagsForCurrentCategory.length > 0"
-                      @click="clearCurrentCategory"
-                      class="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 font-medium"
-                    >
-                      {{ $t("common.clear") }} ({{
-                        selectedTagsForCurrentCategory.length
-                      }})
-                    </button>
-                  </div>
-                </div>
+                <!-- Search & Filters Component -->
+                <EditorSearchFilters
+                  v-model:search="categorySearch"
+                  v-model:show-favorites="showOnlyFavorites"
+                  :results-count="filteredTagsForCategory.length"
+                  :selected-count="selectedTagsForCurrentCategory.length"
+                  @randomize="randomizeCategory"
+                  @clear="clearCurrentCategory"
+                />
 
                 <!-- Selected Tags -->
                 <div
@@ -284,9 +88,9 @@
                         </span>
                       </button>
 
-                      <!-- Popup controls -->
+                      <!-- Popup controls with Glass Effect -->
                       <div
-                        class="absolute top-full mt-1 left-0 bg-white dark:bg-gray-800 rounded-lg shadow-xl border-2 border-gray-200 dark:border-gray-700 p-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50"
+                        class="absolute top-full mt-2 left-0 glass-card rounded-xl shadow-2xl ring-2 ring-primary-500/20 p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 backdrop-blur-xl"
                       >
                         <div class="space-y-3 min-w-[220px]">
                           <!-- Weight slider -->
@@ -338,8 +142,8 @@
                                 :class="[
                                   'px-2 py-1.5 text-xs rounded-lg font-medium transition-all',
                                   (tagObj.emphasis || 0) === n
-                                    ? 'bg-primary-500 text-white shadow-md scale-105'
-                                    : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600',
+                                    ? 'bg-primary-500 text-white shadow-lg ring-2 ring-primary-400'
+                                    : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 hover:shadow-md',
                                 ]"
                               >
                                 {{ n === 0 ? "None" : "(".repeat(n) }}
@@ -352,28 +156,26 @@
                   </div>
                 </div>
 
-                <!-- Tags Grid -->
-                <div
-                  class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-4 overflow-hidden"
-                >
+                <!-- Tags Grid with Glass Effect -->
+                <div class="glass-card p-5 overflow-hidden shadow-lg">
                   <div
                     v-if="filteredTagsForCategory.length > 0"
-                    class="flex flex-wrap justify-start items-start gap-2 h-full overflow-y-auto pr-2 custom-scrollbar"
+                    class="flex flex-wrap justify-start items-start gap-2.5 h-full overflow-y-auto pr-2 custom-scrollbar"
                   >
                     <button
                       v-for="tagObj in filteredTagsForCategory"
                       :key="getTagText(tagObj)"
                       @click="toggleTag(tagObj)"
                       :class="[
-                        'group relative px-2 py-2 rounded-lg text-xs font-medium transition-all text-left h-fit',
-                        'hover:scale-105',
+                        'group relative px-3 py-2.5 rounded-xl text-xs font-semibold transition-all duration-300 text-left h-fit backdrop-blur-sm',
+                        'hover:brightness-110 hover:shadow-xl',
                         tagObj.nsfw
-                          ? ' bg-red-500/40'
+                          ? ' bg-red-500/40 ring-2 ring-red-500/50'
                           : isTagSelected(tagObj)
                             ? tagObj.nsfw
-                              ? 'bg-red-500 text-white shadow-md'
-                              : 'bg-primary-500 text-white shadow-md'
-                            : 'bg-gray-50 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700',
+                              ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg shadow-red-500/30 ring-2 ring-red-500/50'
+                              : 'bg-gradient-to-r from-primary-500 to-purple-600 text-white shadow-lg shadow-primary-500/30 ring-2 ring-primary-500/50'
+                            : 'bg-white/50 dark:bg-gray-800/50 text-gray-700 dark:text-gray-300 hover:bg-white/70 dark:hover:bg-gray-800/70 ring-1 ring-gray-200/50 dark:ring-gray-700/50',
                       ]"
                     >
                       <div class="flex items-center justify-between gap-1">
@@ -428,331 +230,73 @@
                 <div
                   class="flex justify-between items-center gap-3 flex-shrink-0"
                 >
-                  <UButton
+                  <GlassButton
                     size="lg"
                     color="neutral"
                     variant="outline"
                     :disabled="currentStep === 0"
                     @click="previousStep"
                     class="flex-1"
+                    icon="i-heroicons-arrow-left"
                   >
-                    <UIcon name="i-heroicons-arrow-left" class="mr-2" />
-                    {{ $t("common.previous") }}
-                  </UButton>
+                    <span v-once>{{ $t("common.previous") }}</span>
+                  </GlassButton>
 
-                  <UButton
+                  <GlassButton
                     size="lg"
                     color="neutral"
                     variant="soft"
                     @click="skipCategory"
                     class="w-1/5 flex justify-center"
                   >
-                    {{ $t("common.skip") }}
-                  </UButton>
+                    <span v-once>{{ $t("common.skip") }}</span>
+                  </GlassButton>
 
-                  <UButton
+                  <GlassButton
                     size="lg"
                     color="primary"
                     @click="nextStep"
                     class="flex-1 shadow-lg shadow-primary-500/30 justify-end"
+                    :icon="
+                      currentStep === totalSteps - 1
+                        ? undefined
+                        : 'i-heroicons-arrow-right'
+                    "
+                    icon-position="right"
                   >
                     {{
                       currentStep === totalSteps - 1
                         ? $t("common.finish")
                         : $t("common.next")
                     }}
-                    <UIcon name="i-heroicons-arrow-right" class="ml-2" />
-                  </UButton>
+                  </GlassButton>
                 </div>
               </div>
 
-              <!-- Sidebar - Summary -->
-              <div
-                class="lg:col-span-1 flex flex-col space-y-4 overflow-hidden"
-              >
-                <!-- Card Settings-->
-                <div
-                  class="flex items-center rounded-xl p-2 gap-2 flex-shrink-0 border-1 border-gray-700"
-                >
-                  <USwitch
-                    v-model="showNsfw"
-                    color="error"
-                    size="xl"
-                    :checked-icon="'i-heroicons-eye'"
-                    :unchecked-icon="'i-heroicons-eye-slash'"
-                  />
-                  <UButton
-                    color="neutral"
-                    variant="outline"
-                    size="sm"
-                    @click="showAddTagModal = true"
-                    icon="i-heroicons-plus"
-                  >
-                    {{ $t("prompt_creator.add_custom_tag") }}
-                  </UButton>
-                  <UButton
-                    color="neutral"
-                    variant="outline"
-                    size="sm"
-                    @click="showNegativeTemplatesModal = true"
-                    icon="i-heroicons-exclamation-triangle"
-                  >
-                    {{ $t("prompt_creator.negative_templates") }}
-                  </UButton>
-                  <UButton
-                    color="neutral"
-                    variant="outline"
-                    size="sm"
-                    @click="sharePrompt"
-                    icon="i-heroicons-share"
-                  >
-                    Udostępnij
-                  </UButton>
-                </div>
-
-                <!-- Selected Summary -->
-                <div
-                  class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 flex-1 overflow-hidden flex flex-col"
-                >
-                  <div
-                    class="bg-gray-50 flex justify-between dark:bg-gray-900/50 px-4 py-2 border-b border-gray-200 dark:border-gray-700 flex-shrink-0"
-                  >
-                    <h3 class="font-bold text-gray-900 dark:text-white text-sm">
-                      {{ $t("prompt_creator.selected_tags") }}
-                    </h3>
-                    <div class="flex gap-2">
-                      <div class="flex justify-center items-center gap-1">
-                        <span class="text-sm opacity-90"
-                          >{{
-                            $t("prompt_creator.categories_name").slice(0, 1)
-                          }}:
-                        </span>
-                        <span class="text-sm font-bold">{{
-                          Object.keys(selectedTags).length
-                        }}</span>
-                      </div>
-                      <div class="flex justify-center items-center gap-1">
-                        <span class="text-sm opacity-90"
-                          >{{ $t("prompt_creator.total_tags") }}:
-                        </span>
-                        <span class="text-sm font-bold">{{
-                          totalSelectedTags
-                        }}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="p-3 overflow-y-auto flex-1 custom-scrollbar">
-                    <div
-                      v-if="Object.keys(selectedTags).length > 0"
-                      class="space-y-2"
-                    >
-                      <div
-                        v-for="(tagObjs, category) in selectedTags"
-                        :key="category"
-                      >
-                        <div
-                          class="text-xs font-bold text-gray-500 dark:text-gray-400 mb-1"
-                        >
-                          {{ getCategoryNameByLabel(category) }} ({{
-                            tagObjs.length
-                          }})
-                        </div>
-                        <div class="flex flex-wrap gap-1">
-                          <button
-                            v-for="tagObj in tagObjs"
-                            :key="getTagText(tagObj)"
-                            @click="removeTagFromSummary(category, tagObj)"
-                            :class="[
-                              'px-2 py-0.5 rounded text-xs font-medium transition-all hover:scale-105',
-                              tagObj.nsfw
-                                ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 border border-red-300 dark:border-red-700'
-                                : 'bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 border border-primary-300 dark:border-primary-700',
-                            ]"
-                          >
-                            {{ getTagText(tagObj) }}
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    <div v-else class="flex items-center justify-center h-full">
-                      <div class="text-center">
-                        <UIcon
-                          name="i-heroicons-inbox"
-                          class="w-10 h-10 mx-auto mb-2 text-gray-300 dark:text-gray-600"
-                        />
-                        <p class="text-xs text-gray-500 dark:text-gray-400">
-                          {{ $t("prompt_creator.no_selections") }}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Generated Prompts -->
-                <div
-                  class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 flex-shrink-0"
-                >
-                  <div
-                    class="bg-green-50 dark:bg-green-900/20 px-4 py-2 border-b border-gray-200 dark:border-gray-700"
-                  >
-                    <h3
-                      class="font-bold text-gray-900 dark:text-white text-sm flex items-center gap-2"
-                    >
-                      <UIcon
-                        name="i-heroicons-sparkles"
-                        class="w-4 h-4 text-green-500"
-                      />
-                      {{ $t("prompt_creator.prompts") }}
-                    </h3>
-                  </div>
-                  <div class="p-3 space-y-2">
-                    <!-- Positive -->
-                    <div v-if="generatedPrompt.positive">
-                      <div class="flex items-center justify-between mb-1">
-                        <span
-                          class="text-xs font-bold text-green-600 dark:text-green-400"
-                        >
-                          {{ $t("prompt_creator.positive") }}
-                        </span>
-                        <button
-                          @click="copyPrompt('positive')"
-                          class="text-xs text-gray-600 hover:text-green-600 dark:text-gray-400 dark:hover:text-green-400"
-                        >
-                          {{ copiedPositive ? "✓" : "📋" }}
-                        </button>
-                      </div>
-                      <div
-                        class="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-2"
-                      >
-                        <p
-                          class="text-xs font-mono text-gray-700 dark:text-gray-300 line-clamp-2"
-                        >
-                          {{ generatedPrompt.positive }}
-                        </p>
-                      </div>
-                    </div>
-
-                    <!-- Negative -->
-                    <div v-if="generatedPrompt.negative">
-                      <div class="flex items-center justify-between mb-1">
-                        <span
-                          class="text-xs font-bold text-red-600 dark:text-red-400"
-                        >
-                          {{ $t("prompt_creator.negative") }}
-                        </span>
-                        <button
-                          @click="copyPrompt('negative')"
-                          class="text-xs text-gray-600 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400"
-                        >
-                          {{ copiedNegative ? "✓" : "📋" }}
-                        </button>
-                      </div>
-                      <div
-                        class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-2"
-                      >
-                        <p
-                          class="text-xs font-mono text-gray-700 dark:text-gray-300 line-clamp-2"
-                        >
-                          {{ generatedPrompt.negative }}
-                        </p>
-                      </div>
-                    </div>
-
-                    <!-- Actions -->
-                    <div class="pt-2 space-y-2">
-                      <UButton
-                        color="success"
-                        size="md"
-                        block
-                        @click="savePrompt"
-                      >
-                        <UIcon name="i-heroicons-bookmark-solid" class="mr-2" />
-                        {{ $t("common.save") }}
-                      </UButton>
-                      <UButton
-                        color="primary"
-                        size="md"
-                        block
-                        @click="usePrompt"
-                      >
-                        <UIcon name="i-heroicons-play-solid" class="mr-2" />
-                        {{ $t("common.use") }}
-                      </UButton>
-                      <UButton
-                        color="neutral"
-                        variant="outline"
-                        size="sm"
-                        block
-                        @click="clearAll"
-                      >
-                        <UIcon name="i-heroicons-trash" class="mr-2" />
-                        {{ $t("common.clear_all") }}
-                      </UButton>
-                      <div class="flex gap-2">
-                        <UButton
-                          color="neutral"
-                          variant="outline"
-                          size="sm"
-                          @click="undo"
-                          :disabled="!canUndo"
-                          icon="i-heroicons-arrow-uturn-left"
-                        >
-                          Cofnij
-                        </UButton>
-                        <UButton
-                          color="neutral"
-                          variant="outline"
-                          size="sm"
-                          @click="redo"
-                          :disabled="!canRedo"
-                          icon="i-heroicons-arrow-uturn-right"
-                        >
-                          Ponów
-                        </UButton>
-                        <UButton
-                          color="neutral"
-                          variant="outline"
-                          size="sm"
-                          @click="saveSnapshot"
-                          icon="i-heroicons-clock"
-                        >
-                          Zapisz wersję
-                        </UButton>
-                        <UButton
-                          color="neutral"
-                          variant="outline"
-                          size="sm"
-                          @click="showHistoryModal = true"
-                          icon="i-heroicons-queue-list"
-                        >
-                          Historia
-                        </UButton>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <!-- Sidebar - Summary Component -->
+              <EditorSelectedSummary
+                :selected-tags="selectedTags"
+                :positive-prompt="generatedPrompt.positive"
+                :negative-prompt="generatedPrompt.negative"
+                :show-nsfw="showNsfw"
+                :copied-positive="copiedPositive"
+                :copied-negative="copiedNegative"
+                @update:show-nsfw="showNsfw = $event"
+                @add-custom-tag="showAddTagModal = true"
+                @show-negative-templates="showNegativeTemplatesModal = true"
+                @clear-category="clearCategoryFromSummary"
+                @remove-tag="removeTagFromSummary"
+                @update-tag="updateTagFromSummary"
+                @copy-prompt="copyPrompt"
+                @save-prompt="savePrompt"
+                @use-prompt="usePrompt"
+                @clear-all="clearAll"
+              />
             </div>
           </div>
         </div>
       </main>
     </div>
-
-    <!-- SVG for Gooey Effect -->
-    <svg class="hidden">
-      <defs>
-        <filter id="goo">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-          <feColorMatrix
-            in="blur"
-            mode="matrix"
-            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7"
-            result="goo"
-          />
-          <feBlend in="SourceGraphic" in2="goo" />
-        </filter>
-      </defs>
-    </svg>
 
     <!-- Save Modal -->
     <SavePromptModal
@@ -767,69 +311,244 @@
     <UModal
       v-model:open="showAddTagModal"
       :title="$t('prompt_creator.add_custom_tag')"
+      :description="$t('prompt_creator.add_custom_tag_description')"
+      :ui="{
+        content: 'max-w-3xl',
+        body: 'overflow-y-auto max-h-[calc(100vh-6rem)]',
+      }"
     >
-      <template #description>{{
-        $t("prompt_creator.add_custom_tag_description")
-      }}</template>
       <template #body>
-        <form @submit.prevent="addCustomTag" class="space-y-4 p-4">
-          <div class="space-y-2">
-            <label
-              class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+        <form @submit.prevent="addCustomTag" class="space-y-6 p-6">
+          <!-- Sekcja: Podstawowe informacje -->
+          <div class="space-y-4">
+            <div
+              class="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white pb-2 border-b border-gray-200 dark:border-gray-700"
             >
-              {{ $t("prompt_creator.tag_name") }} (PL)
-            </label>
-            <UInput v-model="customTag.pl" size="lg" />
+              <UIcon name="i-heroicons-tag" class="w-5 h-5 text-primary-500" />
+              <span v-once>{{ $t("prompt_creator.tag_names") }}</span>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4">
+              <!-- Nazwa PL -->
+              <div class="space-y-2">
+                <label
+                  class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+                >
+                  <UIcon name="i-heroicons-language" class="w-4 h-4" />
+                  <span v-once>{{ $t("prompt_creator.tag_name") }}</span>
+                  <GlassBadge color="primary" variant="soft" size="xs">
+                    <span v-once>PL</span>
+                  </GlassBadge>
+                  <span class="text-red-500">*</span>
+                </label>
+                <UInput
+                  v-model="customTag.pl"
+                  :placeholder="$t('prompt_creator.tag_name_placeholder_pl')"
+                  size="lg"
+                  leading-icon="i-heroicons-pencil"
+                  class="w-full"
+                  required
+                />
+                <p
+                  v-if="!customTag.pl.trim()"
+                  class="text-xs text-gray-500 dark:text-gray-400"
+                >
+                  <span v-once>{{
+                    $t("prompt_creator.tag_name_hint_pl")
+                  }}</span>
+                </p>
+              </div>
+
+              <!-- Nazwa EN -->
+              <div class="space-y-2">
+                <label
+                  class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+                >
+                  <UIcon name="i-heroicons-language" class="w-4 h-4" />
+                  <span v-once>{{ $t("prompt_creator.tag_name") }}</span>
+                  <GlassBadge color="secondary" variant="soft" size="xs">
+                    <span v-once>EN</span>
+                  </GlassBadge>
+                  <span class="text-red-500">*</span>
+                </label>
+                <UInput
+                  v-model="customTag.en"
+                  :placeholder="$t('prompt_creator.tag_name_placeholder_en')"
+                  size="lg"
+                  leading-icon="i-heroicons-pencil"
+                  class="w-full"
+                  required
+                />
+                <p
+                  v-if="!customTag.en.trim()"
+                  class="text-xs text-gray-500 dark:text-gray-400"
+                >
+                  <span v-once>{{
+                    $t("prompt_creator.tag_name_hint_en")
+                  }}</span>
+                </p>
+              </div>
+            </div>
           </div>
-          <div class="space-y-2">
-            <label
-              class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+
+          <!-- Sekcja: Negative Prompts (opcjonalne) -->
+          <div class="space-y-4">
+            <div
+              class="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white pb-2 border-b border-gray-200 dark:border-gray-700"
             >
-              {{ $t("prompt_creator.tag_name") }} (EN)
-            </label>
-            <UInput v-model="customTag.en" size="lg" />
+              <UIcon
+                name="i-heroicons-exclamation-circle"
+                class="w-5 h-5 text-red-500"
+              />
+              <span v-once>{{
+                $t("prompt_creator.negative_prompts_optional")
+              }}</span>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4">
+              <!-- Negative PL -->
+              <div class="space-y-2">
+                <label
+                  class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+                >
+                  <UIcon name="i-heroicons-x-circle" class="w-4 h-4" />
+                  <span v-once>{{ $t("prompt_creator.negative_prompt") }}</span>
+                  <GlassBadge color="primary" variant="soft" size="xs">
+                    <span v-once>PL</span>
+                  </GlassBadge>
+                </label>
+                <UInput
+                  v-model="customTag.neg_pl"
+                  :placeholder="
+                    $t('prompt_creator.negative_prompt_placeholder_pl')
+                  "
+                  size="lg"
+                  leading-icon="i-heroicons-minus-circle"
+                  class="w-full"
+                />
+              </div>
+
+              <!-- Negative EN -->
+              <div class="space-y-2">
+                <label
+                  class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+                >
+                  <UIcon name="i-heroicons-x-circle" class="w-4 h-4" />
+                  <span v-once>{{ $t("prompt_creator.negative_prompt") }}</span>
+                  <GlassBadge color="secondary" variant="soft" size="xs">
+                    <span v-once>EN</span>
+                  </GlassBadge>
+                </label>
+                <UInput
+                  v-model="customTag.neg_en"
+                  :placeholder="
+                    $t('prompt_creator.negative_prompt_placeholder_en')
+                  "
+                  size="lg"
+                  leading-icon="i-heroicons-minus-circle"
+                  class="w-full"
+                />
+              </div>
+            </div>
+
+            <div
+              class="flex items-start gap-2 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg"
+            >
+              <UIcon
+                name="i-heroicons-information-circle"
+                class="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0"
+              />
+              <p class="text-sm text-blue-700 dark:text-blue-300">
+                <span v-once>{{
+                  $t("prompt_creator.negative_prompt_info")
+                }}</span>
+              </p>
+            </div>
           </div>
-          <div class="space-y-2">
-            <label
-              class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+
+          <!-- Sekcja: Ustawienia dodatkowe -->
+          <div class="space-y-4">
+            <div
+              class="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white pb-2 border-b border-gray-200 dark:border-gray-700"
             >
-              {{ $t("prompt_creator.negative_prompt") }} (PL)
-            </label>
-            <UInput v-model="customTag.neg_pl" size="lg" />
+              <UIcon
+                name="i-heroicons-cog-6-tooth"
+                class="w-5 h-5 text-gray-500"
+              />
+              <span v-once>{{ $t("prompt_creator.additional_settings") }}</span>
+            </div>
+
+            <GlassCard variant="subtle" class="p-4">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <UIcon
+                    name="i-heroicons-eye-slash"
+                    class="w-5 h-5 text-red-500"
+                  />
+                  <div>
+                    <p
+                      class="text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      <span v-once>{{
+                        $t("prompt_creator.mark_as_nsfw")
+                      }}</span>
+                    </p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">
+                      <span v-once>{{
+                        $t("prompt_creator.nsfw_description")
+                      }}</span>
+                    </p>
+                  </div>
+                </div>
+                <!-- Custom Toggle Switch -->
+                <button
+                  type="button"
+                  @click="customTag.nsfw = !customTag.nsfw"
+                  :class="[
+                    'relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
+                    customTag.nsfw
+                      ? 'bg-red-500'
+                      : 'bg-gray-200 dark:bg-gray-700',
+                  ]"
+                >
+                  <span
+                    :class="[
+                      'inline-block h-4 w-4 transform rounded-full bg-white transition-transform',
+                      customTag.nsfw ? 'translate-x-6' : 'translate-x-1',
+                    ]"
+                  />
+                </button>
+              </div>
+            </GlassCard>
           </div>
-          <div class="space-y-2">
-            <label
-              class="block text-sm font-medium text-gray-700 dark:text-gray-300"
-            >
-              {{ $t("prompt_creator.negative_prompt") }} (EN)
-            </label>
-            <UInput v-model="customTag.neg_en" size="lg" />
-          </div>
-          <div class="flex items-center gap-2">
-            <input
-              type="checkbox"
-              v-model="customTag.nsfw"
-              id="nsfw-check"
-              class="rounded"
-            />
-            <label
-              for="nsfw-check"
-              class="text-sm text-gray-700 dark:text-gray-300"
-            >
-              NSFW
-            </label>
-          </div>
-          <div class="flex justify-end gap-3 pt-4 border-t">
-            <UButton
-              color="neutral"
-              variant="outline"
-              @click="showAddTagModal = false"
-            >
-              {{ $t("pages.common.cancel") }}
-            </UButton>
-            <UButton type="submit" color="primary">
-              {{ $t("pages.common.add") }}
-            </UButton>
+
+          <!-- Actions -->
+          <div
+            class="flex justify-between items-center gap-3 pt-4 border-t border-gray-200 dark:border-gray-700"
+          >
+            <p class="text-xs text-gray-500 dark:text-gray-400">
+              <span v-once>{{
+                $t("prompt_creator.required_fields_note")
+              }}</span>
+            </p>
+            <div class="flex gap-3">
+              <GlassButton
+                color="neutral"
+                variant="outline"
+                @click="showAddTagModal = false"
+                icon="i-heroicons-x-mark"
+              >
+                <span v-once>{{ $t("pages.shared.cancel") }}</span>
+              </GlassButton>
+              <GlassButton
+                type="submit"
+                color="primary"
+                :disabled="!customTag.pl.trim() || !customTag.en.trim()"
+                icon="i-heroicons-plus-circle"
+              >
+                <span v-once>{{ $t("pages.shared.add") }}</span>
+              </GlassButton>
+            </div>
           </div>
         </form>
       </template>
@@ -838,44 +557,199 @@
     <UModal
       v-model:open="showNegativeTemplatesModal"
       :title="$t('prompt_creator.negative_templates')"
+      :description="$t('prompt_creator.negative_templates_description')"
+      :ui="{
+        content: 'max-w-4xl',
+        body: 'overflow-y-auto max-h-[calc(100vh-8rem)]',
+      }"
     >
-      <template #description>{{
-        $t("prompt_creator.negative_templates_description")
-      }}</template>
       <template #body>
-        <div class="space-y-4">
-          <div
-            v-for="group in negativeTemplateGroups"
-            :key="group.label"
-            class="space-y-2"
-          >
-            <h4 class="text-sm font-semibold text-gray-900 dark:text-white">
-              {{ group.label }}
-            </h4>
-            <div class="grid grid-cols-2 gap-2">
-              <UButton
-                v-for="template in group.templates"
-                :key="template.label"
-                color="neutral"
-                variant="outline"
-                size="xs"
-                @click="addNegativeTemplate(template.text)"
-                class="text-xs"
-                :class="{
-                  'bg-primary-500 text-white border-primary-600':
-                    activeNegativeTemplates.includes(template.text),
-                  'bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200':
-                    !activeNegativeTemplates.includes(template.text),
-                }"
-              >
-                {{ template.label }}
-                <span
-                  v-if="activeNegativeTemplates.includes(template.text)"
-                  class="ml-1"
-                  >✓</span
+        <div class="space-y-6 p-6">
+          <!-- Header z licznikiem i search -->
+          <div class="space-y-4">
+            <div class="flex items-center justify-between flex-wrap gap-3">
+              <!-- Licznik wybranych -->
+              <div class="flex items-center gap-2">
+                <GlassBadge
+                  :color="
+                    activeNegativeTemplates.length > 0 ? 'primary' : 'neutral'
+                  "
+                  variant="soft"
+                  size="md"
                 >
-              </UButton>
+                  <UIcon name="i-heroicons-check-circle" class="w-4 h-4" />
+                  <span class="font-semibold">
+                    {{ activeNegativeTemplates.length }}
+                  </span>
+                  <span v-once>{{ $t("prompt_creator.selected") }}</span>
+                </GlassBadge>
+              </div>
+
+              <!-- Clear all button -->
+              <GlassButton
+                v-if="activeNegativeTemplates.length > 0"
+                color="error"
+                variant="outline"
+                size="sm"
+                @click="activeNegativeTemplates = []"
+                icon="i-heroicons-x-circle"
+              >
+                <span v-once>{{ $t("prompt_creator.clear_all") }}</span>
+              </GlassButton>
             </div>
+
+            <!-- Info box -->
+            <div
+              class="flex items-start gap-2 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg"
+            >
+              <UIcon
+                name="i-heroicons-information-circle"
+                class="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0"
+              />
+              <p class="text-sm text-blue-700 dark:text-blue-300">
+                <span v-once>{{
+                  $t("prompt_creator.negative_templates_info")
+                }}</span>
+              </p>
+            </div>
+          </div>
+
+          <!-- Template Groups -->
+          <div class="space-y-6">
+            <GlassCard
+              v-for="group in negativeTemplateGroups"
+              :key="group.label"
+              variant="subtle"
+              padding="md"
+              class="space-y-4"
+            >
+              <!-- Group Header -->
+              <div
+                class="flex items-center gap-2 pb-2 border-b border-gray-200 dark:border-gray-700"
+              >
+                <UIcon
+                  name="i-heroicons-folder"
+                  class="w-5 h-5 text-primary-500"
+                />
+                <h4 class="text-sm font-semibold text-gray-900 dark:text-white">
+                  {{ group.label }}
+                </h4>
+                <GlassBadge color="neutral" variant="soft" size="xs">
+                  {{ group.templates.length }}
+                </GlassBadge>
+              </div>
+
+              <!-- Templates Grid -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                <GlassButton
+                  v-for="template in group.templates"
+                  :key="template.label"
+                  :color="
+                    activeNegativeTemplates.includes(template.text)
+                      ? 'primary'
+                      : 'neutral'
+                  "
+                  :variant="
+                    activeNegativeTemplates.includes(template.text)
+                      ? 'solid'
+                      : 'outline'
+                  "
+                  size="sm"
+                  @click="addNegativeTemplate(template.text)"
+                  class="justify-between group relative overflow-hidden"
+                >
+                  <span class="flex-1 text-left truncate">
+                    {{ template.label }}
+                  </span>
+                  <UIcon
+                    v-if="activeNegativeTemplates.includes(template.text)"
+                    name="i-heroicons-check-circle-solid"
+                    class="w-4 h-4 flex-shrink-0 ml-2"
+                  />
+                  <UIcon
+                    v-else
+                    name="i-heroicons-plus-circle"
+                    class="w-4 h-4 flex-shrink-0 ml-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                  />
+                </GlassButton>
+              </div>
+
+              <!-- Selected templates from this group -->
+              <div
+                v-if="
+                  group.templates.some((t) =>
+                    activeNegativeTemplates.includes(t.text)
+                  )
+                "
+                class="pt-3 border-t border-gray-200 dark:border-gray-700"
+              >
+                <p class="text-xs text-gray-500 dark:text-gray-400 mb-2">
+                  <span v-once
+                    >{{ $t("prompt_creator.selected_from_group") }}:</span
+                  >
+                </p>
+                <div class="flex flex-wrap gap-2">
+                  <GlassBadge
+                    v-for="template in group.templates.filter((t) =>
+                      activeNegativeTemplates.includes(t.text)
+                    )"
+                    :key="template.text"
+                    color="primary"
+                    variant="soft"
+                    size="sm"
+                  >
+                    {{ template.label }}
+                  </GlassBadge>
+                </div>
+              </div>
+            </GlassCard>
+          </div>
+
+          <!-- Preview wybranych szablonów -->
+          <div v-if="activeNegativeTemplates.length > 0" class="space-y-3">
+            <div
+              class="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white pb-2 border-b border-gray-200 dark:border-gray-700"
+            >
+              <UIcon name="i-heroicons-eye" class="w-5 h-5 text-purple-500" />
+              <span v-once>{{ $t("prompt_creator.preview") }}</span>
+            </div>
+
+            <GlassCard variant="strong" padding="md">
+              <p
+                class="text-sm text-gray-700 dark:text-gray-300 font-mono leading-relaxed"
+              >
+                {{ activeNegativeTemplates.join(", ") }}
+              </p>
+            </GlassCard>
+
+            <div
+              class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400"
+            >
+              <UIcon name="i-heroicons-document-text" class="w-4 h-4" />
+              <span>
+                {{ activeNegativeTemplates.join(", ").length }}
+                <span v-once>{{ $t("prompt_creator.characters") }}</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div
+            class="flex justify-between items-center gap-3 pt-4 border-t border-gray-200 dark:border-gray-700"
+          >
+            <p class="text-xs text-gray-500 dark:text-gray-400">
+              <span v-once>{{
+                $t("prompt_creator.templates_auto_apply")
+              }}</span>
+            </p>
+            <GlassButton
+              color="neutral"
+              variant="outline"
+              @click="showNegativeTemplatesModal = false"
+              icon="i-heroicons-check"
+            >
+              <span v-once>{{ $t("common.done") }}</span>
+            </GlassButton>
           </div>
         </div>
       </template>
@@ -906,7 +780,7 @@
                   {{ snapshot.tagsCount }} tagów, krok {{ snapshot.step + 1 }}
                 </p>
               </div>
-              <UButton
+              <GlassButton
                 color="error"
                 variant="ghost"
                 size="xs"
@@ -929,21 +803,29 @@
     <!-- Modal alertu -->
     <UModal v-model:open="showAlertModal" :title="$t('common.error')">
       <template #description>{{
-        $t("pages.common.error_description")
+        $t("pages.shared.error_description")
       }}</template>
       <template #body>
         <p>{{ alertMessage }}</p>
       </template>
       <template #footer>
-        <UButton @click="showAlertModal = false">{{
-          $t("common.save")
-        }}</UButton>
+        <GlassButton @click="showAlertModal = false">
+          <span v-once>{{ $t("common.save") }}</span>
+        </GlassButton>
       </template>
     </UModal>
   </div>
 </template>
 
 <script setup lang="ts">
+// Import components
+import SavePromptModal from "~/components/editor/SavePromptModal.vue";
+import EditorSidebar from "~/components/editor/EditorSidebar.vue";
+import EditorProgressBar from "~/components/editor/EditorProgressBar.vue";
+import EditorStatsCard from "~/components/editor/EditorStatsCard.vue";
+import EditorSearchFilters from "~/components/editor/EditorSearchFilters.vue";
+import EditorSelectedSummary from "~/components/editor/EditorSelectedSummary.vue";
+
 // Extend Window type for custom properties
 declare global {
   interface Window {
@@ -951,6 +833,10 @@ declare global {
     mouseY?: number;
   }
 }
+
+// Initialize editor state
+const editorState = useEditorState();
+
 interface TagObject {
   pl: string;
   en: string;
@@ -1006,7 +892,6 @@ const addNegativeTemplate = (text: string) => {
     additionalNegative.value = currentParts.join(", ");
   }
 };
-import SavePromptModal from "~/components/editor/SavePromptModal.vue";
 
 definePageMeta({
   layout: "dashboard",
@@ -1130,6 +1015,24 @@ const categoryOrderKeys: string[] = [
   "other",
 ];
 
+// Handler for category selection from sidebar
+const handleCategorySelect = (categoryLabel: string) => {
+  // Convert label to key (e.g., "Subject" → "subject")
+  const key = labelToKey[categoryLabel];
+  if (!key) {
+    console.warn(`No key found for category label: ${categoryLabel}`);
+    return;
+  }
+
+  // Find index in categoryOrderKeys
+  const index = categoryOrderKeys.indexOf(key);
+  if (index !== -1) {
+    currentStep.value = index;
+  } else {
+    console.warn(`Category key not found in order: ${key}`);
+  }
+};
+
 // HELPERY UI: tłumaczenie nazwy kategorii po etykiecie
 const getI18nKeyFromLabel = (label: string) => labelToKey[label] || null;
 const getCategoryNameByLabel = (label: string) => {
@@ -1182,10 +1085,10 @@ const getCategoryIcon = (category: string) => {
   return categoryIcons[category] || "i-heroicons-tag";
 };
 
-// Wszystkie kategorie
+// Wszystkie kategorie (etykiety angielskie z content/tags)
 const categories = categoryOrderKeys
   .map((key) => categoryKeyMap[key])
-  .filter((label) => !!label && !!categoryIcons[label as string]);
+  .filter((label): label is string => !!label);
 
 // Definicja grup (klucze i18n zgodne z categoryOrderKeys)
 const categoryGroupsDef = [
@@ -1251,7 +1154,9 @@ const categoryGroupsUI = computed(() =>
     key: g.key,
     title: t(`prompt_creator.groups.${g.key}`),
     // items jako LABELS (np. "Subject"), zgodne z selectedTags i resztą logiki
-    items: g.items.map((k) => categoryKeyMap[k]).filter((label) => !!label),
+    items: g.items
+      .map((k) => categoryKeyMap[k])
+      .filter((label): label is string => !!label),
   }))
 );
 
@@ -1595,18 +1500,34 @@ const toggleTag = (tagObj: TagObject) => {
   toggleTagDebounced(tagObj);
 };
 
-const removeTagFromSummary = (category: string, tagObj: TagObject) => {
+const removeTagFromSummary = (category: string, tagIndex: number) => {
   if (!selectedTags.value[category]) return;
 
-  const index = selectedTags.value[category].findIndex(
-    (selected) => getTagText(selected) === getTagText(tagObj)
-  );
+  selectedTags.value[category].splice(tagIndex, 1);
+  if (selectedTags.value[category].length === 0) {
+    delete selectedTags.value[category];
+  }
+};
 
-  if (index > -1) {
-    selectedTags.value[category].splice(index, 1);
-    if (selectedTags.value[category].length === 0) {
-      delete selectedTags.value[category];
-    }
+const updateTagFromSummary = (
+  category: string,
+  tagIndex: number,
+  updatedTag: TagObject
+) => {
+  if (!selectedTags.value[category] || !selectedTags.value[category][tagIndex])
+    return;
+
+  // Update the tag with new weight/emphasis
+  selectedTags.value[category][tagIndex] = {
+    ...selectedTags.value[category][tagIndex],
+    weight: updatedTag.weight,
+    emphasis: updatedTag.emphasis,
+  };
+};
+
+const clearCategoryFromSummary = (category: string) => {
+  if (selectedTags.value[category]) {
+    delete selectedTags.value[category];
   }
 };
 
@@ -1806,7 +1727,7 @@ const updateEmphasis = (tagObj: TagObject, emphasis: number) => {
 const tagClasses = computed(() => {
   return (tagObj: TagObject) => [
     "px-2 py-1.5 rounded-lg text-xs font-medium transition-all",
-    "border-2 hover:scale-105",
+    "border-2 hover:shadow-lg hover:brightness-110",
     tagObj.nsfw
       ? "bg-red-50 dark:bg-red-900/20 border-red-500 text-red-700 dark:text-red-300"
       : "bg-white dark:bg-gray-800 border-primary-500 text-gray-900 dark:text-white",
@@ -2127,89 +2048,6 @@ onMounted(() => {
   pushToHistory(); // Dodaj początkowy stan
 });
 
-// Dragging functionality for toggle button
-const toggleButtonRef = ref<HTMLElement | null>(null);
-const buttonVisible = ref(false);
-const buttonTop = ref(0);
-const buttonLeft = ref(0);
-const mouseY = ref(0);
-const buttonOffset = ref(-30); // domyślny offset
-
-const handleMouseMove = (e: MouseEvent) => {
-  mouseY.value = e.clientY;
-  const sidebarWidth = sidebarExpanded.value ? 288 : 64;
-  const distance = e.clientX - sidebarWidth;
-
-  // Konfiguracja dla lg i mobile
-  const config = isLg.value
-    ? {
-        min: 0,
-        max: 170,
-        steps: [
-          { to: 60, offset: -30 },
-          { to: 70, offset: -10 },
-          { to: 90, offset: 4 },
-        ],
-        smooth: { from: 100, to: 170, minOffset: 7, maxOffset: 80, extra: 12 },
-      }
-    : {
-        min: -10,
-        max: 120,
-        steps: [
-          { to: 0, offset: -10 },
-          { to: 25, offset: 4 },
-        ],
-        smooth: { from: 25, to: 120, minOffset: 7, maxOffset: 80, extra: 25 },
-      };
-
-  if (distance >= config.min && distance < config.max) {
-    buttonVisible.value = true;
-    buttonTop.value = e.clientY;
-
-    // Sprawdź progi
-    let foundStep = false;
-    for (const step of config.steps) {
-      if (distance < step.to) {
-        buttonOffset.value = step.offset;
-        foundStep = true;
-        break;
-      }
-    }
-
-    // Jeśli nie znaleziono progu, płynny offset
-    if (!foundStep) {
-      const { from, to, minOffset, maxOffset, extra } = config.smooth;
-      const percent = Math.min(Math.max((distance - from) / (to - from), 0), 1);
-      buttonOffset.value =
-        minOffset + percent * (maxOffset - minOffset) + (extra || 0);
-    }
-
-    buttonLeft.value = sidebarWidth + buttonOffset.value;
-  } else {
-    buttonVisible.value = false;
-    buttonOffset.value = -30;
-  }
-};
-watch(sidebarExpanded, () => {
-  // Symuluj ruch myszki w ostatniej pozycji
-  handleMouseMove({
-    clientX: window.mouseX ?? 0,
-    clientY: window.mouseY ?? 0,
-  } as MouseEvent);
-});
-// Event listeners
-onMounted(() => {
-  window.addEventListener("mousemove", (e) => {
-    window.mouseX = e.clientX;
-    window.mouseY = e.clientY;
-    handleMouseMove(e);
-  });
-});
-
-onUnmounted(() => {
-  window.removeEventListener("mousemove", handleMouseMove);
-});
-
 const isLg = ref(false);
 
 onMounted(() => {
@@ -2302,49 +2140,5 @@ input[type="range"]::-moz-range-thumb {
 
 input[type="range"]::-moz-range-thumb:hover {
   transform: scale(1.2);
-}
-
-/* Gooey Effect - uproszczone */
-.gooey-sidebar {
-  filter: url(#goo);
-  z-index: 40;
-  position: relative;
-}
-
-.gooey-container {
-  position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.15s ease-out;
-  z-index: -50;
-}
-
-.gooey-button {
-  position: relative;
-  background: rgb(9, 57, 134); /* primary-500 */
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-  transition: all 0.2s ease-out;
-  color: white;
-}
-
-/* Gooey blob - tło */
-.gooey-blob {
-  position: absolute;
-  background: #1e2939;
-  border-radius: 50%;
-  opacity: 1;
-}
-
-.blob-bg {
-  width: 35px;
-  height: 35px;
-  left: -7px;
 }
 </style>

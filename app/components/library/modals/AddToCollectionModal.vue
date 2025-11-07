@@ -41,16 +41,18 @@
             name="i-heroicons-check-circle"
             class="w-12 h-12 mx-auto mb-2 text-gray-400"
           />
-          <p>{{ $t("library.modals.addToCollection.empty") }}</p>
+          <p>
+            <span v-once>{{ $t("library.modals.addToCollection.empty") }}</span>
+          </p>
         </div>
       </div>
     </template>
 
     <template #footer="{ close }">
-      <UButton color="neutral" variant="ghost" @click="close">
-        {{ $t("library.modals.addToCollection.cancel") }}
-      </UButton>
-      <UButton
+      <GlassButton color="neutral" variant="ghost" @click="close">
+        <span v-once>{{ $t("library.modals.addToCollection.cancel") }}</span>
+      </GlassButton>
+      <GlassButton
         color="primary"
         :disabled="selectedIds.length === 0"
         @click="handleAdd"
@@ -61,7 +63,7 @@
             count: selectedIds.length,
           })
         }}
-      </UButton>
+      </GlassButton>
     </template>
   </UModal>
 </template>

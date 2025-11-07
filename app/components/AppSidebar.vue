@@ -1,61 +1,69 @@
-<template>
-  <!-- mobile toggle button (floating) - PRZENIEŚ POZA OVERLAY -->
-  <button
+﻿<template>
+  <!-- mobile toggle button (floating) -->
+  <GlassButton
     v-if="!isSidebarOpen"
-    @click="open"
-    class="fixed top-4 right-4 z-50 lg:hidden p-2 rounded-lg bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 flex items-center justify-center"
+    @click="() => open()"
+    icon="i-heroicons-bars-3"
+    size="lg"
+    color="primary"
+    variant="solid"
+    class="fixed top-4 right-4 lg:hidden glass-button shadow-lg"
+    :style="zIndexStyle('SIDEBAR')"
     aria-label="Open menu"
-  >
-    <UIcon
-      name="i-heroicons-bars-3"
-      class="h-6 w-6 text-gray-600 dark:text-gray-300"
-    />
-  </button>
+  />
 
   <!-- mobile overlay -->
-  <div v-if="isSidebarOpen" class="fixed inset-0 z-50 lg:hidden">
-    <div class="fixed inset-0 bg-black/50" @click="close" />
+  <div
+    v-if="isSidebarOpen"
+    class="fixed inset-0 lg:hidden"
+    :style="zIndexStyle('SIDEBAR')"
+  >
+    <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" @click="close" />
     <aside
-      class="fixed inset-y-0 left-0 w-64 bg-white dark:bg-gray-800 overflow-hidden flex flex-col"
+      class="fixed inset-y-0 left-0 w-64 glass-panel overflow-hidden flex flex-col shadow-2xl"
     >
       <!-- mobile header with close button -->
       <div
-        class="flex h-16 items-center justify-between px-4 border-b border-gray-100 dark:border-gray-700"
+        class="flex h-16 items-center justify-between px-4 border-b border-white/20 dark:border-gray-700/50"
       >
-        <NuxtLink to="/" class="flex items-center gap-2">
+        <NuxtLink to="/" class="flex items-center gap-2 group">
           <div
-            class="h-8 w-8 bg-primary-600 rounded flex items-center justify-center text-white font-bold"
+            class="h-8 w-8 bg-gradient-to-br from-primary-600 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold shadow-lg group-hover:scale-110 transition-transform"
           >
             PF
           </div>
-          <span class="text-lg font-semibold text-gray-900 dark:text-white">{{
-            $t("app.name")
-          }}</span>
+          <span class="text-lg font-semibold text-gray-900 dark:text-white">
+            <span v-once>{{ $t("app.name") }}</span>
+          </span>
         </NuxtLink>
-        <button
-          @click="close"
-          class="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
+        <GlassButton
+          @click="() => close()"
+          icon="i-heroicons-x-mark"
+          color="neutral"
+          variant="ghost"
           aria-label="Close menu"
-        >
-          <UIcon
-            name="i-heroicons-x-mark"
-            class="h-6 w-6 text-gray-600 dark:text-gray-300"
-          />
-        </button>
+        />
       </div>
 
       <!-- mobile navigation -->
-      <nav class="flex-1 overflow-y-auto px-2 py-4">
+      <nav
+        class="flex-1 overflow-y-auto custom-scrollbar px-2 py-4"
+        style="contain: layout style"
+      >
         <ul class="space-y-1">
-          <li v-for="item in navigation" :key="item.href">
+          <li
+            v-for="item in navigation"
+            :key="item.href"
+            v-memo="[isActive(item.href)]"
+          >
             <NuxtLink
               :to="item.href"
               @click="close"
-              class="flex items-center gap-3 px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
+              class="flex items-center gap-3 px-3 py-2 rounded-lg transition-all"
               :class="
                 isActive(item.href)
-                  ? 'bg-gray-100 dark:bg-gray-700 text-primary-600'
-                  : 'text-gray-700 dark:text-gray-300'
+                  ? 'glass-card text-primary-600 dark:text-primary-400 font-semibold'
+                  : 'text-gray-700 dark:text-gray-300 hover:glass-button'
               "
             >
               <UIcon :name="item.icon" class="h-5 w-5" />
@@ -66,42 +74,46 @@
       </nav>
 
       <!-- mobile footer -->
-      <div class="px-4 py-3 border-t border-gray-100 dark:border-gray-700">
-        <!-- Theme toggle mobile - wrapped in ClientOnly -->
+      <div class="px-4 py-3 border-t border-white/20 dark:border-gray-700/50">
+        <!-- Theme toggle mobile -->
         <ClientOnly>
           <div class="flex items-center justify-between mb-3">
-            <div class="text-xs text-gray-500">{{ $t("nav.theme") }}</div>
-            <button
+            <div class="text-xs text-gray-500 dark:text-gray-400">
+              <span v-once>{{ $t("nav.theme") }}</span>
+            </div>
+            <GlassButton
               @click="toggleTheme"
-              class="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
+              :icon="themeIcon"
+              color="neutral"
+              variant="ghost"
+              size="xs"
               :title="$t('nav.toggle_theme')"
-            >
-              <UIcon
-                :name="themeIcon"
-                class="h-5 w-5 text-gray-600 dark:text-gray-300"
-              />
-            </button>
+            />
           </div>
         </ClientOnly>
 
         <!-- Language selector mobile -->
         <div class="flex items-center justify-between">
-          <div class="text-xs text-gray-500">{{ $t("nav.language") }}</div>
+          <div class="text-xs text-gray-500 dark:text-gray-400">
+            <span v-once>{{ $t("nav.language") }}</span>
+          </div>
           <div class="flex gap-2">
-            <button
+            <GlassButton
               @click="selectLang('pl')"
-              :class="btnClass('pl')"
-              class="px-2 py-1 rounded text-xs"
+              :color="locale === 'pl' ? 'primary' : 'neutral'"
+              :variant="locale === 'pl' ? 'solid' : 'soft'"
+              size="xs"
             >
               PL
-            </button>
-            <button
+            </GlassButton>
+            <GlassButton
               @click="selectLang('en')"
-              :class="btnClass('en')"
-              class="px-2 py-1 rounded text-xs"
+              :color="locale === 'en' ? 'primary' : 'neutral'"
+              :variant="locale === 'en' ? 'solid' : 'soft'"
+              size="xs"
             >
               EN
-            </button>
+            </GlassButton>
           </div>
         </div>
       </div>
@@ -111,59 +123,66 @@
   <!-- desktop -->
   <aside
     :class="[
-      'hidden fixed lg:inset-y-0 lg:z-50 lg:flex lg:flex-col bg-white dark:bg-gray-800 shadow transition-all duration-200 overflow-hidden',
+      'hidden fixed lg:inset-y-0 lg:flex lg:flex-col glass-panel shadow-2xl transition-all duration-300 overflow-hidden',
       !sidebarOpen ? 'lg:w-16' : 'lg:w-72',
     ]"
+    :style="zIndexStyle('SIDEBAR')"
   >
     <!-- desktop header -->
     <div
-      class="flex h-16 items-center border-b border-gray-100 dark:border-gray-700"
+      class="flex h-16 items-center border-b border-white/20 dark:border-gray-700/50"
       :class="!sidebarOpen ? 'justify-center px-2' : 'justify-between px-4'"
     >
-      <NuxtLink v-if="sidebarOpen" to="/" class="flex items-center gap-2">
+      <NuxtLink v-if="sidebarOpen" to="/" class="flex items-center gap-2 group">
         <div
-          class="h-8 w-8 bg-primary-600 rounded flex items-center justify-center text-white font-bold"
+          class="h-8 w-8 bg-gradient-to-br from-primary-600 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold shadow-lg group-hover:scale-110 transition-transform"
         >
           PF
         </div>
-        <span class="text-lg font-semibold text-gray-900 dark:text-white">{{
-          $t("app.name")
-        }}</span>
+        <span class="text-lg font-semibold text-gray-900 dark:text-white">
+          <span v-once>{{ $t("app.name") }}</span>
+        </span>
       </NuxtLink>
 
-      <NuxtLink v-else to="/" class="flex items-center justify-center">
+      <NuxtLink v-else to="/" class="flex items-center justify-center group">
         <div
-          class="h-8 w-8 bg-primary-600 rounded flex items-center justify-center text-white font-bold"
+          class="h-8 w-8 bg-gradient-to-br from-primary-600 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold shadow-lg group-hover:scale-110 transition-transform"
         >
           PF
         </div>
       </NuxtLink>
 
-      <button
+      <GlassButton
         v-if="sidebarOpen"
         @click="toggleCollapsed"
-        class="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
+        icon="i-heroicons-chevron-left"
+        color="neutral"
+        variant="ghost"
+        size="xs"
         title="Collapse sidebar"
-      >
-        <UIcon
-          name="i-heroicons-chevron-left"
-          class="h-5 w-5 text-gray-600 dark:text-gray-300"
-        />
-      </button>
+      />
     </div>
 
     <!-- desktop navigation -->
-    <nav class="flex-1 overflow-hidden px-2 py-4">
+    <nav
+      class="flex-1 overflow-hidden px-2 py-4 custom-scrollbar"
+      style="contain: layout style"
+    >
       <ul class="space-y-1">
-        <li v-for="item in navigation" :key="item.href" class="relative">
+        <li
+          v-for="item in navigation"
+          :key="item.href"
+          class="relative"
+          v-memo="[isActive(item.href), sidebarOpen]"
+        >
           <NuxtLink
             :to="item.href"
-            class="group flex items-center rounded px-2 py-2 text-sm font-medium transition-colors relative"
+            class="group flex items-center rounded-lg px-2 py-2 text-sm font-medium transition-all relative"
             :class="[
               !sidebarOpen ? 'justify-center' : 'gap-3',
               isActive(item.href)
-                ? 'bg-gray-100 dark:bg-gray-700 text-primary-600'
-                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary-600',
+                ? 'glass-card text-primary-600 dark:text-primary-400 font-semibold'
+                : 'text-gray-700 dark:text-gray-300 hover:glass-button',
             ]"
           >
             <div class="flex items-center justify-center w-6 h-6 flex-shrink-0">
@@ -177,7 +196,8 @@
             <!-- tooltip when collapsed -->
             <div
               v-if="!sidebarOpen"
-              class="absolute left-full top-1/2 -translate-y-1/2 ml-3 z-50 whitespace-nowrap rounded-md bg-gray-900 dark:bg-gray-700 text-white text-xs px-2 py-1 opacity-0 pointer-events-none transition-opacity group-hover:opacity-100"
+              class="absolute left-full top-1/2 -translate-y-1/2 ml-3 whitespace-nowrap rounded-lg glass-card text-sm px-3 py-2 opacity-0 pointer-events-none transition-opacity group-hover:opacity-100 shadow-lg"
+              :style="{ zIndex: 60 }"
             >
               {{ $t(item.name) }}
             </div>
@@ -188,95 +208,100 @@
 
     <!-- desktop footer -->
     <div
-      class="border-t border-gray-100 dark:border-gray-700"
+      class="border-t border-white/20 dark:border-gray-700/50"
       :class="!sidebarOpen ? 'px-2 py-3' : 'px-4 py-3'"
     >
       <div v-if="!sidebarOpen" class="flex flex-col items-center gap-2">
-        <button
+        <GlassButton
           @click="toggleCollapsed"
-          class="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
+          icon="i-heroicons-chevron-right"
+          color="neutral"
+          variant="ghost"
+          size="xs"
           title="Expand sidebar"
-        >
-          <UIcon
-            name="i-heroicons-chevron-right"
-            class="h-5 w-5 text-gray-600 dark:text-gray-300"
-          />
-        </button>
+        />
 
-        <!-- Theme toggle collapsed - wrapped in ClientOnly -->
+        <!-- Theme toggle collapsed -->
         <ClientOnly>
-          <button
+          <GlassButton
             @click="toggleTheme"
-            class="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
+            :icon="themeIcon"
+            color="neutral"
+            variant="ghost"
+            size="xs"
             :title="$t('nav.toggle_theme')"
-          >
-            <UIcon
-              :name="themeIcon"
-              class="h-5 w-5 text-gray-600 dark:text-gray-300"
-            />
-          </button>
+          />
         </ClientOnly>
 
         <!-- Language buttons collapsed -->
         <div class="flex flex-col gap-1">
-          <button
+          <GlassButton
             @click="selectLang('pl')"
-            :class="btnClass('pl')"
-            class="w-8 h-6 rounded text-xs flex items-center justify-center"
+            :color="locale === 'pl' ? 'primary' : 'neutral'"
+            :variant="locale === 'pl' ? 'solid' : 'ghost'"
+            size="xs"
+            class="w-8"
             title="Polski"
           >
             PL
-          </button>
-          <button
+          </GlassButton>
+          <GlassButton
             @click="selectLang('en')"
-            :class="btnClass('en')"
-            class="w-8 h-6 rounded text-xs flex items-center justify-center"
+            :color="locale === 'en' ? 'primary' : 'neutral'"
+            :variant="locale === 'en' ? 'solid' : 'ghost'"
+            size="xs"
+            class="w-8"
             title="English"
           >
             EN
-          </button>
+          </GlassButton>
         </div>
       </div>
 
       <div v-else class="space-y-3">
-        <!-- Theme toggle expanded - wrapped in ClientOnly -->
+        <!-- Theme toggle expanded -->
         <ClientOnly>
           <div class="flex items-center justify-between">
-            <div class="text-xs text-gray-500">{{ $t("nav.theme") }}</div>
-            <button
+            <div class="text-xs text-gray-500 dark:text-gray-400">
+              <span v-once>{{ $t("nav.theme") }}</span>
+            </div>
+            <GlassButton
               @click="toggleTheme"
-              class="flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-xs"
+              :icon="themeIcon"
+              color="neutral"
+              variant="ghost"
+              size="xs"
               :title="$t('nav.toggle_theme')"
             >
-              <UIcon
-                :name="themeIcon"
-                class="h-4 w-4 text-gray-600 dark:text-gray-300"
-              />
-              <span class="text-gray-600 dark:text-gray-300">{{
-                themeLabel
-              }}</span>
-            </button>
+              <template #trailing>
+                <span class="text-xs">{{ themeLabel }}</span>
+              </template>
+            </GlassButton>
           </div>
         </ClientOnly>
 
         <!-- Language selector expanded -->
         <div class="flex items-center justify-between">
-          <div class="text-xs text-gray-500">{{ $t("nav.language") }}</div>
+          <div class="text-xs text-gray-500 dark:text-gray-400">
+            <span v-once>{{ $t("nav.language") }}</span>
+          </div>
           <div class="flex gap-2">
-            <button
+            <GlassButton
               @click="selectLang('pl')"
-              :class="btnClass('pl')"
-              class="px-2 py-1 rounded text-xs"
+              :color="locale === 'pl' ? 'primary' : 'neutral'"
+              :variant="locale === 'pl' ? 'solid' : 'soft'"
+              size="xs"
             >
               PL
-            </button>
-            <button
+            </GlassButton>
+            <GlassButton
               @click="selectLang('en')"
-              :class="btnClass('en')"
-              class="px-2 py-1 rounded text-xs"
+              :color="locale === 'en' ? 'primary' : 'neutral'"
+              :variant="locale === 'en' ? 'solid' : 'soft'"
+              size="xs"
             >
               EN
-            </button>
+            </GlassButton>
           </div>
         </div>
       </div>
@@ -287,21 +312,23 @@
 <script setup lang="ts">
 import { useSidebar } from "~/composables/useSidebar";
 import { useI18n } from "vue-i18n";
-import { useColorMode } from "#imports";
+
 const { isSidebarOpen, close, open } = useSidebar();
 const isOpen = defineModel<boolean>("open", { default: true });
+const { zIndexStyle } = useZIndex();
 
-// Zamiast useState, użyj ref z localStorage (jak w dashboard.vue)
+// Używamy centralnego composable dla motywu
+const { toggleTheme, themeIcon, themeLabel } = useTheme();
+
+// Stan sidebara z localStorage
 const sidebarOpen = ref(true);
 
-// Zapisz stan sidebara w localStorage (jak w dashboard.vue)
 watch(sidebarOpen, (value) => {
   if (process.client) {
     localStorage.setItem("sidebar-open", JSON.stringify(value));
   }
 });
 
-// Załaduj stan sidebara z localStorage (jak w dashboard.vue)
 onMounted(() => {
   if (process.client) {
     const saved = localStorage.getItem("sidebar-open");
@@ -313,29 +340,8 @@ onMounted(() => {
 
 const toggleCollapsed = () => {
   sidebarOpen.value = !sidebarOpen.value;
-  isOpen.value = !isOpen.value; // dla mobile (zachowaj synchronizację)
+  isOpen.value = !isOpen.value;
 };
-
-// Theme management - tylko po stronie klienta
-const colorMode = process.client ? useColorMode() : null;
-
-const toggleTheme = () => {
-  if (colorMode) {
-    colorMode.preference = colorMode.preference === "dark" ? "light" : "dark";
-  }
-};
-
-const themeIcon = computed(() => {
-  if (!colorMode) return "i-heroicons-moon";
-  return colorMode.preference === "dark"
-    ? "i-heroicons-sun"
-    : "i-heroicons-moon";
-});
-
-const themeLabel = computed(() => {
-  if (!colorMode) return "Dark";
-  return colorMode.preference === "dark" ? "Light" : "Dark";
-});
 
 // navigation items
 const navigation = [
@@ -369,11 +375,6 @@ const isActive = (href: string) => {
 
 const { locale, setLocale } = useI18n();
 
-const btnClass = (code: string) =>
-  locale.value === code
-    ? "bg-primary-600 text-white"
-    : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200";
-
 const selectLang = (code: string) => {
   setLocale(code as "pl" | "en");
   if (import.meta.client) {
@@ -384,33 +385,8 @@ const selectLang = (code: string) => {
 </script>
 
 <style scoped>
-/* Zapobieganie scroll-owi gdy collapsed */
-.overflow-hidden {
-  overflow: hidden;
-}
-
-/* Tooltip z wyższym z-index */
-.group:hover .opacity-0 {
-  opacity: 1;
-  z-index: 60;
-}
-
-/* Smooth transitions */
-.transition-all {
-  transition-property: width, padding, margin;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
 /* Ensure no horizontal scroll */
 aside {
   min-width: 0;
-}
-
-/* Mobile floating button positioning */
-@media (max-width: 1023px) {
-  .fixed.top-4.left-4 {
-    top: 1rem;
-    left: 1rem;
-  }
 }
 </style>

@@ -1,27 +1,50 @@
 <template>
-  <UCard
-    class="group hover:scale-105 transition-all duration-300 hover:shadow-2xl border-2 border-transparent hover:border-primary-500/20"
-    :ui="{
-      body: 'p-6 sm:p-8 ring-1 ring-gray-200 dark:ring-gray-700',
-    }"
+  <GlassCard
+    variant="default"
+    padding="lg"
+    hover
+    shadow
+    gradient
+    class="group transition-all duration-500 hover:-translate-y-2 overflow-hidden"
   >
-    <div class="space-y-4">
+    <!-- Content -->
+    <div class="relative space-y-4">
+      <!-- Icon with gradient background -->
       <div
-        class="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-500 to-blue-500 flex items-center justify-center group-hover:scale-110 transition-transform"
+        class="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-purple-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg"
       >
-        <UIcon :name="icon" class="w-7 h-7 text-white" />
+        <!-- Glow effect on hover -->
+        <div
+          class="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary-500 to-purple-600 opacity-0 group-hover:opacity-50 blur-xl transition-opacity duration-500"
+        ></div>
+        <UIcon :name="icon" class="w-8 h-8 text-white relative z-10" />
       </div>
-      <h3 class="text-xl font-bold text-gray-900 dark:text-white">
+
+      <!-- Title -->
+      <h3
+        class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300"
+      >
         {{ title }}
       </h3>
-      <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+
+      <!-- Description -->
+      <p
+        class="text-gray-600 dark:text-gray-400 leading-relaxed transition-colors duration-300"
+      >
         {{ description }}
       </p>
     </div>
-  </UCard>
+
+    <!-- Decorative corner accent -->
+    <div
+      class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-primary-500/10 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+    ></div>
+  </GlassCard>
 </template>
 
 <script setup lang="ts">
+import type { FeatureItem } from "~/types/landing";
+
 defineProps<{
   icon: string;
   title: string;

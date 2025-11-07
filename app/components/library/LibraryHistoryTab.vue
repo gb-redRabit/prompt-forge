@@ -3,16 +3,21 @@
     <div class="flex justify-between items-center mb-4">
       <div>
         <p class="text-sm text-gray-600 dark:text-gray-400">
-          {{ $t("library.history.title") }}
+          <span v-once>{{ $t("library.history.title") }}</span>
         </p>
         <p class="text-xs text-gray-500 mt-1">
-          {{ $t("library.history.description") }}
+          <span v-once>{{ $t("library.history.description") }}</span>
         </p>
       </div>
-      <UButton color="error" variant="ghost" size="xs" @click="$emit('clear')">
+      <GlassButton
+        color="error"
+        variant="ghost"
+        size="xs"
+        @click="$emit('clear')"
+      >
         <UIcon name="i-heroicons-trash" class="mr-1" />
-        {{ $t("library.history.clear") }}
-      </UButton>
+        <span v-once>{{ $t("library.history.clear") }}</span>
+      </GlassButton>
     </div>
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
       <LibraryPromptCard
@@ -31,17 +36,27 @@
       class="w-16 h-16 mx-auto text-gray-400 mb-4"
     />
     <p class="text-gray-600 dark:text-gray-400 font-medium mb-2">
-      {{ $t("library.history.empty") }}
+      <span v-once>{{ $t("library.history.empty") }}</span>
     </p>
     <div class="max-w-md mx-auto text-sm text-gray-500 space-y-2">
       <p>
-        <strong>{{ $t("library.history.howItWorks") }}</strong>
+        <strong
+          ><span v-once>{{ $t("library.history.howItWorks") }}</span></strong
+        >
       </p>
       <ul class="text-left space-y-1">
-        <li>• {{ $t("library.history.features.autoSave") }}</li>
-        <li>• {{ $t("library.history.features.quickAccess") }}</li>
-        <li>• {{ $t("library.history.features.noSpace") }}</li>
-        <li>• {{ $t("library.history.features.canClear") }}</li>
+        <li>
+          <span v-once>• {{ $t("library.history.features.autoSave") }}</span>
+        </li>
+        <li>
+          <span v-once>• {{ $t("library.history.features.quickAccess") }}</span>
+        </li>
+        <li>
+          <span v-once>• {{ $t("library.history.features.noSpace") }}</span>
+        </li>
+        <li>
+          <span v-once>• {{ $t("library.history.features.canClear") }}</span>
+        </li>
       </ul>
     </div>
   </div>

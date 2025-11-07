@@ -43,10 +43,10 @@
       <div class="flex items-center justify-between animate-fade-in">
         <div>
           <h1 class="text-2xl sm:text-3xl font-bold gradient-text-multi mb-2">
-            {{ $t("library.title") }}
+            <span v-once>{{ $t("library.title") }}</span>
           </h1>
           <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400">
-            {{ $t("library.subtitle") }}
+            <span v-once>{{ $t("library.subtitle") }}</span>
           </p>
         </div>
 
@@ -54,29 +54,33 @@
         <div
           class="flex items-center gap-2 animate-fade-in animation-delay-100"
         >
-          <UButton
+          <GlassButton
             color="success"
             variant="outline"
             @click="showImportModal = true"
             class="hover-scale transition-all-smooth hover-glow text-xs sm:text-sm"
+            icon="i-heroicons-arrow-up-tray"
           >
-            <UIcon name="i-heroicons-arrow-up-tray" class="mr-1 sm:mr-2" />
-            <span class="hidden sm:inline">{{ $t("library.import") }}</span>
-          </UButton>
-          <UButton
+            <span class="hidden sm:inline" v-once>{{
+              $t("library.import")
+            }}</span>
+          </GlassButton>
+          <GlassButton
             color="primary"
             variant="outline"
             @click="handleExport"
             class="hover-scale transition-all-smooth hover-glow text-xs sm:text-sm"
+            icon="i-heroicons-arrow-down-tray"
           >
-            <UIcon name="i-heroicons-arrow-down-tray" class="mr-1 sm:mr-2" />
-            <span class="hidden sm:inline">{{ $t("library.export") }}</span>
-          </UButton>
+            <span class="hidden sm:inline" v-once>{{
+              $t("library.export")
+            }}</span>
+          </GlassButton>
         </div>
       </div>
 
       <!-- Stats -->
-      <div class="animate-fade-in animation-delay-200">
+      <div class="animate-fade-in animation-delay-200 my-5">
         <LibraryStats :stats="stats" />
       </div>
 
@@ -143,29 +147,36 @@
                   <div
                     class="flex items-center gap-2 opacity-90 group-hover:opacity-100 transition-opacity"
                   >
-                    <UButton
+                    <GlassButton
                       size="xs"
                       color="primary"
                       variant="soft"
                       icon="i-heroicons-play"
                       @click="() => openLink(prompt.link)"
-                      >{{ $t("common.use") || "Użyj" }}</UButton
                     >
-                    <UButton
+                      <span v-once>{{ $t("common.use") || "Użyj" }}</span>
+                    </GlassButton>
+                    <GlassButton
                       size="xs"
                       color="neutral"
                       variant="outline"
                       @click="() => shareLink(prompt.link)"
-                      >{{ $t("common.share") || "Udostępnij" }}</UButton
                     >
-                    <UButton
+                      <span v-once>{{
+                        $t("common.share") || "Udostępnij"
+                      }}</span>
+                    </GlassButton>
+                    <GlassButton
                       size="xs"
                       color="neutral"
                       variant="ghost"
                       @click="() => openPreview(prompt)"
-                      >{{ $t("common.preview") || "Podgląd" }}</UButton
                     >
-                    <UButton
+                      <span v-once>{{
+                        $t("common.preview") || "Podgląd"
+                      }}</span>
+                    </GlassButton>
+                    <GlassButton
                       size="xs"
                       color="error"
                       variant="ghost"
@@ -218,7 +229,7 @@
                                 : tagObj.en || tagObj.pl
                             }}
                           </button>
-                          <UButton
+                          <GlassButton
                             size="xs"
                             variant="ghost"
                             color="error"
@@ -308,12 +319,12 @@
               }}
             </p>
             <div class="flex justify-end gap-2">
-              <UButton size="sm" variant="ghost" @click="cancelDeleteTag">{{
-                t("common.cancel") || "Anuluj"
-              }}</UButton>
-              <UButton size="sm" color="error" @click="confirmDeleteTag">{{
-                t("common.confirm") || "Usuń"
-              }}</UButton>
+              <GlassButton size="sm" variant="ghost" @click="cancelDeleteTag">
+                <span v-once>{{ t("common.cancel") || "Anuluj" }}</span>
+              </GlassButton>
+              <GlassButton size="sm" color="error" @click="confirmDeleteTag">
+                <span v-once>{{ t("common.confirm") || "Usuń" }}</span>
+              </GlassButton>
             </div>
           </UCard>
         </transition>
@@ -343,18 +354,20 @@
               }}
             </p>
             <div class="flex justify-end gap-2">
-              <UButton
+              <GlassButton
                 size="sm"
                 variant="ghost"
                 @click="cancelDeleteEditorPrompt"
-                >{{ t("common.cancel") || "Anuluj" }}</UButton
               >
-              <UButton
+                <span v-once>{{ t("common.cancel") || "Anuluj" }}</span>
+              </GlassButton>
+              <GlassButton
                 size="sm"
                 color="error"
                 @click="confirmDeleteEditorPrompt"
-                >{{ t("common.confirm") || "Usuń" }}</UButton
               >
+                <span v-once>{{ t("common.confirm") || "Usuń" }}</span>
+              </GlassButton>
             </div>
           </UCard>
         </transition>
@@ -374,9 +387,9 @@
           {{ t("pages.library.actions.promptRemoved") || "Usunięto prompt" }}
         </div>
         <div class="ml-2">
-          <UButton size="sm" variant="ghost" @click="undoSoftDelete">
-            {{ t("common.undo") || "Cofnij" }}
-          </UButton>
+          <GlassButton size="sm" variant="ghost" @click="undoSoftDelete">
+            <span v-once>{{ t("common.undo") || "Cofnij" }}</span>
+          </GlassButton>
         </div>
       </UCard>
     </div>

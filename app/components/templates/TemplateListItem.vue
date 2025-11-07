@@ -1,7 +1,9 @@
 <template>
-  <UCard
-    class="hover:shadow-lg bg-white dark:bg-gray-800 transition-all duration-200 cursor-pointer group"
-    :ui="{ body: 'p-6' }"
+  <GlassCard
+    hover
+    shadow
+    class="cursor-pointer group transition-all duration-200"
+    padding="lg"
     @click="$emit('select', template)"
   >
     <div class="flex gap-6">
@@ -11,22 +13,22 @@
         <div class="flex items-start justify-between gap-4">
           <div class="flex-1 min-w-0">
             <div class="flex items-center gap-2 mb-2">
-              <UBadge
+              <GlassBadge
                 v-if="template.id"
                 color="neutral"
-                variant="subtle"
+                variant="soft"
                 size="md"
               >
                 #{{ template.id }}
-              </UBadge>
-              <UBadge
+              </GlassBadge>
+              <GlassBadge
                 v-if="template.type"
                 color="secondary"
-                variant="subtle"
+                variant="soft"
                 size="md"
               >
                 {{ template.type }}
-              </UBadge>
+              </GlassBadge>
             </div>
 
             <h3
@@ -52,12 +54,15 @@
           class="bg-gray-50 dark:bg-gray-900/50 rounded-lg p-4 border border-gray-200 dark:border-gray-700"
         >
           <div class="flex items-center justify-between mb-2">
-            <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">
+            <p
+              v-once
+              class="text-xs text-gray-500 dark:text-gray-400 font-medium"
+            >
               {{ $t("pages.templates.preview") }}
             </p>
-            <UBadge color="neutral" variant="subtle" size="xs">
+            <GlassBadge color="neutral" variant="soft" size="xs">
               {{ previewText.length }} {{ $t("pages.templates.characters") }}
-            </UBadge>
+            </GlassBadge>
           </div>
           <div class="max-h-[400px] overflow-y-auto pr-2">
             <pre
@@ -109,37 +114,43 @@
       <div class="w-64 flex-shrink-0 space-y-3">
         <!-- Categories -->
         <div v-if="template.categories?.length">
-          <p class="text-xs text-gray-500 dark:text-gray-400 mb-2 font-medium">
+          <p
+            v-once
+            class="text-xs text-gray-500 dark:text-gray-400 mb-2 font-medium"
+          >
             {{ $t("pages.templates.categories") }}
           </p>
           <div class="flex flex-wrap gap-1">
-            <UBadge
+            <GlassBadge
               v-for="category in template.categories.slice(0, 5)"
               :key="category"
               color="primary"
-              variant="subtle"
+              variant="soft"
               size="md"
             >
               {{ category }}
-            </UBadge>
-            <UBadge
+            </GlassBadge>
+            <GlassBadge
               v-if="template.categories.length > 5"
               color="primary"
-              variant="subtle"
+              variant="soft"
               size="md"
             >
               +{{ template.categories.length - 5 }}
-            </UBadge>
+            </GlassBadge>
           </div>
         </div>
 
         <!-- Tags -->
         <div v-if="template.tags?.length">
-          <p class="text-xs text-gray-500 dark:text-gray-400 mb-2 font-medium">
+          <p
+            v-once
+            class="text-xs text-gray-500 dark:text-gray-400 mb-2 font-medium"
+          >
             {{ $t("pages.templates.tags") }}
           </p>
           <div class="flex flex-wrap gap-1">
-            <UBadge
+            <GlassBadge
               v-for="tag in template.tags.slice(0, 8)"
               :key="tag"
               color="neutral"
@@ -147,46 +158,49 @@
               size="md"
             >
               #{{ tag }}
-            </UBadge>
-            <UBadge
+            </GlassBadge>
+            <GlassBadge
               v-if="template.tags.length > 8"
               color="neutral"
               variant="outline"
               size="md"
             >
               +{{ template.tags.length - 8 }}
-            </UBadge>
+            </GlassBadge>
           </div>
         </div>
 
         <!-- Placeholders -->
         <div v-if="template.placeholder_keys?.length">
-          <p class="text-xs text-gray-500 dark:text-gray-400 mb-2 font-medium">
+          <p
+            v-once
+            class="text-xs text-gray-500 dark:text-gray-400 mb-2 font-medium"
+          >
             {{ $t("pages.templates.placeholders") }}
           </p>
           <div class="flex flex-wrap gap-1">
-            <UBadge
+            <GlassBadge
               v-for="key in template.placeholder_keys.slice(0, 6)"
               :key="key"
-              color="info"
+              color="primary"
               variant="soft"
               size="md"
             >
               {{ key }}
-            </UBadge>
-            <UBadge
+            </GlassBadge>
+            <GlassBadge
               v-if="template.placeholder_keys.length > 6"
-              color="info"
+              color="primary"
               variant="soft"
               size="md"
             >
               +{{ template.placeholder_keys.length - 6 }}
-            </UBadge>
+            </GlassBadge>
           </div>
         </div>
       </div>
     </div>
-  </UCard>
+  </GlassCard>
 </template>
 
 <script setup lang="ts">

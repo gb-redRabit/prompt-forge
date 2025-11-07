@@ -5,78 +5,81 @@
       class="w-90 flex-shrink-0 overflow-y-auto space-y-4 h-[calc(100vh-6rem)]"
     >
       <!-- Type Filter -->
-      <UCard :ui="{ body: 'p-4' }">
+      <GlassCard padding="md">
         <template #header>
-          <h3 class="text-sm font-semibold text-gray-900 dark:text-white">
+          <h3
+            v-once
+            class="text-sm font-semibold text-gray-900 dark:text-white"
+          >
             {{ $t("pages.templates.types") }}
           </h3>
         </template>
 
         <div class="space-y-2">
-          <UButton
+          <GlassButton
             v-for="{ type, count } in availableTypes"
             :key="type"
             :variant="selectedType === type ? 'solid' : 'outline'"
             :color="selectedType === type ? 'primary' : 'neutral'"
-            block
+            full-width
             size="sm"
             @click="toggleType(type)"
           >
             <div class="flex items-center justify-between w-full">
               <span>{{ type }}</span>
-              <UBadge
+              <GlassBadge
                 :color="selectedType === type ? 'secondary' : 'neutral'"
-                variant="subtle"
+                variant="soft"
                 size="xs"
               >
                 {{ count }}
-              </UBadge>
+              </GlassBadge>
             </div>
-          </UButton>
+          </GlassButton>
 
-          <UButton
+          <GlassButton
             v-if="selectedType"
             color="neutral"
             variant="ghost"
-            block
+            full-width
             size="xs"
+            icon="i-heroicons-x-mark"
             @click="clearType"
           >
-            <UIcon name="i-heroicons-x-mark" class="mr-1" />
             Wyczyść
-          </UButton>
+          </GlassButton>
         </div>
-      </UCard>
+      </GlassCard>
 
       <!-- Category/Tags Tabs -->
-      <UCard :ui="{ body: 'p-4' }">
+      <GlassCard padding="md">
         <template #header>
           <div class="flex gap-2">
-            <UButton
-              :variant="filterMode === 'categories' ? 'solid' : 'subtle'"
+            <GlassButton
+              :variant="filterMode === 'categories' ? 'solid' : 'soft'"
               :color="filterMode === 'categories' ? 'primary' : 'neutral'"
               size="sm"
               class="flex-1"
               @click="filterMode = 'categories'"
             >
               {{ $t("pages.templates.categories") }}
-            </UButton>
-            <UButton
-              :variant="filterMode === 'tags' ? 'solid' : 'subtle'"
+            </GlassButton>
+            <GlassButton
+              :variant="filterMode === 'tags' ? 'solid' : 'soft'"
               :color="filterMode === 'tags' ? 'primary' : 'neutral'"
               size="sm"
               class="flex-1"
               @click="filterMode = 'tags'"
             >
               {{ $t("pages.templates.tags") }}
-            </UButton>
+            </GlassButton>
           </div>
         </template>
 
         <!-- Categories View -->
         <div v-if="filterMode === 'categories'">
           <div class="flex flex-wrap gap-1">
-            <UBadge
+            <GlassBadge
               v-for="{ category, count } in availableCategories"
               :key="category"
               :color="
@@ -86,17 +89,12 @@
                 selectedCategories.includes(category) ? 'solid' : 'soft'
               "
               size="md"
+              :removable="selectedCategories.includes(category)"
               class="cursor-pointer hover:opacity-80 transition-opacity"
               @click="toggleCategory(category)"
             >
-              <span>{{ category }}</span>
-              <span class="ml-1 opacity-75">({{ count }})</span>
-              <UIcon
-                v-if="selectedCategories.includes(category)"
-                name="i-heroicons-x-mark-20-solid"
-                class="ml-1.5 w-3.5 h-3.5"
-              />
-            </UBadge>
+              {{ category }} ({{ count }})
+            </GlassBadge>
           </div>
         </div>
 
@@ -113,23 +111,18 @@
           <!-- Tags List -->
           <div class="overflow-y-auto">
             <div class="flex flex-wrap gap-2">
-              <UBadge
+              <GlassBadge
                 v-for="{ tag, count } in filteredTagsWithCounts"
                 :key="tag"
                 :color="selectedTags.includes(tag) ? 'primary' : 'neutral'"
                 :variant="selectedTags.includes(tag) ? 'solid' : 'soft'"
                 size="sm"
+                :removable="selectedTags.includes(tag)"
                 class="cursor-pointer hover:opacity-80 transition-opacity"
                 @click="toggleTag(tag)"
               >
-                <span>#{{ tag }}</span>
-                <span class="ml-1.5 opacity-75">({{ count }})</span>
-                <UIcon
-                  v-if="selectedTags.includes(tag)"
-                  name="i-heroicons-x-mark-20-solid"
-                  class="ml-1.5 w-3 h-3"
-                />
-              </UBadge>
+                #{{ tag }} ({{ count }})
+              </GlassBadge>
             </div>
           </div>
 
@@ -142,22 +135,22 @@
         </div>
 
         <template #footer v-if="hasActiveFilters">
-          <UButton
+          <GlassButton
             color="neutral"
             variant="ghost"
-            block
+            full-width
             size="xs"
+            icon="i-heroicons-x-mark"
             @click="resetFilters"
           >
-            <UIcon name="i-heroicons-x-mark" class="mr-1" />
             {{ $t("pages.templates.reset_filters") }}
-          </UButton>
+          </GlassButton>
         </template>
-      </UCard>
+      </GlassCard>
     </aside>
 
     <!-- RIGHT COLUMN: Templates -->
-    <main class="flex-1 overflow-hidden flex flex-col">
+    <main class="flex-1 flex flex-col">
       <!-- Toolbar -->
       <div
         class="flex items-center justify-between mb-4 pb-4 border-b border-gray-200 dark:border-gray-700"
@@ -165,42 +158,40 @@
         <!-- Left: Sort & Count -->
         <div class="flex items-center gap-3">
           <!-- Sort by ID -->
-          <UButton
+          <GlassButton
             :variant="sortBy === 'id' ? 'solid' : 'outline'"
             :color="sortBy === 'id' ? 'primary' : 'neutral'"
             size="sm"
+            :icon="
+              sortBy === 'id'
+                ? sortOrder === 'asc'
+                  ? 'i-heroicons-arrow-up'
+                  : 'i-heroicons-arrow-down'
+                : undefined
+            "
+            icon-position="right"
             @click="toggleSort('id')"
           >
             ID
-            <UIcon
-              v-if="sortBy === 'id'"
-              :name="
-                sortOrder === 'asc'
-                  ? 'i-heroicons-arrow-up'
-                  : 'i-heroicons-arrow-down'
-              "
-              class="ml-1"
-            />
-          </UButton>
+          </GlassButton>
 
           <!-- Sort by Name -->
-          <UButton
+          <GlassButton
             :variant="sortBy === 'name' ? 'solid' : 'outline'"
             :color="sortBy === 'name' ? 'primary' : 'neutral'"
             size="sm"
+            :icon="
+              sortBy === 'name'
+                ? sortOrder === 'asc'
+                  ? 'i-heroicons-arrow-up'
+                  : 'i-heroicons-arrow-down'
+                : undefined
+            "
+            icon-position="right"
             @click="toggleSort('name')"
           >
             A-Z
-            <UIcon
-              v-if="sortBy === 'name'"
-              :name="
-                sortOrder === 'asc'
-                  ? 'i-heroicons-arrow-up'
-                  : 'i-heroicons-arrow-down'
-              "
-              class="ml-1"
-            />
-          </UButton>
+          </GlassButton>
 
           <!-- Count -->
           <div class="text-sm text-gray-600 dark:text-gray-400 ml-2">
@@ -219,42 +210,42 @@
         />
         <!-- Right: View Mode -->
         <div class="flex items-center gap-2">
-          <UButton
+          <GlassButton
             :variant="viewMode === 'list' ? 'solid' : 'outline'"
             :color="viewMode === 'list' ? 'primary' : 'neutral'"
             size="sm"
             icon="i-heroicons-list-bullet"
             @click="viewMode = 'list'"
           />
-          <UButton
+          <GlassButton
             :variant="viewMode === 'grid-2' ? 'solid' : 'outline'"
             :color="viewMode === 'grid-2' ? 'primary' : 'neutral'"
             size="sm"
             @click="viewMode = 'grid-2'"
           >
             2
-          </UButton>
-          <UButton
+          </GlassButton>
+          <GlassButton
             :variant="viewMode === 'grid-3' ? 'solid' : 'outline'"
             :color="viewMode === 'grid-3' ? 'primary' : 'neutral'"
             size="sm"
             @click="viewMode = 'grid-3'"
           >
             3
-          </UButton>
-          <UButton
+          </GlassButton>
+          <GlassButton
             :variant="viewMode === 'grid-4' ? 'solid' : 'outline'"
             :color="viewMode === 'grid-4' ? 'primary' : 'neutral'"
             size="sm"
             @click="viewMode = 'grid-4'"
           >
             4
-          </UButton>
+          </GlassButton>
         </div>
       </div>
 
       <!-- Templates Grid/List -->
-      <div class="flex-1 overflow-y-auto">
+      <div class="flex-1">
         <!-- List View -->
         <div v-if="viewMode === 'list'" class="space-y-4">
           <TemplateListItem
