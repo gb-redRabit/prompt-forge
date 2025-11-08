@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     "@nuxt/eslint",
     "@nuxt/image",
     "@nuxtjs/i18n",
+    "@vite-pwa/nuxt",
   ],
 
   // @nuxt/ui
@@ -77,5 +78,106 @@ export default defineNuxtConfig({
 
   nitro: {
     compressPublicAssets: true,
+  },
+
+  pwa: {
+    registerType: "autoUpdate",
+    manifest: {
+      name: "Prompt Forge - Generator Promptów AI",
+      short_name: "PromptForge",
+      description:
+        "Zaawansowany generator i biblioteka promptów AI z edytorem tagów, systemem wag i integracją czatu AI",
+      lang: "pl",
+      theme_color: "#6366f1",
+      background_color: "#ffffff",
+      display: "standalone",
+      start_url: "/?standalone=true",
+      scope: "/",
+      orientation: "any",
+      icons: [
+        {
+          src: "/icon-64x64.png",
+          sizes: "64x64",
+          type: "image/png",
+          purpose: "any",
+        },
+        {
+          src: "/icon-192x192.png",
+          sizes: "192x192",
+          type: "image/png",
+          purpose: "any maskable",
+        },
+        {
+          src: "/icon-512x512.png",
+          sizes: "512x512",
+          type: "image/png",
+          purpose: "any maskable",
+        },
+      ],
+    },
+    workbox: {
+      navigateFallback: "/",
+      // Tylko dla production - dev nie potrzebuje precache
+      globPatterns:
+        process.env.NODE_ENV === "production"
+          ? ["**/*.{js,css,html,png,svg,ico}"]
+          : [],
+      cleanupOutdatedCaches: true,
+      clientsClaim: true,
+      skipWaiting: true,
+      runtimeCaching: [
+        {
+          urlPattern: /^https:\/\/api\./,
+          handler: "NetworkFirst",
+          options: {
+            cacheName: "api-cache",
+            expiration: {
+              maxEntries: 50,
+              maxAgeSeconds: 60 * 60, // 1 godzina
+            },
+            cacheableResponse: {
+              statuses: [0, 200],
+            },
+          },
+        },
+        {
+          urlPattern: /^https:\/\/.*\.(?:png|jpg|jpeg|svg|gif|webp)$/,
+          handler: "CacheFirst",
+          options: {
+            cacheName: "image-cache",
+            expiration: {
+              maxEntries: 100,
+              maxAgeSeconds: 60 * 60 * 24 * 30, // 30 dni
+            },
+          },
+        },
+        {
+          urlPattern: /^https:\/\/fonts\.googleapis\.com/,
+          handler: "StaleWhileRevalidate",
+          options: {
+            cacheName: "google-fonts-stylesheets",
+          },
+        },
+        {
+          urlPattern: /^https:\/\/fonts\.gstatic\.com/,
+          handler: "CacheFirst",
+          options: {
+            cacheName: "google-fonts-webfonts",
+            expiration: {
+              maxEntries: 30,
+              maxAgeSeconds: 60 * 60 * 24 * 365, // 1 rok
+            },
+            cacheableResponse: {
+              statuses: [0, 200],
+            },
+          },
+        },
+      ],
+    },
+    devOptions: {
+      enabled: true,
+      type: "module",
+      // Note: Development warnings są normalne - zobacz PWA-DEV-WARNINGS.md
+    },
   },
 });

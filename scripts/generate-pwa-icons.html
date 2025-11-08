@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PWA Icon Generator - Prompt Forge</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          sans-serif;
+        padding: 2rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      }
+      h1 {
+        color: #6366f1;
+        margin-bottom: 1rem;
+      }
+      .info {
+        background: #f3f4f6;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        margin-bottom: 2rem;
+        border-left: 4px solid #6366f1;
+      }
+      canvas {
+        border: 2px solid #e5e7eb;
+        border-radius: 0.5rem;
+        margin: 1rem 0;
+        display: block;
+      }
+      button {
+        background: #6366f1;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        font-size: 1rem;
+        margin-right: 1rem;
+        margin-bottom: 1rem;
+        transition: background 0.2s;
+      }
+      button:hover {
+        background: #4f46e5;
+      }
+      .downloads {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 2px solid #e5e7eb;
+      }
+      code {
+        background: #1f2937;
+        color: #10b981;
+        padding: 0.2rem 0.5rem;
+        border-radius: 0.25rem;
+        font-size: 0.875rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🎨 PWA Icon Generator</h1>
+
+      <div class="info">
+        <p><strong>Instrukcja:</strong></p>
+        <ol style="margin-left: 1.5rem; margin-top: 0.5rem">
+          <li>Kliknij przyciski poniżej aby wygenerować ikony</li>
+          <li>Zapisz każdą ikonę w folderze <code>public/</code></li>
+          <li>
+            Nazwy plików: <code>icon-64x64.png</code>,
+            <code>icon-192x192.png</code>, <code>icon-512x512.png</code>
+          </li>
+        </ol>
+      </div>
+
+      <h3>64x64 (Favicon)</h3>
+      <canvas id="canvas64" width="64" height="64"></canvas>
+      <button onclick="downloadIcon(64)">💾 Pobierz icon-64x64.png</button>
+
+      <h3>192x192 (Android, iOS)</h3>
+      <canvas id="canvas192" width="192" height="192"></canvas>
+      <button onclick="downloadIcon(192)">💾 Pobierz icon-192x192.png</button>
+
+      <h3>512x512 (Splash Screen)</h3>
+      <canvas id="canvas512" width="512" height="512"></canvas>
+      <button onclick="downloadIcon(512)">💾 Pobierz icon-512x512.png</button>
+
+      <div class="downloads">
+        <h3>Opcjonalnie: Screenshoty</h3>
+        <p style="color: #6b7280; margin-bottom: 1rem">
+          Możesz dodać screenshoty aplikacji (nie są wymagane, ale poprawiają
+          prezentację w instalacji).
+        </p>
+        <button
+          onclick="alert('Zrób screenshot landing page w rozdzielczości 1280x720 i zapisz jako screenshot-wide.png')"
+        >
+          📸 Instrukcje dla Wide Screenshot
+        </button>
+        <button
+          onclick="alert('Zrób screenshot na telefonie (750x1334) i zapisz jako screenshot-mobile.png')"
+        >
+          📱 Instrukcje dla Mobile Screenshot
+        </button>
+      </div>
+    </div>
+
+    <script>
+      function drawIcon(size) {
+        const canvas = document.getElementById(`canvas${size}`);
+        const ctx = canvas.getContext("2d");
+
+        // Gradient background
+        const gradient = ctx.createLinearGradient(0, 0, size, size);
+        gradient.addColorStop(0, "#6366f1");
+        gradient.addColorStop(1, "#8b5cf6");
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, size, size);
+
+        // White rounded square (document icon)
+        const padding = size * 0.2;
+        const docWidth = size - padding * 2;
+        const docHeight = size - padding * 2;
+        const radius = size * 0.08;
+
+        ctx.fillStyle = "white";
+        ctx.beginPath();
+        ctx.moveTo(padding + radius, padding);
+        ctx.lineTo(padding + docWidth - radius, padding);
+        ctx.quadraticCurveTo(
+          padding + docWidth,
+          padding,
+          padding + docWidth,
+          padding + radius
+        );
+        ctx.lineTo(padding + docWidth, padding + docHeight - radius);
+        ctx.quadraticCurveTo(
+          padding + docWidth,
+          padding + docHeight,
+          padding + docWidth - radius,
+          padding + docHeight
+        );
+        ctx.lineTo(padding + radius, padding + docHeight);
+        ctx.quadraticCurveTo(
+          padding,
+          padding + docHeight,
+          padding,
+          padding + docHeight - radius
+        );
+        ctx.lineTo(padding, padding + radius);
+        ctx.quadraticCurveTo(padding, padding, padding + radius, padding);
+        ctx.closePath();
+        ctx.fill();
+
+        // Text lines
+        const lineHeight = size * 0.04;
+        const lineSpacing = size * 0.08;
+        const lineStartX = padding + size * 0.1;
+        const lineStartY = padding + size * 0.25;
+
+        ctx.fillStyle = "#6366f1";
+        ctx.fillRect(lineStartX, lineStartY, docWidth * 0.6, lineHeight);
+        ctx.fillRect(
+          lineStartX,
+          lineStartY + lineSpacing,
+          docWidth * 0.8,
+          lineHeight
+        );
+        ctx.fillRect(
+          lineStartX,
+          lineStartY + lineSpacing * 2,
+          docWidth * 0.5,
+          lineHeight
+        );
+
+        // "P" logo
+        if (size >= 192) {
+          ctx.font = `bold ${size * 0.3}px Arial`;
+          ctx.fillStyle = "#8b5cf6";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText("P", size / 2, size * 0.7);
+        }
+      }
+
+      function downloadIcon(size) {
+        const canvas = document.getElementById(`canvas${size}`);
+        const link = document.createElement("a");
+        link.download = `icon-${size}x${size}.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      }
+
+      // Generate all icons on load
+      window.onload = function () {
+        drawIcon(64);
+        drawIcon(192);
+        drawIcon(512);
+      };
+    </script>
+  </body>
+</html>

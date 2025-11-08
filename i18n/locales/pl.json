@@ -89,6 +89,12 @@
       "search_tags": "Szukaj tagów...",
       "hidden_tags": "{count} ukrytych tagów (użyj wyszukiwania)",
       "types": "Typy",
+      "show_filters": "Pokaż Filtry",
+      "filters": "Filtry",
+      "apply_filters": "Zastosuj Filtry",
+      "filters_description": "Wybierz filtry, aby zawęzić wyniki",
+      "selected": "wybrane",
+      "available": "Dostępne",
       "template_editor": "Edytor Szablonu",
       "template_placeholder": "Wpisz lub edytuj szablon...",
       "placeholder_values": "Wartości Zmiennych",
@@ -358,6 +364,7 @@
       "key_enter": "Enter"
     },
     "sidebar": {
+      "new": "Nowa",
       "new_conversation": "Nowa rozmowa",
       "no_conversations": "Brak rozmów",
       "start_conversation": "Kliknij przycisk wyżej, aby rozpocząć",
@@ -448,7 +455,7 @@
       "models_available": "Dostępne modele",
       "status": "Status",
       "online": "🟢 Online",
-      "offline": "🔴 Offline"
+      "offline": "🔴 Offline - skonfiguruj endpoint"
     },
     "messages": {
       "found_models": "Znaleziono {count} modeli",

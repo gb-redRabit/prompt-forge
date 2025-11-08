@@ -106,6 +106,12 @@
       },
       "no_more": "That's all available templates",
       "types": "Types",
+      "show_filters": "Show Filters",
+      "filters": "Filters",
+      "apply_filters": "Apply Filters",
+      "filters_description": "Select filters to narrow results",
+      "selected": "selected",
+      "available": "Available",
       "template_editor": "Template Editor",
       "template_placeholder": "Type or edit template...",
       "placeholder_values": "Variable Values",
@@ -381,6 +387,7 @@
       "key_enter": "Enter"
     },
     "sidebar": {
+      "new": "New",
       "new_conversation": "New conversation",
       "no_conversations": "No conversations",
       "start_conversation": "Click the button above to start",
@@ -471,7 +478,7 @@
       "models_available": "Available models",
       "status": "Status",
       "online": "🟢 Online",
-      "offline": "🔴 Offline"
+      "offline": "🔴 Offline - configure endpoint"
     },
     "messages": {
       "found_models": "Found {count} models",
