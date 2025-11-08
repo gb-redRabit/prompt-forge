@@ -1,23 +1,25 @@
 <template>
   <section class="relative">
     <!-- Header -->
-    <div class="text-center mb-20 animate-fade-in-up">
+    <div class="text-center mb-4 md:mb-8 lg:mb-12 xl:mb-16 animate-fade-in-up">
       <h2
         v-once
-        class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4"
+        class="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 dark:text-white mb-2 md:mb-3 lg:mb-4"
       >
         {{ $t("app.section_how_title") }}
       </h2>
       <p
         v-once
-        class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto"
+        class="text-sm md:text-base lg:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto"
       >
         {{ $t("app.section_how_subtitle") }}
       </p>
     </div>
 
     <!-- Steps grid with animated timeline -->
-    <div class="relative grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div
+      class="relative grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 lg:gap-6 xl:gap-8"
+    >
       <!-- Animated connection line (desktop only) -->
       <div
         class="hidden lg:block absolute top-20 left-0 right-0 h-1 overflow-hidden pointer-events-none"
@@ -43,26 +45,34 @@
     </div>
 
     <!-- CTA Section -->
-    <div class="text-center mt-20 animate-fade-in-up animation-delay-600">
-      <GlassBadge variant="soft" size="lg" pill class="mb-6">
+    <div
+      class="text-center mt-4 md:mt-8 lg:mt-12 xl:mt-16 animate-fade-in-up animation-delay-600 flex flex-col items-center"
+    >
+      <GlassBadge
+        variant="soft"
+        size="sm"
+        pill
+        class="mb-2 md:mb-4 lg:mb-6 hidden md:inline-flex"
+      >
         {{ $t("app.how_cta_badge") }}
       </GlassBadge>
       <h3
         v-once
-        class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4"
+        class="text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold text-gray-900 dark:text-white mb-2 md:mb-3 lg:mb-4 hidden md:block"
       >
         {{ $t("app.how_cta_title") }}
       </h3>
       <p
         v-once
-        class="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto"
+        class="text-sm md:text-base lg:text-lg text-gray-600 dark:text-gray-400 mb-3 md:mb-6 lg:mb-8 max-w-2xl mx-auto hidden md:block"
       >
         {{ $t("app.how_cta_subtitle") }}
       </p>
       <NuxtLink to="/editor">
         <GlassButton
           color="primary"
-          size="xl"
+          size="md"
+          class="text-xs md:text-sm lg:text-base"
           glow
           icon="i-heroicons-rocket-launch"
           icon-position="right"

@@ -3,18 +3,20 @@
     <!-- Glass card with hover effects -->
     <GlassCard
       variant="subtle"
-      padding="lg"
+      padding="sm"
       hover
       shadow
       gradient
       class="h-full transition-all duration-500 hover:-translate-y-2 overflow-hidden"
     >
       <!-- Content -->
-      <div class="relative space-y-6 text-center">
+      <div
+        class="relative space-y-2 md:space-y-3 lg:space-y-4 xl:space-y-6 text-center"
+      >
         <!-- Number badge with glow -->
         <div class="relative inline-flex">
           <div
-            class="w-20 h-20 rounded-full bg-gradient-to-br from-primary-500 via-purple-600 to-blue-600 flex items-center justify-center text-3xl font-black text-white shadow-xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500"
+            class="w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 xl:w-20 xl:h-20 rounded-full bg-gradient-to-br from-primary-500 via-purple-600 to-blue-600 flex items-center justify-center text-xl md:text-2xl lg:text-2xl xl:text-3xl font-black text-white shadow-xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500"
           >
             <!-- Glow effect -->
             <div
@@ -31,13 +33,15 @@
 
         <!-- Title -->
         <h3
-          class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300"
+          class="text-sm md:text-base lg:text-lg xl:text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300 leading-tight"
         >
           {{ title }}
         </h3>
 
         <!-- Description -->
-        <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+        <p
+          class="text-xs md:text-sm lg:text-base text-gray-600 dark:text-gray-400 leading-relaxed"
+        >
           {{ description }}
         </p>
       </div>

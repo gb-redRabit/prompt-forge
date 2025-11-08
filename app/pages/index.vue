@@ -56,7 +56,7 @@
         <section
           id="demo"
           data-fullpage-section
-          class="fullpage-section flex items-center"
+          class="fullpage-section hidden lg:flex items-center"
           role="region"
           aria-label="Demo"
         >
@@ -295,6 +295,7 @@ onMounted(() => {
 .fullpage-viewport {
   position: relative;
   height: 100vh;
+  height: 100dvh; /* Dynamic viewport height - uwzględnia pasek adresu na mobile */
   width: 100%;
   /* allow native scrolling so scroll-snap can work */
   overflow-y: auto;
@@ -310,10 +311,19 @@ onMounted(() => {
 
 .fullpage-section {
   height: 100vh;
+  height: 100dvh; /* Dynamic viewport height - uwzględnia pasek adresu na mobile */
   width: 100%;
   /* ensure sections participate in scroll snapping */
   scroll-snap-align: start;
   scroll-snap-stop: always;
+}
+
+/* Mobile: kompaktowy padding dla kontenerów */
+@media (max-width: 767px) {
+  .fullpage-section .container {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
 }
 
 /* Skip link */

@@ -1,23 +1,23 @@
 <template>
   <section class="relative">
     <!-- Header -->
-    <div class="text-center mb-16 animate-fade-in-up">
+    <div class="text-center mb-8 md:mb-12 lg:mb-16 animate-fade-in-up">
       <h2
         v-once
-        class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4"
+        class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-3 md:mb-4"
       >
         {{ $t("app.faq.title") }}
       </h2>
       <p
         v-once
-        class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto"
+        class="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto"
       >
         {{ $t("app.faq.subtitle") }}
       </p>
     </div>
 
     <!-- FAQ Accordion -->
-    <div class="max-w-3xl mx-auto space-y-4">
+    <div class="max-w-3xl mx-auto space-y-3 md:space-y-4">
       <GlassCard
         v-for="(item, index) in faqs"
         :key="index"
@@ -34,20 +34,20 @@
         <!-- Question Button -->
         <button
           @click="toggle(index)"
-          class="w-full p-6 flex items-center justify-between text-left transition-all duration-300 hover:bg-white/50 dark:hover:bg-gray-800/50"
+          class="w-full p-4 md:p-5 lg:p-6 flex items-center justify-between text-left transition-all duration-300 hover:bg-white/50 dark:hover:bg-gray-800/50"
           :aria-expanded="openIndex === index"
           :aria-controls="`faq-answer-${index}`"
         >
           <!-- Icon -->
-          <div class="flex items-center gap-4 flex-1">
+          <div class="flex items-center gap-2 md:gap-3 lg:gap-4 flex-1">
             <div
-              class="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-purple-600 flex items-center justify-center text-white font-bold shadow-lg transition-all duration-300"
+              class="flex-shrink-0 w-8 h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 rounded-full bg-gradient-to-br from-primary-500 to-purple-600 flex items-center justify-center text-white text-sm md:text-base font-bold shadow-lg transition-all duration-300"
               :class="openIndex === index ? 'scale-110 rotate-6' : ''"
             >
               {{ index + 1 }}
             </div>
             <span
-              class="font-semibold text-lg text-gray-900 dark:text-white pr-4"
+              class="font-semibold text-base md:text-lg text-gray-900 dark:text-white pr-2 md:pr-4"
             >
               {{ $t(item.question) }}
             </span>

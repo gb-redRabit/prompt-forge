@@ -1,6 +1,8 @@
 <template>
   <section class="relative">
-    <div class="text-center max-w-5xl mx-auto space-y-8">
+    <div
+      class="text-center max-w-5xl mx-auto space-y-4 md:space-y-6 lg:space-y-8"
+    >
       <!-- Badge with Glass Effect -->
       <div class="flex justify-center">
         <GlassBadge
@@ -16,7 +18,7 @@
 
       <!-- Main heading -->
       <h1
-        class="text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-gray-900 dark:text-white leading-tight animate-fade-in-up animation-delay-100"
+        class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight text-gray-900 dark:text-white leading-tight animate-fade-in-up animation-delay-100"
       >
         <span
           class="bg-gradient-to-r from-primary-600 to-blue-600 dark:from-primary-400 dark:to-blue-400 bg-clip-text text-transparent"
@@ -27,7 +29,7 @@
 
       <!-- Subtitle -->
       <p
-        class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed animate-fade-in-up animation-delay-200"
+        class="text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed animate-fade-in-up animation-delay-200"
       >
         {{ $t("app.hero_sub") }}
       </p>
@@ -60,23 +62,23 @@
       <!-- Stats with Glass Cards -->
       <div
         v-if="isContentLoaded"
-        class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-4xl mx-auto pt-12 animate-fade-in-up animation-delay-400"
+        class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4 lg:gap-6 max-w-4xl mx-auto pt-6 md:pt-8 lg:pt-12 animate-fade-in-up animation-delay-400"
       >
         <GlassCard
           v-for="(stat, index) in stats"
           :key="index"
           variant="subtle"
-          padding="md"
+          padding="sm"
           hover
           shadow
           class="text-center"
         >
           <div
-            class="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2"
+            class="text-xl md:text-2xl lg:text-3xl font-bold text-primary-600 dark:text-primary-400 mb-1 md:mb-2"
           >
             {{ stat.value }}
           </div>
-          <div class="text-sm text-gray-600 dark:text-gray-400">
+          <div class="text-xs md:text-sm text-gray-600 dark:text-gray-400">
             {{ stat.label }}
           </div>
         </GlassCard>

@@ -1,7 +1,7 @@
 <template>
-  <section class="relative py-20">
+  <section class="relative py-0 md:py-8 lg:py-12 xl:py-20">
     <!-- Animated Background Elements -->
-    <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
       <div
         class="absolute top-20 left-10 w-64 h-64 bg-gradient-to-br from-primary-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse"
       ></div>
@@ -13,25 +13,25 @@
 
     <div class="relative">
       <!-- Header -->
-      <div class="text-center mb-12">
+      <div class="text-center mb-3 md:mb-6 lg:mb-8 xl:mb-12">
         <GlassBadge
           variant="soft"
-          size="lg"
+          size="sm"
+          class="text-xs md:text-sm mb-2 md:mb-4 lg:mb-6"
           icon="i-heroicons-sparkles"
           pill
-          class="mb-6"
         >
           {{ $t("app.demo.badge") }}
         </GlassBadge>
         <h2
           v-once
-          class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-primary-600 to-purple-600 dark:from-white dark:via-primary-400 dark:to-purple-400 bg-clip-text text-transparent mb-4"
+          class="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold bg-gradient-to-r from-gray-900 via-primary-600 to-purple-600 dark:from-white dark:via-primary-400 dark:to-purple-400 bg-clip-text text-transparent mb-2 md:mb-3 lg:mb-4"
         >
           {{ $t("app.demo.title") }}
         </h2>
         <p
           v-once
-          class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto"
+          class="text-sm md:text-base lg:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto hidden md:block"
         >
           {{ $t("app.demo.subtitle") }}
         </p>
@@ -40,8 +40,8 @@
       <!-- Alert: AI nie skonfigurowane -->
       <GlassCard
         v-if="!isConfigured"
-        padding="lg"
-        class="mb-8 ring-2 ring-yellow-500/50"
+        padding="sm"
+        class="mb-3 md:mb-6 lg:mb-8 ring-2 ring-yellow-500/50"
       >
         <div class="flex items-start gap-4">
           <div
@@ -74,7 +74,7 @@
       </GlassCard>
 
       <!-- Demo Grid -->
-      <div class="grid lg:grid-cols-2 gap-8">
+      <div class="grid lg:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
         <!-- Input Section -->
         <DemoInputSection
           v-model="inputText"

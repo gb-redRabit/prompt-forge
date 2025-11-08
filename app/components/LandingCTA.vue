@@ -17,18 +17,20 @@
     <!-- Glass container -->
     <GlassCard
       variant="strong"
-      padding="xl"
+      padding="lg"
       gradient
       shadow
-      class="rounded-3xl"
+      class="rounded-2xl md:rounded-3xl"
     >
-      <div class="relative z-10 text-center space-y-8 animate-fade-in-up">
+      <div
+        class="relative z-10 text-center space-y-4 md:space-y-6 lg:space-y-8 animate-fade-in-up"
+      >
         <!-- Title with gradient -->
         <h2
           v-once
-          class="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 dark:text-white"
+          class="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-gray-900 dark:text-white"
         >
-          <span class="block mb-2">{{ $t("app.cta_title") }}</span>
+          <span class="block mb-1.5 md:mb-2">{{ $t("app.cta_title") }}</span>
           <span
             class="bg-gradient-to-r from-primary-600 via-purple-600 to-blue-600 dark:from-primary-400 dark:via-purple-400 dark:to-blue-400 bg-clip-text text-transparent"
           >
@@ -39,16 +41,18 @@
         <!-- Subtitle -->
         <p
           v-once
-          class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed"
+          class="text-base md:text-lg lg:text-xl xl:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed"
         >
           {{ $t("app.footer_note") }}
         </p>
 
         <!-- CTA Buttons -->
-        <div class="flex flex-col sm:flex-row gap-4 justify-center pt-6">
+        <div
+          class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center pt-4 md:pt-6"
+        >
           <GlassButton
             color="primary"
-            size="xl"
+            size="lg"
             glow
             icon="i-heroicons-arrow-right"
             icon-position="right"
@@ -60,7 +64,7 @@
 
           <GlassButton
             variant="outline"
-            size="xl"
+            size="lg"
             color="neutral"
             icon="i-heroicons-play"
             icon-position="right"
@@ -72,7 +76,7 @@
 
         <!-- Trust indicators -->
         <div
-          class="flex flex-wrap items-center justify-center gap-8 pt-8 text-sm text-gray-500 dark:text-gray-400"
+          class="flex flex-wrap items-center justify-center gap-4 md:gap-6 lg:gap-8 pt-6 md:pt-8 text-xs md:text-sm text-gray-500 dark:text-gray-400"
         >
           <GlassBadge
             variant="soft"

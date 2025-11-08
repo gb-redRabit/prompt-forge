@@ -1,21 +1,23 @@
 <template>
   <section class="relative">
-    <div class="text-center mb-16 animate-fade-in-up">
+    <div class="text-center mb-4 md:mb-8 lg:mb-12 xl:mb-16 animate-fade-in-up">
       <h2
         v-once
-        class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4"
+        class="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 dark:text-white mb-2 md:mb-3 lg:mb-4"
       >
         {{ $t("app.features_title") }}
       </h2>
       <p
         v-once
-        class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto"
+        class="text-sm md:text-base lg:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto"
       >
         {{ $t("app.features_subtitle") }}
       </p>
     </div>
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div
+      class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 lg:gap-5 xl:gap-6"
+    >
       <LandingFeatureCard
         v-for="(feature, index) in features"
         :key="index"
@@ -27,15 +29,21 @@
     </div>
 
     <!-- CTA Section -->
-    <div class="text-center mt-16 animate-fade-in-up animation-delay-500">
-      <p v-once class="text-lg text-gray-600 dark:text-gray-400 mb-6">
+    <div
+      class="text-center mt-4 md:mt-8 lg:mt-12 xl:mt-16 animate-fade-in-up animation-delay-500"
+    >
+      <p
+        v-once
+        class="text-sm md:text-base lg:text-lg text-gray-600 dark:text-gray-400 mb-3 md:mb-4 lg:mb-6 hidden md:block"
+      >
         {{ $t("app.features_cta_text") }}
       </p>
-      <div class="flex gap-4 justify-center flex-wrap">
+      <div class="flex gap-2 md:gap-3 lg:gap-4 justify-center flex-wrap">
         <NuxtLink to="/editor">
           <GlassButton
             color="primary"
-            size="lg"
+            size="md"
+            class="text-xs md:text-sm lg:text-base"
             glow
             icon="i-heroicons-sparkles"
             icon-position="right"
@@ -43,10 +51,11 @@
             {{ $t("app.cta_start_creating") }}
           </GlassButton>
         </NuxtLink>
-        <NuxtLink to="/templates">
+        <NuxtLink to="/templates" class="hidden md:inline-block">
           <GlassButton
             variant="outline"
-            size="lg"
+            size="md"
+            class="text-xs md:text-sm lg:text-base"
             icon="i-heroicons-arrow-right"
             icon-position="right"
           >

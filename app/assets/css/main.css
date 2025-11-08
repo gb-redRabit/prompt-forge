@@ -264,6 +264,7 @@ svg.gooey-svg {
 #fullpage-container,
 .fullpage-viewport {
   height: 100vh;
+  height: 100dvh; /* Dynamic viewport height - uwzględnia pasek adresu na mobile */
   overflow-y: auto;
   scroll-snap-type: y mandatory;
   -webkit-overflow-scrolling: touch;
@@ -275,6 +276,15 @@ svg.gooey-svg {
   scroll-snap-align: start;
   scroll-snap-stop: always;
   min-height: 100vh;
+  min-height: 100dvh; /* Dynamic viewport height - uwzględnia pasek adresu na mobile */
+}
+
+/* Mobile: zmniejsz padding wewnętrzny aby treść się mieściła */
+@media (max-width: 767px) {
+  [data-fullpage-section] .container {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

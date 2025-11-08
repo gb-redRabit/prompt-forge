@@ -1,34 +1,46 @@
 <template>
-  <div class="space-y-2 p-8">
+  <div class="space-y-2 p-3 sm:p-4 md:p-6 lg:p-8">
     <!-- Loading State -->
-    <div v-if="isLoading" class="flex items-center justify-center py-12">
+    <div
+      v-if="isLoading"
+      class="flex items-center justify-center py-8 md:py-12"
+    >
       <div class="text-center">
         <div
-          class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4"
+          class="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 border-primary-600 mx-auto mb-3 sm:mb-4"
         ></div>
-        <p class="text-gray-600 dark:text-gray-400">
+        <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400">
           <span v-once>{{ $t("pages.shared.loading") }}</span>
         </p>
       </div>
     </div>
 
     <!-- Error State -->
-    <div v-else-if="error" class="text-center py-12">
+    <div v-else-if="error" class="text-center py-8 md:py-12 px-4">
       <UIcon
         name="i-heroicons-exclamation-circle"
-        class="w-16 h-16 mx-auto text-red-500 mb-4"
+        class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mx-auto text-red-500 mb-3 sm:mb-4"
       />
-      <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">
+      <h3
+        class="text-base sm:text-lg font-medium text-gray-900 dark:text-white mb-2"
+      >
         <span v-once>{{ $t("pages.templates.error_loading") }}</span>
       </h3>
-      <p class="text-gray-600 dark:text-gray-400 mb-4">
+      <p
+        class="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-3 sm:mb-4"
+      >
         {{ error }}
       </p>
-      <div class="flex gap-2 justify-center">
-        <GlassButton color="primary" @click="loadTemplate">
+      <div class="flex flex-col sm:flex-row gap-2 justify-center">
+        <GlassButton color="primary" size="md" @click="loadTemplate">
           <span v-once>{{ $t("pages.templates.try_again") }}</span>
         </GlassButton>
-        <GlassButton color="neutral" variant="outline" @click="handleClose">
+        <GlassButton
+          color="neutral"
+          variant="outline"
+          size="md"
+          @click="handleClose"
+        >
           <span v-once>{{ $t("common.back") }}</span>
         </GlassButton>
       </div>
@@ -44,11 +56,15 @@
     <!-- Empty State with Prompt Selection -->
     <div v-else class="max-w-6xl mx-auto flex flex-col justify-center">
       <!-- Header -->
-      <div class="text-center mb-8">
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+      <div class="text-center mb-4 sm:mb-6 md:mb-8 px-4">
+        <h2
+          class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2"
+        >
           <span v-once>{{ $t("pages.prompts.choose_template") }}</span>
         </h2>
-        <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        <p
+          class="text-sm sm:text-base text-gray-600 dark:text-gray-400 max-w-2xl mx-auto"
+        >
           <span v-once>{{
             $t("pages.prompts.choose_template_description")
           }}</span>
@@ -56,13 +72,13 @@
       </div>
 
       <!-- Search Bar -->
-      <div class="mb-6 mx-auto">
+      <div class="mb-4 sm:mb-6 mx-auto w-full px-4 max-w-2xl">
         <UInput
           v-model="searchQuery"
           :placeholder="$t('pages.prompts.search_templates')"
           icon="i-heroicons-magnifying-glass"
-          size="xl"
-          class="w-2xl"
+          size="lg"
+          class="w-full"
         >
           <template #trailing>
             <GlassButton
@@ -78,32 +94,48 @@
       </div>
 
       <!-- Stats -->
-      <div class="grid grid-cols-3 gap-4 mb-8 max-w-2xl mx-auto">
-        <div class="text-center p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
+      <div
+        class="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4 mb-4 sm:mb-6 md:mb-8 max-w-2xl mx-auto px-4"
+      >
+        <div
+          class="text-center p-2 sm:p-3 md:p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg"
+        >
           <div
-            class="text-2xl font-bold text-primary-600 dark:text-primary-400"
+            class="text-lg sm:text-xl md:text-2xl font-bold text-primary-600 dark:text-primary-400"
           >
             {{ totalPrompts }}
           </div>
-          <div class="text-xs text-gray-600 dark:text-gray-400 mt-1">
+          <div
+            class="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 mt-0.5 sm:mt-1"
+          >
             <span v-once>{{ $t("pages.prompts.total_templates") }}</span>
           </div>
         </div>
-        <div class="text-center p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
+        <div
+          class="text-center p-2 sm:p-3 md:p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg"
+        >
           <div
-            class="text-2xl font-bold text-success-600 dark:text-success-400"
+            class="text-lg sm:text-xl md:text-2xl font-bold text-success-600 dark:text-success-400"
           >
             {{ filteredPromptsCount }}
           </div>
-          <div class="text-xs text-gray-600 dark:text-gray-400 mt-1">
+          <div
+            class="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 mt-0.5 sm:mt-1"
+          >
             <span v-once>{{ $t("pages.prompts.matching") }}</span>
           </div>
         </div>
-        <div class="text-center p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
-          <div class="text-2xl font-bold text-info-600 dark:text-info-400">
+        <div
+          class="text-center p-2 sm:p-3 md:p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg"
+        >
+          <div
+            class="text-lg sm:text-xl md:text-2xl font-bold text-info-600 dark:text-info-400"
+          >
             {{ uniqueCategories }}
           </div>
-          <div class="text-xs text-gray-600 dark:text-gray-400 mt-1">
+          <div
+            class="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 mt-0.5 sm:mt-1"
+          >
             {{ $t("pages.prompts.categories") }}
           </div>
         </div>
@@ -112,30 +144,33 @@
       <!-- Templates List -->
       <div
         v-if="filteredPrompts.length > 0"
-        class="grid gap-3 max-h-[500px] overflow-y-auto pr-2"
+        class="grid gap-2 sm:gap-3 max-h-[400px] sm:max-h-[500px] overflow-y-auto pr-1 sm:pr-2 px-4"
       >
         <button
           v-for="prompt in filteredPrompts"
           :key="prompt.id"
-          class="text-left p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary-500 dark:hover:border-primary-500 hover:shadow-lg transition-all group bg-white dark:bg-gray-800"
+          class="text-left p-3 sm:p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary-500 dark:hover:border-primary-500 hover:shadow-lg transition-all group bg-white dark:bg-gray-800"
           @click="selectPrompt(prompt)"
         >
-          <div class="flex items-start justify-between gap-4">
+          <div class="flex items-start justify-between gap-2 sm:gap-4">
             <div class="flex-1 min-w-0">
               <h3
-                class="font-semibold text-gray-900 dark:text-white mb-1 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors"
+                class="text-sm sm:text-base font-semibold text-gray-900 dark:text-white mb-1 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors"
               >
                 {{ getTranslatedName(prompt) }}
               </h3>
-              <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
+              <p
+                class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 line-clamp-2"
+              >
                 {{ getTranslatedDescription(prompt) }}
               </p>
-              <div class="flex flex-wrap gap-1 mt-2">
+              <div class="flex flex-wrap gap-1 mt-1.5 sm:mt-2">
                 <UBadge
                   v-if="prompt.type"
                   color="secondary"
                   variant="subtle"
                   size="xs"
+                  class="text-[10px] sm:text-xs"
                 >
                   {{ prompt.type }}
                 </UBadge>
@@ -144,6 +179,7 @@
                   color="info"
                   variant="subtle"
                   size="xs"
+                  class="text-[10px] sm:text-xs"
                 >
                   {{ prompt.placeholder_keys.length }}
                   {{ $t("pages.prompts.variables") }}
@@ -152,7 +188,7 @@
             </div>
             <UIcon
               name="i-heroicons-arrow-right"
-              class="w-5 h-5 text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 group-hover:translate-x-1 transition-all flex-shrink-0"
+              class="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 group-hover:translate-x-1 transition-all flex-shrink-0"
             />
           </div>
         </button>
@@ -161,19 +197,24 @@
       <!-- No Results -->
       <div
         v-else-if="searchQuery"
-        class="text-center py-12 bg-gray-50 dark:bg-gray-800/50 rounded-lg"
+        class="text-center py-8 md:py-12 bg-gray-50 dark:bg-gray-800/50 rounded-lg px-4"
       >
         <UIcon
           name="i-heroicons-magnifying-glass"
-          class="w-12 h-12 mx-auto text-gray-400 dark:text-gray-600 mb-3"
+          class="w-10 h-10 sm:w-12 sm:h-12 mx-auto text-gray-400 dark:text-gray-600 mb-2 sm:mb-3"
         />
-        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">
+        <h3
+          class="text-base sm:text-lg font-medium text-gray-900 dark:text-white mb-2"
+        >
           <span v-once>{{ $t("pages.prompts.no_results") }}</span>
         </h3>
-        <p class="text-gray-600 dark:text-gray-400 mb-4">
+        <p
+          class="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-3 sm:mb-4"
+        >
           <span v-once>{{ $t("pages.prompts.try_different_search") }}</span>
         </p>
         <GlassButton
+          size="md"
           color="neutral"
           variant="ghost"
           @click="searchQuery = ''"
@@ -184,11 +225,12 @@
       </div>
 
       <!-- Browse All Link -->
-      <div class="text-center mt-6">
+      <div class="text-center mt-4 sm:mt-6 px-4">
         <GlassButton
           color="primary"
           variant="outline"
-          size="lg"
+          size="md"
+          class="text-sm sm:text-base"
           @click="navigateTo('/templates')"
           icon="i-heroicons-squares-2x2"
         >
