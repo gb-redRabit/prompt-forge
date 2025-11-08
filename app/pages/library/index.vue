@@ -40,19 +40,25 @@
     <!-- Content with higher z-index -->
     <div class="relative z-10">
       <!-- Header -->
-      <div class="flex items-center justify-between animate-fade-in">
-        <div>
-          <h1 class="text-2xl sm:text-3xl font-bold gradient-text-multi mb-2">
+      <div
+        class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0 animate-fade-in"
+      >
+        <div class="flex-1">
+          <h1
+            class="text-xl sm:text-2xl lg:text-3xl font-bold gradient-text-multi mb-1 sm:mb-2"
+          >
             <span v-once>{{ $t("library.title") }}</span>
           </h1>
-          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400">
+          <p
+            class="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400"
+          >
             <span v-once>{{ $t("library.subtitle") }}</span>
           </p>
         </div>
 
-        <!-- Actions -->
+        <!-- Actions - Desktop only, moved to stats on mobile -->
         <div
-          class="flex items-center gap-2 animate-fade-in animation-delay-100"
+          class="hidden sm:flex items-center gap-2 animate-fade-in animation-delay-100"
         >
           <GlassButton
             color="success"
@@ -61,9 +67,7 @@
             class="hover-scale transition-all-smooth hover-glow text-xs sm:text-sm"
             icon="i-heroicons-arrow-up-tray"
           >
-            <span class="hidden sm:inline" v-once>{{
-              $t("library.import")
-            }}</span>
+            <span v-once>{{ $t("library.import") }}</span>
           </GlassButton>
           <GlassButton
             color="primary"
@@ -72,20 +76,22 @@
             class="hover-scale transition-all-smooth hover-glow text-xs sm:text-sm"
             icon="i-heroicons-arrow-down-tray"
           >
-            <span class="hidden sm:inline" v-once>{{
-              $t("library.export")
-            }}</span>
+            <span v-once>{{ $t("library.export") }}</span>
           </GlassButton>
         </div>
       </div>
 
       <!-- Stats -->
-      <div class="animate-fade-in animation-delay-200 my-5">
-        <LibraryStats :stats="stats" />
+      <div class="animate-fade-in animation-delay-200 my-3 sm:my-5">
+        <LibraryStats
+          :stats="stats"
+          @import="showImportModal = true"
+          @export="handleExport"
+        />
       </div>
 
-      <!-- Tabs -->
-      <div class="animate-fade-in animation-delay-300">
+      <!-- Tabs - Desktop -->
+      <div class="hidden sm:block animate-fade-in animation-delay-300">
         <UTabs v-model="activeTab" :items="tabs">
           <template #saved>
             <LibrarySavedTab
@@ -269,6 +275,230 @@
             />
           </template>
         </UTabs>
+      </div>
+
+      <!-- Mobile Content (without UTabs) -->
+      <div class="sm:hidden animate-fade-in animation-delay-300 pb-20">
+        <!-- Saved Tab -->
+        <div v-show="activeTab === 0">
+          <LibrarySavedTab
+            :prompts="savedPrompts"
+            @use="usePrompt"
+            @delete="handleDeletePrompt"
+          />
+        </div>
+
+        <!-- Custom Tab -->
+        <div v-show="activeTab === 1">
+          <LibraryCustomTab
+            :prompts="customPrompts"
+            @use="usePrompt"
+            @edit="handleEditPrompt"
+            @delete="handleDeleteCustomPrompt"
+            @create="createNewPrompt"
+          />
+        </div>
+
+        <!-- Prompts Tags Tab -->
+        <div v-show="activeTab === 2">
+          <div class="grid grid-cols-1 gap-3 mt-4">
+            <UCard
+              v-for="prompt in filteredEditorPrompts"
+              :key="prompt.savedId"
+              class="card-interactive group animate-fade-in-up"
+            >
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <h3
+                    class="font-semibold text-sm text-gray-900 dark:text-white"
+                  >
+                    {{
+                      prompt.name
+                        ? locale === "pl"
+                          ? prompt.name.pl
+                          : prompt.name.en
+                        : prompt.result || "Prompt"
+                    }}
+                  </h3>
+                </div>
+
+                <p
+                  class="text-xs text-gray-600 dark:text-gray-400 line-clamp-2"
+                >
+                  {{
+                    prompt.description
+                      ? locale === "pl"
+                        ? prompt.description.pl
+                        : prompt.description.en
+                      : prompt.result || ""
+                  }}
+                </p>
+              </div>
+
+              <div
+                class="flex items-center justify-between pt-2 border-t border-gray-200 dark:border-gray-700 mt-2"
+              >
+                <span class="text-[10px] text-gray-500">{{
+                  formattedDateFor(prompt)
+                }}</span>
+                <div
+                  class="flex items-center gap-1.5 opacity-90 group-hover:opacity-100 transition-opacity"
+                >
+                  <GlassButton
+                    size="xs"
+                    color="primary"
+                    variant="soft"
+                    icon="i-heroicons-play"
+                    @click="() => openLink(prompt.link)"
+                  >
+                    <span class="text-[10px]" v-once>{{
+                      $t("common.use") || "Użyj"
+                    }}</span>
+                  </GlassButton>
+                  <GlassButton
+                    size="xs"
+                    color="error"
+                    variant="ghost"
+                    icon="i-heroicons-trash"
+                    title="Usuń prompt"
+                    aria-label="Usuń prompt"
+                    @click="() => requestDeleteEditorPrompt(prompt.savedId)"
+                  />
+                </div>
+              </div>
+            </UCard>
+          </div>
+        </div>
+
+        <!-- Tag Favorites Tab -->
+        <div v-show="activeTab === 3">
+          <div class="mt-4">
+            <h3
+              class="text-base font-medium text-gray-900 dark:text-white mb-3"
+            >
+              Ulubione tagi
+            </h3>
+            <div class="space-y-3">
+              <template v-if="Object.keys(groupedTagFavorites).length">
+                <div
+                  v-for="(items, category) in groupedTagFavorites"
+                  :key="category"
+                >
+                  <h4
+                    class="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2"
+                  >
+                    {{
+                      category === "_uncategorized"
+                        ? $t("pages.library.tags.uncategorized") || "Inne"
+                        : category
+                    }}
+                  </h4>
+                  <div class="flex flex-wrap gap-2">
+                    <template v-for="(tagObj, i) in items" :key="tagObj.raw">
+                      <div
+                        class="inline-flex items-center bg-gray-100 dark:bg-gray-800 rounded-full px-2.5 py-1 text-xs text-gray-700 dark:text-gray-200"
+                      >
+                        <button
+                          class="mr-1.5 text-[10px] text-gray-500"
+                          @click="() => setTagFilter(tagObj.raw)"
+                        >
+                          {{
+                            locale === "pl"
+                              ? tagObj.pl || tagObj.en
+                              : tagObj.en || tagObj.pl
+                          }}
+                        </button>
+                        <GlassButton
+                          size="xs"
+                          variant="ghost"
+                          color="error"
+                          icon="i-heroicons-trash"
+                          @click="() => requestDeleteTag(tagObj.raw)"
+                        />
+                      </div>
+                    </template>
+                  </div>
+                </div>
+              </template>
+              <template v-else>
+                <p class="text-xs text-gray-500">Brak ulubionych tagów.</p>
+              </template>
+            </div>
+          </div>
+        </div>
+
+        <!-- History Tab -->
+        <div v-show="activeTab === 4">
+          <LibraryHistoryTab
+            :prompts="promptHistory"
+            @use="usePrompt"
+            @clear="handleClearHistory"
+          />
+        </div>
+
+        <!-- Collections Tab -->
+        <div v-show="activeTab === 5">
+          <LibraryCollectionsTab
+            :collections="collections"
+            :all-prompts="allPrompts"
+            @create="showCreateCollectionModal = true"
+            @view="viewCollection"
+            @delete="handleDeleteCollection"
+            @add-prompts="handleAddPromptsDialog"
+            @use-prompt="usePrompt"
+            @remove-prompt="handleRemoveFromCollection"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Bottom Navigation -->
+    <div class="sm:hidden fixed bottom-0 left-0 right-0 z-40 safe-area-bottom">
+      <div
+        class="glass-panel border-t border-white/20 dark:border-gray-700/50 px-2 pt-2 pb-safe"
+      >
+        <div class="flex items-center justify-around relative">
+          <!-- Active indicator -->
+          <div
+            class="absolute top-0 h-0.5 bg-gradient-to-r from-primary-500 to-purple-600 transition-all duration-300 ease-out"
+            :style="{
+              left: `${(activeTab / 6) * 100}%`,
+              width: `${100 / 6}%`,
+            }"
+          />
+
+          <button
+            v-for="(tab, index) in tabs"
+            :key="index"
+            @click="activeTab = index"
+            class="flex flex-col items-center justify-center py-2 px-1 transition-all duration-200 relative group min-w-0 flex-1"
+            :class="
+              activeTab === index
+                ? 'text-primary-600 dark:text-primary-400'
+                : 'text-gray-600 dark:text-gray-400'
+            "
+          >
+            <!-- Circle indicator for active tab -->
+            <div
+              v-if="activeTab === index"
+              class="absolute -top-1 w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse"
+            />
+
+            <UIcon
+              :name="tab.icon"
+              class="transition-all duration-200"
+              :class="activeTab === index ? 'w-6 h-6 mb-0.5' : 'w-5 h-5 mb-0.5'"
+            />
+
+            <!-- Optional: tiny label on active -->
+            <span
+              v-if="activeTab === index"
+              class="text-[9px] font-medium mt-0.5 leading-tight truncate max-w-full"
+            >
+              {{ tab.label }}
+            </span>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -942,5 +1172,13 @@ useHead({
 .scale-fade-leave-to {
   opacity: 0;
   transform: scale(0.95);
+}
+
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.pb-safe {
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom, 0.5rem));
 }
 </style>

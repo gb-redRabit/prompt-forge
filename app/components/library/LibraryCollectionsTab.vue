@@ -1,37 +1,42 @@
 <template>
-  <div class="space-y-4 mt-4">
-    <div class="flex justify-between items-center">
-      <p class="text-sm text-gray-600 dark:text-gray-400">
+  <div class="space-y-3 sm:space-y-4 mt-3 sm:mt-4">
+    <div
+      class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2"
+    >
+      <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
         <span v-once>{{ $t("library.collections.organize") }}</span>
       </p>
-      <GlassButton color="primary" size="sm" @click="$emit('create')">
-        <UIcon name="i-heroicons-plus" class="mr-1" />
-        <span v-once>{{ $t("library.collections.new") }}</span>
+      <GlassButton color="primary" size="xs" @click="$emit('create')">
+        <UIcon name="i-heroicons-plus" class="mr-1 w-3 h-3 sm:w-4 sm:h-4" />
+        <span v-once class="text-xs">{{ $t("library.collections.new") }}</span>
       </GlassButton>
     </div>
 
     <div
       v-if="collections.length > 0"
-      class="grid md:grid-cols-2 lg:grid-cols-3 gap-4"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4"
     >
       <GlassCard
         v-for="collection in collections"
         :key="collection.id"
         class="hover:shadow-lg transition-all cursor-pointer"
+        padding="sm"
         @click="$emit('view', collection)"
       >
         <template #header>
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-1.5 sm:gap-2 min-w-0">
               <UIcon
                 name="i-heroicons-folder"
-                class="w-5 h-5 text-primary-600"
+                class="w-4 h-4 sm:w-5 sm:h-5 text-primary-600 flex-shrink-0"
               />
-              <h3 class="font-semibold text-gray-900 dark:text-white">
+              <h3
+                class="font-semibold text-sm sm:text-base text-gray-900 dark:text-white truncate"
+              >
                 {{ collection.name }}
               </h3>
             </div>
-            <div class="flex items-center gap-1">
+            <div class="flex items-center gap-0.5 sm:gap-1 flex-shrink-0">
               <GlassButton
                 color="primary"
                 variant="ghost"
@@ -53,12 +58,17 @@
         <div class="space-y-2">
           <p
             v-if="collection.description"
-            class="text-sm text-gray-600 dark:text-gray-400"
+            class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 line-clamp-2"
           >
             {{ collection.description }}
           </p>
-          <div class="flex items-center gap-2 text-xs text-gray-500">
-            <UIcon name="i-heroicons-document-text" class="w-4 h-4" />
+          <div
+            class="flex items-center gap-1.5 text-[10px] sm:text-xs text-gray-500"
+          >
+            <UIcon
+              name="i-heroicons-document-text"
+              class="w-3 h-3 sm:w-4 sm:h-4"
+            />
             {{
               $t("library.collections.promptCount", {
                 count: collection.promptIds.length,
@@ -69,17 +79,17 @@
           <!-- Prompty w kolekcji -->
           <div
             v-if="getCollectionPrompts(collection.id).length > 0"
-            class="mt-3 space-y-2"
+            class="mt-2 sm:mt-3 space-y-1.5 sm:space-y-2"
           >
             <div
               v-for="prompt in getCollectionPrompts(collection.id).slice(0, 3)"
               :key="prompt.savedId"
-              class="flex items-center justify-between gap-2 p-2 bg-gray-50 dark:bg-gray-800 rounded text-xs"
+              class="flex items-center justify-between gap-2 p-1.5 sm:p-2 bg-gray-50 dark:bg-gray-800 rounded text-[10px] sm:text-xs"
             >
               <span class="truncate flex-1" :title="getPromptName(prompt)">
                 {{ getPromptName(prompt) }}
               </span>
-              <div class="flex items-center gap-1 flex-shrink-0">
+              <div class="flex items-center gap-0.5 sm:gap-1 flex-shrink-0">
                 <GlassButton
                   color="primary"
                   variant="ghost"
@@ -102,7 +112,7 @@
             </div>
             <p
               v-if="getCollectionPrompts(collection.id).length > 3"
-              class="text-xs text-gray-500 text-center"
+              class="text-[10px] sm:text-xs text-gray-500 text-center"
             >
               {{
                 $t("library.collections.more", {
@@ -115,12 +125,12 @@
       </GlassCard>
     </div>
 
-    <div v-else class="text-center py-12">
+    <div v-else class="text-center py-8 sm:py-12 px-4">
       <UIcon
         name="i-heroicons-folder"
-        class="w-16 h-16 mx-auto text-gray-400 mb-4"
+        class="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-gray-400 mb-3 sm:mb-4"
       />
-      <p class="text-gray-600 dark:text-gray-400">
+      <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400">
         {{ $t("library.collections.empty") }}
       </p>
     </div>

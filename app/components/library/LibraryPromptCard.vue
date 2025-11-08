@@ -1,10 +1,15 @@
 <template>
-  <GlassCard hover shadow padding="md" class="flex flex-col justify-between">
+  <GlassCard hover shadow padding="sm" class="flex flex-col justify-between">
     <template #header>
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <UIcon :name="categoryIcon" class="w-5 h-5 text-primary-600" />
-          <h3 class="font-semibold text-gray-900 dark:text-white">
+      <div class="flex items-center justify-between gap-2">
+        <div class="flex items-center gap-1.5 sm:gap-2 min-w-0">
+          <UIcon
+            :name="categoryIcon"
+            class="w-4 h-4 sm:w-5 sm:h-5 text-primary-600 flex-shrink-0"
+          />
+          <h3
+            class="font-semibold text-sm sm:text-base text-gray-900 dark:text-white truncate"
+          >
             {{ promptName }}
           </h3>
         </div>
@@ -13,21 +18,24 @@
           color="success"
           variant="soft"
           size="xs"
+          class="flex-shrink-0"
         >
           <span v-once>{{ $t("library.custom.badge") || "Własny" }}</span>
         </GlassBadge>
       </div>
     </template>
 
-    <div class="space-y-3">
-      <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
+    <div class="space-y-2 sm:space-y-3">
+      <p
+        class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 line-clamp-2"
+      >
         {{ promptDescription }}
       </p>
 
       <div
         class="flex items-center justify-between pt-2 border-t border-gray-200 dark:border-gray-700"
       >
-        <span class="text-xs text-gray-500">
+        <span class="text-[10px] sm:text-xs text-gray-500">
           {{ formattedDate }}
         </span>
 
@@ -38,8 +46,11 @@
             color="primary"
             variant="soft"
             @click="$emit('use', prompt)"
+            class="text-xs"
           >
-            <span v-once>{{ $t("common.use") || "Użyj" }}</span>
+            <span v-once class="hidden sm:inline">{{
+              $t("common.use") || "Użyj"
+            }}</span>
           </GlassButton>
 
           <GlassButton

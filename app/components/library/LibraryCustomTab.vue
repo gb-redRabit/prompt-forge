@@ -1,5 +1,7 @@
 <template>
-  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mt-3 sm:mt-4"
+  >
     <LibraryPromptCard
       v-for="prompt in prompts"
       :key="prompt.savedId"
@@ -11,18 +13,20 @@
     />
 
     <GlassCard
-      class="hover:shadow-lg transition-all cursor-pointer border-2 border-dashed border-gray-300 dark:border-gray-700 hover:border-primary-500 dark:hover:border-primary-500 bg-gray-50 dark:bg-gray-900 flex items-center justify-center min-h-[200px]"
+      class="hover:shadow-lg transition-all cursor-pointer border-2 border-dashed border-gray-300 dark:border-gray-700 hover:border-primary-500 dark:hover:border-primary-500 bg-gray-50 dark:bg-gray-900 flex items-center justify-center min-h-[150px] sm:min-h-[200px]"
       @click="$emit('create')"
     >
-      <div class="text-center p-6">
+      <div class="text-center p-4 sm:p-6">
         <UIcon
           name="i-heroicons-plus-circle"
-          class="w-12 h-12 mx-auto text-gray-400 mb-3"
+          class="w-10 h-10 sm:w-12 sm:h-12 mx-auto text-gray-400 mb-2 sm:mb-3"
         />
-        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">
+        <p
+          class="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400"
+        >
           <span v-once>{{ $t("library.custom.addNew") }}</span>
         </p>
-        <p class="text-xs text-gray-500 mt-1">
+        <p class="text-[10px] sm:text-xs text-gray-500 mt-1">
           <span v-once>{{ $t("library.custom.clickToCreate") }}</span>
         </p>
       </div>
