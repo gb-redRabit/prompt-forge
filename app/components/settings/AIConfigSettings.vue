@@ -1,7 +1,7 @@
 <template>
-  <div class="grid lg:grid-cols-2 gap-6">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
     <!-- LEFT COLUMN: Configuration Form -->
-    <div class="space-y-4">
+    <div class="space-y-3 sm:space-y-4">
       <!-- Alert Messages -->
       <UAlert
         v-if="connectionStatus"
@@ -18,33 +18,34 @@
       />
 
       <!-- Configuration Form Card -->
-      <GlassCard padding="md">
+      <GlassCard padding="sm">
         <h3
-          class="text-sm font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2"
+          class="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3 flex items-center gap-1.5 sm:gap-2"
         >
           <UIcon
             name="i-heroicons-cog-6-tooth"
-            class="w-4 h-4 text-purple-500"
+            class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-500"
           />
           <span v-once>{{ $t("ai.config.title") }}</span>
         </h3>
 
         <!-- Server Endpoint -->
-        <div class="space-y-2">
+        <div class="space-y-1.5 sm:space-y-2">
           <label
-            class="text-xs font-medium text-gray-700 dark:text-gray-300 flex items-center gap-1.5"
+            class="text-[10px] sm:text-xs font-medium text-gray-700 dark:text-gray-300 flex items-center gap-1 sm:gap-1.5"
           >
             <UIcon
               name="i-heroicons-server"
-              class="w-3.5 h-3.5 text-purple-500"
+              class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-purple-500"
             />
             <span v-once>{{ $t("ai.config.endpoint") }}</span>
           </label>
           <UInput
             v-model="config.endpoint"
             :placeholder="$t('ai.config.endpoint_hint')"
-            size="md"
+            size="sm"
             icon="i-heroicons-link"
+            class="text-xs sm:text-sm"
           >
             <template #trailing>
               <GlassButton
@@ -66,14 +67,14 @@
         </div>
 
         <!-- Model Selection -->
-        <div class="space-y-2">
+        <div class="space-y-1.5 sm:space-y-2">
           <div class="flex items-center justify-between">
             <label
-              class="text-xs font-medium text-gray-700 dark:text-gray-300 flex items-center gap-1.5"
+              class="text-[10px] sm:text-xs font-medium text-gray-700 dark:text-gray-300 flex items-center gap-1 sm:gap-1.5"
             >
               <UIcon
                 name="i-heroicons-cpu-chip"
-                class="w-3.5 h-3.5 text-purple-500"
+                class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-purple-500"
               />
               <span v-once>{{ $t("ai.config.model_name") }}</span>
             </label>
@@ -89,7 +90,7 @@
                 <UIcon
                   name="i-heroicons-arrow-path"
                   :class="{ 'animate-spin': loadingModels }"
-                  class="w-3.5 h-3.5"
+                  class="w-3 h-3 sm:w-3.5 sm:h-3.5"
                 />
               </template>
             </GlassButton>
@@ -100,12 +101,16 @@
             v-model="config.modelId"
             :items="availableModels"
             :placeholder="$t('ai.config.model_name_placeholder')"
-            size="md"
+            size="sm"
             searchable
             :searchable-placeholder="$t('pages.prompts.search')"
+            class="text-xs sm:text-sm"
           >
             <template #leading>
-              <UIcon name="i-heroicons-sparkles" class="w-4 h-4" />
+              <UIcon
+                name="i-heroicons-sparkles"
+                class="w-3.5 h-3.5 sm:w-4 sm:h-4"
+              />
             </template>
           </USelectMenu>
 
@@ -114,8 +119,9 @@
             v-model="config.modelId"
             :placeholder="$t('ai.config.model_name_placeholder')"
             icon="i-heroicons-sparkles"
-            size="md"
+            size="sm"
             disabled
+            class="text-xs sm:text-sm"
           >
             <template #trailing>
               <UTooltip text="Kliknij 'Odśwież' aby pobrać modele">
@@ -129,11 +135,11 @@
 
           <p
             v-if="availableModels.length > 0"
-            class="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1"
+            class="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1"
           >
             <UIcon
               name="i-heroicons-check-circle"
-              class="w-3 h-3 text-green-500"
+              class="w-2.5 h-2.5 sm:w-3 sm:h-3 text-green-500"
             />
             {{ availableModels.length }}
             {{
@@ -144,11 +150,11 @@
           </p>
           <p
             v-else
-            class="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1"
+            class="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1"
           >
             <UIcon
               name="i-heroicons-information-circle"
-              class="w-3 h-3 text-blue-500"
+              class="w-2.5 h-2.5 sm:w-3 sm:h-3 text-blue-500"
             />
             <span v-once>{{ $t("ai.config.model_name_hint") }}</span>
           </p>
@@ -156,21 +162,23 @@
       </GlassCard>
 
       <!-- Action Buttons Card -->
-      <GlassCard padding="md">
-        <div class="flex gap-3">
+      <GlassCard padding="sm">
+        <div class="flex gap-2 sm:gap-3">
           <GlassButton
             color="primary"
             variant="soft"
             full-width
-            size="lg"
+            size="md"
             :loading="isTesting"
             :disabled="!isConfigValid"
             @click="testConnection"
+            class="text-xs sm:text-sm"
           >
             <template #leading>
               <UIcon
                 name="i-heroicons-beaker"
                 :class="{ 'animate-bounce': isTesting }"
+                class="w-4 h-4"
               />
             </template>
             <span v-once>{{
@@ -183,15 +191,17 @@
           <GlassButton
             color="primary"
             full-width
-            size="lg"
+            size="md"
             :loading="isSaving"
             :disabled="!isConfigValid"
             @click="saveConfig"
+            class="text-xs sm:text-sm"
           >
             <template #leading>
               <UIcon
                 name="i-heroicons-check"
                 :class="{ 'animate-pulse': isSaving }"
+                class="w-4 h-4"
               />
             </template>
             <span v-once>{{
@@ -203,7 +213,7 @@
         <!-- Last Connection Footer -->
         <div
           v-if="isConfigured && lastConnectionTime"
-          class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 pt-3 mt-3 border-t border-gray-200 dark:border-gray-700"
+          class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 pt-2 sm:pt-3 mt-2 sm:mt-3 border-t border-gray-200 dark:border-gray-700"
         >
           <span class="flex items-center gap-1.5">
             <UIcon name="i-heroicons-clock" class="w-3.5 h-3.5" />
@@ -223,33 +233,40 @@
     </div>
 
     <!-- RIGHT COLUMN: Information & Help -->
-    <div class="space-y-4">
+    <div class="space-y-3 sm:space-y-4">
       <!-- Quick Stats Card -->
       <GlassCard
-        padding="md"
+        padding="sm"
         gradient
-        class="space-y-3 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20"
+        class="space-y-2 sm:space-y-3 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20"
       >
-        <div class="flex items-center gap-2 mb-3">
+        <div class="flex items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3">
           <div
-            class="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center"
+            class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center"
           >
-            <UIcon name="i-heroicons-chart-bar" class="w-4 h-4 text-white" />
+            <UIcon
+              name="i-heroicons-chart-bar"
+              class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white"
+            />
           </div>
-          <h3 class="font-semibold text-sm text-gray-900 dark:text-white">
+          <h3
+            class="font-semibold text-xs sm:text-sm text-gray-900 dark:text-white"
+          >
             <span v-once>{{ $t("ai.status_card.title") }}</span>
           </h3>
         </div>
 
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-2 gap-2 sm:gap-3">
           <div
-            class="p-3 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm"
+            class="p-2 sm:p-3 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm"
           >
-            <div class="text-xs text-gray-600 dark:text-gray-400 mb-1">
+            <div
+              class="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 mb-0.5 sm:mb-1"
+            >
               <span v-once>{{ $t("ai.status_card.endpoint") }}</span>
             </div>
             <div
-              class="text-sm font-semibold text-gray-900 dark:text-white truncate"
+              class="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white truncate"
             >
               {{
                 config.endpoint
@@ -260,13 +277,15 @@
           </div>
 
           <div
-            class="p-3 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm"
+            class="p-2 sm:p-3 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm"
           >
-            <div class="text-xs text-gray-600 dark:text-gray-400 mb-1">
+            <div
+              class="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 mb-0.5 sm:mb-1"
+            >
               <span v-once>{{ $t("ai.status_card.model") }}</span>
             </div>
             <div
-              class="text-sm font-semibold text-gray-900 dark:text-white truncate"
+              class="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white truncate"
               :title="config.modelId"
             >
               {{
@@ -276,23 +295,31 @@
           </div>
 
           <div
-            class="p-3 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm"
+            class="p-2 sm:p-3 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm"
           >
-            <div class="text-xs text-gray-600 dark:text-gray-400 mb-1">
+            <div
+              class="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 mb-0.5 sm:mb-1"
+            >
               <span v-once>{{ $t("ai.status_card.models_available") }}</span>
             </div>
-            <div class="text-sm font-semibold text-gray-900 dark:text-white">
+            <div
+              class="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white"
+            >
               {{ availableModels.length || 0 }}
             </div>
           </div>
 
           <div
-            class="p-3 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm"
+            class="p-2 sm:p-3 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm"
           >
-            <div class="text-xs text-gray-600 dark:text-gray-400 mb-1">
+            <div
+              class="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 mb-0.5 sm:mb-1"
+            >
               <span v-once>{{ $t("ai.status_card.status") }}</span>
             </div>
-            <div class="text-sm font-semibold text-gray-900 dark:text-white">
+            <div
+              class="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white"
+            >
               {{
                 isConfigured
                   ? $t("ai.status_card.online")
@@ -306,12 +333,14 @@
       <!-- Quick Guide -->
       <UAlert color="info" variant="soft" icon="i-heroicons-light-bulb">
         <template #title>
-          <span class="text-sm font-medium" v-once>{{
+          <span class="text-xs sm:text-sm font-medium" v-once>{{
             $t("ai.quick_guide_title")
           }}</span>
         </template>
         <template #description>
-          <ol class="text-xs space-y-1.5 mt-2 list-decimal list-inside">
+          <ol
+            class="text-[10px] sm:text-xs space-y-1 sm:space-y-1.5 mt-1.5 sm:mt-2 list-decimal list-inside leading-relaxed"
+          >
             <li>
               <span v-once>{{ $t("ai.config.endpoint_hint") }}</span>
             </li>

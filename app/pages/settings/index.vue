@@ -1,11 +1,11 @@
 <template>
-  <div class="space-y-6 sm:space-y-8 p-3 sm:p-4 lg:p-8">
+  <div class="space-y-4 sm:space-y-6 lg:space-y-8 p-3 sm:p-4 lg:p-8">
     <!-- Header -->
     <div>
-      <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+      <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-1 sm:mb-2">
         <span v-once>{{ $t("settings.title") }}</span>
       </h1>
-      <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400">
+      <p class="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400">
         <span v-once>{{ $t("settings.subtitle") }}</span>
       </p>
     </div>
@@ -22,7 +22,7 @@
         <AIConfigSettings />
       </SettingsCard>
 
-      <div class="grid md:grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         <!-- Language Settings -->
         <SettingsCard
           icon="i-heroicons-language"

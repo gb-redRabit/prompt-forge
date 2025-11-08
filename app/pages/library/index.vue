@@ -478,12 +478,6 @@
                 : 'text-gray-600 dark:text-gray-400'
             "
           >
-            <!-- Circle indicator for active tab -->
-            <div
-              v-if="activeTab === index"
-              class="absolute -top-1 w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse"
-            />
-
             <UIcon
               :name="tab.icon"
               class="transition-all duration-200"
