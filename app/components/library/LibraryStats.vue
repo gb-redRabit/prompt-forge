@@ -12,7 +12,9 @@
           >
             <div class="flex flex-col items-center text-center">
               <UIcon :name="stat.icon" :class="['w-5 h-5 mb-1', stat.color]" />
-              <div :class="['text-base font-bold leading-none', stat.textColor]">
+              <div
+                :class="['text-base font-bold leading-none', stat.textColor]"
+              >
                 {{ stat.value }}
               </div>
               <div
@@ -32,7 +34,9 @@
             :title="$t('library.import')"
           >
             <UIcon name="i-heroicons-arrow-up-tray" class="w-3.5 h-3.5" />
-            <span class="text-[11px] font-medium">{{ $t("library.import") }}</span>
+            <span class="text-[11px] font-medium">{{
+              $t("library.import")
+            }}</span>
           </button>
           <button
             @click="$emit('export')"
@@ -40,7 +44,9 @@
             :title="$t('library.export')"
           >
             <UIcon name="i-heroicons-arrow-down-tray" class="w-3.5 h-3.5" />
-            <span class="text-[11px] font-medium">{{ $t("library.export") }}</span>
+            <span class="text-[11px] font-medium">{{
+              $t("library.export")
+            }}</span>
           </button>
         </div>
       </div>
