@@ -10,11 +10,13 @@
 
     <!-- Main Content -->
     <div
-      class="flex-1 flex flex-col transition-all duration-300 ease-in-out relative"
-      :class="sidebarOpen ? 'lg:ml-72' : 'lg:ml-16'"
+      :class="[
+        'flex-1 flex flex-col transition-all duration-300 ease-in-out relative w-full min-w-0',
+        sidebarOpen ? 'lg:ml-72' : 'lg:ml-16',
+      ]"
       :style="zIndexStyle('CONTENT')"
     >
-      <main class="flex-1 overflow-auto">
+      <main class="flex-1 overflow-auto w-full">
         <slot />
       </main>
     </div>

@@ -119,11 +119,17 @@
 definePageMeta({ layout: "dashboard" });
 
 useHead({
-  title: "Prompt Forge – Twórz prompty AI szybciej",
+  title: "Prompt Forge – Edytor promptów dla Stable Diffusion",
   meta: [
     {
       name: "description",
-      content: "Nowoczesny edytor promptów AI z Nuxt, Vue i Nuxt UI.",
+      content:
+        "Zaawansowany edytor tagów z systemem wag i emfazy dla generatorów obrazów AI. Biblioteka promptów, kolekcje i więcej.",
+    },
+    {
+      name: "keywords",
+      content:
+        "stable diffusion, ai art, prompt editor, tags, weight, emphasis, negative prompts, prompt library",
     },
   ],
 });
@@ -156,8 +162,12 @@ const handleGetStarted = async () => {
   await navigateTo("/editor");
 };
 
-const handleLearnMore = async () => {
-  await navigateTo("/about");
+const handleLearnMore = () => {
+  // Scroll to demo section
+  const demoSection = document.getElementById("demo");
+  if (demoSection) {
+    demoSection.scrollIntoView({ behavior: "smooth" });
+  }
 };
 
 // upewnij się że scroll container ma focus by działały klawisze pgup/pagedown jeśli potrzebne

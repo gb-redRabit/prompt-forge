@@ -116,11 +116,11 @@ const isProcessing = ref(false);
 const error = ref("");
 const copied = ref(false);
 
-// Example prompts for quick testing
+// Example prompts for quick testing (AI Art related)
 const examplePrompts = [
-  "Napisz email sprzedażowy dla nowego produktu SaaS",
-  "Stwórz prompt do generowania opisów produktów e-commerce",
-  "Pomóż mi napisać post na LinkedIn o AI",
+  "portrait of a woman, detailed face, blue eyes",
+  "fantasy landscape, mountains, sunset, cinematic lighting",
+  "cyberpunk city, neon lights, futuristic, highly detailed",
 ];
 
 const canProcess = computed(() => {

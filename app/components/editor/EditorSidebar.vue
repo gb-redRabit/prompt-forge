@@ -32,7 +32,7 @@
 
         <!-- Icon with rotation animation -->
         <div
-          class="relative z-10 transition-transform duration-150 group-hover:scale-110"
+          class="relative z-50 transition-transform duration-150 group-hover:scale-110"
         >
           <UIcon
             :name="

@@ -1,7 +1,9 @@
 <template>
-  <div class="flex flex-col space-y-3 h-full">
+  <div class="flex flex-col space-y-3 h-full w-full max-w-full overflow-hidden">
     <!-- Settings Bar -->
-    <div class="glass-card p-3 flex items-center justify-between gap-3">
+    <div
+      class="glass-card p-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 w-full max-w-full"
+    >
       <!-- NSFW Toggle -->
       <div class="flex items-center gap-2">
         <USwitch
@@ -16,15 +18,19 @@
       </div>
 
       <!-- Action Buttons -->
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-2 w-full sm:w-auto">
         <GlassButton
           size="xs"
           color="primary"
           variant="soft"
           icon="i-heroicons-plus-circle"
           @click="$emit('add-custom-tag')"
+          class="flex-1 sm:flex-none"
         >
-          <span v-once>{{ $t("prompt_creator.add_custom_tag") }}</span>
+          <span v-once class="hidden sm:inline">{{
+            $t("prompt_creator.add_custom_tag")
+          }}</span>
+          <span v-once class="sm:hidden">{{ $t("common.add") }}</span>
         </GlassButton>
         <GlassButton
           size="xs"
@@ -32,8 +38,12 @@
           variant="soft"
           icon="i-heroicons-exclamation-triangle"
           @click="$emit('show-negative-templates')"
+          class="flex-1 sm:flex-none"
         >
-          <span v-once>{{ $t("prompt_creator.negative_templates") }}</span>
+          <span v-once class="hidden sm:inline">{{
+            $t("prompt_creator.negative_templates")
+          }}</span>
+          <span v-once class="sm:hidden">{{ $t("common.templates") }}</span>
         </GlassButton>
       </div>
     </div>
@@ -42,18 +52,20 @@
     <div class="glass-card flex-1 overflow-hidden flex flex-col shadow-lg">
       <!-- Header -->
       <div
-        class="bg-gradient-to-r from-primary-500/10 to-purple-600/10 dark:from-primary-500/20 dark:to-purple-600/20 backdrop-blur-sm px-5 py-3 border-b border-white/20 dark:border-gray-700/50 flex-shrink-0"
+        class="bg-gradient-to-r from-primary-500/10 to-purple-600/10 dark:from-primary-500/20 dark:to-purple-600/20 backdrop-blur-sm px-3 sm:px-5 py-3 border-b border-white/20 dark:border-gray-700/50 flex-shrink-0"
       >
-        <div class="flex justify-between items-center">
+        <div
+          class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2"
+        >
           <h3
-            class="font-bold text-gray-900 dark:text-white text-base flex items-center gap-2"
+            class="font-bold text-gray-900 dark:text-white text-sm sm:text-base flex items-center gap-2"
           >
             <span
               class="w-2 h-2 rounded-full bg-gradient-to-r from-primary-500 to-purple-600 shadow-lg shadow-primary-500/50"
             ></span>
             <span v-once>{{ $t("prompt_creator.selected_tags") }}</span>
           </h3>
-          <div class="flex gap-3 text-sm">
+          <div class="flex gap-2 sm:gap-3 text-xs sm:text-sm">
             <!-- Categories Count -->
             <div class="flex items-center gap-1.5">
               <UIcon
@@ -173,11 +185,16 @@
           <div
             class="bg-gradient-to-r from-green-50/50 to-emerald-50/50 dark:from-green-900/10 dark:to-emerald-900/10 rounded-lg p-3 border border-green-200/30 dark:border-green-700/30"
           >
-            <div class="flex items-center justify-between mb-2">
+            <div
+              class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-2"
+            >
               <span
                 class="text-xs font-semibold text-green-700 dark:text-green-400 uppercase tracking-wide flex items-center gap-1.5"
               >
-                <UIcon name="i-heroicons-plus-circle" />
+                <UIcon
+                  name="i-heroicons-plus-circle"
+                  class="w-3 h-3 sm:w-4 sm:h-4"
+                />
                 <span v-once>{{ $t("prompt_creator.positive_prompt") }}</span>
                 <GlassBadge
                   v-if="positivePrompt"
@@ -188,7 +205,7 @@
                   {{ positivePrompt.length }}
                 </GlassBadge>
               </span>
-              <div class="flex gap-1">
+              <div class="flex gap-1 ml-auto sm:ml-0">
                 <GlassButton
                   v-if="positivePrompt && positivePrompt.length > 200"
                   size="xs"
@@ -238,11 +255,16 @@
           <div
             class="bg-gradient-to-r from-red-50/50 to-orange-50/50 dark:from-red-900/10 dark:to-orange-900/10 rounded-lg p-3 border border-red-200/30 dark:border-red-700/30"
           >
-            <div class="flex items-center justify-between mb-2">
+            <div
+              class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-2"
+            >
               <span
                 class="text-xs font-semibold text-red-700 dark:text-red-400 uppercase tracking-wide flex items-center gap-1.5"
               >
-                <UIcon name="i-heroicons-minus-circle" />
+                <UIcon
+                  name="i-heroicons-minus-circle"
+                  class="w-3 h-3 sm:w-4 sm:h-4"
+                />
                 <span v-once>{{ $t("prompt_creator.negative_prompt") }}</span>
                 <GlassBadge
                   v-if="negativePrompt"
@@ -253,7 +275,7 @@
                   {{ negativePrompt.length }}
                 </GlassBadge>
               </span>
-              <div class="flex gap-1">
+              <div class="flex gap-1 ml-auto sm:ml-0">
                 <GlassButton
                   v-if="negativePrompt && negativePrompt.length > 200"
                   size="xs"
@@ -306,26 +328,36 @@
       <!-- Action Buttons (Footer) -->
       <div
         v-if="totalTags > 0"
-        class="flex-shrink-0 p-4 bg-white/40 dark:bg-gray-800/40 backdrop-blur-sm border-t border-white/20 dark:border-gray-700/50"
+        class="flex-shrink-0 p-3 sm:p-4 bg-white/40 dark:bg-gray-800/40 backdrop-blur-sm border-t border-white/20 dark:border-gray-700/50"
       >
-        <div class="flex items-center justify-between gap-3">
-          <div class="flex gap-2">
+        <div
+          class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 sm:gap-3"
+        >
+          <div class="flex gap-2 flex-1 sm:flex-initial">
             <GlassButton
               color="primary"
               variant="soft"
               size="sm"
               icon="i-heroicons-bookmark"
               @click="$emit('save-prompt')"
+              class="flex-1 sm:flex-initial"
             >
-              <span v-once>{{ $t("prompt_creator.save") }}</span>
+              <span v-once class="hidden sm:inline">{{
+                $t("prompt_creator.save")
+              }}</span>
+              <span v-once class="sm:hidden">{{ $t("common.save") }}</span>
             </GlassButton>
             <GlassButton
               color="primary"
               size="sm"
               icon="i-heroicons-play"
               @click="$emit('use-prompt')"
+              class="flex-1 sm:flex-initial"
             >
-              <span v-once>{{ $t("prompt_creator.use") }}</span>
+              <span v-once class="hidden sm:inline">{{
+                $t("prompt_creator.use")
+              }}</span>
+              <span v-once class="sm:hidden">{{ $t("common.use") }}</span>
             </GlassButton>
           </div>
           <GlassButton
@@ -334,6 +366,7 @@
             size="sm"
             icon="i-heroicons-trash"
             @click="$emit('clear-all')"
+            class="w-full sm:w-auto"
           >
             <span v-once>{{ $t("prompt_creator.clear_all") }}</span>
           </GlassButton>
@@ -347,12 +380,12 @@
       :title="$t('prompt_creator.positive_prompt')"
       :description="$t('prompt_creator.positive_prompt_info')"
       :ui="{
-        content: 'max-w-4xl',
-        body: 'max-h-[70vh] overflow-y-auto',
+        content: 'w-full sm:max-w-4xl mx-4 sm:mx-auto',
+        body: 'max-h-[60vh] sm:max-h-[70vh] overflow-y-auto',
       }"
     >
       <template #body>
-        <div class="space-y-4 p-6">
+        <div class="space-y-4 p-4 sm:p-6">
           <!-- Stats -->
           <div
             class="flex items-center gap-4 pb-4 border-b border-gray-200 dark:border-gray-700"
@@ -413,8 +446,8 @@
       :title="$t('prompt_creator.negative_prompt')"
       :description="$t('prompt_creator.negative_prompt_info')"
       :ui="{
-        content: 'max-w-4xl',
-        body: 'max-h-[70vh] overflow-y-auto',
+        content: 'w-full sm:max-w-4xl mx-4 sm:mx-auto',
+        body: 'max-h-[60vh] sm:max-h-[70vh] overflow-y-auto',
       }"
     >
       <template #body>
@@ -479,8 +512,8 @@
       :title="getCategoryName(selectedCategory)"
       :description="`${$t('prompt_creator.editing')} ${categoryTags.length} ${$t('prompt_creator.tags')}`"
       :ui="{
-        content: 'max-w-3xl',
-        body: 'max-h-[70vh] overflow-y-auto',
+        content: 'w-full sm:max-w-3xl mx-4 sm:mx-auto',
+        body: 'max-h-[60vh] sm:max-h-[70vh] overflow-y-auto',
       }"
     >
       <template #body>

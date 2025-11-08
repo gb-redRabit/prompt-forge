@@ -14,13 +14,13 @@
 
   <!-- mobile overlay -->
   <div
-    v-if="isSidebarOpen"
+    v-show="isSidebarOpen"
     class="fixed inset-0 lg:hidden"
     :style="zIndexStyle('SIDEBAR')"
   >
     <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" @click="close" />
     <aside
-      class="fixed inset-y-0 left-0 w-64 glass-panel overflow-hidden flex flex-col shadow-2xl"
+      class="fixed inset-y-0 left-0 w-full glass-panel overflow-hidden flex flex-col shadow-2xl"
     >
       <!-- mobile header with close button -->
       <div
@@ -372,6 +372,16 @@ const isActive = (href: string) => {
   if (href === "/") return route.path === "/";
   return route.path.startsWith(href);
 };
+
+// Automatyczne zamykanie menu mobilnego przy zmianie route
+watch(
+  () => route.path,
+  () => {
+    if (isSidebarOpen.value) {
+      close();
+    }
+  }
+);
 
 const { locale, setLocale } = useI18n();
 

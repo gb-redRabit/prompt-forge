@@ -1,5 +1,15 @@
 <template>
-  <UModal v-model:open="isOpen" :title="$t('prompt_creator.save_prompt')">
+  <UModal
+    v-model:open="isOpen"
+    :title="$t('prompt_creator.save_prompt')"
+    :ui="{
+      wrapper: 'z-[60]',
+      overlay: 'z-[60]',
+      content:
+        'w-full h-full sm:h-auto sm:max-w-2xl m-0 sm:m-4 rounded-none sm:rounded-xl z-[60]',
+      body: 'overflow-y-auto max-h-[calc(100vh-8rem)]',
+    }"
+  >
     <template #body>
       <form @submit.prevent="handleSubmit" class="space-y-4 p-4">
         <!-- Name -->

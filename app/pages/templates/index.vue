@@ -1,8 +1,8 @@
 <template>
-  <div class="flex gap-6 p-8">
+  <div class="flex flex-col lg:flex-row gap-4 lg:gap-6 p-3 sm:p-4 lg:p-8">
     <!-- LEFT COLUMN: Filters -->
     <aside
-      class="w-90 flex-shrink-0 overflow-y-auto space-y-4 h-[calc(100vh-6rem)]"
+      class="w-full lg:w-90 flex-shrink-0 overflow-y-auto space-y-4 lg:h-[calc(100vh-6rem)] max-h-none lg:max-h-full"
     >
       <!-- Type Filter -->
       <GlassCard padding="md">
@@ -153,10 +153,10 @@
     <main class="flex-1 flex flex-col">
       <!-- Toolbar -->
       <div
-        class="flex items-center justify-between mb-4 pb-4 border-b border-gray-200 dark:border-gray-700"
+        class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4 pb-4 border-b border-gray-200 dark:border-gray-700"
       >
         <!-- Left: Sort & Count -->
-        <div class="flex items-center gap-3">
+        <div class="flex flex-wrap items-center gap-2 sm:gap-3">
           <!-- Sort by ID -->
           <GlassButton
             :variant="sortBy === 'id' ? 'solid' : 'outline'"
@@ -206,10 +206,10 @@
           :placeholder="$t('pages.templates.search')"
           icon="i-heroicons-magnifying-glass"
           size="lg"
-          class="w-1/3"
+          class="w-full sm:w-1/2 lg:w-1/3"
         />
         <!-- Right: View Mode -->
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
           <GlassButton
             :variant="viewMode === 'list' ? 'solid' : 'outline'"
             :color="viewMode === 'list' ? 'primary' : 'neutral'"

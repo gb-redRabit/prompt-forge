@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen">
+  <div class="min-h-screen w-full overflow-x-hidden">
     <div class="flex h-screen overflow-hidden">
       <!-- Sidebar Component -->
       <EditorSidebar
@@ -11,9 +11,11 @@
       />
 
       <!-- Main Content -->
-      <main class="flex-1 overflow-hidden flex flex-col h-screen">
+      <main
+        class="flex-1 overflow-hidden flex flex-col h-screen w-full min-w-0"
+      >
         <div class="flex-1 overflow-y-auto custom-scrollbar">
-          <div class="container p-6 mx-auto">
+          <div class="w-full max-w-full p-3 sm:p-4 lg:p-6 mx-auto">
             <!-- Header with Progress -->
             <EditorProgressBar
               :current-step="currentStep + 1"
@@ -30,11 +32,11 @@
             </EditorProgressBar>
 
             <div
-              class="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[calc(100vh-170px)]"
+              class="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[calc(100vh-170px)] w-full max-w-full"
             >
               <!-- Tags Selection -->
               <div
-                class="lg:col-span-2 flex flex-col space-y-4 overflow-hidden"
+                class="lg:col-span-2 flex flex-col space-y-4 overflow-hidden min-h-[500px] lg:min-h-0 w-full max-w-full"
               >
                 <!-- Search & Filters Component -->
                 <EditorSearchFilters
@@ -49,7 +51,7 @@
                 <!-- Selected Tags -->
                 <div
                   v-if="selectedTagsForCurrentCategory.length > 0"
-                  class="bg-gradient-to-r from-primary-50 to-purple-50 dark:from-primary-900/20 dark:to-purple-900/20 rounded-2xl border border-primary-200 dark:border-primary-800 p-3 flex-shrink-0"
+                  class="hidden lg:block bg-gradient-to-r from-primary-50 to-purple-50 dark:from-primary-900/20 dark:to-purple-900/20 rounded-2xl border border-primary-200 dark:border-primary-800 p-3 flex-shrink-0"
                 >
                   <div class="flex items-center gap-2 mb-2">
                     <UIcon
@@ -157,29 +159,29 @@
                 </div>
 
                 <!-- Tags Grid with Glass Effect -->
-                <div class="glass-card p-5 overflow-hidden shadow-lg">
+                <div class="glass-card p-3 sm:p-5 overflow-hidden shadow-lg">
                   <div
                     v-if="filteredTagsForCategory.length > 0"
-                    class="flex flex-wrap justify-start items-start gap-2.5 h-full overflow-y-auto pr-2 custom-scrollbar"
+                    class="flex flex-wrap justify-start items-start gap-1.5 sm:gap-2.5 h-full overflow-y-auto pr-1 sm:pr-2 custom-scrollbar"
                   >
                     <button
                       v-for="tagObj in filteredTagsForCategory"
                       :key="getTagText(tagObj)"
                       @click="toggleTag(tagObj)"
                       :class="[
-                        'group relative px-3 py-2.5 rounded-xl text-xs font-semibold transition-all duration-300 text-left h-fit backdrop-blur-sm',
-                        'hover:brightness-110 hover:shadow-xl',
+                        'group relative px-2 sm:px-3 py-1.5 sm:py-2.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-semibold transition-all duration-300 text-left h-fit backdrop-blur-sm',
+                        'active:scale-95 hover:brightness-110 hover:shadow-xl',
                         tagObj.nsfw
-                          ? ' bg-red-500/40 ring-2 ring-red-500/50'
+                          ? 'bg-red-500/40 ring-1 sm:ring-2 ring-red-500/50'
                           : isTagSelected(tagObj)
                             ? tagObj.nsfw
-                              ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg shadow-red-500/30 ring-2 ring-red-500/50'
-                              : 'bg-gradient-to-r from-primary-500 to-purple-600 text-white shadow-lg shadow-primary-500/30 ring-2 ring-primary-500/50'
+                              ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-md sm:shadow-lg shadow-red-500/30 ring-1 sm:ring-2 ring-red-500/50'
+                              : 'bg-gradient-to-r from-primary-500 to-purple-600 text-white shadow-md sm:shadow-lg shadow-primary-500/30 ring-1 sm:ring-2 ring-primary-500/50'
                             : 'bg-white/50 dark:bg-gray-800/50 text-gray-700 dark:text-gray-300 hover:bg-white/70 dark:hover:bg-gray-800/70 ring-1 ring-gray-200/50 dark:ring-gray-700/50',
                       ]"
                     >
-                      <div class="flex items-center justify-between gap-1">
-                        <span class="truncate flex-1">{{
+                      <div class="flex items-center gap-1">
+                        <span class="truncate leading-tight">{{
                           getTagText(tagObj)
                         }}</span>
                         <button
@@ -199,7 +201,7 @@
                                 ? 'i-heroicons-star-solid'
                                 : 'i-heroicons-star'
                             "
-                            class="w-3 h-3"
+                            class="w-2.5 h-2.5 sm:w-3 sm:h-3"
                           />
                         </button>
                       </div>
@@ -228,35 +230,39 @@
 
                 <!-- Navigation -->
                 <div
-                  class="flex justify-between items-center gap-3 flex-shrink-0"
+                  class="flex justify-between items-center gap-2 sm:gap-3 flex-shrink-0 pb-20 lg:pb-0"
                 >
                   <GlassButton
-                    size="lg"
+                    size="md"
                     color="neutral"
                     variant="outline"
                     :disabled="currentStep === 0"
                     @click="previousStep"
-                    class="flex-1"
+                    class="flex-1 sm:flex-initial sm:min-w-[120px]"
                     icon="i-heroicons-arrow-left"
                   >
-                    <span v-once>{{ $t("common.previous") }}</span>
+                    <span v-once class="hidden sm:inline">{{
+                      $t("common.previous")
+                    }}</span>
                   </GlassButton>
 
                   <GlassButton
-                    size="lg"
+                    size="md"
                     color="neutral"
                     variant="soft"
                     @click="skipCategory"
-                    class="w-1/5 flex justify-center"
+                    class="px-2 sm:px-4 sm:min-w-[100px]"
                   >
-                    <span v-once>{{ $t("common.skip") }}</span>
+                    <span v-once class="text-xs sm:text-sm">{{
+                      $t("common.skip")
+                    }}</span>
                   </GlassButton>
 
                   <GlassButton
-                    size="lg"
+                    size="md"
                     color="primary"
                     @click="nextStep"
-                    class="flex-1 shadow-lg shadow-primary-500/30 justify-end"
+                    class="flex-1 sm:flex-initial sm:min-w-[120px] shadow-lg shadow-primary-500/30"
                     :icon="
                       currentStep === totalSteps - 1
                         ? undefined
@@ -264,17 +270,18 @@
                     "
                     icon-position="right"
                   >
-                    {{
+                    <span v-once class="hidden sm:inline">{{
                       currentStep === totalSteps - 1
                         ? $t("common.finish")
                         : $t("common.next")
-                    }}
+                    }}</span>
                   </GlassButton>
                 </div>
               </div>
 
-              <!-- Sidebar - Summary Component -->
+              <!-- Sidebar - Summary Component (Desktop Only) -->
               <EditorSelectedSummary
+                class="hidden lg:flex"
                 :selected-tags="selectedTags"
                 :positive-prompt="generatedPrompt.positive"
                 :negative-prompt="generatedPrompt.negative"
@@ -293,6 +300,26 @@
                 @clear-all="clearAll"
               />
             </div>
+
+            <!-- Mobile Summary Button -->
+            <EditorMobileSummary
+              :selected-tags="selectedTags"
+              :positive-prompt="generatedPrompt.positive"
+              :negative-prompt="generatedPrompt.negative"
+              :show-nsfw="showNsfw"
+              :copied-positive="copiedPositive"
+              :copied-negative="copiedNegative"
+              @update:show-nsfw="showNsfw = $event"
+              @add-custom-tag="showAddTagModal = true"
+              @show-negative-templates="showNegativeTemplatesModal = true"
+              @clear-category="clearCategoryFromSummary"
+              @remove-tag="removeTagFromSummary"
+              @update-tag="updateTagFromSummary"
+              @copy-prompt="copyPrompt"
+              @save-prompt="savePrompt"
+              @use-prompt="usePrompt"
+              @clear-all="clearAll"
+            />
           </div>
         </div>
       </main>
@@ -313,8 +340,11 @@
       :title="$t('prompt_creator.add_custom_tag')"
       :description="$t('prompt_creator.add_custom_tag_description')"
       :ui="{
-        content: 'max-w-3xl',
-        body: 'overflow-y-auto max-h-[calc(100vh-6rem)]',
+        wrapper: 'z-[60]',
+        overlay: 'z-[60]',
+        content:
+          'w-full h-full sm:h-auto sm:max-w-3xl m-0 sm:m-4 rounded-none sm:rounded-xl z-[60]',
+        body: 'overflow-y-auto max-h-[calc(100vh-8rem)] sm:max-h-[calc(100vh-6rem)]',
       }"
     >
       <template #body>
@@ -559,7 +589,10 @@
       :title="$t('prompt_creator.negative_templates')"
       :description="$t('prompt_creator.negative_templates_description')"
       :ui="{
-        content: 'max-w-4xl',
+        wrapper: 'z-[60]',
+        overlay: 'z-[60]',
+        content:
+          'w-full h-full sm:h-auto sm:max-w-4xl m-0 sm:m-4 rounded-none sm:rounded-xl z-[60]',
         body: 'overflow-y-auto max-h-[calc(100vh-8rem)]',
       }"
     >
@@ -758,6 +791,12 @@
     <UModal
       v-model:open="showHistoryModal"
       :title="$t('prompt_creator.history_title')"
+      :ui="{
+        wrapper: 'z-[60]',
+        overlay: 'z-[60]',
+        content:
+          'w-full h-full sm:h-auto sm:max-w-2xl m-0 sm:m-4 rounded-none sm:rounded-xl z-[60]',
+      }"
     >
       <template #description>{{
         $t("prompt_creator.history_description")
@@ -801,7 +840,16 @@
     </UModal>
 
     <!-- Modal alertu -->
-    <UModal v-model:open="showAlertModal" :title="$t('common.error')">
+    <UModal
+      v-model:open="showAlertModal"
+      :title="$t('common.error')"
+      :ui="{
+        wrapper: 'z-[60]',
+        overlay: 'z-[60]',
+        content:
+          'w-full h-full sm:h-auto sm:max-w-md m-0 sm:m-4 rounded-none sm:rounded-xl z-[60]',
+      }"
+    >
       <template #description>{{
         $t("pages.shared.error_description")
       }}</template>
@@ -825,6 +873,7 @@ import EditorProgressBar from "~/components/editor/EditorProgressBar.vue";
 import EditorStatsCard from "~/components/editor/EditorStatsCard.vue";
 import EditorSearchFilters from "~/components/editor/EditorSearchFilters.vue";
 import EditorSelectedSummary from "~/components/editor/EditorSelectedSummary.vue";
+import EditorMobileSummary from "~/components/editor/EditorMobileSummary.vue";
 
 // Extend Window type for custom properties
 declare global {

@@ -1,9 +1,9 @@
 <template>
   <div
-    class="glass-card p-4 flex-shrink-0 shadow-lg hover:shadow-xl transition-shadow duration-300"
+    class="glass-card p-3 sm:p-4 flex-shrink-0 shadow-lg hover:shadow-xl transition-shadow duration-300"
   >
     <!-- Search & Filter Controls -->
-    <div class="flex gap-3">
+    <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
       <UInput
         :model-value="search"
         @update:model-value="$emit('update:search', $event)"
@@ -12,26 +12,32 @@
         size="md"
         class="flex-1"
       />
-      <GlassButton
-        :color="showFavorites ? 'primary' : 'neutral'"
-        :variant="showFavorites ? 'solid' : 'outline'"
-        size="md"
-        @click="$emit('update:showFavorites', !showFavorites)"
-        class="transition-all duration-300 hover:scale-105"
-        icon="i-heroicons-star-solid"
-      >
-        <span v-once>{{ $t("prompt_creator.favorites") }}</span>
-      </GlassButton>
-      <GlassButton
-        color="primary"
-        variant="outline"
-        size="md"
-        @click="$emit('randomize')"
-        class="transition-all duration-300 hover:scale-105"
-        icon="i-heroicons-arrows-right-left"
-      >
-        <span v-once>{{ $t("prompt_creator.randomize") }}</span>
-      </GlassButton>
+      <div class="flex gap-2">
+        <GlassButton
+          :color="showFavorites ? 'primary' : 'neutral'"
+          :variant="showFavorites ? 'solid' : 'outline'"
+          size="md"
+          @click="$emit('update:showFavorites', !showFavorites)"
+          class="transition-all duration-300 hover:scale-105 flex-1 sm:flex-initial"
+          icon="i-heroicons-star-solid"
+        >
+          <span v-once class="hidden sm:inline">{{
+            $t("prompt_creator.favorites")
+          }}</span>
+        </GlassButton>
+        <GlassButton
+          color="primary"
+          variant="outline"
+          size="md"
+          @click="$emit('randomize')"
+          class="transition-all duration-300 hover:scale-105 flex-1 sm:flex-initial"
+          icon="i-heroicons-arrows-right-left"
+        >
+          <span v-once class="hidden sm:inline">{{
+            $t("prompt_creator.randomize")
+          }}</span>
+        </GlassButton>
+      </div>
     </div>
 
     <!-- Results & Clear -->

@@ -1,11 +1,11 @@
 <template>
-  <div class="space-y-8 p-8">
+  <div class="space-y-6 sm:space-y-8 p-3 sm:p-4 lg:p-8">
     <!-- Header -->
     <div>
-      <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+      <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">
         <span v-once>{{ $t("settings.title") }}</span>
       </h1>
-      <p class="text-gray-600 dark:text-gray-400">
+      <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400">
         <span v-once>{{ $t("settings.subtitle") }}</span>
       </p>
     </div>

@@ -63,22 +63,22 @@ import type { FeatureItem } from "~/types/landing";
 
 const features: FeatureItem[] = [
   {
-    icon: "i-heroicons-book-open",
+    icon: "i-heroicons-tag",
     title: "app.features.library_title",
     description: "app.features.library_desc",
   },
   {
-    icon: "i-heroicons-users",
+    icon: "i-heroicons-adjustments-horizontal",
     title: "app.features.collab_title",
     description: "app.features.collab_desc",
   },
   {
-    icon: "i-heroicons-shield-check",
+    icon: "i-heroicons-folder",
     title: "app.features.quality_title",
     description: "app.features.quality_desc",
   },
   {
-    icon: "i-heroicons-arrow-down-tray",
+    icon: "i-heroicons-clipboard-document-check",
     title: "app.features.export_title",
     description: "app.features.export_desc",
   },

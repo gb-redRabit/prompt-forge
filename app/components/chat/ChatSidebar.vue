@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-64 border-r border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 flex flex-col h-full"
+    class="w-full lg:w-64 border-r border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 flex flex-col h-auto lg:h-full max-h-48 lg:max-h-full mb-4 lg:mb-0"
   >
     <!-- Header -->
     <div class="p-4 border-b border-gray-200 dark:border-gray-800">

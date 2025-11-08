@@ -1,197 +1,761 @@
 # Prompt Forge – Generator i Biblioteka Promptów AI
 
-Demo: https://prompt-forge-pink.vercel.app/
+🌐 **Demo**: https://prompt-forge-pink.vercel.app/
 
-Prompt Forge to aplikacja Nuxt 3/4 do tworzenia, edycji i organizacji promptów AI. Oferuje bibliotekę zapisów, kolekcje, historię, edytor z placeholderami oraz wbudowany czat z lokalną konfiguracją AI (LM Studio / API kompatybilne z OpenAI).
+Prompt Forge to nowoczesna aplikacja Nuxt 4 do tworzenia, edycji i organizacji promptów AI. Oferuje zaawansowany edytor tagów z system wag i emfazy, bibliotekę zapisów z kolekcjami, historię działań oraz wbudowany czat z konfiguracją AI (LM Studio / API kompatybilne z OpenAI). Pełna responsywność z dedykowanymi komponentami mobilnymi.
 
-## Funkcje
+## ✨ Funkcje
 
-- Edytor promptów
-  - Placeholdery i podpowiedzi (oparte o content/options)
-  - Automatyczna kompozycja finalnego promptu i kopiowanie
-  - Tłumaczenia nazw/opisów (PL/EN)
-- Biblioteka (useLibrary)
-  - Zapisywanie wyników (SavedPrompt), własne prompty (custom), historia, kolekcje
-  - Import/Export biblioteki (JSON, localStorage)
-- Szablony (Templates)
-  - Lista, filtry (typy, kategorie, tagi), sortowanie, paginacja/infinite scroll
-  - Podgląd treści szablonu
-- Czat (useChat)
-  - Konwersacje, retry błędów, zmiana tytułu, trwałość w localStorage
-- Ustawienia
-  - Konfiguracja AI (endpoint/model), test połączenia, pobieranie listy modeli
-  - Motyw (jasny/ciemny/system), język (PL/EN)
-- Landing
-  - Hero, sekcje funkcji, demo interaktywne (optymalizacja promptu), FAQ, CTA
+### 📝 Edytor Promptów (`/editor`)
 
-## Stos technologiczny
+- **System tagów z kategoriami**: wybór tagów pogrupowanych tematycznie
+- **Zaawansowane sterowanie**:
+  - Weight (waga): precyzyjna kontrola wpływu tagu (0.1-2.0)
+  - Emphasis (emfaza): obsługa nawiasów wzmacniających `()` (0-3 poziomy)
+- **Filtry i wyszukiwanie**: real-time search, ulubione, kategorie, NSFW toggle
+- **Randomizacja**: automatyczny wybór losowych tagów w kategorii
+- **Podgląd na żywo**: wizualizacja pozytywnych i negatywnych promptów
+- **Copy-to-clipboard**: natychmiastowe kopiowanie wyników
+- **Responsywność mobilna**:
+  - `EditorMobileSummary`: floating button z slide-up panel na urządzeniach mobilnych
+  - `EditorSelectedSummary`: desktop sidebar z pełną kontrolą
+  - Optymalizowane przyciski i spacing dla touch devices
+- **Zapisywanie**: SavePromptModal z metadanymi i tagami
+- **Szablony negatywne**: gotowe zestawy negatywnych promptów
 
-- Nuxt 4 (Vue 3 + Vite), TypeScript
-- @nuxt/ui, @nuxt/content, @nuxtjs/i18n, @nuxt/image
-- Tailwind (klasy w komponentach UI)
-- LocalStorage (persistencja konfiguracji i danych użytkownika)
+### 📚 Biblioteka (`/library`)
 
-## Struktura (skrót)
+- **4 zakładki**:
+  - **Saved**: zapisane finalne prompty z metadanymi
+  - **Custom**: własne prompty użytkownika (CRUD)
+  - **History**: historia akcji (generowanie, optymalizacja)
+  - **Collections**: organizacja w kolekcje z opisami
+- **Import/Export**: backup i przywracanie całej biblioteki (JSON)
+- **Statystyki**: liczniki, ostatnie aktywności
+- **Modal system**: podgląd, edycja, dodawanie do kolekcji
 
-- app/components
-  - prompts/PromptEditor.vue
-  - templates/(TemplateCard|TemplateListItem|TemplateSkeleton).vue
-  - library/(… oraz modals/)
-  - chat/(ChatWindow|ChatSidebar|ChatMessage|ChatHeader).vue
-  - landing/(LandingHero|Features|FAQ|…)
-  - settings/(AIConfigSettings|ThemeSettings|SettingsCard).vue
-  - AppSidebar.vue
-- app/composables
-  - useAI.ts (wywołania modeli, test, lista modeli)
-  - useLibrary.ts (saved/custom/history/collections, import/export)
-  - usePreloadedContent.ts (preload options/prompts/tags z @nuxt/content)
-  - useTemplates.ts (filtry i sortowanie listy szablonów)
-  - useChat.ts (logika czatu)
-  - useInfiniteScroll.ts, useSidebar.ts, usePromptOptimizer.ts
-- app/pages
-  - index.vue (landing)
-  - prompts/index.vue (edytor/picker)
-  - templates/index.vue (katalog szablonów)
-  - library/index.vue (biblioteka)
-  - settings/index.vue (ustawienia)
-  - chat/index.vue (czat)
-- i18n/locales (pl.json, en.json)
-- content
-  - prompts.json, options.json, tagi.json (wczytywane przez @nuxt/content)
-- content.config.ts (schematy Zod kolekcji content)
+### 🎨 Szablony (`/templates`)
 
-## Wymagania
+- **Katalog**: lista gotowych szablonów promptów
+- **Filtry**: typ, kategorie, tagi (wielokrotny wybór)
+- **Sortowanie**: ID, nazwa (A-Z, Z-A)
+- **Infinite scroll**: dynamiczne ładowanie przy przewijaniu
+- **Podgląd**: modal z pełną treścią szablonu i metadanymi
+- **Tłumaczenia**: pełne wsparcie PL/EN
 
-- Node.js 18+
-- pnpm / npm / yarn (dowolny)
+### 💬 Czat AI (`/chat`)
 
-## Instalacja
+- **Wielowątkowy**: zarządzanie wieloma konwersacjami
+- **Retry**: ponowienie nieudanych zapytań
+- **Edycja tytułów**: zmiana nazw konwersacji
+- **Persistencja**: localStorage synchronizacja
+- **Historia**: pełna archiwizacja wiadomości
+
+### ⚙️ Ustawienia (`/settings`)
+
+- **AI Configuration**:
+  - Endpoint i model ID (LM Studio / OpenAI-compatible)
+  - Test połączenia z diagnostyką
+  - Automatyczne pobieranie listy modeli
+- **Theme Management**: jasny / ciemny / system z animacjami
+- **Language**: PL/EN z persystencją w cookie i localStorage
+
+### 🏠 Landing Page (`/`)
+
+- **Full-page scroll**: sekcje pełnoekranowe z `FullPageDots` nawigacją
+- **Hero**: animowany gradient, CTA buttons
+- **Features**: karty funkcji z ikonami
+- **Interactive Demo**: komponent optymalizacji promptu na żywo
+- **How It Works**: kroki użytkowania
+- **FAQ**: często zadawane pytania
+- **Accessibility**: skip links, ARIA labels, reduced motion support
+
+## 🛠️ Stos technologiczny
+
+### Core
+
+- **Nuxt 4.1.2**: Framework SSR z Vue 3 Composition API
+- **Vue 3.5.22**: Reaktywny UI framework
+- **TypeScript 5.9.2**: Type-safe development
+- **Vite**: Ultra-szybki bundler
+
+### Nuxt Modules
+
+- **@nuxt/ui 4.0**: System komponentów z Tailwind CSS
+- **@nuxt/content 3.7**: Content management z walidacją Zod
+- **@nuxtjs/i18n 10.1**: Internationalization (PL/EN)
+- **@nuxt/image 1.11**: Optymalizacja obrazów
+- **@nuxt/eslint 1.9**: Linting z flat config
+
+### UI & Styling
+
+- **Tailwind CSS**: Utility-first CSS framework
+- **Heroicons & Lucide**: Icon sets (@iconify-json)
+- **Glass Morphism Components**: Custom UI (GlassButton, GlassCard, GlassBadge, GlassPanel)
+- **ApexCharts**: Wykresy i wizualizacje danych (vue3-apexcharts)
+
+### State & Storage
+
+- **LocalStorage**: Persistencja ustawień, biblioteki i czatu
+- **Composables**: Centralized state management (Composition API)
+- **Color Mode**: @nuxt/color-mode dla theme managementu
+
+### Development Tools
+
+- **ESLint 9**: Linting z @antfu/eslint-config
+- **Better-SQLite3**: (opcjonalne dla rozszerzeń)
+- **@nuxt/test-utils**: Testing utilities
+
+## 📁 Struktura Projektu
+
+### `app/components/`
+
+```
+├── ui/                              # Glass Morphism Components
+│   ├── GlassButton.vue
+│   ├── GlassCard.vue
+│   ├── GlassBadge.vue
+│   └── GlassPanel.vue
+├── editor/                          # Editor Components
+│   ├── EditorSidebar.vue           # Kategorie sidebar (desktop)
+│   ├── EditorSelectedSummary.vue   # Podsumowanie desktop (sidebar)
+│   ├── EditorMobileSummary.vue     # Floating button + slide-up panel (mobile)
+│   ├── EditorSearchFilters.vue     # Search & filters bar
+│   ├── EditorProgressBar.vue       # Progress indicator
+│   ├── EditorStatsCard.vue         # Statistics display
+│   └── SavePromptModal.vue         # Save dialog
+├── library/                         # Library Components
+│   ├── LibrarySavedTab.vue
+│   ├── LibraryCustomTab.vue
+│   ├── LibraryHistoryTab.vue
+│   ├── LibraryCollectionsTab.vue
+│   ├── LibraryPromptCard.vue
+│   ├── LibraryStats.vue
+│   ├── PreviewModal.vue
+│   └── modals/                      # CRUD Modals
+│       ├── AddToCollectionModal.vue
+│       ├── CreateCollectionModal.vue
+│       ├── EditPromptModal.vue
+│       └── ImportModal.vue
+├── templates/                       # Template Components
+│   ├── TemplateCard.vue
+│   ├── TemplateListItem.vue
+│   └── TemplateSkeleton.vue
+├── chat/                            # Chat Components
+│   ├── ChatWindow.vue
+│   ├── ChatSidebar.vue
+│   ├── ChatMessage.vue
+│   ├── ChatInput.vue
+│   └── ChatHeader.vue
+├── settings/                        # Settings Components
+│   ├── AIConfigSettings.vue
+│   ├── ThemeSettings.vue
+│   ├── LanguageSettings.vue
+│   └── SettingsCard.vue
+├── landing/                         # Landing Page Components
+│   ├── LandingHero.vue
+│   ├── LandingFeatures.vue
+│   ├── LandingFeatureCard.vue
+│   ├── LandingInteractiveDemo.vue  # Live demo
+│   ├── LandingHowItWorks.vue
+│   ├── LandingStepCard.vue
+│   ├── LandingFAQ.vue
+│   ├── LandingStatCard.vue
+│   ├── LandingTestimonialCard.vue
+│   └── LandingCTA.vue
+├── demo/                            # Demo Section Components
+│   ├── DemoInputSection.vue
+│   ├── DemoOutputSection.vue
+│   ├── DemoStateEmpty.vue
+│   ├── DemoStateProcessing.vue
+│   ├── DemoStateSuccess.vue
+│   └── DemoStateError.vue
+├── prompts/
+│   └── PromptEditor.vue             # Legacy editor (jeśli używany)
+├── AppSidebar.vue                   # Main navigation (mobile + desktop)
+├── FullPageDots.vue                 # Full-page scroll navigation
+├── LoadingOverlay.vue               # Global loading state
+├── BackgroundEffects.vue            # Visual effects
+└── BaseModal.vue                    # Base modal wrapper
+```
+
+### `app/composables/`
+
+```typescript
+useAI.ts; // AI API calls, test connection, model list
+useChat.ts; // Chat state, conversations, retry logic
+useLibrary.ts; // Saved/custom/history/collections CRUD, import/export
+useTemplates.ts; // Template filters, sorting, pagination
+useEditorState.ts; // Centralized editor state (tags, filters, modals)
+usePreloadedContent.ts; // Preload content (options, prompts, tags)
+usePromptOptimizer.ts; // Prompt optimization logic
+useSidebar.ts; // Sidebar open/close state
+useTheme.ts; // Theme management (light/dark/system)
+useZIndex.ts; // Z-index hierarchy management
+useInfiniteScroll.ts; // Infinite scroll implementation
+useGooey.ts; // Gooey effect (SVG filters)
+```
+
+### `app/pages/`
+
+```
+├── index.vue              # Landing page (full-page sections)
+├── editor/
+│   └── index.vue          # Tag-based prompt editor
+├── prompts/
+│   └── index.vue          # Alternative prompt picker (jeśli używany)
+├── templates/
+│   └── index.vue          # Templates catalog
+├── library/
+│   └── index.vue          # Library with 4 tabs
+├── chat/
+│   └── index.vue          # AI chat interface
+└── settings/
+    └── index.vue          # Settings page
+```
+
+### `content/`
+
+```json
+prompts.json   // Prompt templates (z schematem Zod)
+options.json   // Dropdown options (placeholder values)
+tagi.json      // Tags database (categories, translations, NSFW)
+```
+
+### `i18n/`
+
+```
+├── i18n.config.ts         # i18n configuration
+└── locales/
+    ├── pl.json            # Polish translations
+    └── en.json            # English translations
+```
+
+### Konfiguracje
+
+```
+nuxt.config.ts             # Nuxt configuration
+content.config.ts          # Content schemas (Zod validation)
+tsconfig.json              # TypeScript config
+eslint.config.js           # ESLint flat config
+app.config.ts              # App-level config
+```
+
+## 📋 Wymagania
+
+- **Node.js**: 18.0.0 lub wyższy
+- **Package Manager**: pnpm (zalecany) / npm / yarn
+
+## 🚀 Instalacja
 
 ```bash
-# pnpm
+# Sklonuj repozytorium
+git clone https://github.com/gb-redRabit/prompt-forge.git
+cd prompt-forge
+
+# Instalacja zależności (pnpm - zalecane)
 pnpm install
-# lub npm
+
+# Alternatywnie: npm
 npm install
-# lub yarn
+
+# Alternatywnie: yarn
 yarn install
 ```
 
-## Development
+## 💻 Development
 
 ```bash
-# pnpm
+# Uruchom dev server (pnpm)
 pnpm dev
-# npm
+
+# Lub npm
 npm run dev
-# yarn
+
+# Lub yarn
 yarn dev
 ```
 
-Aplikacja: http://localhost:3000
+**Aplikacja dostępna pod**: http://localhost:3000
 
-## Build/Preview
+### Hot Module Replacement (HMR)
+
+- Zmiany w komponentach Vue są stosowane na żywo
+- Zmiany w content/ wymagają czasem przeładowania
+- Zmiany w nuxt.config.ts wymagają restartu serwera
+
+## 🏗️ Build & Preview
 
 ```bash
-# build
+# Production build
 pnpm build
-# preview prod
+
+# Preview production build lokalnie
 pnpm preview
+
+# Generate static site (jeśli używasz SSG)
+pnpm generate
 ```
 
-## Konfiguracja AI (LM Studio / OpenAI-compatible)
+**Output**: `.output/` directory (gotowe do deploy)
 
-Composable useAI.ts czyta ustawienia z localStorage (klucz ai_config):
+## 🤖 Konfiguracja AI (LM Studio / OpenAI-compatible)
 
-- endpoint: np. http://localhost:1234/v1/chat/completions
-- modelId: identyfikator modelu
+### Ustawienia w aplikacji
 
-Uwagi:
+Przejdź do **Settings → AI Configuration** w aplikacji:
 
-- Nagłówek Authorization ustawiony domyślnie na Bearer lm-studio (dostosuj, jeśli potrzeba).
-- Użyj ustawień w Ustawienia → AI, aby przetestować połączenie i pobrać listę modeli.
+1. **Endpoint URL**:
+   - LM Studio: `http://localhost:1234/v1/chat/completions`
+   - OpenAI: `https://api.openai.com/v1/chat/completions`
+   - Inne kompatybilne API
 
-## Dane treści (Nuxt Content)
+2. **Model ID**:
+   - Wybierz z listy (button "Fetch Models")
+   - Lub wpisz ręcznie (np. `gpt-4`, `llama-2-7b`)
 
-Schematy są wymuszane przez content.config.ts:
+3. **Test Connection**:
+   - Zweryfikuj połączenie przed użyciem
+   - Otrzymasz komunikat o sukcesie/błędzie
 
-- prompts: tablica obiektów z polami m.in. id, type, name.{pl,en}, description.{pl,en}, template.{pl,en}, placeholder_keys[], tags[], categories[]
-- options: rekord { [key: string]: OptionItem[] } z polami value, label.{pl,en}
-- tags: tablica obiektów z polami pl/en/neg_pl/neg_en/category/nsfw
+### Composable `useAI.ts`
 
-Upewnij się, że JSONy są poprawne (bez przecinków końcowych i komentarzy). W razie błędów walidacji @nuxt/content odrzuci pliki.
+Dane są zapisywane w `localStorage` (klucz: `ai_config`):
 
-## i18n
+```typescript
+{
+  endpoint: string,    // URL endpointu
+  modelId: string,     // ID modelu
+  apiKey?: string      // Opcjonalny API key
+}
+```
 
-- Domyślne locale: pl (fallback: pl)
-- Dostępne: pl, en
-- Persistencja wyboru języka w localStorage i cookie (plugin i18n-persist.client.ts)
+### Uwagi
 
-## Skróty funkcjonalne
+- **Authorization Header**: Domyślnie `Bearer lm-studio` (zmień w kodzie dla innych API)
+- **CORS**: LM Studio domyślnie obsługuje CORS z localhost
+- **API Key**: Dla OpenAI dodaj klucz w ustawieniach (wymaga modyfikacji kodu)
 
-- Biblioteka: importLibrary, downloadLibrary, createCustomPrompt, updateCustomPrompt, collections CRUD
-- Edytor: detekcja placeholderów [key], podmiana wartości, kopiowanie wyniku
-- Templates: filtry (typ/kategorie/tagi), sortowanie (id/nazwa), infinite scroll
-- Chat: wiele konwersacji, retry po błędzie, auto-tytuł
+### Testowanie połączenia
 
-## Deploy
+```bash
+# LM Studio (upewnij się, że serwer działa)
+curl http://localhost:1234/v1/models
 
-- Gotowe pod Vercel (zobacz demo).
-- Komenda build: npm run build (lub pnpm build)
-- Output: .output/ (Nuxt)
+# Powinno zwrócić listę dostępnych modeli
+```
 
-## Znane uwagi
+## 📦 Content Management (@nuxt/content)
 
-- Jeśli pliki content/\*.json nie są poprawnym JSON, należy je naprawić pod schematy z content.config.ts.
-- Przy pierwszym uruchomieniu warto wczytać zawartość (usePreloadedContent) lub odwiedzić stronę główną, która triggeruje preload.
+### Struktura plików
 
-## Instrukcja: dodawanie i konfiguracja full-page sekcji (landing)
+Wszystkie pliki znajdują się w `content/` i są walidowane przez `content.config.ts` (Zod schemas):
 
-W projekcie landing page (`app/pages/index.vue`) jest zrealizowany jako zestaw sekcji pełnoekranowych sterowanych komponentem `FullPageDots`.
+#### `prompts.json`
 
-Jak dodać nową sekcję:
+```typescript
+{
+  id: string,
+  type: string,
+  name: { pl: string, en: string },
+  description: { pl: string, en: string },
+  template: { pl: string, en: string },
+  placeholder_keys: string[],
+  tags: string[],
+  categories: string[]
+}
+```
 
-1. Dodaj nowy element `section` wewnątrz `#fullpage-track`:
+#### `options.json`
 
-```html
+```typescript
+{
+  [key: string]: Array<{
+    value: string,
+    label: { pl: string, en: string }
+  }>
+}
+```
+
+#### `tagi.json`
+
+```typescript
+{
+  pl: string,           // Polski tag
+  en: string,           // Angielski tag
+  neg_pl: string,       // Polski negatywny
+  neg_en: string,       // Angielski negatywny
+  category: string,     // Kategoria
+  nsfw: boolean         // NSFW flag
+}
+```
+
+### Ważne uwagi
+
+- ✅ **Format**: Tylko poprawny JSON (bez trailing commas, komentarzy)
+- ✅ **Walidacja**: @nuxt/content automatycznie waliduje z Zod
+- ⚠️ **Błędy**: Niepoprawne pliki zostaną odrzucone w build time
+- 🔄 **HMR**: Zmiany w content wymają czasem ręcznego reload
+
+## 🌐 Internationalization (i18n)
+
+### Konfiguracja
+
+- **Strategy**: `no_prefix` (brak `/pl` lub `/en` w URL)
+- **Default Locale**: `pl` (Polski)
+- **Available**: `pl` (Polski), `en` (English)
+- **Fallback**: `pl`
+
+### Persistencja
+
+- **Cookie**: `locale` (dla SSR)
+- **LocalStorage**: `locale` (dla client-side)
+- **Plugin**: `i18n-persist.client.ts` synchronizuje wybór
+
+### Dodawanie tłumaczeń
+
+1. Edytuj `i18n/locales/pl.json` i `en.json`
+2. Użyj w komponentach: `{{ $t('klucz.zagnieżdżony') }}`
+3. W composables: `const { t } = useI18n()` → `t('klucz')`
+
+## 🎯 Kluczowe Funkcjonalności
+
+### Biblioteka (useLibrary)
+
+- `createCustomPrompt()` - Tworzenie własnych promptów
+- `updateCustomPrompt()` - Edycja zapisanych
+- `deleteCustomPrompt()` - Usuwanie
+- `importLibrary()` - Import z JSON
+- `downloadLibrary()` - Export do JSON
+- `createCollection()` - Nowa kolekcja
+- `addToCollection()` - Dodaj prompt do kolekcji
+
+### Edytor (useEditorState)
+
+- **Tag Selection**: `selectedTags` (Record<category, TagItem[]>)
+- **Weight Control**: 0.1 - 2.0 (slider)
+- **Emphasis Control**: 0-3 nawiasy `()` (slider)
+- **Filters**: search, favorites, NSFW toggle
+- **Copy**: Instant clipboard copy (pozytywny/negatywny)
+
+### Templates (useTemplates)
+
+- **Filters**: Multiple categories, tags, types
+- **Sort**: ID, Name (A-Z, Z-A)
+- **Pagination**: Infinite scroll z `useInfiniteScroll`
+- **Preview**: Modal z pełną zawartością
+
+### Chat (useChat)
+
+- **Multi-conversation**: Zarządzanie wieloma wątkami
+- **Retry Logic**: Ponowienie nieudanych zapytań
+- **Title Edit**: Zmiana nazw konwersacji
+- **History**: Pełna archiwizacja w localStorage
+
+## 🚀 Deploy
+
+### Vercel (Zalecane)
+
+Projekt jest zoptymalizowany pod Vercel (zobacz [demo](https://prompt-forge-pink.vercel.app/)):
+
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel
+
+# Production
+vercel --prod
+```
+
+### Inne platformy (Netlify, Cloudflare, etc.)
+
+```bash
+# Build
+pnpm build
+
+# Output directory
+.output/
+```
+
+### Environment Variables (opcjonalne)
+
+```bash
+# .env
+NUXT_PUBLIC_API_BASE=https://your-api.com
+```
+
+## ⚠️ Znane uwagi i rozwiązywanie problemów
+
+### Content validation errors
+
+- ✅ **Problem**: `@nuxt/content` odrzuca pliki z błędami
+- 🔧 **Rozwiązanie**: Sprawdź `content/*.json` - usuń trailing commas i komentarze
+- 📝 **Walidacja**: Schematy w `content.config.ts`
+
+### Hydration mismatch
+
+- ✅ **Problem**: Warning o różnicach SSR vs Client
+- 🔧 **Rozwiązanie**: Użyj `<ClientOnly>` dla komponentów zależnych od `window`/`localStorage`
+- 📝 **Przykład**: Theme toggle, language selector
+
+### LocalStorage nie działa po refresh
+
+- ✅ **Problem**: Dane znikają po odświeżeniu
+- 🔧 **Rozwiązanie**: Sprawdź `plugins/i18n-persist.client.ts` i composables
+- 📝 **Debug**: Otwórz DevTools → Application → Local Storage
+
+### Mobile menu nie działa poprawnie
+
+- ✅ **Problem**: Linki znikają po nawigacji (FIXED w najnowszej wersji)
+- 🔧 **Rozwiązanie**: `AppSidebar.vue` używa `v-show` zamiast `v-if`
+- 📝 **Commit**: Zmiana zapobiega niszczeniu komponentów przy zamykaniu menu
+
+### Content nie ładuje się
+
+- ✅ **Problem**: Brak danych z `content/`
+- 🔧 **Rozwiązanie**: Użyj `usePreloadedContent()` w `app.vue` lub odwiedź landing page
+- 📝 **Dev Mode**: Restart dev servera po zmianach w content/
+
+### Build failures
+
+- ✅ **Problem**: TypeScript errors podczas buildu
+- 🔧 **Rozwiązanie**: `pnpm dlx nuxt typecheck` dla diagnostyki
+- 📝 **Common**: Missing types dla custom composables - dodaj `*.d.ts`
+
+## 📄 Landing Page: Full-Page Scroll Sections
+
+Landing page (`app/pages/index.vue`) wykorzystuje `FullPageDots.vue` do nawigacji pełnoekranowej.
+
+### Dodawanie nowej sekcji
+
+**Krok 1**: Dodaj `<section>` w `app/pages/index.vue`:
+
+```vue
 <section
-  id="nowa"
+  id="nova-section"
   data-fullpage-section
   class="fullpage-section"
   role="region"
-  aria-label="Nowa sekcja"
+  aria-label="Nova Section"
 >
   <UContainer class="py-8 lg:py-16 w-full">
-    <!-- treść -->
+    <!-- Twoja zawartość -->
   </UContainer>
 </section>
 ```
 
-2. Dodaj odpowiadający element do `dotItems` w `app/pages/index.vue`, np.:
+**Krok 2**: Dodaj do `dotItems` (w tym samym pliku):
 
-```ts
+```typescript
 const dotItems = [
   { id: "hero", label: "Hero" },
-  // ...
-  { id: "nowa", label: "Nowa sekcja" },
+  { id: "features", label: "Features" },
+  { id: "nova-section", label: "Nova" }, // <-- Nowa
 ];
 ```
 
-Uwagi dotyczące przewijania wewnętrznego (passthrough wheel):
+### Przewijanie wewnętrzne (Passthrough Wheel)
 
-- Mechanizm sprawdza, czy element pod kursorem (lub jego przodek) ma wewnętrzny overflow i czy może przewinąć się w danym kierunku. Jeśli tak, pozwala na normalne przewijanie wewnątrz tego elementu zamiast przełączać sekcje.
-- Jeśli chcesz, aby dana sekcja zawsze przewijała wewnętrznie, upewnij się, że jej kontener ma `overflow-y: auto` oraz ograniczoną wysokość (np. max-height wewnątrz sekcji).
+Komponent automatycznie wykrywa elementy z `overflow-y: auto` i pozwala na przewijanie wewnętrzne:
 
-Reduced motion i accessibility:
+```vue
+<!-- Przykład sekcji z długą zawartością -->
+<section id="long-content" data-fullpage-section class="fullpage-section">
+  <div class="max-h-screen overflow-y-auto">
+    <!-- Długa lista - przewijanie wewnątrz sekcji -->
+  </div>
+</section>
+```
 
-- Strona honoruje preferencję `prefers-reduced-motion` — animacje przejść są skracane/wyłączane, jeśli użytkownik preferuje zmniejszoną animację.
-- Dodano `skip link` (link pomijający na początku strony), `role="main"` oraz `role="region"` i `aria-label` dla poszczególnych sekcji.
-- `FullPageDots` posiada `aria-live` (polite) i aktualizuje komunikat dla czytników ekranu przy zmianie sekcji.
+**Mechanizm**:
 
-Dodatkowe tipy:
+- Sprawdza element pod kursorem i jego przodków
+- Jeśli element może się przewijać w danym kierunku → przewija wewnętrznie
+- Jeśli nie może → przełącza sekcję
 
-- Jeśli sekcja zawiera długą, przewijaną zawartość (np. listę), lepiej dopasować wewnętrzny kontener z `overflow-auto` i paddingami, aby użytkownicy mogli przewijać zawartość bez wywoływania przejścia sekcji.
-- Możesz dostosować prędkość i czułość wheel poprzez zmienne `WHEEL_TRIGGER` oraz `WHEEL_DECAY_MS` w `app/components/FullPageDots.vue`.
+### Accessibility & Reduced Motion
 
-## Licencja
+✅ **Implemented features**:
 
-MIT
+- `skip link` na początku strony (pomija do głównej treści)
+- `role="main"` i `role="region"` dla sekcji
+- `aria-label` dla każdej sekcji
+- `aria-live="polite"` w `FullPageDots` (komunikaty dla screen readers)
+- Obsługa `prefers-reduced-motion`:
+  - Jeśli włączone → animacje są skracane/wyłączane
+  - Przejścia natychmiastowe zamiast animowanych
+
+### Customizacja
+
+Edytuj `app/components/FullPageDots.vue`:
+
+```typescript
+// Czułość scroll wheel (niższa = łatwiej przełączyć sekcję)
+const WHEEL_TRIGGER = 100;
+
+// Czas decay (ms) - jak długo ignorować dodatkowe scroll events
+const WHEEL_DECAY_MS = 50;
+```
+
+### Touch Support
+
+- **Swipe**: Przesuń palcem góra/dół (mobile)
+- **Threshold**: 50px minimum swipe distance
+- **Velocity**: Wykrywa szybkie gesty
+
+## 🎨 Design System
+
+### Glass Morphism Components
+
+Projekt wykorzystuje custom Glass Morphism UI:
+
+- **GlassButton**: Przyciski z efektem szkła i backdrop-blur
+- **GlassCard**: Karty z przezroczystym tłem
+- **GlassBadge**: Odznaczniki z glassmorphism
+- **GlassPanel**: Panele z efektem szklanym
+
+**Użycie**:
+
+```vue
+<GlassButton variant="solid" color="primary" size="md">
+  Click me
+</GlassButton>
+
+<GlassCard class="p-6">
+  <h3>Card Content</h3>
+</GlassCard>
+```
+
+### Color Palette
+
+- **Primary**: Blue gradient (primary-500 → primary-600)
+- **Secondary**: Purple accent (purple-500 → purple-600)
+- **Neutral**: Gray scale (gray-50 → gray-900)
+- **Status**: Success (green), Error (red), Warning (yellow), Info (blue)
+
+### Responsive Breakpoints
+
+```css
+sm: 640px   /* Tablet portrait */
+md: 768px   /* Tablet landscape */
+lg: 1024px  /* Desktop */
+xl: 1280px  /* Large desktop */
+2xl: 1536px /* Extra large */
+```
+
+### Z-Index Hierarchy (useZIndex)
+
+```typescript
+BACKGROUND: 0-10
+CONTENT: 20-40
+SIDEBAR/NAV: 50
+DROPDOWN: 60-65
+MODAL: 70-80
+LOADING/TOAST: 90-100
+```
+
+## 📱 Mobile Optimization
+
+### Responsive Features
+
+- **EditorMobileSummary**: Floating button (z-40) + slide-up panel (z-50)
+- **AppSidebar**: `v-show` dla menu (zamiast `v-if` - zapobiega znikaniu linków)
+- **Compact UI**: Zmniejszone paddingi, gaps i font-size na mobile
+- **Touch Feedback**: `active:scale-95` dla lepszego UX
+- **Safe Area Support**: `env(safe-area-inset-bottom)` dla notched devices
+
+### Mobile-First Classes
+
+```vue
+<!-- Przykład responsive class pattern -->
+<div class="p-3 sm:p-4 lg:p-6"></div>
+```
+
+## 🤝 Contributing
+
+### Development Workflow
+
+1. Fork repository
+2. Utwórz branch: `git checkout -b feature/amazing-feature`
+3. Commit changes: `git commit -m 'Add amazing feature'`
+4. Push: `git push origin feature/amazing-feature`
+5. Otwórz Pull Request
+
+### Code Style
+
+- **ESLint**: `@antfu/eslint-config` (flat config)
+- **Format**: Auto-format on save (VS Code + ESLint)
+- **TypeScript**: Strict mode enabled
+- **Conventions**:
+  - Composables: `use[Name].ts`
+  - Components: PascalCase.vue
+  - Props/Events: camelCase
+
+### Testing
+
+```bash
+# Type check
+pnpm dlx nuxt typecheck
+
+# Lint
+pnpm lint
+
+# Build test
+pnpm build
+```
+
+## 📚 Dodatkowe Zasoby
+
+### Dokumentacja
+
+- [Nuxt 4 Docs](https://nuxt.com)
+- [Vue 3 Composition API](https://vuejs.org/guide/extras/composition-api-faq.html)
+- [@nuxt/ui](https://ui.nuxt.com)
+- [@nuxt/content](https://content.nuxt.com)
+
+### Tutorials
+
+- [Prompt Engineering Guide](https://www.promptingguide.ai/)
+- [Stable Diffusion Prompting](https://stable-diffusion-art.com/prompt-guide/)
+
+## 📝 Changelog
+
+### v2.0.0 (Current)
+
+- ✨ Nowy system tagów z weight/emphasis control
+- 📱 Dedykowane komponenty mobilne (EditorMobileSummary)
+- 🎨 Glass Morphism design system
+- 🐛 Fix: Mobile menu links disappearing (v-if → v-show)
+- 📦 Upgrade: Nuxt 4.1.2, Vue 3.5.22
+- 🌐 Enhanced i18n with better persistence
+
+### v1.0.0
+
+- 🎉 Initial release
+- 📝 Edytor promptów z placeholderami
+- 📚 Biblioteka (saved, custom, history, collections)
+- 🎨 Katalog szablonów
+- 💬 AI Chat integration
+
+## 📄 Licencja
+
+MIT License - zobacz [LICENSE](LICENSE) dla szczegółów
+
+## 👤 Author
+
+**gb-redRabit**
+
+- GitHub: [@gb-redRabit](https://github.com/gb-redRabit)
+- Project: [prompt-forge](https://github.com/gb-redRabit/prompt-forge)
+
+## 🙏 Acknowledgments
+
+- [Nuxt Team](https://nuxt.com) za framework
+- [Heroicons](https://heroicons.com) za ikony
+- Społeczność AI/ML za inspirację do promptów
+
+---
+
+**⭐ Star this repo if you find it useful!**
