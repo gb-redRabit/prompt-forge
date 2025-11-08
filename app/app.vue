@@ -24,6 +24,16 @@
 const { isLoaded: isContentLoaded } = usePreloadedContent();
 const route = useRoute();
 
+// PWA Manifest link
+useHead({
+  link: [
+    {
+      rel: "manifest",
+      href: "/manifest.webmanifest",
+    },
+  ],
+});
+
 // Fallback - jeśli zawartość nie załaduje się w 5 sekund, wyłącz overlay
 
 // Sprawdź czy jesteśmy na stronie z dashboard layout

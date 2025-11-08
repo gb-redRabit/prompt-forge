@@ -177,7 +177,13 @@ export default defineNuxtConfig({
     devOptions: {
       enabled: true,
       type: "module",
+      navigateFallback: "/",
       // Note: Development warnings są normalne - zobacz PWA-DEV-WARNINGS.md
     },
+    // Włącz generowanie manifestu w dev mode
+    injectManifest: {
+      globPatterns: ["**/*.{js,css,html,png,svg,ico}"],
+    },
+    writePlugin: true,
   },
 });
