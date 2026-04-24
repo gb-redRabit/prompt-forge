@@ -1,11 +1,11 @@
-import type { OptionItem, Prompt, TagItem } from "~/types/content";
+import type { OptionItem, Prompt, TagItem } from "~~/shared/types/content";
 
 // Global reactive state - dostępne wszędzie
-const globalOptions = ref<Record<string, OptionItem[]> | null>(null);
-const globalPrompts = ref<Prompt[] | null>(null);
-const globalTags = ref<Record<string, TagItem> | null>(null);
-const globalAvailableTags = ref<string[]>([]);
-const globalAvailableCategories = ref<string[]>([]);
+const globalOptions = shallowRef<Record<string, OptionItem[]> | null>(null);
+const globalPrompts = shallowRef<Prompt[] | null>(null);
+const globalTags = shallowRef<Record<string, TagItem> | null>(null);
+const globalAvailableTags = shallowRef<string[]>([]);
+const globalAvailableCategories = shallowRef<string[]>([]);
 const isContentLoaded = ref(false);
 const isContentLoading = ref(false);
 

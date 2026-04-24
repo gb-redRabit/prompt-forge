@@ -3,7 +3,8 @@
     <div class="flex h-screen overflow-hidden">
       <!-- Sidebar Component -->
       <EditorSidebar
-        v-model:expanded="editorState.sidebarExpanded.value"
+        class="z-20"
+        v-model:expanded="sidebarExpanded"
         :current-category="currentCategory || ''"
         :selected-tags="selectedTags"
         :category-groups="categoryGroupsUI"
@@ -12,32 +13,28 @@
 
       <!-- Main Content -->
       <main
-        class="flex-1 overflow-hidden flex flex-col h-screen w-full min-w-0"
+        class="flex-1 overflow-hidden flex flex-col h-screen w-full min-w-0 bg-gray-50/30 dark:bg-gray-900/10 relative z-10"
       >
-        <div class="flex-1 overflow-y-auto custom-scrollbar">
-          <div class="w-full max-w-full p-3 sm:p-4 lg:p-6 mx-auto">
-            <!-- Header with Progress -->
-            <EditorProgressBar
-              :current-step="currentStep + 1"
-              :total-steps="totalSteps"
-              :category-name="getCategoryNameByLabel(currentCategory || '')"
-              class="mb-3"
-            >
-              <template #stats>
-                <EditorStatsCard
-                  :current-step="currentStep + 1"
-                  :total-steps="totalSteps"
-                />
-              </template>
-            </EditorProgressBar>
+        <div class="flex-1 overflow-hidden h-full">
+          <div class="w-full max-w-[1700px] h-full p-2 sm:p-4 lg:p-6 lg:py-8 mx-auto flex flex-col lg:flex-row gap-0 lg:gap-6">
+            
+            <!-- Left Side / Center: Tags Selection -->
+            <div class="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
+            <!-- Workspace Header -->
+            <div class="flex items-center justify-between mb-2 px-2 pb-3 border-b border-gray-100 dark:border-gray-800">
+              <h1 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight">
+                {{ getCategoryNameByLabel(currentCategory || '') }}
+              </h1>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold bg-primary-100 text-primary-700 dark:bg-primary-900/40 dark:text-primary-400 px-3 py-1.5 rounded-full">
+                  {{ tagsForCurrentCategory.length }} opcji
+                </span>
+              </div>
+            </div>
 
-            <div
-              class="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[calc(100vh-170px)] w-full max-w-full"
-            >
+            <div class="flex-1 flex flex-col w-full h-full min-h-0 mt-3 pt-1">
               <!-- Tags Selection -->
-              <div
-                class="lg:col-span-2 flex flex-col space-y-4 overflow-hidden min-h-[500px] lg:min-h-0 w-full max-w-full"
-              >
+              <div class="flex flex-col space-y-4 overflow-hidden h-full w-full pb-24 lg:pb-0">
                 <!-- Search & Filters Component -->
                 <EditorSearchFilters
                   v-model:search="categorySearch"
@@ -48,261 +45,21 @@
                   @clear="clearCurrentCategory"
                 />
 
-                <!-- Selected Tags -->
-                <div
-                  v-if="selectedTagsForCurrentCategory.length > 0"
-                  class="hidden lg:block bg-gradient-to-r from-primary-50 to-purple-50 dark:from-primary-900/20 dark:to-purple-900/20 rounded-2xl border border-primary-200 dark:border-primary-800 p-3 flex-shrink-0"
-                >
-                  <div class="flex items-center gap-2 mb-2">
-                    <UIcon
-                      name="i-heroicons-check-circle"
-                      class="w-4 h-4 text-primary-500"
-                    />
-                    <span
-                      class="text-sm font-semibold text-gray-900 dark:text-white"
-                    >
-                      {{ selectedTagsForCurrentCategory.length }}
-                      {{ $t("prompt_creator.selected") }}
-                    </span>
-                  </div>
-                  <div class="flex flex-wrap gap-2">
-                    <div
-                      v-for="tagObj in selectedTagsForCurrentCategory"
-                      :key="getTagText(tagObj)"
-                      class="relative group"
-                    >
-                      <button
-                        @click="toggleTag(tagObj)"
-                        :class="tagClasses(tagObj)"
-                      >
-                        {{ getTagText(tagObj) }}
-                        <span
-                          v-if="tagObj.weight && tagObj.weight !== 1.0"
-                          class="ml-1 text-xs opacity-70"
-                        >
-                          :{{ tagObj.weight.toFixed(1) }}
-                        </span>
-                        <span
-                          v-if="tagObj.emphasis && tagObj.emphasis > 0"
-                          class="ml-1 text-xs opacity-70"
-                        >
-                          {{ "(".repeat(tagObj.emphasis) }}
-                        </span>
-                      </button>
+                <EditorTagGrid
+                  :tags="filteredTagsForCategory"
+                  :selected-tags="selectedTags"
+                  :is-favorite="isFavorite"
+                  @toggle="toggleTag"
+                  @toggle-favorite="toggleFavorite"
+                />
 
-                      <!-- Popup controls with Glass Effect -->
-                      <div
-                        class="absolute top-full mt-2 left-0 glass-card rounded-xl shadow-2xl ring-2 ring-primary-500/20 p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 backdrop-blur-xl"
-                      >
-                        <div class="space-y-3 min-w-[220px]">
-                          <!-- Weight slider -->
-                          <div>
-                            <div class="flex items-center justify-between mb-2">
-                              <label
-                                class="text-xs font-medium text-gray-700 dark:text-gray-300"
-                              >
-                                {{ $t("prompt_creator.weight") }}
-                              </label>
-                              <span
-                                class="text-sm font-bold text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 px-2 py-0.5 rounded"
-                              >
-                                {{ (tagObj.weight || 1.0).toFixed(1) }}
-                              </span>
-                            </div>
-                            <USlider
-                              :model-value="tagObj.weight || 1.0"
-                              @update:model-value="
-                                (value) => updateWeight(tagObj, value as number)
-                              "
-                              :min="0"
-                              :max="3"
-                              :step="0.1"
-                              color="primary"
-                              size="md"
-                            />
-                            <div
-                              class="flex justify-between text-xs text-gray-500 mt-1"
-                            >
-                              <span>0.0</span>
-                              <span>1.5</span>
-                              <span>3.0</span>
-                            </div>
-                          </div>
-
-                          <!-- Emphasis buttons -->
-                          <div>
-                            <label
-                              class="text-xs font-medium text-gray-700 dark:text-gray-300 block mb-2"
-                            >
-                              {{ $t("prompt_creator.emphasis") }}
-                            </label>
-                            <div class="grid grid-cols-4 gap-1">
-                              <button
-                                v-for="n in [0, 1, 2, 3]"
-                                :key="n"
-                                @click.stop="updateEmphasis(tagObj, n)"
-                                :class="[
-                                  'px-2 py-1.5 text-xs rounded-lg font-medium transition-all',
-                                  (tagObj.emphasis || 0) === n
-                                    ? 'bg-primary-500 text-white shadow-lg ring-2 ring-primary-400'
-                                    : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 hover:shadow-md',
-                                ]"
-                              >
-                                {{ n === 0 ? "None" : "(".repeat(n) }}
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Tags Grid with Glass Effect -->
-                <div class="glass-card p-3 sm:p-5 overflow-hidden shadow-lg">
-                  <div
-                    v-if="filteredTagsForCategory.length > 0"
-                    class="flex flex-wrap justify-start items-start gap-1.5 sm:gap-2.5 h-full overflow-y-auto pr-1 sm:pr-2 custom-scrollbar"
-                  >
-                    <button
-                      v-for="tagObj in filteredTagsForCategory"
-                      :key="getTagText(tagObj)"
-                      @click="toggleTag(tagObj)"
-                      :class="[
-                        'group relative px-2 sm:px-3 py-1.5 sm:py-2.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-semibold transition-all duration-300 text-left h-fit backdrop-blur-sm',
-                        'active:scale-95 hover:brightness-110 hover:shadow-xl',
-                        tagObj.nsfw
-                          ? 'bg-red-500/40 ring-1 sm:ring-2 ring-red-500/50'
-                          : isTagSelected(tagObj)
-                            ? tagObj.nsfw
-                              ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-md sm:shadow-lg shadow-red-500/30 ring-1 sm:ring-2 ring-red-500/50'
-                              : 'bg-gradient-to-r from-primary-500 to-purple-600 text-white shadow-md sm:shadow-lg shadow-primary-500/30 ring-1 sm:ring-2 ring-primary-500/50'
-                            : 'bg-white/50 dark:bg-gray-800/50 text-gray-700 dark:text-gray-300 hover:bg-white/70 dark:hover:bg-gray-800/70 ring-1 ring-gray-200/50 dark:ring-gray-700/50',
-                      ]"
-                    >
-                      <div class="flex items-center gap-1">
-                        <span class="truncate leading-tight">{{
-                          getTagText(tagObj)
-                        }}</span>
-                        <button
-                          @click.stop="toggleFavorite(tagObj)"
-                          :class="[
-                            'flex-shrink-0 p-0.5 rounded transition-all',
-                            isFavorite(tagObj)
-                              ? 'text-yellow-400'
-                              : isTagSelected(tagObj)
-                                ? 'text-white/50 hover:text-white'
-                                : 'text-gray-400 hover:text-yellow-400',
-                          ]"
-                        >
-                          <UIcon
-                            :name="
-                              isFavorite(tagObj)
-                                ? 'i-heroicons-star-solid'
-                                : 'i-heroicons-star'
-                            "
-                            class="w-2.5 h-2.5 sm:w-3 sm:h-3"
-                          />
-                        </button>
-                      </div>
-                    </button>
-                  </div>
-
-                  <!-- Empty State -->
-                  <div v-else class="flex items-center justify-center h-full">
-                    <div class="text-center">
-                      <div
-                        class="w-16 h-16 mx-auto mb-3 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center"
-                      >
-                        <UIcon
-                          name="i-heroicons-magnifying-glass"
-                          class="w-8 h-8 text-gray-400"
-                        />
-                      </div>
-                      <p
-                        class="text-gray-600 dark:text-gray-400 font-medium text-sm"
-                      >
-                        {{ $t("prompt_creator.no_results") }}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Navigation -->
-                <div
-                  class="flex justify-between items-center gap-2 sm:gap-3 flex-shrink-0 pb-20 lg:pb-0"
-                >
-                  <GlassButton
-                    size="md"
-                    color="neutral"
-                    variant="outline"
-                    :disabled="currentStep === 0"
-                    @click="previousStep"
-                    class="flex-1 sm:flex-initial sm:min-w-[120px]"
-                    icon="i-heroicons-arrow-left"
-                  >
-                    <span v-once class="hidden sm:inline">{{
-                      $t("common.previous")
-                    }}</span>
-                  </GlassButton>
-
-                  <GlassButton
-                    size="md"
-                    color="neutral"
-                    variant="soft"
-                    @click="skipCategory"
-                    class="px-2 sm:px-4 sm:min-w-[100px]"
-                  >
-                    <span v-once class="text-xs sm:text-sm">{{
-                      $t("common.skip")
-                    }}</span>
-                  </GlassButton>
-
-                  <GlassButton
-                    size="md"
-                    color="primary"
-                    @click="nextStep"
-                    class="flex-1 sm:flex-initial sm:min-w-[120px] shadow-lg shadow-primary-500/30"
-                    :icon="
-                      currentStep === totalSteps - 1
-                        ? undefined
-                        : 'i-heroicons-arrow-right'
-                    "
-                    icon-position="right"
-                  >
-                    <span v-once class="hidden sm:inline">{{
-                      currentStep === totalSteps - 1
-                        ? $t("common.finish")
-                        : $t("common.next")
-                    }}</span>
-                  </GlassButton>
-                </div>
               </div>
-
-              <!-- Sidebar - Summary Component (Desktop Only) -->
-              <EditorSelectedSummary
-                class="hidden lg:flex"
-                :selected-tags="selectedTags"
-                :positive-prompt="generatedPrompt.positive"
-                :negative-prompt="generatedPrompt.negative"
-                :show-nsfw="showNsfw"
-                :copied-positive="copiedPositive"
-                :copied-negative="copiedNegative"
-                @update:show-nsfw="showNsfw = $event"
-                @add-custom-tag="showAddTagModal = true"
-                @show-negative-templates="showNegativeTemplatesModal = true"
-                @clear-category="clearCategoryFromSummary"
-                @remove-tag="removeTagFromSummary"
-                @update-tag="updateTagFromSummary"
-                @copy-prompt="copyPrompt"
-                @save-prompt="savePrompt"
-                @use-prompt="usePrompt"
-                @clear-all="clearAll"
-              />
             </div>
-
-            <!-- Mobile Summary Button -->
-            <EditorMobileSummary
+          </div>
+          
+          <!-- Right Side: Desktop Sidebar -->
+          <div class="hidden lg:flex w-[400px] xl:w-[460px] flex-col h-[calc(100vh-2rem)] flex-shrink-0 animate-fade-in sticky top-4">
+            <EditorSelectedSummary
               :selected-tags="selectedTags"
               :positive-prompt="generatedPrompt.positive"
               :negative-prompt="generatedPrompt.negative"
@@ -321,8 +78,32 @@
               @clear-all="clearAll"
             />
           </div>
+
         </div>
-      </main>
+      </div>
+
+      <!-- Mobile Summary Button -->
+      <div class="lg:hidden">
+        <EditorMobileSummary
+          :selected-tags="selectedTags"
+          :positive-prompt="generatedPrompt.positive"
+          :negative-prompt="generatedPrompt.negative"
+          :show-nsfw="showNsfw"
+          :copied-positive="copiedPositive"
+          :copied-negative="copiedNegative"
+          @update:show-nsfw="showNsfw = $event"
+          @add-custom-tag="showAddTagModal = true"
+          @show-negative-templates="showNegativeTemplatesModal = true"
+          @clear-category="clearCategoryFromSummary"
+          @remove-tag="removeTagFromSummary"
+          @update-tag="updateTagFromSummary"
+          @copy-prompt="copyPrompt"
+          @save-prompt="savePrompt"
+          @use-prompt="usePrompt"
+          @clear-all="clearAll"
+        />
+      </div>
+    </main>
     </div>
 
     <!-- Save Modal -->
@@ -335,459 +116,19 @@
     />
 
     <!-- Add Custom Tag Modal -->
-    <UModal
+    <EditorAddTagModal
       v-model:open="showAddTagModal"
-      :title="$t('prompt_creator.add_custom_tag')"
-      :description="$t('prompt_creator.add_custom_tag_description')"
-      :ui="{
-        wrapper: 'z-[60]',
-        overlay: 'z-[60]',
-        content:
-          'w-full h-full sm:h-auto sm:max-w-3xl m-0 sm:m-4 rounded-none sm:rounded-xl z-[60]',
-        body: 'overflow-y-auto max-h-[calc(100vh-8rem)] sm:max-h-[calc(100vh-6rem)]',
-      }"
-    >
-      <template #body>
-        <form @submit.prevent="addCustomTag" class="space-y-6 p-6">
-          <!-- Sekcja: Podstawowe informacje -->
-          <div class="space-y-4">
-            <div
-              class="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white pb-2 border-b border-gray-200 dark:border-gray-700"
-            >
-              <UIcon name="i-heroicons-tag" class="w-5 h-5 text-primary-500" />
-              <span v-once>{{ $t("prompt_creator.tag_names") }}</span>
-            </div>
+      @submit="handleCustomTagSubmit"
+    />
 
-            <div class="grid md:grid-cols-2 gap-4">
-              <!-- Nazwa PL -->
-              <div class="space-y-2">
-                <label
-                  class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
-                >
-                  <UIcon name="i-heroicons-language" class="w-4 h-4" />
-                  <span v-once>{{ $t("prompt_creator.tag_name") }}</span>
-                  <GlassBadge color="primary" variant="soft" size="xs">
-                    <span v-once>PL</span>
-                  </GlassBadge>
-                  <span class="text-red-500">*</span>
-                </label>
-                <UInput
-                  v-model="customTag.pl"
-                  :placeholder="$t('prompt_creator.tag_name_placeholder_pl')"
-                  size="lg"
-                  leading-icon="i-heroicons-pencil"
-                  class="w-full"
-                  required
-                />
-                <p
-                  v-if="!customTag.pl.trim()"
-                  class="text-xs text-gray-500 dark:text-gray-400"
-                >
-                  <span v-once>{{
-                    $t("prompt_creator.tag_name_hint_pl")
-                  }}</span>
-                </p>
-              </div>
-
-              <!-- Nazwa EN -->
-              <div class="space-y-2">
-                <label
-                  class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
-                >
-                  <UIcon name="i-heroicons-language" class="w-4 h-4" />
-                  <span v-once>{{ $t("prompt_creator.tag_name") }}</span>
-                  <GlassBadge color="secondary" variant="soft" size="xs">
-                    <span v-once>EN</span>
-                  </GlassBadge>
-                  <span class="text-red-500">*</span>
-                </label>
-                <UInput
-                  v-model="customTag.en"
-                  :placeholder="$t('prompt_creator.tag_name_placeholder_en')"
-                  size="lg"
-                  leading-icon="i-heroicons-pencil"
-                  class="w-full"
-                  required
-                />
-                <p
-                  v-if="!customTag.en.trim()"
-                  class="text-xs text-gray-500 dark:text-gray-400"
-                >
-                  <span v-once>{{
-                    $t("prompt_creator.tag_name_hint_en")
-                  }}</span>
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Sekcja: Negative Prompts (opcjonalne) -->
-          <div class="space-y-4">
-            <div
-              class="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white pb-2 border-b border-gray-200 dark:border-gray-700"
-            >
-              <UIcon
-                name="i-heroicons-exclamation-circle"
-                class="w-5 h-5 text-red-500"
-              />
-              <span v-once>{{
-                $t("prompt_creator.negative_prompts_optional")
-              }}</span>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-4">
-              <!-- Negative PL -->
-              <div class="space-y-2">
-                <label
-                  class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
-                >
-                  <UIcon name="i-heroicons-x-circle" class="w-4 h-4" />
-                  <span v-once>{{ $t("prompt_creator.negative_prompt") }}</span>
-                  <GlassBadge color="primary" variant="soft" size="xs">
-                    <span v-once>PL</span>
-                  </GlassBadge>
-                </label>
-                <UInput
-                  v-model="customTag.neg_pl"
-                  :placeholder="
-                    $t('prompt_creator.negative_prompt_placeholder_pl')
-                  "
-                  size="lg"
-                  leading-icon="i-heroicons-minus-circle"
-                  class="w-full"
-                />
-              </div>
-
-              <!-- Negative EN -->
-              <div class="space-y-2">
-                <label
-                  class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
-                >
-                  <UIcon name="i-heroicons-x-circle" class="w-4 h-4" />
-                  <span v-once>{{ $t("prompt_creator.negative_prompt") }}</span>
-                  <GlassBadge color="secondary" variant="soft" size="xs">
-                    <span v-once>EN</span>
-                  </GlassBadge>
-                </label>
-                <UInput
-                  v-model="customTag.neg_en"
-                  :placeholder="
-                    $t('prompt_creator.negative_prompt_placeholder_en')
-                  "
-                  size="lg"
-                  leading-icon="i-heroicons-minus-circle"
-                  class="w-full"
-                />
-              </div>
-            </div>
-
-            <div
-              class="flex items-start gap-2 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg"
-            >
-              <UIcon
-                name="i-heroicons-information-circle"
-                class="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0"
-              />
-              <p class="text-sm text-blue-700 dark:text-blue-300">
-                <span v-once>{{
-                  $t("prompt_creator.negative_prompt_info")
-                }}</span>
-              </p>
-            </div>
-          </div>
-
-          <!-- Sekcja: Ustawienia dodatkowe -->
-          <div class="space-y-4">
-            <div
-              class="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white pb-2 border-b border-gray-200 dark:border-gray-700"
-            >
-              <UIcon
-                name="i-heroicons-cog-6-tooth"
-                class="w-5 h-5 text-gray-500"
-              />
-              <span v-once>{{ $t("prompt_creator.additional_settings") }}</span>
-            </div>
-
-            <GlassCard variant="subtle" class="p-4">
-              <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                  <UIcon
-                    name="i-heroicons-eye-slash"
-                    class="w-5 h-5 text-red-500"
-                  />
-                  <div>
-                    <p
-                      class="text-sm font-medium text-gray-900 dark:text-white"
-                    >
-                      <span v-once>{{
-                        $t("prompt_creator.mark_as_nsfw")
-                      }}</span>
-                    </p>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">
-                      <span v-once>{{
-                        $t("prompt_creator.nsfw_description")
-                      }}</span>
-                    </p>
-                  </div>
-                </div>
-                <!-- Custom Toggle Switch -->
-                <button
-                  type="button"
-                  @click="customTag.nsfw = !customTag.nsfw"
-                  :class="[
-                    'relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-                    customTag.nsfw
-                      ? 'bg-red-500'
-                      : 'bg-gray-200 dark:bg-gray-700',
-                  ]"
-                >
-                  <span
-                    :class="[
-                      'inline-block h-4 w-4 transform rounded-full bg-white transition-transform',
-                      customTag.nsfw ? 'translate-x-6' : 'translate-x-1',
-                    ]"
-                  />
-                </button>
-              </div>
-            </GlassCard>
-          </div>
-
-          <!-- Actions -->
-          <div
-            class="flex justify-between items-center gap-3 pt-4 border-t border-gray-200 dark:border-gray-700"
-          >
-            <p class="text-xs text-gray-500 dark:text-gray-400">
-              <span v-once>{{
-                $t("prompt_creator.required_fields_note")
-              }}</span>
-            </p>
-            <div class="flex gap-3">
-              <GlassButton
-                color="neutral"
-                variant="outline"
-                @click="showAddTagModal = false"
-                icon="i-heroicons-x-mark"
-              >
-                <span v-once>{{ $t("pages.shared.cancel") }}</span>
-              </GlassButton>
-              <GlassButton
-                type="submit"
-                color="primary"
-                :disabled="!customTag.pl.trim() || !customTag.en.trim()"
-                icon="i-heroicons-plus-circle"
-              >
-                <span v-once>{{ $t("pages.shared.add") }}</span>
-              </GlassButton>
-            </div>
-          </div>
-        </form>
-      </template>
-    </UModal>
     <!-- Negative Templates Modal -->
-    <UModal
+    <EditorNegativeTemplatesModal
       v-model:open="showNegativeTemplatesModal"
-      :title="$t('prompt_creator.negative_templates')"
-      :description="$t('prompt_creator.negative_templates_description')"
-      :ui="{
-        wrapper: 'z-[60]',
-        overlay: 'z-[60]',
-        content:
-          'w-full h-full sm:h-auto sm:max-w-4xl m-0 sm:m-4 rounded-none sm:rounded-xl z-[60]',
-        body: 'overflow-y-auto max-h-[calc(100vh-8rem)]',
-      }"
-    >
-      <template #body>
-        <div class="space-y-6 p-6">
-          <!-- Header z licznikiem i search -->
-          <div class="space-y-4">
-            <div class="flex items-center justify-between flex-wrap gap-3">
-              <!-- Licznik wybranych -->
-              <div class="flex items-center gap-2">
-                <GlassBadge
-                  :color="
-                    activeNegativeTemplates.length > 0 ? 'primary' : 'neutral'
-                  "
-                  variant="soft"
-                  size="md"
-                >
-                  <UIcon name="i-heroicons-check-circle" class="w-4 h-4" />
-                  <span class="font-semibold">
-                    {{ activeNegativeTemplates.length }}
-                  </span>
-                  <span v-once>{{ $t("prompt_creator.selected") }}</span>
-                </GlassBadge>
-              </div>
+      v-model:active-templates="activeNegativeTemplates"
+      :groups="negativeTemplateGroups"
+    />
 
-              <!-- Clear all button -->
-              <GlassButton
-                v-if="activeNegativeTemplates.length > 0"
-                color="error"
-                variant="outline"
-                size="sm"
-                @click="activeNegativeTemplates = []"
-                icon="i-heroicons-x-circle"
-              >
-                <span v-once>{{ $t("prompt_creator.clear_all") }}</span>
-              </GlassButton>
-            </div>
-
-            <!-- Info box -->
-            <div
-              class="flex items-start gap-2 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg"
-            >
-              <UIcon
-                name="i-heroicons-information-circle"
-                class="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0"
-              />
-              <p class="text-sm text-blue-700 dark:text-blue-300">
-                <span v-once>{{
-                  $t("prompt_creator.negative_templates_info")
-                }}</span>
-              </p>
-            </div>
-          </div>
-
-          <!-- Template Groups -->
-          <div class="space-y-6">
-            <GlassCard
-              v-for="group in negativeTemplateGroups"
-              :key="group.label"
-              variant="subtle"
-              padding="md"
-              class="space-y-4"
-            >
-              <!-- Group Header -->
-              <div
-                class="flex items-center gap-2 pb-2 border-b border-gray-200 dark:border-gray-700"
-              >
-                <UIcon
-                  name="i-heroicons-folder"
-                  class="w-5 h-5 text-primary-500"
-                />
-                <h4 class="text-sm font-semibold text-gray-900 dark:text-white">
-                  {{ group.label }}
-                </h4>
-                <GlassBadge color="neutral" variant="soft" size="xs">
-                  {{ group.templates.length }}
-                </GlassBadge>
-              </div>
-
-              <!-- Templates Grid -->
-              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                <GlassButton
-                  v-for="template in group.templates"
-                  :key="template.label"
-                  :color="
-                    activeNegativeTemplates.includes(template.text)
-                      ? 'primary'
-                      : 'neutral'
-                  "
-                  :variant="
-                    activeNegativeTemplates.includes(template.text)
-                      ? 'solid'
-                      : 'outline'
-                  "
-                  size="sm"
-                  @click="addNegativeTemplate(template.text)"
-                  class="justify-between group relative overflow-hidden"
-                >
-                  <span class="flex-1 text-left truncate">
-                    {{ template.label }}
-                  </span>
-                  <UIcon
-                    v-if="activeNegativeTemplates.includes(template.text)"
-                    name="i-heroicons-check-circle-solid"
-                    class="w-4 h-4 flex-shrink-0 ml-2"
-                  />
-                  <UIcon
-                    v-else
-                    name="i-heroicons-plus-circle"
-                    class="w-4 h-4 flex-shrink-0 ml-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                  />
-                </GlassButton>
-              </div>
-
-              <!-- Selected templates from this group -->
-              <div
-                v-if="
-                  group.templates.some((t) =>
-                    activeNegativeTemplates.includes(t.text)
-                  )
-                "
-                class="pt-3 border-t border-gray-200 dark:border-gray-700"
-              >
-                <p class="text-xs text-gray-500 dark:text-gray-400 mb-2">
-                  <span v-once
-                    >{{ $t("prompt_creator.selected_from_group") }}:</span
-                  >
-                </p>
-                <div class="flex flex-wrap gap-2">
-                  <GlassBadge
-                    v-for="template in group.templates.filter((t) =>
-                      activeNegativeTemplates.includes(t.text)
-                    )"
-                    :key="template.text"
-                    color="primary"
-                    variant="soft"
-                    size="sm"
-                  >
-                    {{ template.label }}
-                  </GlassBadge>
-                </div>
-              </div>
-            </GlassCard>
-          </div>
-
-          <!-- Preview wybranych szablonów -->
-          <div v-if="activeNegativeTemplates.length > 0" class="space-y-3">
-            <div
-              class="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white pb-2 border-b border-gray-200 dark:border-gray-700"
-            >
-              <UIcon name="i-heroicons-eye" class="w-5 h-5 text-purple-500" />
-              <span v-once>{{ $t("prompt_creator.preview") }}</span>
-            </div>
-
-            <GlassCard variant="strong" padding="md">
-              <p
-                class="text-sm text-gray-700 dark:text-gray-300 font-mono leading-relaxed"
-              >
-                {{ activeNegativeTemplates.join(", ") }}
-              </p>
-            </GlassCard>
-
-            <div
-              class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400"
-            >
-              <UIcon name="i-heroicons-document-text" class="w-4 h-4" />
-              <span>
-                {{ activeNegativeTemplates.join(", ").length }}
-                <span v-once>{{ $t("prompt_creator.characters") }}</span>
-              </span>
-            </div>
-          </div>
-
-          <!-- Actions -->
-          <div
-            class="flex justify-between items-center gap-3 pt-4 border-t border-gray-200 dark:border-gray-700"
-          >
-            <p class="text-xs text-gray-500 dark:text-gray-400">
-              <span v-once>{{
-                $t("prompt_creator.templates_auto_apply")
-              }}</span>
-            </p>
-            <GlassButton
-              color="neutral"
-              variant="outline"
-              @click="showNegativeTemplatesModal = false"
-              icon="i-heroicons-check"
-            >
-              <span v-once>{{ $t("common.done") }}</span>
-            </GlassButton>
-          </div>
-        </div>
-      </template>
-    </UModal>
-    <!-- Modal historii -->
+    <!-- History Modal -->
     <UModal
       v-model:open="showHistoryModal"
       :title="$t('prompt_creator.history_title')"
@@ -816,7 +157,7 @@
                   {{ new Date(snapshot.createdAt).toLocaleString() }}
                 </p>
                 <p class="text-xs text-gray-500">
-                  {{ snapshot.tagsCount }} tagów, krok {{ snapshot.step + 1 }}
+                  {{ snapshot.tagsCount }} tagów, {{ getCategoryNameByLabel(snapshot.category || 'Subject') }}
                 </p>
               </div>
               <GlassButton
@@ -866,14 +207,31 @@
 </template>
 
 <script setup lang="ts">
-// Import components
-import SavePromptModal from "~/components/editor/SavePromptModal.vue";
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useEditorStore } from '~/stores/editor';
+import { useI18n, useRouter, useHead, definePageMeta } from '#imports';
+import { useToast } from '#ui/composables/useToast';
+import { getTagText, getTagId, getNegativeTagText } from '~/utils/tags';
+import type { TagItem } from '~~/shared/types/content';
+
 import EditorSidebar from "~/components/editor/EditorSidebar.vue";
-import EditorProgressBar from "~/components/editor/EditorProgressBar.vue";
-import EditorStatsCard from "~/components/editor/EditorStatsCard.vue";
 import EditorSearchFilters from "~/components/editor/EditorSearchFilters.vue";
+import EditorTagGrid from "~/components/editor/EditorTagGrid.vue";
 import EditorSelectedSummary from "~/components/editor/EditorSelectedSummary.vue";
 import EditorMobileSummary from "~/components/editor/EditorMobileSummary.vue";
+import SavePromptModal from "~/components/editor/SavePromptModal.vue";
+import EditorAddTagModal from "~/components/editor/EditorAddTagModal.vue";
+import EditorNegativeTemplatesModal from "~/components/editor/EditorNegativeTemplatesModal.vue";
+import GlassButton from "~/components/ui/GlassButton.vue";
+
+import { 
+  CATEGORY_KEY_MAP, 
+  LABEL_TO_KEY_MAP, 
+  CATEGORY_ORDER, 
+  CATEGORY_ICONS, 
+  CATEGORY_GROUPS 
+} from "~~/shared/constants/categories";
 
 // Extend Window type for custom properties
 declare global {
@@ -883,64 +241,63 @@ declare global {
   }
 }
 
-// Initialize editor state
-const editorState = useEditorState();
+// Initialize editor store
+const editorStore = useEditorStore();
 
-interface TagObject {
-  pl: string;
-  en: string;
-  neg_pl: string;
-  neg_en: string;
-  category: string;
-  nsfw: boolean;
-  custom?: boolean;
-  weight?: number; // 0.0 - 3.0
-  emphasis?: number; // 0-3 (nawiasy)
-}
+// TagObject was just a local name for TagItem
+type TagObject = TagItem;
 const toast = useToast();
+const { 
+  categorySearch, 
+  selectedTags, 
+  showSaveModal, 
+  showAddTagModal, 
+  copiedPositive, 
+  copiedNegative, 
+  sidebarExpanded, 
+  showOnlyFavorites, 
+  favorites, 
+  customTags, 
+  showNsfw, 
+  additionalNegative,
+  currentCategory,
+  canUndo,
+  canRedo,
+  snapshots
+} = storeToRefs(editorStore);
+
 const showNegativeTemplatesModal = ref(false);
 const showAlertModal = ref(false);
 const alertMessage = ref("");
 const activeNegativeTemplates = ref<string[]>([]);
-const addNegativeTemplate = (text: string) => {
-  // Rozbij szablon na frazy (np. "blurry, low quality, ugly" → ["blurry", "low quality", "ugly"])
-  const templateParts = text
+const showHistoryModal = ref(false);
+
+// Synchronizuj tekst negative prompt z wybranymi szablonami
+watch(activeNegativeTemplates, (newTemplates, oldTemplates) => {
+  const currentParts = new Set((additionalNegative.value || "")
     .split(",")
-    .map((s) => s.trim())
-    .filter(Boolean);
+    .map((s: string) => s.trim())
+    .filter(Boolean));
 
-  if (activeNegativeTemplates.value.includes(text)) {
-    // Usuń z aktywnych
-    activeNegativeTemplates.value = activeNegativeTemplates.value.filter(
-      (t) => t !== text
-    );
+  // Znajdź co zostało dodane
+  const added = newTemplates.filter(t => !oldTemplates.includes(t));
+  // Znajdź co zostało usunięte
+  const removed = oldTemplates.filter(t => !newTemplates.includes(t));
 
-    // Usuń WSZYSTKIE frazy szablonu z additionalNegative
-    const currentParts = (additionalNegative.value || "")
-      .split(",")
-      .map((s) => s.trim())
-      .filter(Boolean)
-      .filter((s) => !templateParts.includes(s));
-    additionalNegative.value = currentParts.join(", ");
-  } else {
-    // Dodaj do aktywnych
-    activeNegativeTemplates.value.push(text);
-
-    // Dodaj frazy szablonu do additionalNegative (unikaj duplikatów)
-    const currentParts = (additionalNegative.value || "")
-      .split(",")
-      .map((s) => s.trim())
-      .filter(Boolean);
-
-    // Dodaj tylko te, których jeszcze nie ma
-    templateParts.forEach((part) => {
-      if (!currentParts.includes(part)) {
-        currentParts.push(part);
-      }
+  added.forEach(templateText => {
+    templateText.split(",").map((s: string) => s.trim()).filter(Boolean).forEach(part => {
+      currentParts.add(part);
     });
-    additionalNegative.value = currentParts.join(", ");
-  }
-};
+  });
+
+  removed.forEach(templateText => {
+    templateText.split(",").map((s: string) => s.trim()).filter(Boolean).forEach(part => {
+      currentParts.delete(part);
+    });
+  });
+
+  additionalNegative.value = Array.from(currentParts).join(", ");
+}, { deep: true });
 
 definePageMeta({
   layout: "dashboard",
@@ -951,288 +308,83 @@ const router = useRouter();
 
 // Preloaded content
 const { tags, isLoaded: isContentLoaded } = usePreloadedContent();
-let autoSaveInterval: NodeJS.Timeout | null = null;
-// Mapowanie: klucz i18n -> obecna etykieta kategorii (z content/tagów)
-const categoryKeyMap: Record<string, string> = {
-  subject: "Subject",
-  art_style: "Art Style",
-  medium: "Medium",
-  quality: "Quality",
-  characters: "Characters",
-  character_traits: "Character Traits",
-  facial_features: "Facial Features",
-  eyes: "Eyes",
-  hair: "Hair",
-  body_features: "Body Features",
-  breasts: "Breasts",
-  genitals: "Genitals",
-  anatomy_details: "Anatomy Details",
-  hand_details: "Hand Details",
-  expression_pose: "Expression/Pose",
-  posture: "Posture",
-  clothing: "Clothing",
-  accessories: "Accessories",
-  setting: "Setting",
-  environment_details: "Environment Details",
-  background_elements: "Background Elements",
-  time_of_day: "Time of Day",
-  weather: "Weather",
-  lighting_effects: "Lighting/Effects",
-  themes_moods: "Themes/Moods",
-  color_palettes: "Color Palettes",
-  camera_angles: "Camera Angles",
-  perspectives: "Perspectives",
-  camera_settings: "Camera Settings",
-  lens_type: "Lens Type",
-  composition_rules: "Composition Rules",
-  motion_effects: "Motion Effects",
-  rendering_engine: "Rendering Engine",
-  post_processing: "Post Processing",
-  texture_materials: "Texture Materials",
-  technology_objects: "Technology/Objects",
-  other: "Other",
-};
-
-// Odwrotna mapa: etykieta -> klucz i18n (do tłumaczenia UI)
-const labelToKey: Record<string, string> = Object.entries(
-  categoryKeyMap
-).reduce(
-  (acc, [key, label]) => {
-    acc[label] = key;
-    return acc;
-  },
-  {} as Record<string, string>
-);
-
-// Kolejność logiczna kategorii (klucze i18n)
-const categoryOrderKeys: string[] = [
-  // 🎯 Podstawy
-  "subject",
-  "quality",
-
-  // 👤 Postać
-  "characters",
-  "character_traits",
-  "facial_features",
-  "eyes",
-  "hair",
-  "body_features",
-  "breasts",
-  "genitals",
-  "anatomy_details",
-  "hand_details",
-
-  // 💃 Poza
-  "expression_pose",
-  "posture",
-
-  // 👗 Ubranie
-  "clothing",
-  "accessories",
-
-  // 🎨 Styl
-  "art_style",
-  "medium",
-
-  // 📷 Kamera
-  "camera_angles",
-  "perspectives",
-  "camera_settings",
-  "lens_type",
-  "composition_rules",
-  "motion_effects",
-
-  // 🌍 Środowisko
-  "setting",
-  "environment_details",
-  "background_elements",
-  "time_of_day",
-  "weather",
-
-  // ✨ Atmosfera
-  "lighting_effects",
-  "themes_moods",
-  "color_palettes",
-
-  // ⚙️ Techniczne
-  "rendering_engine",
-  "post_processing",
-  "texture_materials",
-  "technology_objects",
-
-  // 📦 Inne
-  "other",
-];
+let autoSaveInterval: any = null;
 
 // Handler for category selection from sidebar
 const handleCategorySelect = (categoryLabel: string) => {
-  // Convert label to key (e.g., "Subject" → "subject")
-  const key = labelToKey[categoryLabel];
-  if (!key) {
-    console.warn(`No key found for category label: ${categoryLabel}`);
-    return;
-  }
-
-  // Find index in categoryOrderKeys
-  const index = categoryOrderKeys.indexOf(key);
-  if (index !== -1) {
-    currentStep.value = index;
-  } else {
-    console.warn(`Category key not found in order: ${key}`);
+  if (categories.includes(categoryLabel)) {
+    currentCategory.value = categoryLabel;
+    
+    // Opcjonalnie zresetuj scroll/content
+    const scrollContainer = document.querySelector('.custom-scrollbar');
+    if (scrollContainer) scrollContainer.scrollTop = 0;
   }
 };
 
 // HELPERY UI: tłumaczenie nazwy kategorii po etykiecie
-const getI18nKeyFromLabel = (label: string) => labelToKey[label] || null;
+const getI18nKeyFromLabel = (label: string) => LABEL_TO_KEY_MAP[label] || null;
 const getCategoryNameByLabel = (label: string) => {
   const key = getI18nKeyFromLabel(label);
   return key ? t(`prompt_creator.categories.${key}`) : label;
 };
 
-// Category Icons Map
-const categoryIcons: Record<string, string> = {
-  Subject: "i-heroicons-user",
-  "Art Style": "i-heroicons-paint-brush",
-  Medium: "i-heroicons-photo",
-  Quality: "i-heroicons-star",
-  Characters: "i-heroicons-users",
-  "Character Traits": "i-heroicons-identification",
-  "Facial Features": "i-heroicons-face-smile",
-  Eyes: "i-heroicons-eye",
-  Hair: "i-heroicons-scissors",
-  "Body Features": "i-heroicons-user-circle",
-  Breasts: "i-heroicons-heart",
-  Genitals: "i-heroicons-shield-exclamation",
-  "Anatomy Details": "i-heroicons-finger-print",
-  "Hand Details": "i-heroicons-hand-raised",
-  "Expression/Pose": "i-heroicons-face-smile",
-  Posture: "i-heroicons-arrow-trending-up",
-  Clothing: "i-heroicons-shopping-bag",
-  Accessories: "i-heroicons-sparkles",
-  Setting: "i-heroicons-map-pin",
-  "Environment Details": "i-heroicons-building-office",
-  "Background Elements": "i-heroicons-square-3-stack-3d",
-  "Time of Day": "i-heroicons-clock",
-  Weather: "i-heroicons-cloud",
-  "Lighting/Effects": "i-heroicons-light-bulb",
-  "Themes/Moods": "i-heroicons-face-frown",
-  "Color Palettes": "i-heroicons-swatch",
-  "Camera Angles": "i-heroicons-camera",
-  Perspectives: "i-heroicons-cube",
-  "Camera Settings": "i-heroicons-cog-6-tooth",
-  "Lens Type": "i-heroicons-magnifying-glass-circle",
-  "Composition Rules": "i-heroicons-squares-2x2",
-  "Motion Effects": "i-heroicons-arrow-path",
-  "Rendering Engine": "i-heroicons-cpu-chip",
-  "Post Processing": "i-heroicons-adjustments-horizontal",
-  "Texture Materials": "i-heroicons-cube-transparent",
-  "Technology/Objects": "i-heroicons-rocket-launch",
-  Other: "i-heroicons-ellipsis-horizontal-circle",
-};
-
 const getCategoryIcon = (category: string) => {
-  return categoryIcons[category] || "i-heroicons-tag";
+  const key = LABEL_TO_KEY_MAP[category];
+  return (key && CATEGORY_ICONS[key]) || "i-heroicons-tag";
 };
 
 // Wszystkie kategorie (etykiety angielskie z content/tags)
-const categories = categoryOrderKeys
-  .map((key) => categoryKeyMap[key])
+const categories = CATEGORY_ORDER
+  .map((key) => CATEGORY_KEY_MAP[key])
   .filter((label): label is string => !!label);
 
-// Definicja grup (klucze i18n zgodne z categoryOrderKeys)
-const categoryGroupsDef = [
-  { key: "basics", items: ["subject", "quality"] },
-  {
-    key: "character",
-    items: [
-      "characters",
-      "character_traits",
-      "facial_features",
-      "eyes",
-      "hair",
-      "body_features",
-      "breasts",
-      "genitals",
-      "anatomy_details",
-      "hand_details",
-    ],
-  },
-  { key: "pose", items: ["expression_pose", "posture"] },
-  { key: "clothing", items: ["clothing", "accessories"] },
-  { key: "style", items: ["art_style", "medium"] },
-  {
-    key: "camera",
-    items: [
-      "camera_angles",
-      "perspectives",
-      "camera_settings",
-      "lens_type",
-      "composition_rules",
-      "motion_effects",
-    ],
-  },
-  {
-    key: "environment",
-    items: [
-      "setting",
-      "environment_details",
-      "background_elements",
-      "time_of_day",
-      "weather",
-    ],
-  },
-  {
-    key: "atmosphere",
-    items: ["lighting_effects", "themes_moods", "color_palettes"],
-  },
-  {
-    key: "technical",
-    items: [
-      "rendering_engine",
-      "post_processing",
-      "texture_materials",
-      "technology_objects",
-    ],
-  },
-  { key: "other", items: ["other"] },
-];
-
-// UI: grupy zamienione na etykiety (logika nadal używa categories = flat labels)
+// UI: grupy zamienione na etykiety
 const categoryGroupsUI = computed(() =>
-  categoryGroupsDef.map((g) => ({
+  CATEGORY_GROUPS.map((g) => ({
     key: g.key,
     title: t(`prompt_creator.groups.${g.key}`),
-    // items jako LABELS (np. "Subject"), zgodne z selectedTags i resztą logiki
     items: g.items
-      .map((k) => categoryKeyMap[k])
+      .map((k) => CATEGORY_KEY_MAP[k])
       .filter((label): label is string => !!label),
   }))
 );
 
-// Globalny indeks na podstawie etykiety
-const getIndexByLabel = (label: string) => categories.indexOf(label);
 
-// State
-const currentStep = ref(0);
-const categorySearch = ref("");
-const selectedTags = ref<Record<string, TagObject[]>>({});
-const showSaveModal = ref(false);
-const showAddTagModal = ref(false);
-const copiedPositive = ref(false);
-const copiedNegative = ref(false);
-const sidebarExpanded = ref(false);
-const showOnlyFavorites = ref(false);
-const favorites = ref<Set<string>>(new Set());
-const customTags = ref<TagObject[]>([]);
-const showNsfw = ref(false);
-const additionalNegative = ref("");
 
-const customTag = ref({
-  pl: "",
-  en: "",
-  neg_pl: "",
-  neg_en: "",
-  nsfw: false,
+// Computed properties used in template
+const tagsForCurrentCategory = computed(() => {
+  const category = currentCategory.value;
+  if (!category) return [];
+  return editorStore.allTags.filter(t => t.category === category);
+});
+
+const filteredTagsForCategory = computed(() => editorStore.filteredTags);
+
+const selectedTagsForCurrentCategory = computed(() => {
+  const category = currentCategory.value;
+  if (!category) return [];
+  return selectedTags.value[category] || [];
+});
+
+const totalSelectedTags = computed<number>(() => {
+  return Object.values(selectedTags.value).reduce(
+    (sum: number, tagObjs: TagItem[]) => sum + tagObjs.length,
+    0
+  );
+});
+
+const generatedPrompt = computed(() => 
+  editorStore.getGeneratedPrompt(locale.value, categories)
+);
+
+const allSelectedTagsList = computed<string[]>(() => {
+  const allTags: string[] = [];
+  Object.values(selectedTags.value).forEach((tagObjs: TagItem[]) => {
+    tagObjs.forEach((tagObj: TagItem) => {
+      allTags.push(getTagText(tagObj, locale.value));
+    });
+  });
+  return allTags;
 });
 
 // Negative templates grouped
@@ -1263,299 +415,63 @@ const negativeTemplateGroups = [
   },
 ];
 
-// Load favorites and custom tags from localStorage
-onMounted(() => {
-  const savedFavorites = localStorage.getItem("tag_favorites");
-  if (savedFavorites) {
-    favorites.value = new Set(JSON.parse(savedFavorites));
-  }
+// Synchronize all tags (from content + custom tags) into the store
+watch([tags, customTags], ([newTags, newCustomTags]) => {
+  if (!newTags) return;
 
-  const savedCustomTags = localStorage.getItem("custom_tags");
-  if (savedCustomTags) {
-    customTags.value = JSON.parse(savedCustomTags);
-  }
-});
-
-// Computed
-const totalSteps = computed(() => categories.length);
-const currentCategory = computed(() => categories[currentStep.value]);
-
-// Helper functions
-const getTagText = (tagObj: TagObject): string => {
-  return locale.value === "pl" ? tagObj.pl : tagObj.en;
-};
-
-const getNegativeTagText = (tagObj: TagObject): string => {
-  return locale.value === "pl" ? tagObj.neg_pl : tagObj.neg_en;
-};
-
-const getTagId = (tagObj: TagObject): string => {
-  return `${tagObj.category}__${tagObj.pl}__${tagObj.en}`;
-};
-
-const isFavorite = (tagObj: TagObject): boolean => {
-  return favorites.value.has(getTagId(tagObj));
-};
-
-const toggleFavorite = (tagObj: TagObject) => {
-  const id = getTagId(tagObj);
-  console.log("asdid", id);
-  if (favorites.value.has(id)) {
-    favorites.value.delete(id);
-  } else {
-    favorites.value.add(id);
-  }
-  localStorage.setItem("tag_favorites", JSON.stringify([...favorites.value]));
-};
-
-// Extract all tags
-const allTagsFlatCache = ref<TagObject[]>([]);
-let allTagsFlatCacheKey = "";
-
-const allTagsFlat = computed(() => {
-  if (!tags.value) return [];
-
-  const cacheKey = JSON.stringify(tags.value) + customTags.value.length;
-  if (allTagsFlatCacheKey !== cacheKey) {
-    const allTags: TagObject[] = [];
-
-    const extractTags = (obj: any) => {
-      if (Array.isArray(obj)) {
-        obj.forEach((item) => {
-          if (item && typeof item === "object") {
-            if (item.category && (item.pl || item.en)) {
-              allTags.push(item as TagObject);
-            } else {
-              extractTags(item);
-            }
+  const allTags: TagItem[] = [];
+  
+  const extractTags = (obj: any) => {
+    if (Array.isArray(obj)) {
+      obj.forEach((item) => {
+        if (item && typeof item === "object") {
+          if (item.category && (item.pl || item.en)) {
+            allTags.push(item as TagItem);
+          } else {
+            extractTags(item);
           }
-        });
-      } else if (obj && typeof obj === "object") {
-        Object.values(obj).forEach((value) => extractTags(value));
-      }
-    };
+        }
+      });
+    } else if (obj && typeof obj === "object") {
+      Object.values(obj).forEach((value) => extractTags(value));
+    }
+  };
 
-    extractTags(tags.value);
-    customTags.value.forEach((tag) => {
+  extractTags(newTags);
+  if (newCustomTags) {
+    newCustomTags.forEach((tag: TagItem) => {
       allTags.push(tag);
     });
-
-    allTagsFlatCache.value = allTags;
-    allTagsFlatCacheKey = cacheKey;
   }
 
-  return allTagsFlatCache.value;
-});
-
-// Tags for current category
-const tagsForCurrentCategory = computed(() => {
-  if (!currentCategory.value) return [];
-
-  let categoryTags = allTagsFlat.value.filter(
-    (tag) => tag.category === currentCategory.value
-  );
-
-  // Sort: favorites first, then alphabetically
-  return categoryTags.sort((a, b) => {
-    const aFav = isFavorite(a);
-    const bFav = isFavorite(b);
-
-    if (aFav && !bFav) return -1;
-    if (!aFav && bFav) return 1;
-
-    const textA = getTagText(a).toLowerCase();
-    const textB = getTagText(b).toLowerCase();
-    return textA.localeCompare(textB);
-  });
-});
-
-// Filtered tags
-const filteredTagsForCategory = shallowRef<TagObject[]>([]);
-
-// Funkcja do aktualizacji filtrowanych tagów
-const updateFilteredTags = () => {
-  let tags = tagsForCurrentCategory.value;
-
-  // Filter NSFW if toggle is off
-  if (!showNsfw.value) {
-    tags = tags.filter((tag) => !tag.nsfw);
-  }
-
-  if (showOnlyFavorites.value) {
-    tags = tags.filter((tag) => isFavorite(tag));
-  }
-
-  const search = categorySearch.value.toLowerCase().trim();
-  if (search) {
-    tags = tags.filter((tagObj) => {
-      const text = getTagText(tagObj).toLowerCase();
-      return text.includes(search);
-    });
-  }
-
-  filteredTagsForCategory.value = tags;
-};
-
-// Wywołaj przy zmianach
-watch(
-  [tagsForCurrentCategory, showNsfw, showOnlyFavorites, categorySearch],
-  updateFilteredTags,
-  { immediate: true }
-);
-
-const selectedTagsForCurrentCategory = computed(() => {
-  const category = currentCategory.value;
-  if (!category) return [];
-  return selectedTags.value[category] || [];
-});
-
-const totalSelectedTags = computed(() => {
-  return Object.values(selectedTags.value).reduce(
-    (sum, tagObjs) => sum + tagObjs.length,
-    0
-  );
-});
-
-const allSelectedTagsList = computed(() => {
-  const allTags: string[] = [];
-  Object.values(selectedTags.value).forEach((tagObjs) => {
-    tagObjs.forEach((tagObj) => {
-      allTags.push(getTagText(tagObj));
-    });
-  });
-  return allTags;
-});
-
-const generatedPrompt = computed(() => {
-  if (Object.keys(selectedTags.value).length === 0) {
-    return { positive: "", negative: "" };
-  }
-
-  const positiveParts: string[] = [];
-  const negativeParts: string[] = [];
-
-  categories.forEach((category) => {
-    if (!category) return;
-    const tagObjs = selectedTags.value[category];
-    if (tagObjs && tagObjs.length > 0) {
-      const positiveTexts = tagObjs.map((tagObj: TagObject) => {
-        let text = getTagText(tagObj);
-
-        // Add emphasis (parentheses)
-        if (tagObj.emphasis && tagObj.emphasis > 0) {
-          text =
-            "(".repeat(tagObj.emphasis) + text + ")".repeat(tagObj.emphasis);
-        }
-
-        // Add weight
-        if (tagObj.weight && tagObj.weight !== 1.0) {
-          text = `(${text}:${tagObj.weight.toFixed(1)})`;
-        }
-
-        return text;
-      });
-
-      const negativeTexts = tagObjs
-        .map((tagObj: TagObject) => {
-          const negText = getNegativeTagText(tagObj);
-          if (!negText) return "";
-
-          let text = negText;
-
-          // Add emphasis for negative too
-          if (tagObj.emphasis && tagObj.emphasis > 0) {
-            text =
-              "(".repeat(tagObj.emphasis) + text + ")".repeat(tagObj.emphasis);
-          }
-
-          // Add weight for negative
-          if (tagObj.weight && tagObj.weight !== 1.0) {
-            text = `(${text}:${tagObj.weight.toFixed(1)})`;
-          }
-
-          return text;
-        })
-        .filter((t) => t);
-
-      if (positiveTexts.length > 0) {
-        positiveParts.push(positiveTexts.join(", "));
-      }
-      if (negativeTexts.length > 0) {
-        negativeParts.push(negativeTexts.join(", "));
-      }
-    }
-  });
-
-  let negative = negativeParts.join(", ");
-  if (additionalNegative.value) {
-    negative = negative
-      ? negative + ", " + additionalNegative.value
-      : additionalNegative.value;
-  }
-
-  return {
-    positive: positiveParts.join(", "),
-    negative,
-  };
-});
+  editorStore.allTags = allTags;
+}, { immediate: true });
 
 // Actions
 const isTagSelected = (tagObj: TagObject) => {
-  return selectedTagsForCurrentCategory.value.some(
-    (selected) => getTagId(selected) === getTagId(tagObj)
-  );
-};
-
-// Optymalizacja: Debounce dla ciężkich funkcji
-const debounce = (func: Function, delay: number) => {
-  let timeoutId: NodeJS.Timeout;
-  return (...args: any[]) => {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => func.apply(null, args), delay);
-  };
-};
-
-// Optymalizuj toggleTag z debounce
-const toggleTagDebounced = debounce((tagObj: TagObject) => {
   const category = currentCategory.value;
-  if (!category) return;
-  if (!selectedTags.value[category]) {
-    selectedTags.value[category] = [];
-  }
-
-  const index = selectedTags.value[category].findIndex(
-    (selected) => getTagText(selected) === getTagText(tagObj)
+  if (!category || !selectedTags.value[category]) return false;
+  return selectedTags.value[category].some(
+    (selected: TagObject) => getTagId(selected) === getTagId(tagObj)
   );
+};
 
-  if (index > -1) {
-    selectedTags.value[category].splice(index, 1);
-    if (selectedTags.value[category].length === 0) {
-      delete selectedTags.value[category];
-    }
-  } else {
-    // Initialize with default values
-    const newTag = {
-      ...tagObj,
-      weight: 1.0,
-      emphasis: 0,
-    };
-    selectedTags.value[category].push(newTag);
-  }
-  pushToHistory();
-}, 100); // 100ms debounce
+const isFavorite = (tagObj: TagObject): boolean => {
+  return editorStore.isFavorite(getTagText(tagObj, locale.value));
+};
 
-// Zastąp toggleTag
+const toggleFavorite = (tagObj: TagObject) => {
+  editorStore.toggleFavorite(getTagText(tagObj, locale.value));
+};
+
 const toggleTag = (tagObj: TagObject) => {
-  toggleTagDebounced(tagObj);
+  editorStore.toggleTag(tagObj);
+  pushToHistory();
 };
 
 const removeTagFromSummary = (category: string, tagIndex: number) => {
-  if (!selectedTags.value[category]) return;
-
-  selectedTags.value[category].splice(tagIndex, 1);
-  if (selectedTags.value[category].length === 0) {
-    delete selectedTags.value[category];
-  }
+  editorStore.removeTag(category, tagIndex);
+  pushToHistory();
 };
 
 const updateTagFromSummary = (
@@ -1563,68 +479,28 @@ const updateTagFromSummary = (
   tagIndex: number,
   updatedTag: TagObject
 ) => {
-  if (!selectedTags.value[category] || !selectedTags.value[category][tagIndex])
-    return;
-
-  // Update the tag with new weight/emphasis
-  selectedTags.value[category][tagIndex] = {
-    ...selectedTags.value[category][tagIndex],
-    weight: updatedTag.weight,
-    emphasis: updatedTag.emphasis,
-  };
+  editorStore.updateTag(category, tagIndex, updatedTag);
+  pushToHistory();
 };
 
 const clearCategoryFromSummary = (category: string) => {
-  if (selectedTags.value[category]) {
-    delete selectedTags.value[category];
-  }
+  editorStore.clearCategory(category);
+  pushToHistory();
 };
 
-const addCustomTag = () => {
-  if (!customTag.value.pl || !customTag.value.en) {
-    alertMessage.value = t("prompt_creator.fill_required_fields");
-    showAlertModal.value = true;
-    return;
-  }
-
-  if (!currentCategory.value) {
-    return;
-  }
+const handleCustomTagSubmit = (data: any) => {
+  if (!currentCategory.value) return;
 
   const newTag: TagObject = {
-    ...customTag.value,
+    ...data,
     category: currentCategory.value,
     custom: true,
   };
 
   customTags.value.push(newTag);
-  localStorage.setItem("custom_tags", JSON.stringify(customTags.value));
-
-  customTag.value = { pl: "", en: "", neg_pl: "", neg_en: "", nsfw: false };
-  showAddTagModal.value = false;
+  toast.add({ title: t("prompt_creator.tag_added"), color: "success" });
 };
 
-const nextStep = () => {
-  if (currentStep.value < totalSteps.value - 1) {
-    currentStep.value++;
-    categorySearch.value = "";
-  } else {
-    if (generatedPrompt.value.positive) {
-      showSaveModal.value = true;
-    }
-  }
-};
-
-const previousStep = () => {
-  if (currentStep.value > 0) {
-    currentStep.value--;
-    categorySearch.value = "";
-  }
-};
-
-const skipCategory = () => {
-  nextStep();
-};
 
 const clearCurrentCategory = () => {
   const category = currentCategory.value;
@@ -1638,7 +514,7 @@ const clearAll = () => {
   if (confirm(t("prompt_creator.confirm_clear_all"))) {
     selectedTags.value = {};
     additionalNegative.value = "";
-    currentStep.value = 0;
+    currentCategory.value = "Subject";
   }
   pushToHistory();
 };
@@ -1681,11 +557,10 @@ const handleSavePrompt = (data: { name: string; description: string }) => {
     positivePrompt: generatedPrompt.value.positive,
     negativePrompt: generatedPrompt.value.negative,
     tags: allSelectedTagsList.value,
-    // Dodaj link do prompta (shared URL)
     link: generateSharedUrl({
       prompt: generatedPrompt.value,
       tags: selectedTags.value,
-      step: currentStep.value,
+      step: 0,
       additionalNegative: additionalNegative.value,
     }),
     createdAt: Date.now(),
@@ -1749,7 +624,7 @@ const updateWeight = (tagObj: TagObject, value: number | number[]) => {
   const weightValue = Array.isArray(value) ? value[0] : value;
 
   const index = selectedTags.value[category].findIndex(
-    (selected) => getTagText(selected) === getTagText(tagObj)
+    (selected: TagObject) => getTagText(selected, locale.value) === getTagText(tagObj, locale.value)
   );
 
   if (index > -1 && selectedTags.value[category]?.[index]) {
@@ -1763,7 +638,7 @@ const updateEmphasis = (tagObj: TagObject, emphasis: number) => {
   if (!category || !selectedTags.value[category]) return;
 
   const index = selectedTags.value[category].findIndex(
-    (selected) => getTagText(selected) === getTagText(tagObj)
+    (selected: TagObject) => getTagText(selected, locale.value) === getTagText(tagObj, locale.value)
   );
 
   if (index > -1 && selectedTags.value[category]?.[index]) {
@@ -1810,7 +685,7 @@ const sharePrompt = () => {
   const data = {
     prompt: generatedPrompt.value,
     tags: selectedTags.value,
-    step: currentStep.value,
+    step: 0,
     additionalNegative: additionalNegative.value,
   };
   const url = generateSharedUrl(data);
@@ -1831,6 +706,7 @@ const sharePrompt = () => {
 };
 
 // Ładowanie z query
+// Initialize and handle shared links
 onMounted(() => {
   const query = new URLSearchParams(window.location.search);
   const shared = query.get("shared");
@@ -1838,139 +714,28 @@ onMounted(() => {
   if (shared) {
     try {
       const data = JSON.parse(decodeURIComponent(escape(atob(shared))));
-
-      console.log("📦 Załadowane dane z linku:", data);
-
-      // KROK 1: Poczekaj na załadowanie tagów z usePreloadedContent
-      const waitForTags = () => {
-        if (!isContentLoaded.value || allTagsFlat.value.length === 0) {
-          console.log("⏳ Oczekiwanie na załadowanie tagów...");
-          setTimeout(waitForTags, 50); // Sprawdzaj co 50ms
-          return;
-        }
-
-        console.log("✅ Tagi załadowane:", allTagsFlat.value.length);
-
-        // KROK 2: Dodaj brakujące tagi do customTags
-        const tagsToAdd: TagObject[] = [];
-
-        Object.values(data.tags || {}).forEach((tagObjs) => {
-          (tagObjs as TagObject[]).forEach((tagObj) => {
-            const tagId = `${tagObj.category}_${tagObj.pl}_${tagObj.en}`;
-
-            // Sprawdź czy tag istnieje w allTagsFlat
-            const existsInFlat = allTagsFlat.value.some(
-              (existing) =>
-                `${existing.category}_${existing.pl}_${existing.en}` === tagId
-            );
-
-            // Sprawdź czy już jest w customTags
-            const existsInCustom = customTags.value.some(
-              (existing) =>
-                `${existing.category}_${existing.pl}_${existing.en}` === tagId
-            );
-
-            // Dodaj tylko jeśli nie istnieje nigdzie
-            if (!existsInFlat && !existsInCustom) {
-              tagsToAdd.push({ ...tagObj, custom: true });
-            }
-          });
-        });
-
-        // Dodaj nowe tagi do customTags
-        if (tagsToAdd.length > 0) {
-          customTags.value.push(...tagsToAdd);
-          localStorage.setItem("custom_tags", JSON.stringify(customTags.value));
-          console.log("✅ Dodano nowe tagi do customTags:", tagsToAdd.length);
-        }
-
-        // KROK 3: Poczekaj na aktualizację allTagsFlat po dodaniu customTags
-        nextTick(() => {
-          console.log(
-            "🔄 Po nextTick - allTagsFlat zawiera:",
-            allTagsFlat.value.length,
-            "tagów"
-          );
-
-          // KROK 4: Ustaw selectedTags z REFERENCJAMI do tagów z allTagsFlat
-          const validatedTags: Record<string, TagObject[]> = {};
-
-          Object.entries(data.tags || {}).forEach(([category, tagObjs]) => {
-            if (!validatedTags[category]) {
-              validatedTags[category] = [];
-            }
-
-            (tagObjs as TagObject[]).forEach((tagObj) => {
-              // Znajdź tag w allTagsFlat
-              const foundTag = allTagsFlat.value.find(
-                (t) =>
-                  t.category === tagObj.category &&
-                  t.pl === tagObj.pl &&
-                  t.en === tagObj.en
-              );
-
-              if (foundTag) {
-                // Modyfikuj referencję (bez spread)
-                foundTag.weight = tagObj.weight ?? 1.0;
-                foundTag.emphasis = tagObj.emphasis ?? 0;
-                if (!validatedTags[category]) {
-                  validatedTags[category] = [];
-                }
-                validatedTags[category].push(foundTag);
-              } else {
-                console.warn("⚠️ Nie znaleziono tagu w allTagsFlat:", tagObj);
-              }
-            });
-
-            // Usuń puste kategorie
-            if (
-              validatedTags[category] &&
-              validatedTags[category].length === 0
-            ) {
-              delete validatedTags[category];
-            }
-          });
-
-          console.log("✅ Załadowano selectedTags:", validatedTags);
-
-          selectedTags.value = validatedTags;
-          currentStep.value = data.step || 0;
-          additionalNegative.value = data.additionalNegative || "";
-
-          // Usuń query z URL
+      
+      // Wait for content and sync with store
+      const stop = watch(isContentLoaded, (loaded) => {
+        if (loaded && editorStore.allTags.length > 0) {
+          editorStore.loadFromSharedData(data, editorStore.allTags);
           router.replace({ path: "/editor" });
-        });
-      };
-
-      // Uruchom oczekiwanie
-      waitForTags();
+          stop();
+        }
+      }, { immediate: true });
+      
+      return;
     } catch (error) {
-      console.error("❌ Błąd ładowania shared prompt:", error);
-    }
-    return; // Nie ładuj postępu jeśli jest shared link
-  }
-
-  // Przywracanie postępu (tylko jeśli NIE ma shared query)
-  const savedProgress = localStorage.getItem("editor_progress");
-  if (savedProgress) {
-    try {
-      const progress = JSON.parse(savedProgress);
-      selectedTags.value = progress.tags || {};
-      currentStep.value = progress.step || 0;
-      additionalNegative.value = progress.additionalNegative || "";
-    } catch (error) {
-      console.error("Błąd ładowania postępu:", error);
+      console.error("❌ Shared link error:", error);
     }
   }
 
-  // Start auto-save
+  // Normal progress loading
+  editorStore.loadProgress();
+
+  // Auto-save
   autoSaveInterval = setInterval(() => {
-    const progress = {
-      tags: selectedTags.value,
-      step: currentStep.value,
-      additionalNegative: additionalNegative.value,
-    };
-    localStorage.setItem("editor_progress", JSON.stringify(progress));
+    editorStore.saveProgress();
   }, 30000);
 });
 
@@ -1980,121 +745,30 @@ onUnmounted(() => {
   }
 });
 
-const historyStack = ref<
-  {
-    tags: Record<string, TagObject[]>;
-    step: number;
-    additionalNegative: string;
-  }[]
->([]);
-const historyIndex = ref(-1);
-const snapshots = ref<
-  {
-    name: string;
-    tags: Record<string, TagObject[]>;
-    step: number;
-    additionalNegative: string;
-    createdAt: number;
-    tagsCount: number;
-  }[]
->([]);
-const showHistoryModal = ref(false);
+// History & Snapshots logic handled in Pinia store
+const pushToHistory = () => editorStore.pushToHistory();
+const undo = () => editorStore.undo();
+const redo = () => editorStore.redo();
 
-// Załaduj snapshoty z localStorage
-onMounted(() => {
-  // ... istniejący kod ...
-  const savedSnapshots = localStorage.getItem("prompt_snapshots");
-  if (savedSnapshots) {
-    snapshots.value = JSON.parse(savedSnapshots);
-  }
-});
-
-// Funkcje undo/redo
-const pushToHistory = () => {
-  // Usuń przyszłe stany jeśli jesteśmy w środku historii
-  historyStack.value = historyStack.value.slice(0, historyIndex.value + 1);
-
-  // Dodaj aktualny stan
-  historyStack.value.push({
-    tags: JSON.parse(JSON.stringify(selectedTags.value)), // Deep copy
-    step: currentStep.value,
-    additionalNegative: additionalNegative.value,
-  });
-
-  historyIndex.value = historyStack.value.length - 1;
-
-  // Limit historii do 50 wpisów
-  if (historyStack.value.length > 50) {
-    historyStack.value.shift();
-    historyIndex.value--;
-  }
-};
-
-const canUndo = computed(() => historyIndex.value > 0);
-const canRedo = computed(
-  () => historyIndex.value < historyStack.value.length - 1
-);
-
-const undo = () => {
-  if (!canUndo.value) return;
-  historyIndex.value--;
-  const state = historyStack.value[historyIndex.value];
-  if (!state) return;
-  selectedTags.value = JSON.parse(JSON.stringify(state.tags));
-  currentStep.value = state.step;
-  additionalNegative.value = state.additionalNegative;
-};
-const redo = () => {
-  if (!canRedo.value) return;
-  historyIndex.value++;
-  const state = historyStack.value[historyIndex.value];
-  if (!state) return;
-  selectedTags.value = JSON.parse(JSON.stringify(state.tags));
-  currentStep.value = state.step;
-  additionalNegative.value = state.additionalNegative;
-};
-
-// W funkcji saveSnapshot
 const saveSnapshot = () => {
-  const name = prompt($t("prompt_creator.snapshot_name_prompt"));
+  const name = prompt(t("prompt_creator.snapshot_name_prompt"));
   if (!name) return;
-
-  const snapshot = {
-    name,
-    tags: JSON.parse(JSON.stringify(selectedTags.value)),
-    step: currentStep.value,
-    additionalNegative: additionalNegative.value,
-    createdAt: Date.now(),
-    tagsCount: totalSelectedTags.value,
-  };
-
-  snapshots.value.unshift(snapshot);
-  localStorage.setItem("prompt_snapshots", JSON.stringify(snapshots.value));
-
-  // Zastąp komentarz toastem
-  toast.add({
-    title: t("prompt_creator.snapshot_saved"),
-    color: "success",
-  });
+  editorStore.saveSnapshot(name, totalSelectedTags.value);
 };
 
 const restoreSnapshot = (snapshot: any) => {
-  selectedTags.value = JSON.parse(JSON.stringify(snapshot.tags));
-  currentStep.value = snapshot.step;
-  additionalNegative.value = snapshot.additionalNegative;
+  editorStore.restoreSnapshot(snapshot);
   showHistoryModal.value = false;
-  pushToHistory(); // Dodaj do historii undo
 };
 
 const deleteSnapshot = (index: number) => {
-  snapshots.value.splice(index, 1);
-  localStorage.setItem("prompt_snapshots", JSON.stringify(snapshots.value));
+  editorStore.deleteSnapshot(index);
 };
 
-// Inicjalizuj historię przy pierwszym ładowaniu
+// Initialization
 onMounted(() => {
-  // ... istniejący kod ...
-  pushToHistory(); // Dodaj początkowy stan
+  editorStore.loadSnapshots();
+  editorStore.pushToHistory(); // Initial state
 });
 
 const isLg = ref(false);

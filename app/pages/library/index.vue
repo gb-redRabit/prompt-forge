@@ -1,44 +1,7 @@
 <template>
   <div class="space-y-6 p-4 sm:p-6 lg:p-8 relative">
-    <!-- Decorative gradient orbs in background -->
-    <div
-      class="hidden lg:block gradient-orb gradient-orb-primary animate-pulse-slow fixed pointer-events-none"
-      style="
-        width: 450px;
-        height: 450px;
-        top: 5%;
-        right: -8%;
-        opacity: 0.1;
-        z-index: 0;
-      "
-    />
-    <div
-      class="hidden md:block gradient-orb gradient-orb-secondary animate-float fixed pointer-events-none"
-      style="
-        width: 350px;
-        height: 350px;
-        bottom: 10%;
-        left: -5%;
-        opacity: 0.08;
-        z-index: 0;
-        animation-delay: 4s;
-      "
-    />
-    <div
-      class="hidden lg:block gradient-orb gradient-orb-accent animate-gradient-shift fixed pointer-events-none"
-      style="
-        width: 400px;
-        height: 400px;
-        top: 50%;
-        left: 10%;
-        opacity: 0.06;
-        z-index: 0;
-        animation-delay: 8s;
-      "
-    />
-
     <!-- Content with higher z-index -->
-    <div class="relative z-10">
+    <div class="relative z-10 max-w-7xl mx-auto">
       <!-- Header -->
       <div
         class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0 animate-fade-in"
@@ -82,7 +45,7 @@
       </div>
 
       <!-- Stats -->
-      <div class="animate-fade-in animation-delay-200 my-3 sm:my-5">
+      <div class="hidden sm:block animate-fade-in animation-delay-200 my-3 sm:my-5">
         <LibraryStats
           :stats="stats"
           @import="showImportModal = true"
@@ -113,10 +76,10 @@
 
           <template #promptsTags>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-              <UCard
+              <div
                 v-for="prompt in filteredEditorPrompts"
                 :key="prompt.savedId"
-                class="card-interactive group animate-fade-in-up"
+                class="flex flex-col p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl hover:shadow-md transition-all group animate-fade-in-up"
               >
                 <div>
                   <div class="flex items-center justify-between mb-2">
@@ -193,7 +156,7 @@
                     />
                   </div>
                 </div>
-              </UCard>
+              </div>
             </div>
           </template>
 
@@ -302,10 +265,10 @@
         <!-- Prompts Tags Tab -->
         <div v-show="activeTab === 2">
           <div class="grid grid-cols-1 gap-3 mt-4">
-            <UCard
+            <div
               v-for="prompt in filteredEditorPrompts"
               :key="prompt.savedId"
-              class="card-interactive group animate-fade-in-up"
+              class="flex flex-col p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl transition-all group animate-fade-in-up"
             >
               <div>
                 <div class="flex items-center justify-between mb-2">
@@ -366,7 +329,7 @@
                   />
                 </div>
               </div>
-            </UCard>
+            </div>
           </div>
         </div>
 
@@ -455,7 +418,7 @@
     <!-- Mobile Bottom Navigation -->
     <div class="sm:hidden fixed bottom-0 left-0 right-0 z-40 safe-area-bottom">
       <div
-        class="glass-panel border-t border-white/20 dark:border-gray-700/50 px-2 pt-2 pb-safe"
+        class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 px-2 pt-2 pb-safe shadow-[0_-4px_10px_rgba(0,0,0,0.05)] dark:shadow-[0_-4px_10px_rgba(0,0,0,0.4)]"
       >
         <div class="flex items-center justify-around relative">
           <!-- Active indicator -->

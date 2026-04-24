@@ -5,88 +5,84 @@
       expanded ? 'w-72' : 'w-16',
     ]"
   >
-    <!-- Magnetic Toggle Button -->
+    <!-- Gooey Toggle (Schowany pod listą) -->
     <div
       ref="toggleButtonContainer"
-      class="absolute -right-10 top-0 z-50 hidden md:block h-full pointer-events-none"
+      class="absolute top-0 right-0 w-24 h-full pointer-events-none overflow-hidden z-0"
+      style="transform: translateX(100%);"
     >
+      <div class="absolute inset-0 pointer-events-none" style="filter: url('#liquid-tab');">
+        <!-- Baza śluzu: przywrócona zieleń -->
+        <div 
+          class="absolute left-0 -top-3 -bottom-3 h-[106%] w-4 bg-primary-500 dark:bg-purple-900/70 transition-transform duration-500 ease-out shadow-[2px_0_10px_rgba(34,197,94,0.2)] dark:shadow-[4px_0_20px_rgba(89,22,139,0.4)]"
+          :style="{
+            transform: `translateX(${(isMouseNear || isHoveringBtn) ? '-3px' : '-18px'})`
+          }"
+        ></div>
+        
+        <!-- Bąbelek: zielony z silniejszym cieniem -->
+        <div
+          class="absolute left-0 rounded-full bg-primary-500 dark:bg-purple-900/70 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] shadow-[4px_0_15px_rgba(34,197,94,0.3)] dark:shadow-[6px_0_25px_rgba(89,22,139,0.6)]"
+          :style="{
+            transform: `translateY(${buttonY}px) translateX(${isMouseNear || isHoveringBtn ? '12px' : '-20px'}) scale(${isMouseNear || isHoveringBtn ? 1 : 0.4})`,
+            height: isHoveringBtn ? '64px' : '48px',
+            width: isHoveringBtn ? '36px' : '28px',
+            opacity: isMouseNear || isHoveringBtn ? 1 : 0
+          }"
+        ></div>
+      </div>
+
+      <!-- Ikonka (Biała na zielonym tle) -->
       <button
         @click="$emit('update:expanded', !expanded)"
-        @mouseenter="isHovering = true"
-        @mouseleave="isHovering = false"
-        :style="{ transform: `translateY(${buttonY}px)` }"
-        class="relative w-8 h-16 glass-card rounded-r-2xl flex items-center justify-center shadow-xl hover:shadow-2xl group transition-all duration-150 pointer-events-auto hover:w-10"
+        @mouseenter="isHoveringBtn = true"
+        @mouseleave="isHoveringBtn = false"
+        :style="{
+          transform: `translateY(${buttonY}px) translateX(${isMouseNear || isHoveringBtn ? '12px' : '-20px'})`,
+          height: isHoveringBtn ? '64px' : '48px',
+          width: isHoveringBtn ? '36px' : '28px'
+        }"
+        class="absolute left-0 flex items-center justify-center transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] pointer-events-auto rounded-full z-10 focus:outline-none group overflow-hidden"
       >
-        <!-- Animated gradient background -->
-        <div
+        <UIcon
+          :name="expanded ? 'i-heroicons-chevron-left' : 'i-heroicons-chevron-right'"
           :class="[
-            'absolute inset-0 bg-gradient-to-br from-primary-500 via-purple-500 to-pink-500 rounded-r-2xl transition-all duration-200',
-            isHovering ? 'opacity-100 scale-105' : 'opacity-0 scale-95',
+            'transition-all duration-300 transform',
+            isMouseNear || isHoveringBtn ? 'opacity-100 scale-110' : 'opacity-0 scale-50',
+            'text-white w-5 h-5 drop-shadow-md'
           ]"
-        ></div>
-
-        <!-- Glass overlay -->
-        <div
-          class="absolute inset-0 bg-white/10 dark:bg-white/5 backdrop-blur-sm rounded-r-2xl border-l-0 border border-white/20 dark:border-white/10"
-        ></div>
-
-        <!-- Icon with rotation animation -->
-        <div
-          class="relative z-50 transition-transform duration-150 group-hover:scale-110"
-        >
-          <UIcon
-            :name="
-              expanded
-                ? 'i-heroicons-chevron-left'
-                : 'i-heroicons-chevron-right'
-            "
-            :class="[
-              'w-5 h-5 transition-all duration-150',
-              isHovering
-                ? 'text-white drop-shadow-lg'
-                : 'text-gray-600 dark:text-gray-400',
-            ]"
-          />
-        </div>
-
-        <!-- Glow effect on hover -->
-        <div
-          :class="[
-            'absolute inset-0 rounded-r-2xl blur-xl transition-opacity duration-200',
-            'bg-gradient-to-br from-primary-400 via-purple-400 to-pink-400',
-            isHovering ? 'opacity-60' : 'opacity-0',
-          ]"
-        ></div>
-
-        <!-- Active pulse -->
-        <div
-          class="absolute inset-0 bg-primary-500 rounded-r-2xl opacity-0 group-active:opacity-40 transition-opacity duration-100"
-        ></div>
-
-        <!-- Dots indicator -->
-        <div
-          class="absolute left-1 top-1/2 -translate-y-1/2 space-y-1 opacity-30 group-hover:opacity-60 transition-opacity duration-150"
-        >
-          <div class="w-0.5 h-0.5 rounded-full bg-current"></div>
-          <div class="w-0.5 h-0.5 rounded-full bg-current"></div>
-          <div class="w-0.5 h-0.5 rounded-full bg-current"></div>
-        </div>
+        />
+        
+        <!-- Subtle Glow Effect on Hover -->
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
       </button>
     </div>
 
-    <!-- Categories List -->
-    <div class="overflow-y-auto h-full custom-scrollbar">
-      <div
+    <!-- Filtry wektorowe (Gooey Engine) -->
+    <svg width="0" height="0" class="absolute pointer-events-none">
+      <defs>
+        <filter id="liquid-tab" x="-100%" y="-10%" width="300%" height="120%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="6.5" result="blur" />
+          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 25 -11" result="goo" />
+        </filter>
+      </defs>
+    </svg>
+
+    <!-- Główny układ panelu Bocznego -->
+    <div class="flex flex-col h-full overflow-hidden relative bg-white dark:bg-gray-900 z-10">
+      <!-- Categories List (Przewijana część) -->
+      <div class="overflow-y-auto flex-1 custom-scrollbar">
+        <div
         :class="[
-          expanded ? 'p-3' : 'p-1',
-          expanded ? 'space-y-3' : 'space-y-1.5 flex flex-col items-center',
+          expanded ? 'p-2' : 'p-1',
+          expanded ? 'space-y-1.5' : 'space-y-1 flex flex-col items-center',
         ]"
       >
         <!-- Grouped Categories -->
         <div
           v-for="group in categoryGroups"
           :key="group.key"
-          class="space-y-2 w-full"
+          class="space-y-1 w-full"
         >
           <!-- Group Header -->
           <div
@@ -107,7 +103,7 @@
             @click="$emit('select-category', category)"
             :class="[
               'group w-full flex items-center rounded-lg transition-all duration-300',
-              expanded ? 'gap-2 p-2' : 'gap-0 p-1 justify-center',
+              expanded ? 'gap-2 p-1.5' : 'gap-0 p-1 justify-center',
               currentCategory === category
                 ? expanded
                   ? 'glass-card ring-2 ring-primary-500/50 shadow-md shadow-primary-500/20'
@@ -164,20 +160,18 @@
             </div>
           </button>
         </div>
+        </div>
       </div>
     </div>
   </aside>
 </template>
 
 <script setup lang="ts">
-import type { TagItem } from "~/types/content";
-
-// Extend Window type for mouse tracking
-declare global {
-  interface Window {
-    mouseY?: number;
-  }
-}
+import type { TagItem } from "~~/shared/types/content";
+import { 
+  LABEL_TO_KEY_MAP, 
+  CATEGORY_ICONS 
+} from "~~/shared/constants/categories";
 
 // Props
 interface Props {
@@ -202,208 +196,83 @@ defineEmits<{
 // Composables
 const { t } = useI18n();
 
-// Mouse tracking for magnetic button
+// Magnetic interaction state
 const toggleButtonContainer = ref<HTMLElement | null>(null);
-const buttonY = ref(100); // Initial position
-const isHovering = ref(false);
-const targetY = ref(100);
+const buttonY = ref(100);
+const isMouseNear = ref(false);
+const isHoveringBtn = ref(false);
 
-// Smooth mouse tracking
+let animationFrameId: number | null = null;
+let currentY = 100;
+
+// Smooth physics-based tracking
 const updateButtonPosition = () => {
-  if (typeof window === "undefined") return;
+  if (import.meta.server) return;
 
-  const mouseY = window.mouseY || window.innerHeight / 2;
-  const containerHeight =
-    toggleButtonContainer.value?.offsetHeight || window.innerHeight;
+  const containerHeight = toggleButtonContainer.value?.offsetHeight || window.innerHeight;
+  const buttonHeight = isHoveringBtn.value ? 64 : 48;
+  const padding = 20;
 
-  // Calculate target position (center button on mouse, with padding)
-  const buttonHeight = 64; // h-16 = 4rem = 64px
-  const padding = 50;
+  let targetY = 0;
+  if (!isMouseNear.value && !isHoveringBtn.value) {
+    targetY = containerHeight / 2 - buttonHeight / 2;
+  } else {
+    // Podąża za myszką
+    const mouseY = (window as any).mouseY || containerHeight / 2;
+    targetY = Math.max(
+      padding,
+      Math.min(
+        mouseY - buttonHeight / 2,
+        containerHeight - buttonHeight - padding
+      )
+    );
+  }
 
-  // Constrain within container bounds
-  targetY.value = Math.max(
-    padding,
-    Math.min(
-      mouseY - buttonHeight / 2,
-      containerHeight - buttonHeight - padding
-    )
-  );
+  const diff = targetY - currentY;
+  currentY += diff * 0.35; 
+  buttonY.value = currentY;
 
-  // Smooth easing (faster response)
-  const diff = targetY.value - buttonY.value;
-  buttonY.value += diff * 0.35; // Faster interpolation (was 0.15)
-
-  requestAnimationFrame(updateButtonPosition);
+  animationFrameId = requestAnimationFrame(updateButtonPosition);
 };
 
-// Track mouse globally
+// Global distance tracking 
 const handleMouseMove = (e: MouseEvent) => {
-  if (typeof window !== "undefined") {
-    window.mouseY = e.clientY;
+  (window as any).mouseY = e.clientY;
+  
+  const container = toggleButtonContainer.value;
+  if (container) {
+    const rect = container.getBoundingClientRect();
+    const distanceX = Math.abs(e.clientX - rect.left);
+    isMouseNear.value = distanceX < 30;
   }
 };
 
 onMounted(() => {
-  if (typeof window !== "undefined") {
-    window.mouseY = window.innerHeight / 2;
+  if (import.meta.client) {
+    (window as any).mouseY = window.innerHeight / 2;
     window.addEventListener("mousemove", handleMouseMove);
     updateButtonPosition();
   }
 });
 
 onUnmounted(() => {
-  if (typeof window !== "undefined") {
+  if (import.meta.client) {
     window.removeEventListener("mousemove", handleMouseMove);
+    if (animationFrameId) {
+      cancelAnimationFrame(animationFrameId);
+    }
   }
 });
 
-// Label to i18n key mapping (English labels → i18n keys)
-const labelToKeyMap: Record<string, string> = {
-  Subject: "subject",
-  "Art Style": "art_style",
-  Medium: "medium",
-  Quality: "quality",
-  Characters: "characters",
-  "Character Traits": "character_traits",
-  "Facial Features": "facial_features",
-  Eyes: "eyes",
-  Hair: "hair",
-  "Body Features": "body_features",
-  Breasts: "breasts",
-  Genitals: "genitals",
-  "Anatomy Details": "anatomy_details",
-  "Hand Details": "hand_details",
-  "Expression/Pose": "expression_pose",
-  Posture: "posture",
-  Clothing: "clothing",
-  Accessories: "accessories",
-  Setting: "setting",
-  "Environment Details": "environment_details",
-  "Background Elements": "background_elements",
-  "Time of Day": "time_of_day",
-  Weather: "weather",
-  "Lighting/Effects": "lighting_effects",
-  "Themes/Moods": "themes_moods",
-  "Color Palettes": "color_palettes",
-  "Camera Angles": "camera_angles",
-  Perspectives: "perspectives",
-  "Camera Settings": "camera_settings",
-  "Lens Type": "lens_type",
-  "Composition Rules": "composition_rules",
-  "Motion Effects": "motion_effects",
-  "Rendering Engine": "rendering_engine",
-  "Post Processing": "post_processing",
-  "Texture Materials": "texture_materials",
-  "Technology/Objects": "technology_objects",
-  Other: "other",
-};
-
-// Icon mapping (using English labels as keys)
-const labelIconMap: Record<string, string> = {
-  Subject: "i-heroicons-photo",
-  "Art Style": "i-heroicons-paint-brush",
-  Medium: "i-heroicons-photo",
-  Quality: "i-heroicons-star",
-  Characters: "i-heroicons-user-group",
-  "Character Traits": "i-heroicons-identification",
-  "Facial Features": "i-heroicons-face-smile",
-  Eyes: "i-heroicons-eye",
-  Hair: "i-heroicons-scissors",
-  "Body Features": "i-heroicons-user-circle",
-  Breasts: "i-heroicons-heart",
-  Genitals: "i-heroicons-shield-exclamation",
-  "Anatomy Details": "i-heroicons-finger-print",
-  "Hand Details": "i-heroicons-hand-raised",
-  "Expression/Pose": "i-heroicons-face-smile",
-  Posture: "i-heroicons-arrow-trending-up",
-  Clothing: "i-heroicons-shopping-bag",
-  Accessories: "i-heroicons-sparkles",
-  Setting: "i-heroicons-map-pin",
-  "Environment Details": "i-heroicons-building-office",
-  "Background Elements": "i-heroicons-square-3-stack-3d",
-  "Time of Day": "i-heroicons-clock",
-  Weather: "i-heroicons-cloud",
-  "Lighting/Effects": "i-heroicons-light-bulb",
-  "Themes/Moods": "i-heroicons-face-frown",
-  "Color Palettes": "i-heroicons-swatch",
-  "Camera Angles": "i-heroicons-camera",
-  Perspectives: "i-heroicons-cube",
-  "Camera Settings": "i-heroicons-cog-6-tooth",
-  "Lens Type": "i-heroicons-magnifying-glass-circle",
-  "Composition Rules": "i-heroicons-squares-2x2",
-  "Motion Effects": "i-heroicons-arrow-path",
-  "Rendering Engine": "i-heroicons-cpu-chip",
-  "Post Processing": "i-heroicons-adjustments-horizontal",
-  "Texture Materials": "i-heroicons-cube-transparent",
-  "Technology/Objects": "i-heroicons-rocket-launch",
-  Other: "i-heroicons-ellipsis-horizontal-circle",
-};
-
-// Category icons mapping (i18n keys)
-const categoryIcons: Record<string, string> = {
-  subject: "i-heroicons-photo",
-  characters: "i-heroicons-user-group",
-  character_traits: "i-heroicons-star",
-  facial_features: "i-heroicons-face-smile",
-  eyes: "i-heroicons-eye",
-  hair: "i-heroicons-sparkles",
-  body_features: "i-heroicons-hand-raised",
-  breasts: "i-heroicons-heart",
-  genitals: "i-heroicons-lock-closed",
-  anatomy_details: "i-heroicons-beaker",
-  hand_details: "i-heroicons-hand-raised",
-  expression_pose: "i-heroicons-face-smile",
-  posture: "i-heroicons-arrows-up-down",
-  clothing: "i-heroicons-shopping-bag",
-  accessories: "i-heroicons-sparkles",
-  art_style: "i-heroicons-paint-brush",
-  medium: "i-heroicons-photo",
-  quality: "i-heroicons-star",
-  camera_angles: "i-heroicons-camera",
-  perspectives: "i-heroicons-view-columns",
-  camera_settings: "i-heroicons-adjustments-horizontal",
-  lens_type: "i-heroicons-camera",
-  composition_rules: "i-heroicons-squares-2x2",
-  motion_effects: "i-heroicons-arrow-path",
-  setting: "i-heroicons-map-pin",
-  environment_details: "i-heroicons-globe-alt",
-  background_elements: "i-heroicons-photo",
-  time_of_day: "i-heroicons-sun",
-  weather: "i-heroicons-cloud",
-  lighting_effects: "i-heroicons-light-bulb",
-  themes_moods: "i-heroicons-heart",
-  color_palettes: "i-heroicons-swatch",
-  rendering_engine: "i-heroicons-cpu-chip",
-  post_processing: "i-heroicons-cog-6-tooth",
-  texture_materials: "i-heroicons-cube",
-  technology_objects: "i-heroicons-rocket-launch",
-  other: "i-heroicons-ellipsis-horizontal-circle",
-};
-
 // Helper functions
 const getCategoryIcon = (categoryLabel: string) => {
-  // First try direct label match
-  if (labelIconMap[categoryLabel]) {
-    return labelIconMap[categoryLabel];
-  }
-
-  // Fallback: try converting label to key and use categoryIcons
-  const key = labelToKeyMap[categoryLabel];
-  if (key && categoryIcons[key]) {
-    return categoryIcons[key];
-  }
-
-  return "i-heroicons-tag";
+  const key = LABEL_TO_KEY_MAP[categoryLabel];
+  return (key && CATEGORY_ICONS[key]) || "i-heroicons-tag";
 };
 
 const getCategoryName = (categoryLabel: string) => {
-  // Convert label to i18n key
-  const key = labelToKeyMap[categoryLabel];
-  if (key) {
-    return t(`prompt_creator.categories.${key}`);
-  }
-  // Fallback to label
-  return categoryLabel;
+  const key = LABEL_TO_KEY_MAP[categoryLabel];
+  return key ? t(`prompt_creator.categories.${key}`) : categoryLabel;
 };
 
 const getTagCount = (categoryLabel: string) => {

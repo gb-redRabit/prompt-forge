@@ -1,4 +1,4 @@
-import type { Prompt } from "~/types/content";
+import type { Prompt } from "~~/shared/types/content";
 
 export const useTemplates = () => {
   const { prompts } = usePreloadedContent();

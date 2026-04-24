@@ -601,6 +601,7 @@
   },
   "library": {
     "title": "Library",
+    "search_placeholder": "Search prompts...",
     "subtitle": "Manage your saved prompts",
     "import": "Import",
     "export": "Export",

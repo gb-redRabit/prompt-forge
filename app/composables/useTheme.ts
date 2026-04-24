@@ -49,7 +49,7 @@ export const useTheme = () => {
 
   // Toggle między light i dark (pomija system)
   const toggleTheme = () => {
-    colorMode.preference = colorMode.preference === "dark" ? "light" : "dark";
+    colorMode.preference = colorMode.value === "dark" ? "light" : "dark";
   };
 
   // Ustaw konkretny motyw

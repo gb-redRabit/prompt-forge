@@ -1,23 +1,22 @@
 <template>
   <div
-    class="glass-card p-3 sm:p-4 flex-shrink-0 shadow-lg hover:shadow-xl transition-shadow duration-300"
+    class="glass-card p-3 sm:p-4 flex-shrink-0 shadow-lg hover:shadow-xl transition-shadow duration-300 "
   >
     <!-- Search & Filter Controls -->
-    <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
+    <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 ">
       <UInput
-        :model-value="search"
-        @update:model-value="$emit('update:search', $event)"
+        v-model="inputValue"
         :placeholder="$t('prompt_creator.search_placeholder')"
         icon="i-heroicons-magnifying-glass"
         size="md"
         class="flex-1"
       />
-      <div class="flex gap-2">
+      <div class="flex gap-2  ">
         <GlassButton
           :color="showFavorites ? 'primary' : 'neutral'"
           :variant="showFavorites ? 'solid' : 'outline'"
           size="md"
-          @click="$emit('update:showFavorites', !showFavorites)"
+          @click="emit('update:showFavorites', !showFavorites)"
           class="transition-all duration-300 hover:scale-105 flex-1 sm:flex-initial"
           icon="i-heroicons-star-solid"
         >
@@ -58,6 +57,9 @@
 </template>
 
 <script setup lang="ts">
+import { ref, watch } from 'vue';
+import { useDebounce } from '~/composables/useDebounce';
+
 interface Props {
   search: string;
   showFavorites: boolean;
@@ -65,12 +67,29 @@ interface Props {
   selectedCount: number;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 
-defineEmits<{
+const emit = defineEmits<{
   "update:search": [value: string];
   "update:showFavorites": [value: boolean];
   randomize: [];
   clear: [];
 }>();
+
+// Local input value — updates immediately for responsive feel
+const inputValue = ref(props.search);
+
+// Sync if parent resets externally
+watch(() => props.search, (newVal) => {
+  if (newVal !== inputValue.value) inputValue.value = newVal;
+});
+
+// Debounced emit — only fires 300ms after typing stops
+const emitDebounced = useDebounce((val: string) => {
+  emit('update:search', val);
+}, 300);
+
+watch(inputValue, (newVal) => {
+  emitDebounced(newVal);
+});
 </script>

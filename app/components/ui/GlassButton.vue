@@ -55,7 +55,6 @@ const buttonClasses = computed(() => {
     "inline-flex items-center justify-center gap-2",
     "font-semibold",
     "rounded-lg",
-    "backdrop-blur-xl",
     "transition-all duration-200",
     "focus:outline-none focus:ring-2 focus:ring-offset-2",
   ];
@@ -88,60 +87,60 @@ const buttonClasses = computed(() => {
   const colorMap: Record<Color, any> = {
     primary: {
       solid:
-        "bg-gradient-to-r from-primary-500 to-primary-600 text-white border border-primary-600/50 hover:from-primary-600 hover:to-primary-700 focus:ring-primary-500",
-      soft: "bg-primary-500/20 text-primary-700 dark:text-primary-300 border border-primary-500/30 hover:bg-primary-500/30 focus:ring-primary-500",
+        "bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500",
+      soft: "bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-900/50",
       ghost:
-        "text-primary-600 dark:text-primary-400 hover:bg-primary-500/10 focus:ring-primary-500",
+        "text-primary-600 dark:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20",
       outline:
-        "border-2 border-primary-500 text-primary-600 dark:text-primary-400 hover:bg-primary-500/10 focus:ring-primary-500",
+        "border border-primary-200 dark:border-primary-800 text-primary-600 dark:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20",
     },
     secondary: {
       solid:
-        "bg-gradient-to-r from-purple-500 to-purple-600 text-white border border-purple-600/50 hover:from-purple-600 hover:to-purple-700 focus:ring-purple-500",
-      soft: "bg-purple-500/20 text-purple-700 dark:text-purple-300 border border-purple-500/30 hover:bg-purple-500/30 focus:ring-purple-500",
+        "bg-purple-600 text-white hover:bg-purple-700 focus:ring-purple-500",
+      soft: "bg-purple-50 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 hover:bg-purple-100 dark:hover:bg-purple-900/50",
       ghost:
-        "text-purple-600 dark:text-purple-400 hover:bg-purple-500/10 focus:ring-purple-500",
+        "text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20",
       outline:
-        "border-2 border-purple-500 text-purple-600 dark:text-purple-400 hover:bg-purple-500/10 focus:ring-purple-500",
+        "border border-purple-200 dark:border-purple-800 text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20",
     },
     success: {
       solid:
-        "bg-gradient-to-r from-green-500 to-green-600 text-white border border-green-600/50 hover:from-green-600 hover:to-green-700 focus:ring-green-500",
-      soft: "bg-green-500/20 text-green-700 dark:text-green-300 border border-green-500/30 hover:bg-green-500/30 focus:ring-green-500",
+        "bg-green-600 text-white hover:bg-green-700 focus:ring-green-500",
+      soft: "bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-900/50",
       ghost:
-        "text-green-600 dark:text-green-400 hover:bg-green-500/10 focus:ring-green-500",
+        "text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20",
       outline:
-        "border-2 border-green-500 text-green-600 dark:text-green-400 hover:bg-green-500/10 focus:ring-green-500",
+        "border border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20",
     },
     warning: {
       solid:
-        "bg-gradient-to-r from-yellow-500 to-yellow-600 text-white border border-yellow-600/50 hover:from-yellow-600 hover:to-yellow-700 focus:ring-yellow-500",
-      soft: "bg-yellow-500/20 text-yellow-700 dark:text-yellow-300 border border-yellow-500/30 hover:bg-yellow-500/30 focus:ring-yellow-500",
+        "bg-yellow-500 text-white hover:bg-yellow-600 focus:ring-yellow-500",
+      soft: "bg-yellow-50 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300 hover:bg-yellow-100 dark:hover:bg-yellow-900/50",
       ghost:
-        "text-yellow-600 dark:text-yellow-400 hover:bg-yellow-500/10 focus:ring-yellow-500",
+        "text-yellow-600 dark:text-yellow-400 hover:bg-yellow-50 dark:hover:bg-yellow-900/20",
       outline:
-        "border-2 border-yellow-500 text-yellow-600 dark:text-yellow-400 hover:bg-yellow-500/10 focus:ring-yellow-500",
+        "border border-yellow-200 dark:border-yellow-800 text-yellow-600 dark:text-yellow-400 hover:bg-yellow-50 dark:hover:bg-yellow-900/20",
     },
     error: {
       solid:
-        "bg-gradient-to-r from-red-500 to-red-600 text-white border border-red-600/50 hover:from-red-600 hover:to-red-700 focus:ring-red-500",
-      soft: "bg-red-500/20 text-red-700 dark:text-red-300 border border-red-500/30 hover:bg-red-500/30 focus:ring-red-500",
+        "bg-red-600 text-white hover:bg-red-700 focus:ring-red-500",
+      soft: "bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-300 hover:bg-red-100 dark:hover:bg-red-900/50",
       ghost:
-        "text-red-600 dark:text-red-400 hover:bg-red-500/10 focus:ring-red-500",
+        "text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20",
       outline:
-        "border-2 border-red-500 text-red-600 dark:text-red-400 hover:bg-red-500/10 focus:ring-red-500",
+        "border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20",
     },
     neutral: {
       solid:
-        "bg-gradient-to-r from-gray-600 to-gray-700 text-white border border-gray-700/50 hover:from-gray-700 hover:to-gray-800 focus:ring-gray-500",
-      soft: "bg-gray-500/20 text-gray-700 dark:text-gray-300 border border-gray-500/30 hover:bg-gray-500/30 focus:ring-gray-500",
+        "bg-gray-800 text-white dark:bg-white dark:text-gray-900 hover:bg-gray-900 dark:hover:bg-gray-100 focus:ring-gray-500",
+      soft: "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700",
       ghost:
-        "text-gray-600 dark:text-gray-400 hover:bg-gray-500/10 focus:ring-gray-500",
+        "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800",
       outline:
-        "border-2 border-gray-500 text-gray-600 dark:text-gray-400 hover:bg-gray-500/10 focus:ring-gray-500",
+        "border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800",
     },
   };
-
+ 
   classes.push(colorMap[props.color][props.variant]);
 
   // Glow effect (shadow matching color)

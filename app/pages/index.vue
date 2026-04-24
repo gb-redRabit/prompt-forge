@@ -2,17 +2,6 @@
   <div
     class="relative min-h-screen w-full overflow-hidden bg-gray-50 dark:bg-gray-900"
   >
-    <!-- Background Effects with enhanced orbs - client only to avoid hydration mismatch -->
-    <ClientOnly>
-      <BackgroundEffects
-        :orb-count="8"
-        intensity="medium"
-        :colors="['primary', 'purple', 'pink', 'blue', 'green']"
-        :enable-mouse-follow="true"
-        :animated="true"
-      />
-    </ClientOnly>
-
     <!-- skip link for keyboard users -->
     <a href="#hero" class="skip-link">Przejdź do zawartości</a>
 
@@ -29,6 +18,7 @@
           class="fullpage-section flex items-center"
           role="region"
           aria-label="Hero"
+          tabindex="-1"
         >
           <UContainer class="py-8 lg:py-16 w-full">
             <LandingHero
@@ -118,13 +108,14 @@
 <script setup lang="ts">
 definePageMeta({ layout: "dashboard" });
 
+const { t } = useI18n();
+
 useHead({
-  title: "Prompt Forge – Edytor promptów dla Stable Diffusion",
+  title: computed(() => `${t('app.name')} – ${t('app.hero_intro')}`),
   meta: [
     {
       name: "description",
-      content:
-        "Zaawansowany edytor tagów z systemem wag i emfazy dla generatorów obrazów AI. Biblioteka promptów, kolekcje i więcej.",
+      content: computed(() => t('app.hero_sub')),
     },
     {
       name: "keywords",

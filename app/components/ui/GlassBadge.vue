@@ -51,7 +51,6 @@ const badgeClasses = computed(() => {
   const classes = [
     "inline-flex items-center gap-1.5",
     "font-semibold",
-    "backdrop-blur-xl",
     "transition-all duration-200",
   ];
 
@@ -81,49 +80,37 @@ const badgeClasses = computed(() => {
   // Color & Variant
   const colorMap: Record<Color, Record<Variant, string>> = {
     primary: {
-      solid:
-        "bg-gradient-to-r from-primary-500 to-primary-600 text-white border border-primary-600/50",
-      soft: "bg-primary-500/20 text-primary-700 dark:text-primary-300 border border-primary-500/30",
-      outline:
-        "bg-transparent border-2 border-primary-500 text-primary-600 dark:text-primary-400",
+      solid: "bg-primary-600 text-white",
+      soft: "bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300",
+      outline: "bg-transparent border border-primary-200 dark:border-primary-800 text-primary-600 dark:text-primary-400",
     },
     secondary: {
-      solid:
-        "bg-gradient-to-r from-purple-500 to-purple-600 text-white border border-purple-600/50",
-      soft: "bg-purple-500/20 text-purple-700 dark:text-purple-300 border border-purple-500/30",
-      outline:
-        "bg-transparent border-2 border-purple-500 text-purple-600 dark:text-purple-400",
+      solid: "bg-purple-600 text-white",
+      soft: "bg-purple-50 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300",
+      outline: "bg-transparent border border-purple-200 dark:border-purple-800 text-purple-600 dark:text-purple-400",
     },
     success: {
-      solid:
-        "bg-gradient-to-r from-green-500 to-green-600 text-white border border-green-600/50",
-      soft: "bg-green-500/20 text-green-700 dark:text-green-300 border border-green-500/30",
-      outline:
-        "bg-transparent border-2 border-green-500 text-green-600 dark:text-green-400",
+      solid: "bg-green-600 text-white",
+      soft: "bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-300",
+      outline: "bg-transparent border border-green-200 dark:border-green-800 text-green-600 dark:text-green-400",
     },
     warning: {
-      solid:
-        "bg-gradient-to-r from-yellow-500 to-yellow-600 text-white border border-yellow-600/50",
-      soft: "bg-yellow-500/20 text-yellow-700 dark:text-yellow-300 border border-yellow-500/30",
-      outline:
-        "bg-transparent border-2 border-yellow-500 text-yellow-600 dark:text-yellow-400",
+      solid: "bg-yellow-500 text-white",
+      soft: "bg-yellow-50 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300",
+      outline: "bg-transparent border border-yellow-200 dark:border-yellow-800 text-yellow-600 dark:text-yellow-400",
     },
     error: {
-      solid:
-        "bg-gradient-to-r from-red-500 to-red-600 text-white border border-red-600/50",
-      soft: "bg-red-500/20 text-red-700 dark:text-red-300 border border-red-500/30",
-      outline:
-        "bg-transparent border-2 border-red-500 text-red-600 dark:text-red-400",
+      solid: "bg-red-600 text-white",
+      soft: "bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-300",
+      outline: "bg-transparent border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400",
     },
     neutral: {
-      solid:
-        "bg-gradient-to-r from-gray-500 to-gray-600 text-white border border-gray-600/50",
-      soft: "bg-gray-500/20 text-gray-700 dark:text-gray-300 border border-gray-500/30",
-      outline:
-        "bg-transparent border-2 border-gray-500 text-gray-600 dark:text-gray-400",
+      solid: "bg-gray-800 text-white dark:bg-gray-100 dark:text-gray-900",
+      soft: "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300",
+      outline: "bg-transparent border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400",
     },
   };
-
+ 
   classes.push(colorMap[props.color][props.variant]);
 
   // Glow effect

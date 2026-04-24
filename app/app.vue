@@ -1,28 +1,54 @@
 <template>
   <UApp>
-    <!-- Global Background Effects (dla stron bez dashboard layout) -->
+    <!-- Global Background Effects (controlled by route metadata) -->
     <ClientOnly>
-      <BackgroundEffects
-        :orb-count="8"
-        intensity="medium"
-        :colors="['primary', 'purple', 'pink', 'blue', 'green']"
-        :enable-mouse-follow="true"
-        :animated="true"
-      />
+      <span v-if="showGlobalBackground">
+        <BackgroundEffects
+          :orb-count="8"
+          intensity="medium"
+          :colors="['primary', 'purple', 'pink', 'blue', 'green']"
+          :enable-mouse-follow="false"
+          :animated="true"
+        />
+      </span>
+      <template #fallback>
+        <!-- Wypełniacz powstrzymujący Nuxt przed generowaniem "start of fragment" na serwerze -->
+        <span></span>
+      </template>
     </ClientOnly>
 
     <NuxtLayout>
       <NuxtPage />
-      <LoadingOverlay :shown="!isContentLoaded && !isDashboardPage" />
     </NuxtLayout>
 
-    <!-- Global Loading Overlay -->
+    <!-- Pojedyncza, ciągła instancja ładowarki (SSG & CSR połączone) -->
+    <LoadingOverlay :shown="showOverlay" />
   </UApp>
 </template>
 
 <script setup lang="ts">
+import { ref, computed, onMounted } from 'vue';
+
 const { isLoaded: isContentLoaded } = usePreloadedContent();
 const route = useRoute();
+const nuxtApp = useNuxtApp();
+
+const isHydrated = ref(false);
+
+onMounted(() => {
+  // Use Nuxt hook to ensure application is fully ready
+  nuxtApp.hooks.hook('app:suspense:resolve', () => {
+    isHydrated.value = true;
+  });
+  
+  // Fallback if hook already fired or doesn't fire as expected
+  if (!nuxtApp.isHydrating) {
+    isHydrated.value = true;
+  }
+});
+
+// Ekran ładowania jest widoczny dopóki nie załadują się dane ATAKŻE aplikacja nie zakończy pełnej hydracji
+const showOverlay = computed(() => !isContentLoaded.value || !isHydrated.value);
 
 // PWA Manifest link
 useHead({
@@ -34,19 +60,14 @@ useHead({
   ],
 });
 
-// Fallback - jeśli zawartość nie załaduje się w 5 sekund, wyłącz overlay
-
-// Sprawdź czy jesteśmy na stronie z dashboard layout
-const isDashboardPage = computed(() => {
-  // Dashboard layout już ma BackgroundEffects
-  const dashboardRoutes = [
-    "/prompts",
-    "/library",
-    "/templates",
-    "/settings",
-    "/chat",
-    "/editor",
-  ];
-  return dashboardRoutes.some((r) => route.path.startsWith(r));
+// Sterowanie tłem przez metadane strony (np. definePageMeta({ hideGlobalBackground: true }))
+const showGlobalBackground = computed(() => {
+  // Jeśli layout to dashboard, domyślnie ukrywamy (dashboard ma własne efekty)
+  if (route.meta.layout === 'dashboard') return false;
+  
+  // Możliwość jawnego ukrycia/pokazania przez meta
+  if (route.meta.hideGlobalBackground === true) return false;
+  
+  return true;
 });
 </script>

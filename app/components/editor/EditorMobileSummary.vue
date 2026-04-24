@@ -1,18 +1,18 @@
 <template>
-  <!-- Floating Button (Mobile Only) -->
-  <div class="lg:hidden">
+  <!-- Floating Button (All devices) -->
+  <div class="relative">
     <!-- Summary Button - Fixed at bottom center -->
     <button
       @click="isOpen = true"
-      class="fixed bottom-8 left-1/2 -translate-x-1/2 z-40 px-6 py-3.5 rounded-full bg-gradient-to-r from-primary-500 to-purple-600 text-white shadow-2xl hover:shadow-primary-500/50 hover:scale-105 transition-all duration-300 flex items-center gap-2 backdrop-blur-xl border-2 border-white/20 active:scale-95"
+      class="fixed bottom-6 lg:bottom-10 left-1/2 -translate-x-1/2 z-40 px-8 py-3.5 rounded-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 shadow-2xl hover:-translate-y-1 hover:shadow-xl transition-all duration-300 flex items-center gap-3 pointer-events-auto active:scale-95"
     >
-      <UIcon name="i-heroicons-document-text" class="w-5 h-5" />
-      <span class="font-semibold text-sm">{{
+      <UIcon name="i-heroicons-document-text" class="w-5 h-5 opacity-80" />
+      <span class="font-bold text-sm tracking-wide">{{
         $t("prompt_creator.summary")
       }}</span>
       <span
         v-if="totalTags > 0"
-        class="px-2 py-0.5 rounded-full bg-white/30 text-xs font-bold min-w-[24px] text-center"
+        class="px-2.5 py-0.5 rounded-full bg-white/20 dark:bg-gray-900/20 text-xs font-black min-w-[28px] text-center"
       >
         {{ totalTags }}
       </span>
@@ -23,7 +23,7 @@
       <Transition name="slide-up">
         <div
           v-if="isOpen"
-          class="fixed inset-0 z-50 flex items-end lg:hidden"
+          class="fixed inset-0 z-50 flex items-end justify-center"
           @click.self="isOpen = false"
         >
           <!-- Backdrop -->
@@ -34,11 +34,11 @@
 
           <!-- Panel Content -->
           <div
-            class="relative w-full bg-white dark:bg-gray-900 rounded-t-3xl shadow-2xl max-h-[85vh] flex flex-col overflow-hidden z-50"
+            class="relative w-full max-w-4xl bg-white dark:bg-gray-900 md:rounded-t-3xl shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.3)] max-h-[85vh] flex flex-col overflow-hidden z-50 border-t border-x border-gray-200 dark:border-gray-800"
           >
             <!-- Header -->
             <div
-              class="flex-shrink-0 px-4 py-4 border-b border-gray-200 dark:border-gray-800 bg-gradient-to-r from-primary-50 to-purple-50 dark:from-primary-900/20 dark:to-purple-900/20"
+              class="flex-shrink-0 px-6 py-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50"
             >
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
@@ -262,9 +262,9 @@
                 </div>
 
                 <!-- Prompts Preview -->
-                <div v-if="positivePrompt" class="space-y-3">
+                <div v-if="positivePrompt || negativePrompt" class="space-y-4">
                   <!-- Positive Prompt -->
-                  <div class="glass-card p-3 rounded-xl">
+                  <div v-if="positivePrompt" class="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm">
                     <div class="flex items-center justify-between mb-2">
                       <div class="flex items-center gap-2">
                         <UIcon
@@ -304,7 +304,7 @@
                   </div>
 
                   <!-- Negative Prompt -->
-                  <div v-if="negativePrompt" class="glass-card p-3 rounded-xl">
+                  <div v-if="negativePrompt" class="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm">
                     <div class="flex items-center justify-between mb-2">
                       <div class="flex items-center gap-2">
                         <UIcon
@@ -421,22 +421,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
-
-interface TagObject {
-  pl: string;
-  en: string;
-  neg_pl: string;
-  neg_en: string;
-  category: string;
-  nsfw: boolean;
-  custom?: boolean;
-  weight?: number;
-  emphasis?: number;
-}
+import { ref, computed, watch, onMounted } from "vue";
+import type { TagItem } from "~~/shared/types/content";
+import { LABEL_TO_KEY_MAP } from "~~/shared/constants/categories";
 
 const props = defineProps<{
-  selectedTags: Record<string, TagObject[]>;
+  selectedTags: Record<string, TagItem[]>;
   positivePrompt: string;
   negativePrompt: string;
   showNsfw: boolean;
@@ -450,7 +440,7 @@ const emit = defineEmits<{
   "show-negative-templates": [];
   "clear-category": [category: string];
   "remove-tag": [category: string, index: number];
-  "update-tag": [category: string, index: number, tag: TagObject];
+  "update-tag": [category: string, index: number, tag: TagItem];
   "copy-prompt": [type: "positive" | "negative"];
   "save-prompt": [];
   "use-prompt": [];
@@ -460,6 +450,21 @@ const emit = defineEmits<{
 const { t, locale } = useI18n();
 const isOpen = ref(false);
 
+onMounted(() => {
+  if (process.client) {
+    const saved = localStorage.getItem("editor-summary-open");
+    if (saved !== null) {
+      isOpen.value = JSON.parse(saved);
+    }
+  }
+});
+
+watch(isOpen, (newVal) => {
+  if (process.client) {
+    localStorage.setItem("editor-summary-open", JSON.stringify(newVal));
+  }
+});
+
 const totalTags = computed(() => {
   return Object.values(props.selectedTags).reduce(
     (sum, tags) => sum + tags.length,
@@ -467,57 +472,16 @@ const totalTags = computed(() => {
   );
 });
 
-const getTagText = (tagObj: TagObject): string => {
+const getTagText = (tagObj: TagItem): string => {
   return locale.value === "pl" ? tagObj.pl : tagObj.en;
 };
 
 const getCategoryName = (category: string): string => {
-  // Map category label to i18n key
-  const categoryKeyMap: Record<string, string> = {
-    Subject: "subject",
-    "Art Style": "art_style",
-    Medium: "medium",
-    Quality: "quality",
-    Characters: "characters",
-    "Character Traits": "character_traits",
-    "Facial Features": "facial_features",
-    Eyes: "eyes",
-    Hair: "hair",
-    "Body Features": "body_features",
-    Breasts: "breasts",
-    Genitals: "genitals",
-    "Anatomy Details": "anatomy_details",
-    "Hand Details": "hand_details",
-    "Expression/Pose": "expression_pose",
-    Posture: "posture",
-    Clothing: "clothing",
-    Accessories: "accessories",
-    Setting: "setting",
-    "Environment Details": "environment_details",
-    "Background Elements": "background_elements",
-    "Time of Day": "time_of_day",
-    Weather: "weather",
-    "Lighting/Effects": "lighting_effects",
-    "Themes/Moods": "themes_moods",
-    "Color Palettes": "color_palettes",
-    "Camera Angles": "camera_angles",
-    Perspectives: "perspectives",
-    "Camera Settings": "camera_settings",
-    "Lens Type": "lens_type",
-    "Composition Rules": "composition_rules",
-    "Motion Effects": "motion_effects",
-    "Rendering Engine": "rendering_engine",
-    "Post Processing": "post_processing",
-    "Texture Materials": "texture_materials",
-    "Technology/Objects": "technology_objects",
-    Other: "other",
-  };
-
-  const key = categoryKeyMap[category];
+  const key = LABEL_TO_KEY_MAP[category];
   return key ? t(`prompt_creator.categories.${key}`) : category;
 };
 
-const updateTag = (category: string, index: number, updatedTag: TagObject) => {
+const updateTag = (category: string, index: number, updatedTag: TagItem) => {
   emit("update-tag", category, index, updatedTag);
 };
 </script>

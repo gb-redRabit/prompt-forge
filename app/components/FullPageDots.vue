@@ -486,24 +486,8 @@ onMounted(() => {
 
   // TYLKO JEDEN listener wheel na viewport (nie window, nie document)
   // To zapobiega blokowaniu eventów globalnie
-  if (enableWheel) {
-    targetForEvents.addEventListener("wheel", onWheel, { passive: false });
-  }
-
-  targetForEvents.addEventListener("touchstart", onTouchStart, {
-    passive: true,
-  });
-  targetForEvents.addEventListener("touchend", onTouchEnd, { passive: true });
-
-  if (enableMouseDrag && viewportEl) {
-    // pointerdown on viewport to start drag; pointermove/up on document to capture outside element
-    viewportEl.addEventListener("pointerdown", onPointerDown, {
-      passive: false,
-    });
-    document.addEventListener("pointermove", onPointerMove, { passive: false });
-    document.addEventListener("pointerup", onPointerUp);
-    document.addEventListener("pointercancel", onPointerUp);
-  }
+  // Zmiana: polegamy całkowicie na natywnym `scroll-snap` CSS
+  // usunięte hooki na wheel, touchstart, touchend i pointerdown
 
   window.addEventListener("keydown", onKey);
   // attach scroll listener to keep dots in sync when user scrolls
@@ -522,21 +506,10 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   const targetForEvents = viewportEl || document.body;
-  if (enableWheel) {
-    targetForEvents.removeEventListener("wheel", onWheel);
-  }
-  targetForEvents.removeEventListener("touchstart", onTouchStart);
-  targetForEvents.removeEventListener("touchend", onTouchEnd);
-  try {
-    if (viewportEl) viewportEl.removeEventListener("scroll", onScroll as any);
-    else document.removeEventListener("scroll", onScroll as any);
-  } catch (_) {}
-  if (enableMouseDrag && viewportEl) {
-    viewportEl.removeEventListener("pointerdown", onPointerDown);
-    document.removeEventListener("pointermove", onPointerMove);
-    document.removeEventListener("pointerup", onPointerUp);
-    document.removeEventListener("pointercancel", onPointerUp);
-  }
+  // Zmiana: usunięto hooki na wheel ograniczając customowy scroll
+  // targetForEvents.removeEventListener("wheel", onWheel);
+  // targetForEvents.removeEventListener("touchstart", onTouchStart);
+  // targetForEvents.removeEventListener("touchend", onTouchEnd);
   window.removeEventListener("keydown", onKey);
 });
 </script>

@@ -140,7 +140,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Prompt } from "~/types/content";
+import type { Prompt } from "~~/shared/types/content";
 
 const props = withDefaults(
   defineProps<{

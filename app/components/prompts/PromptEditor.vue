@@ -545,7 +545,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Prompt, OptionItem } from "~/types/content";
+import type { Prompt, OptionItem } from "~~/shared/types/content";
 
 const props = defineProps<{
   template: Prompt;

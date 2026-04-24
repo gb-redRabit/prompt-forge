@@ -2,7 +2,9 @@
   <div class="min-h-screen bg-gray-50 dark:bg-gray-900 flex relative">
     <!-- Background Effects -->
     <ClientOnly>
-      <BackgroundEffects />
+      <span>
+        <BackgroundEffects />
+      </span>
     </ClientOnly>
 
     <!-- Sidebar -->

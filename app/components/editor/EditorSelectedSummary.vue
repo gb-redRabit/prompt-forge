@@ -716,7 +716,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TagItem } from "~/types/content";
+import type { TagItem } from "~~/shared/types/content";
 
 interface Props {
   selectedTags: Record<string, TagItem[]>;

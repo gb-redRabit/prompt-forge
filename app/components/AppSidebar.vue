@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <!-- mobile toggle button (floating) -->
   <GlassButton
     v-if="!isSidebarOpen"
@@ -390,6 +390,11 @@ const selectLang = (code: string) => {
   if (import.meta.client) {
     localStorage.setItem("locale", code);
     useCookie("locale").value = code;
+    
+    // Wymuszenie przeładowania aby uniknąć braku reaktywności w niepodpiętych pod i18n labelkach
+    setTimeout(() => {
+      window.location.reload();
+    }, 50);
   }
 };
 </script>

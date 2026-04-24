@@ -31,28 +31,25 @@ const props = withDefaults(defineProps<Props>(), {
 const cardClasses = computed(() => {
   const classes = [props.rounded];
 
-  // Base glass effect
-  classes.push("backdrop-blur-xl");
+  // Base effect (solid instead of glass)
 
   // Variant styles
   switch (props.variant) {
     case "subtle":
       classes.push(
-        "bg-white/30 dark:bg-gray-800/30",
-        props.border ? "border border-white/20 dark:border-gray-700/30" : ""
+        "bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800"
       );
       break;
     case "strong":
       classes.push(
-        "bg-white/70 dark:bg-gray-800/70",
-        props.border ? "border border-white/40 dark:border-gray-700/50" : ""
+        "bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
       );
       break;
     case "default":
     default:
       classes.push(
-        "bg-white/50 dark:bg-gray-800/50",
-        props.border ? "border border-white/30 dark:border-gray-700/40" : ""
+        "bg-white dark:bg-gray-900",
+        props.border ? "border border-gray-200 dark:border-gray-800" : ""
       );
       break;
   }
