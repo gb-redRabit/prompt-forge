@@ -1,6 +1,7 @@
 <template>
   <div
-    class="relative min-h-screen w-full overflow-hidden bg-gray-50 dark:bg-gray-900"
+    class="relative min-h-screen w-full overflow-hidden bg-gray-50 dark:bg-slate-900 transition-colors duration-500"
+    :class="{ 'disable-animations': !animateThisVisit }"
   >
     <!-- skip link for keyboard users -->
     <a href="#hero" class="skip-link">Przejdź do zawartości</a>
@@ -110,6 +111,11 @@ definePageMeta({ layout: "dashboard" });
 
 const { t } = useI18n();
 
+// Globalny stan (per sesja), czy użytkownik już był na stronie głównej
+const hasVisitedHome = useState('hasVisitedHome', () => false);
+// Lokalny stan ustalający czy mamy odtwarzać animacje podczas *tego* konkretnego wejścia
+const animateThisVisit = ref(!hasVisitedHome.value);
+
 useHead({
   title: computed(() => `${t('app.name')} – ${t('app.hero_intro')}`),
   meta: [
@@ -165,6 +171,9 @@ const handleLearnMore = () => {
 onMounted(() => {
   const container = document.getElementById("fullpage-container");
   if (container) container.tabIndex = -1;
+
+  // Zapisz, że użytkownik już widział stronę (kolejne wejścia z innej podstrony będą bez animacji)
+  hasVisitedHome.value = true;
 });
 </script>
 
@@ -232,19 +241,41 @@ onMounted(() => {
   animation-delay: 1s;
 }
 
+/* Klasa wyłączająca animacje przy ponownych wejściach */
+.disable-animations :deep(.animate-fade-in-up),
+.disable-animations :deep([class*="animation-delay-"]) {
+  animation: none !important;
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up,
+  [class*="animation-delay-"],
+  .gradient-orb {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
 /* Gradient orbs */
 .gradient-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.3;
-  animation: gradient-shift 20s ease-in-out infinite;
+  filter: blur(100px);
+  opacity: 0.2;
+  animation: gradient-shift 25s ease-in-out infinite;
+  mix-blend-mode: screen;
+  pointer-events: none;
 }
 
 .gradient-orb-1 {
   width: 600px;
   height: 600px;
-  background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+  background: radial-gradient(circle, hsl(215, 70%, 70%) 0%, transparent 70%);
   top: -10%;
   left: -10%;
 }
@@ -252,7 +283,7 @@ onMounted(() => {
 .gradient-orb-2 {
   width: 500px;
   height: 500px;
-  background: linear-gradient(135deg, #ec4899, #f59e0b);
+  background: radial-gradient(circle, hsl(330, 70%, 70%) 0%, transparent 70%);
   top: 50%;
   right: -10%;
   animation-delay: 5s;
@@ -261,7 +292,7 @@ onMounted(() => {
 .gradient-orb-3 {
   width: 400px;
   height: 400px;
-  background: linear-gradient(225deg, #10b981, #3b82f6);
+  background: radial-gradient(circle, hsl(160, 70%, 70%) 0%, transparent 70%);
   bottom: -10%;
   left: 50%;
   animation-delay: 10s;

@@ -22,6 +22,7 @@ Prompt Forge is a Nuxt 4 app for crafting, optimizing and organizing prompts for
 - Library: saved, custom, history, collections (CRUD, JSON import/export)
 - Templates: filtering (type, categories, tags), infinite scroll preview
 - AI Chat: multi conversation, retry failed, rename threads
+- State Management: Fully reactive Pinia stores with persisted state
 - Settings: endpoint + model ID fetch, theme (light/dark/system), language persistence
 - PWA: manifest, icons, runtime caching (@vite-pwa/nuxt)
 - Accessibility: ARIA, reduced motion, keyboard nav
@@ -33,23 +34,26 @@ Prompt Forge is a Nuxt 4 app for crafting, optimizing and organizing prompts for
 | --------------- | ------------------------ |
 | Framework       | Nuxt 4 (Vue 3, Vite)     |
 | Language        | TypeScript               |
+| State           | Pinia (+ PersistedState) |
 | UI              | Tailwind CSS + @nuxt/ui  |
 | Content         | @nuxt/content + Zod      |
 | i18n            | @nuxtjs/i18n             |
 | PWA             | @vite-pwa/nuxt (Workbox) |
-| Images          | @nuxt/image              |
+| Testing         | Vitest + Happy DOM       |
 | Lint            | ESLint (flat config)     |
 
 ## 🗂 Structure / Struktura
 
 ```
 app/components/   # UI (editor, library, chat, templates, landing)
-app/composables/  # useAI, useChat, useLibrary, useTemplates, etc.
-app/pages/        # /, /editor, /library, /chat, /templates, /settings
-content/          # prompts.json, options.json, tagi.json
+app/composables/  # Hooks (usePreloadedContent, etc.)
+app/pages/        # Routing (/, /editor, /library, /chat, /settings)
+app/stores/       # Pinia state (editor.ts, settings.ts, library.ts)
+tests/            # Vitest unit test suites
+content/          # JSON data (prompts, options, tags)
 public/           # PWA icons + static assets
-nuxt.config.ts    # modules, pwa, i18n
-content.config.ts # Zod schemas
+nuxt.config.ts    # Nuxt modules, PWA, i18n config
+vitest.config.ts  # Test runner configuration
 ```
 
 ## 🚀 Quick Start / Szybki start
@@ -68,6 +72,12 @@ Build & preview:
 ```bash
 pnpm build
 pnpm preview
+```
+
+Testy jednostkowe (Vitest):
+
+```bash
+npx vitest run
 ```
 
 Lokalnie: http://localhost:3000

@@ -164,6 +164,33 @@
       "preview": "Podgląd",
       "no_link": "Brak linku",
       "copy_failed": "Nie udało się skopiować"
+    },
+    "analytics": {
+      "title": "Analityka",
+      "subtitle": "Śledź i analizuj wydajność swoich promptów AI",
+      "description": "Śledź swoje metryki użycia i wydajności",
+      "export": "Eksportuj",
+      "usage_trends": "Trendy użycia",
+      "chart_placeholder": "Wizualizacja wykresu zostanie wyświetlona tutaj",
+      "top_prompts": "Najlepsze prompty",
+      "uses": "użyć",
+      "performance": "Metryki wydajności",
+      "metric": "Metryka",
+      "current": "Bieżący",
+      "previous": "Poprzedni",
+      "change": "Zmiana",
+      "usageOverTime": "Użycie w czasie",
+      "categoryDistribution": "Rozkład kategorii",
+      "topPrompts": "Najlepsze prompty",
+      "aiPerformance": "Wydajność AI",
+      "metrics": {
+        "totalPrompts": "Wszystkie prompty",
+        "totalQueries": "Wszystkie zapytania",
+        "collections": "Kolekcje",
+        "customPrompts": "Własne prompty",
+        "avgResponseTime": "Śr. czas odpowiedzi",
+        "successRate": "Wskaźnik sukcesu"
+      }
     }
   },
   "app": {
@@ -600,7 +627,8 @@
     "custom": {
       "badge": "Własny",
       "addNew": "Dodaj Nowy Prompt",
-      "clickToCreate": "Kliknij, aby utworzyć własny prompt"
+      "clickToCreate": "Kliknij, aby utworzyć własny prompt",
+      "no_favorite_tags": "Brak ulubionych tagów."
     },
     "history": {
       "title": "Ostatnio używane prompty",
@@ -880,5 +908,12 @@
     "history_description": "Przeglądaj i przywracaj zapisane wersje promptów.",
     "add_custom_tag_description": "Dodaj własny tag do bieżącej kategorii.",
     "negative_templates_description": "Wybierz szablon negatywny do dodania do promptu."
+  },
+  "pwa": {
+    "update": {
+      "title": "Dostępna aktualizacja",
+      "description": "Nowa wersja aplikacji jest gotowa do użycia.",
+      "button": "Zaktualizuj teraz"
+    }
   }
 }

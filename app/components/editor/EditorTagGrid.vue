@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { TagItem } from '~~/shared/types/content';
 import { getTagId, getTagText } from '~/utils/tags';
+import { ref, computed, watch } from 'vue';
+import { useIntersectionObserver } from '@vueuse/core';
 
 interface Props {
   tags: TagItem[];
@@ -25,16 +27,36 @@ const isTagSelected = (tagObj: TagItem) => {
     (selected) => getTagId(selected) === getTagId(tagObj)
   );
 };
+
+// --- Virtualization / Infinite Scroll for massive DOM performance boost ---
+const displayLimit = ref(100);
+const loadMoreTrigger = ref<HTMLElement | null>(null);
+
+// Reset the limit whenever the tags list changes (e.g. search or category switch)
+watch(() => props.tags, () => {
+  displayLimit.value = 100;
+});
+
+const displayedTags = computed(() => {
+  return props.tags.slice(0, displayLimit.value);
+});
+
+useIntersectionObserver(loadMoreTrigger, ([{ isIntersecting }]) => {
+  if (isIntersecting && displayLimit.value < props.tags.length) {
+    // Increase limit by 100 smoothly when user reaches the bottom
+    displayLimit.value += 100;
+  }
+});
 </script>
 
 <template>
-  <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-3 sm:p-5 overflow-hidden shadow-sm">
+  <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-3 sm:p-5 overflow-hidden shadow-sm flex flex-col">
     <div
       v-if="tags.length > 0"
-      class="flex flex-wrap justify-start h-full items-start gap-1 sm:gap-1.5 overflow-y-auto pr-1 sm:pr-2 custom-scrollbar"
+      class="flex flex-wrap justify-start items-start gap-1 sm:gap-1.5 overflow-y-auto pr-1 sm:pr-2 custom-scrollbar h-full"
     >
       <button
-        v-for="tagObj in tags"
+        v-for="tagObj in displayedTags"
         :key="getTagId(tagObj)"
         @click="emit('toggle', tagObj)"
         :class="[
@@ -71,6 +93,9 @@ const isTagSelected = (tagObj: TagItem) => {
           </button>
         </div>
       </button>
+      
+      <!-- Invisible element to trigger loading more tags -->
+      <div ref="loadMoreTrigger" class="w-full h-4 shrink-0"></div>
     </div>
 
     <!-- Empty State -->

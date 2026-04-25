@@ -290,9 +290,10 @@ export const useLibrary = () => {
     }
   };
 
-  const addToHistory = (template: Prompt) => {
-    // Konwertuj template.id na string dla porównania
-    const templateId = template.id?.toString();
+  const addToHistory = (template: Prompt | SavedPrompt) => {
+    // Determine the ID (Prompt has 'id', SavedPrompt has 'promptId')
+    const templateId =
+      "id" in template ? template.id?.toString() : template.promptId;
 
     // Usuń duplikaty (ten sam ID promptu)
     promptHistory.value = promptHistory.value.filter(
@@ -302,8 +303,9 @@ export const useLibrary = () => {
     const historyItem: SavedPrompt = {
       savedId: `history-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       promptId: templateId || `temp-${Date.now()}`,
-      result: "",
-      placeholderValues: {},
+      result: "result" in template ? template.result : "",
+      placeholderValues:
+        "placeholderValues" in template ? template.placeholderValues : {},
       timestamp: Date.now(),
       name: template.name,
       description: template.description,
@@ -423,11 +425,16 @@ export const useLibrary = () => {
 
   // NOWA FUNKCJA: Konwertuj SavedPrompt na Prompt (dla custom promptów)
   const getPromptById = (promptId: string): Prompt | null => {
-    // Sprawdź czy to custom prompt
-    if (promptId.startsWith("custom-")) {
-      const customPrompt = customPrompts.value.find(
-        (p) => p.promptId === promptId || p.savedId === promptId
-      );
+    // Sprawdź czy to custom prompt (nowy format z '-' lub legacy z '_')
+    if (promptId.startsWith("custom-") || promptId.startsWith("custom_")) {
+      // Szukaj w obu kolekcjach: nowoczesnej i legacy (editor)
+      const customPrompt =
+        customPrompts.value.find(
+          (p) => p.promptId === promptId || p.savedId === promptId
+        ) ||
+        editorCustomPrompts.value.find(
+          (p) => p.promptId === promptId || p.savedId === promptId
+        );
 
       if (!customPrompt) return null;
 
@@ -437,18 +444,20 @@ export const useLibrary = () => {
         name: customPrompt.name || { pl: "Bez nazwy", en: "Untitled" },
         description: customPrompt.description || { pl: "", en: "" },
         template:
-          typeof customPrompt.result === "string"
-            ? { pl: customPrompt.result, en: customPrompt.result }
-            : (customPrompt.result as any),
+          typeof customPrompt.template === "object"
+            ? customPrompt.template
+            : {
+                pl: customPrompt.result || "",
+                en: customPrompt.result || "",
+              },
         type: "custom",
         categories: customPrompt.categories || ["custom"],
         tags: customPrompt.tags || [],
         placeholder_keys: customPrompt.placeholder_keys || [],
-        placeholderValues: customPrompt.placeholderValues || {}, // Dodane brakujące pole
+        placeholderValues: customPrompt.placeholderValues || {},
       } as unknown as Prompt;
     }
 
-    // Dla zapisanych promptów zwróć null (będą ładowane z głównej kolekcji)
     return null;
   };
 

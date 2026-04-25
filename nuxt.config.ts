@@ -15,6 +15,7 @@ export default defineNuxtConfig({
     "@vite-pwa/nuxt",
     "@pinia/nuxt",
     "pinia-plugin-persistedstate/nuxt",
+    "@vueuse/nuxt",
   ],
 
   // @nuxt/ui
@@ -80,6 +81,14 @@ export default defineNuxtConfig({
 
   nitro: {
     compressPublicAssets: true,
+    // Fix router warnings for PWA/Workbox files in dev
+    routeRules: {
+      "/_payload.json": { prerender: true },
+      "/dev-sw.js": { headers: { "Cache-Control": "no-store" } },
+      "/workbox-*.js": { headers: { "Cache-Control": "no-store" } },
+      "/workbox-*.js.map": { headers: { "Cache-Control": "no-store" } },
+      "/manifest.webmanifest": { headers: { "Cache-Control": "no-store" } },
+    },
   },
 
   pwa: {
@@ -122,23 +131,35 @@ export default defineNuxtConfig({
       // Tylko dla production - dev nie potrzebuje precache
       globPatterns:
         process.env.NODE_ENV === "production"
-          ? ["**/*.{js,css,html,png,svg,ico}"]
-          : [],
+          ? ["**/*.{js,css,html,png,svg,ico}", "**/_payload.json"]
+          : [], // Empty in dev to avoid warnings
       cleanupOutdatedCaches: true,
       clientsClaim: true,
       skipWaiting: true,
       runtimeCaching: [
         {
           urlPattern: /^https:\/\/api\./,
-          handler: "NetworkFirst",
+          handler: "StaleWhileRevalidate",
           options: {
             cacheName: "api-cache",
             expiration: {
               maxEntries: 50,
-              maxAgeSeconds: 60 * 60, // 1 godzina
+              maxAgeSeconds: 60 * 60 * 24, // 24 godziny
             },
             cacheableResponse: {
               statuses: [0, 200],
+            },
+          },
+        },
+        {
+          // Cache dla lokalnych endpointów AI (np. LM Studio)
+          urlPattern: /^http:\/\/localhost:\d+\/v1\/(models|info)/,
+          handler: "StaleWhileRevalidate",
+          options: {
+            cacheName: "local-ai-metadata-cache",
+            expiration: {
+              maxEntries: 20,
+              maxAgeSeconds: 60 * 60 * 24 * 7, // 7 dni dla statycznych list modeli
             },
           },
         },
@@ -179,7 +200,7 @@ export default defineNuxtConfig({
     devOptions: {
       enabled: true,
       type: "module",
-      // Note: Development warnings są normalne - zobacz PWA-DEV-WARNINGS.md
+      navigateFallbackAllowlist: [/^\/$/],
     },
   },
 });

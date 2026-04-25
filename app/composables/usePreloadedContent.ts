@@ -9,6 +9,20 @@ const globalAvailableCategories = shallowRef<string[]>([]);
 const isContentLoaded = ref(false);
 const isContentLoading = ref(false);
 
+/** Safely parse `meta` whether it arrives as a plain object or a JSON string. */
+function parseMeta(meta: unknown): Record<string, unknown> | null {
+  if (!meta) return null;
+  if (typeof meta === "string") {
+    try {
+      return JSON.parse(meta);
+    } catch {
+      return null;
+    }
+  }
+  if (typeof meta === "object") return meta as Record<string, unknown>;
+  return null;
+}
+
 export const usePreloadedContent = () => {
   const loadContent = async () => {
     // Zapobiegaj duplikacji ładowania
@@ -38,48 +52,58 @@ export const usePreloadedContent = () => {
           .catch(() => null),
       ]);
 
-      if (optionsData?.meta) {
-        globalOptions.value = optionsData.meta as Record<string, OptionItem[]>;
+      // --- Options ---
+      const optionsMeta = parseMeta((optionsData as any)?.meta);
+      if (optionsMeta) {
+        // Options JSON is a record directly (no body wrapper)
+        globalOptions.value = optionsMeta as Record<string, OptionItem[]>;
       }
 
-      if (promptsData?.meta?.body) {
-        globalPrompts.value = promptsData.meta.body as Prompt[];
+      // --- Prompts ---
+      const promptsMeta = parseMeta((promptsData as any)?.meta);
+      const rawPrompts: unknown = promptsMeta?.body ?? promptsMeta;
+      if (Array.isArray(rawPrompts) && rawPrompts.length > 0) {
+        globalPrompts.value = rawPrompts as Prompt[];
 
-        // Ekstrahuj wszystkie unikalne tagi
+        // Ekstrahuj wszystkie unikalne tagi i kategorie
         const tagsSet = new Set<string>();
         const categoriesSet = new Set<string>();
 
         globalPrompts.value.forEach((prompt) => {
-          // Zbierz tagi
           if (Array.isArray(prompt.tags)) {
             prompt.tags.forEach((tag) => {
-              if (tag && typeof tag === "string") {
-                tagsSet.add(tag.trim());
-              }
+              if (tag && typeof tag === "string") tagsSet.add(tag.trim());
             });
           }
-
-          // Zbierz kategorie
           if (Array.isArray(prompt.categories)) {
             prompt.categories.forEach((cat) => {
-              if (cat && typeof cat === "string") {
-                categoriesSet.add(cat.trim());
-              }
+              if (cat && typeof cat === "string") categoriesSet.add(cat.trim());
             });
           }
         });
 
-        // Konwertuj na posortowane tablice
         globalAvailableTags.value = Array.from(tagsSet).sort((a, b) =>
           a.toLowerCase().localeCompare(b.toLowerCase())
         );
         globalAvailableCategories.value = Array.from(categoriesSet).sort(
           (a, b) => a.toLowerCase().localeCompare(b.toLowerCase())
         );
+      } else {
+        console.warn("⚠️ usePreloadedContent: prompts body not found", {
+          promptsData,
+          promptsMeta,
+          rawPrompts,
+        });
       }
 
-      if (tagsData?.meta?.body) {
-        globalTags.value = tagsData.meta.body as Record<string, TagItem>;
+      // --- Tags ---
+      const tagsMeta = parseMeta((tagsData as any)?.meta);
+      const rawTags: unknown = tagsMeta?.body ?? tagsMeta;
+      if (rawTags && typeof rawTags === "object" && !Array.isArray(rawTags)) {
+        globalTags.value = rawTags as Record<string, TagItem>;
+      } else if (Array.isArray(rawTags)) {
+        // tagi.json is an array — convert to Record keyed by some identifier if needed
+        globalTags.value = rawTags as unknown as Record<string, TagItem>;
       }
 
       isContentLoaded.value = true;
@@ -100,7 +124,6 @@ export const usePreloadedContent = () => {
 
   // Auto-load gdy composable jest używany po stronie klienta
   if (process.client && !isContentLoaded.value && !isContentLoading.value) {
-    // Wykonaj ładowanie asynchronicznie
     nextTick(() => {
       loadContent();
     });

@@ -3,13 +3,11 @@
     <!-- Header -->
     <div class="text-center mb-4 md:mb-8 lg:mb-12 xl:mb-16 animate-fade-in-up">
       <h2
-        v-once
-        class="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 dark:text-white mb-2 md:mb-3 lg:mb-4"
+        class="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-2 md:mb-3 lg:mb-4"
       >
         {{ $t("app.section_how_title") }}
       </h2>
       <p
-        v-once
         class="text-sm md:text-base lg:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto"
       >
         {{ $t("app.section_how_subtitle") }}
@@ -18,7 +16,7 @@
 
     <!-- Steps grid with animated timeline -->
     <div
-      class="relative grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 lg:gap-6 xl:gap-8"
+      class="relative grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8"
     >
       <!-- Animated connection line (desktop only) -->
       <div
@@ -57,13 +55,11 @@
         {{ $t("app.how_cta_badge") }}
       </GlassBadge>
       <h3
-        v-once
-        class="text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold text-gray-900 dark:text-white mb-2 md:mb-3 lg:mb-4 hidden md:block"
+        class="text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold text-gray-800 dark:text-gray-100 mb-2 md:mb-3 lg:mb-4 hidden md:block"
       >
         {{ $t("app.how_cta_title") }}
       </h3>
       <p
-        v-once
         class="text-sm md:text-base lg:text-lg text-gray-600 dark:text-gray-400 mb-3 md:mb-6 lg:mb-8 max-w-2xl mx-auto hidden md:block"
       >
         {{ $t("app.how_cta_subtitle") }}

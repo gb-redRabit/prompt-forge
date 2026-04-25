@@ -1,5 +1,8 @@
 <template>
-  <div class="space-y-2 p-3 sm:p-4 md:p-6 lg:p-8">
+  <div class="space-y-4 p-3 sm:p-4 md:p-6 min-h-screen bg-gray-50 dark:bg-slate-950 relative overflow-hidden">
+    <!-- Background accents -->
+    <div class="absolute top-0 right-0 w-1/2 h-64 bg-gradient-to-l from-primary-500/5 to-transparent pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-1/2 h-64 bg-gradient-to-r from-purple-500/5 to-transparent pointer-events-none"></div>
     <!-- Loading State -->
     <div
       v-if="isLoading"
@@ -306,7 +309,7 @@ const selectPrompt = (prompt: Prompt) => {
   navigateTo({
     path: "/prompts",
     query: {
-      templateId: prompt.id,
+      templateId: String(prompt.id),
     },
   });
 };
@@ -324,7 +327,10 @@ const loadTemplate = async () => {
     }
 
     // NOWA LOGIKA: Sprawdź czy to custom prompt
-    if (typeof templateId === "string" && templateId.startsWith("custom-")) {
+    if (
+      typeof templateId === "string" &&
+      (templateId.startsWith("custom-") || templateId.startsWith("custom_"))
+    ) {
       const customPrompt = getPromptById(templateId);
 
       if (customPrompt) {
@@ -391,6 +397,6 @@ watch(
 );
 
 useHead({
-  title: `${selectedTemplate.value?.name?.pl || "Prompt Editor"} - Prompt Forge`,
+  title: `${selectedTemplate.value?.name?.pl || selectedTemplate.value?.title || "Prompt Editor"} - Prompt Forge`,
 });
 </script>

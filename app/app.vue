@@ -23,6 +23,9 @@
 
     <!-- Pojedyncza, ciągła instancja ładowarki (SSG & CSR połączone) -->
     <LoadingOverlay :shown="showOverlay" />
+
+    <!-- Powiadomienie o aktualizacji PWA -->
+    <PwaUpdate />
   </UApp>
 </template>
 
@@ -56,6 +59,15 @@ useHead({
     {
       rel: "manifest",
       href: "/manifest.webmanifest",
+    },
+    {
+      rel: "icon",
+      type: "image/png",
+      href: "/favicon.png",
+    },
+    {
+      rel: "apple-touch-icon",
+      href: "/icon-192x192.png",
     },
   ],
 });

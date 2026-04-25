@@ -7,7 +7,7 @@
     size="lg"
     color="primary"
     variant="solid"
-    class="fixed top-4 right-4 lg:hidden glass-button shadow-lg"
+    class="fixed bottom-4 right-4 lg:hidden glass-button shadow-lg"
     :style="zIndexStyle('SIDEBAR')"
     aria-label="Open menu"
   />
@@ -24,7 +24,7 @@
     >
       <!-- mobile header with close button -->
       <div
-        class="flex h-16 items-center justify-between px-4 border-b border-white/20 dark:border-gray-700/50"
+        class="flex h-16 items-center justify-between px-4 border-b border-white/20 dark:border-slate-700/50"
       >
         <NuxtLink to="/" class="flex items-center gap-2 group">
           <div
@@ -33,7 +33,7 @@
             PF
           </div>
           <span class="text-lg font-semibold text-gray-900 dark:text-white">
-            <span v-once>{{ $t("app.name") }}</span>
+            <span>{{ $t("app.name") }}</span>
           </span>
         </NuxtLink>
         <GlassButton
@@ -79,7 +79,7 @@
         <ClientOnly>
           <div class="flex items-center justify-between mb-3">
             <div class="text-xs text-gray-500 dark:text-gray-400">
-              <span v-once>{{ $t("nav.theme") }}</span>
+              <span>{{ $t("nav.theme") }}</span>
             </div>
             <GlassButton
               @click="toggleTheme"
@@ -95,7 +95,7 @@
         <!-- Language selector mobile -->
         <div class="flex items-center justify-between">
           <div class="text-xs text-gray-500 dark:text-gray-400">
-            <span v-once>{{ $t("nav.language") }}</span>
+            <span>{{ $t("nav.language") }}</span>
           </div>
           <div class="flex gap-2">
             <GlassButton
@@ -140,7 +140,7 @@
           PF
         </div>
         <span class="text-lg font-semibold text-gray-900 dark:text-white">
-          <span v-once>{{ $t("app.name") }}</span>
+          <span>{{ $t("app.name") }}</span>
         </span>
       </NuxtLink>
 
@@ -263,7 +263,7 @@
         <ClientOnly>
           <div class="flex items-center justify-between">
             <div class="text-xs text-gray-500 dark:text-gray-400">
-              <span v-once>{{ $t("nav.theme") }}</span>
+              <span>{{ $t("nav.theme") }}</span>
             </div>
             <GlassButton
               @click="toggleTheme"
@@ -283,7 +283,7 @@
         <!-- Language selector expanded -->
         <div class="flex items-center justify-between">
           <div class="text-xs text-gray-500 dark:text-gray-400">
-            <span v-once>{{ $t("nav.language") }}</span>
+            <span>{{ $t("nav.language") }}</span>
           </div>
           <div class="flex gap-2">
             <GlassButton
@@ -390,11 +390,6 @@ const selectLang = (code: string) => {
   if (import.meta.client) {
     localStorage.setItem("locale", code);
     useCookie("locale").value = code;
-    
-    // Wymuszenie przeładowania aby uniknąć braku reaktywności w niepodpiętych pod i18n labelkach
-    setTimeout(() => {
-      window.location.reload();
-    }, 50);
   }
 };
 </script>

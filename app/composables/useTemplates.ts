@@ -31,18 +31,30 @@ export const useTemplates = () => {
     return result;
   };
 
-  // Filtruj i sortuj
-  const filteredPrompts = computed(() => {
-    // Kopiujemy do mutowalnej tablicy
+  // Memoizacja wyszukiwania tekstowego (najdroższa operacja)
+  const searchedPrompts = computed(() => {
     let result = [...(prompts.value || [])];
-
-    // Filtruj po wyszukiwaniu - TYLKO NAME
     if (searchQuery.value) {
       const query = searchQuery.value.toLowerCase();
       result = result.filter((p) => {
-        return getTranslated(p.name).toLowerCase().indexOf(query) !== -1;
+        return (
+          getTranslated(p.name).toLowerCase().indexOf(query) !== -1 ||
+          getTranslated(p.description).toLowerCase().indexOf(query) !== -1 ||
+          (p.type && p.type.toLowerCase().indexOf(query) !== -1) ||
+          (p.tags &&
+            p.tags.some((tag) => tag.toLowerCase().indexOf(query) !== -1)) ||
+          (p.categories &&
+            p.categories.some((cat) => cat.toLowerCase().indexOf(query) !== -1))
+        );
       });
     }
+    return result;
+  });
+
+  // Filtruj i sortuj (korzysta z zamemoizowanego wyszukiwania)
+  const filteredPrompts = computed(() => {
+    // Kopiujemy z already-searched array
+    let result = [...searchedPrompts.value];
 
     // Filtruj po typie
     if (selectedType.value) {
@@ -111,26 +123,11 @@ export const useTemplates = () => {
     }
   };
 
-  // Dostępne typy z licznikami
   const availableTypes = computed(() => {
     const typeCounts = new Map<string, number>();
 
-    let basePrompts = [...(prompts.value || [])];
-
-    if (searchQuery.value) {
-      const query = searchQuery.value.toLowerCase();
-      basePrompts = basePrompts.filter((p) => {
-        return (
-          getTranslated(p.name).toLowerCase().indexOf(query) !== -1 ||
-          getTranslated(p.description).toLowerCase().indexOf(query) !== -1 ||
-          (p.type && p.type.toLowerCase().indexOf(query) !== -1) ||
-          (p.tags &&
-            p.tags.some((tag) => tag.toLowerCase().indexOf(query) !== -1)) ||
-          (p.categories &&
-            p.categories.some((cat) => cat.toLowerCase().indexOf(query) !== -1))
-        );
-      });
-    }
+    // Zaczynamy od już przefiltrowanych po wyszukiwaniu
+    let basePrompts = [...searchedPrompts.value];
 
     if (selectedCategories.value.length > 0) {
       const catSet = new Set(selectedCategories.value);
@@ -157,26 +154,10 @@ export const useTemplates = () => {
       .sort((a, b) => a.type.localeCompare(b.type));
   });
 
-  // Dostępne kategorie z licznikami
   const availableCategories = computed(() => {
     const categoryCounts = new Map<string, number>();
 
-    let basePrompts = [...(prompts.value || [])];
-
-    if (searchQuery.value) {
-      const query = searchQuery.value.toLowerCase();
-      basePrompts = basePrompts.filter((p) => {
-        return (
-          getTranslated(p.name).toLowerCase().indexOf(query) !== -1 ||
-          getTranslated(p.description).toLowerCase().indexOf(query) !== -1 ||
-          (p.type && p.type.toLowerCase().indexOf(query) !== -1) ||
-          (p.tags &&
-            p.tags.some((tag) => tag.toLowerCase().indexOf(query) !== -1)) ||
-          (p.categories &&
-            p.categories.some((cat) => cat.toLowerCase().indexOf(query) !== -1))
-        );
-      });
-    }
+    let basePrompts = [...searchedPrompts.value];
 
     if (selectedType.value) {
       basePrompts = basePrompts.filter((p) => p.type === selectedType.value);
@@ -218,26 +199,10 @@ export const useTemplates = () => {
     return [...selected, ...unselected];
   });
 
-  // Dostępne tagi z licznikami
   const availableTags = computed(() => {
     const tagCounts = new Map<string, number>();
 
-    let basePrompts = [...(prompts.value || [])];
-
-    if (searchQuery.value) {
-      const query = searchQuery.value.toLowerCase();
-      basePrompts = basePrompts.filter((p) => {
-        return (
-          getTranslated(p.name).toLowerCase().indexOf(query) !== -1 ||
-          getTranslated(p.description).toLowerCase().indexOf(query) !== -1 ||
-          (p.type && p.type.toLowerCase().indexOf(query) !== -1) ||
-          (p.tags &&
-            p.tags.some((tag) => tag.toLowerCase().indexOf(query) !== -1)) ||
-          (p.categories &&
-            p.categories.some((cat) => cat.toLowerCase().indexOf(query) !== -1))
-        );
-      });
-    }
+    let basePrompts = [...searchedPrompts.value];
 
     if (selectedType.value) {
       basePrompts = basePrompts.filter((p) => p.type === selectedType.value);

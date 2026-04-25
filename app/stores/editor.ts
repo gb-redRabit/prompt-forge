@@ -1,6 +1,13 @@
 import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
+import localforage from 'localforage';
 import type { TagItem } from '~~/shared/types/content';
+
+// Konfiguracja IndexedDB dla dużych kolekcji
+localforage.config({
+  name: 'PromptForge',
+  storeName: 'editor_state'
+});
 
 export const useEditorStore = defineStore('editor', () => {
   // Navigation
@@ -182,7 +189,6 @@ export const useEditorStore = defineStore('editor', () => {
   function saveSnapshot(name: string, tagsCount: number) {
     const snapshot = { name, tags: JSON.parse(JSON.stringify(selectedTags.value)), category: currentCategory.value, additionalNegative: additionalNegative.value, createdAt: Date.now(), tagsCount };
     snapshots.value.unshift(snapshot);
-    localStorage.setItem("prompt_snapshots", JSON.stringify(snapshots.value));
   }
 
   function restoreSnapshot(snapshot: any) {
@@ -194,7 +200,6 @@ export const useEditorStore = defineStore('editor', () => {
 
   function deleteSnapshot(index: number) {
     snapshots.value.splice(index, 1);
-    localStorage.setItem("prompt_snapshots", JSON.stringify(snapshots.value));
   }
 
   function loadFromSharedData(data: any, allTagsFlat: TagItem[]) {
@@ -213,23 +218,15 @@ export const useEditorStore = defineStore('editor', () => {
   }
 
   function saveProgress() {
-    localStorage.setItem("editor_progress", JSON.stringify({ tags: selectedTags.value, additionalNegative: additionalNegative.value }));
+    // Pinia Persist automatycznie zapisuje zmiany w selectedTags i additionalNegative
   }
 
   function loadProgress() {
-    const saved = localStorage.getItem("editor_progress");
-    if (saved) {
-      try {
-        const p = JSON.parse(saved);
-        selectedTags.value = p.tags || {};
-        additionalNegative.value = p.additionalNegative || "";
-      } catch (e) {}
-    }
+    // Pinia Persist automatycznie przywraca stan z IndexedDB
   }
 
   function loadSnapshots() {
-    const saved = localStorage.getItem("prompt_snapshots");
-    if (saved) { try { snapshots.value = JSON.parse(saved); } catch (e) {} }
+    // Pinia Persist zajmuje się automatycznym ładowaniem z IndexedDB
   }
 
   return {
@@ -243,5 +240,22 @@ export const useEditorStore = defineStore('editor', () => {
     saveSnapshot, restoreSnapshot, deleteSnapshot, loadSnapshots
   };
 }, {
-  persist: true
-} as any);
+  persist: {
+    storage: {
+      getItem: (key) => localforage.getItem(key) as any,
+      setItem: (key, value) => localforage.setItem(key, value) as any,
+    },
+    pick: [
+      'favorites', 
+      'customTags', 
+      'currentCategory', 
+      'showOnlyFavorites', 
+      'showNsfw', 
+      'sidebarExpanded', 
+      'selectedTags', 
+      'additionalNegative', 
+      'snapshots', 
+      'historyStack'
+    ]
+  }
+});

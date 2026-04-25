@@ -2,13 +2,11 @@
   <section class="relative">
     <div class="text-center mb-4 md:mb-8 lg:mb-12 xl:mb-16 animate-fade-in-up">
       <h2
-        v-once
         class="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 dark:text-white mb-2 md:mb-3 lg:mb-4"
       >
         {{ $t("app.features_title") }}
       </h2>
       <p
-        v-once
         class="text-sm md:text-base lg:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto"
       >
         {{ $t("app.features_subtitle") }}
@@ -16,7 +14,7 @@
     </div>
 
     <div
-      class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 lg:gap-5 xl:gap-6"
+      class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8"
     >
       <LandingFeatureCard
         v-for="(feature, index) in features"

@@ -18,13 +18,25 @@ export interface OptionItem {
   value?: string;
 }
 
-export interface Prompt {
-  id: string;
-  title: string;
+export interface LocalizedText {
   pl: string;
   en: string;
-  tags?: string[];
-  categories?: string[];
+}
+
+export interface Prompt {
+  id: number | string;
+  /** Localized display name */
+  name?: LocalizedText;
+  /** Localized description */
+  description?: LocalizedText;
+  /** Legacy flat fields (older data) */
+  title?: string;
+  pl?: string;
+  en?: string;
+  type?: string;
+  placeholder_keys?: readonly string[];
+  tags?: readonly string[];
+  categories?: readonly string[];
   author?: string;
-  createdAt: number;
+  createdAt?: number;
 }

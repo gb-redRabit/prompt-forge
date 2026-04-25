@@ -1,7 +1,7 @@
 <template>
   <GlassCard
     variant="default"
-    padding="sm"
+    padding="md"
     hover
     shadow
     gradient

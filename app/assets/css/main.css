@@ -46,9 +46,14 @@ aside,
 }
 
 .dark {
-  --glass-bg: rgba(17, 24, 39, 0.5);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.2);
+  --glass-bg: rgba(15, 23, 42, 0.6); /* Slate-900 with more opacity */
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+}
+
+/* Base Body Styles for Soft Dark */
+.dark body {
+  @apply bg-slate-900 text-gray-200;
 }
 
 /* ===================================

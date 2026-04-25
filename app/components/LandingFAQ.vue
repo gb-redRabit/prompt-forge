@@ -3,13 +3,11 @@
     <!-- Header -->
     <div class="text-center mb-8 md:mb-12 lg:mb-16 animate-fade-in-up">
       <h2
-        v-once
         class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-3 md:mb-4"
       >
         {{ $t("app.faq.title") }}
       </h2>
       <p
-        v-once
         class="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto"
       >
         {{ $t("app.faq.subtitle") }}
@@ -41,8 +39,8 @@
           <!-- Icon -->
           <div class="flex items-center gap-2 md:gap-3 lg:gap-4 flex-1">
             <div
-              class="flex-shrink-0 w-8 h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 rounded-full bg-gradient-to-br from-primary-500 to-purple-600 flex items-center justify-center text-white text-sm md:text-base font-bold shadow-lg transition-all duration-300"
-              :class="openIndex === index ? 'scale-110 rotate-6' : ''"
+              class="flex-shrink-0 w-8 h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 rounded-full bg-gradient-to-br from-primary-500 to-purple-600 flex items-center justify-center text-white text-sm md:text-base font-bold shadow-lg transition-all duration-300 relative overflow-visible"
+              :class="openIndex === index ? 'scale-110 rotate-6 ring-4 ring-primary-500/20' : ''"
             >
               {{ index + 1 }}
             </div>
@@ -88,22 +86,6 @@
           </div>
         </Transition>
       </GlassCard>
-    </div>
-
-    <!-- Help CTA -->
-    <div class="text-center mt-12 animate-fade-in-up animation-delay-600">
-      <p v-once class="text-gray-600 dark:text-gray-400 mb-4">
-        {{ $t("app.faq.more_questions") || "Masz więcej pytań?" }}
-      </p>
-      <GlassButton
-        variant="outline"
-        size="lg"
-        color="primary"
-        icon="i-heroicons-chat-bubble-left-right"
-        @click="$emit('contact')"
-      >
-        {{ $t("app.faq.contact_us") || "Skontaktuj się z nami" }}
-      </GlassButton>
     </div>
   </section>
 </template>

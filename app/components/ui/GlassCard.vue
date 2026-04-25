@@ -37,19 +37,19 @@ const cardClasses = computed(() => {
   switch (props.variant) {
     case "subtle":
       classes.push(
-        "bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800"
+        "bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800"
       );
       break;
     case "strong":
       classes.push(
-        "bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
+        "bg-slate-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700"
       );
       break;
     case "default":
     default:
       classes.push(
-        "bg-white dark:bg-gray-900",
-        props.border ? "border border-gray-200 dark:border-gray-800" : ""
+        "bg-white dark:bg-slate-900",
+        props.border ? "border border-gray-200 dark:border-slate-800" : ""
       );
       break;
   }
@@ -74,7 +74,7 @@ const cardClasses = computed(() => {
 
   // Shadow
   if (props.shadow) {
-    classes.push("shadow-lg shadow-gray-200/50 dark:shadow-gray-900/50");
+    classes.push("shadow-lg shadow-gray-200/50 dark:shadow-slate-900/50");
   }
 
   // Gradient overlay (optional decorative effect)

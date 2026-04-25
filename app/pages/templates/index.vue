@@ -768,7 +768,7 @@ const handleSelectTemplate = (template: any) => {
   navigateTo({
     path: "/prompts",
     query: {
-      templateId: template.id,
+      templateId: String(template.id),
     },
   });
 };

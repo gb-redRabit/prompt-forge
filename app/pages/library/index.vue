@@ -1,5 +1,7 @@
 <template>
-  <div class="space-y-6 p-4 sm:p-6 lg:p-8 relative">
+  <div class="space-y-6 p-4 sm:p-6 lg:p-8 relative bg-gray-50 dark:bg-slate-950 min-h-screen">
+    <!-- Background accents -->
+    <div class="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-primary-500/5 to-transparent pointer-events-none"></div>
     <!-- Content with higher z-index -->
     <div class="relative z-10 max-w-7xl mx-auto">
       <!-- Header -->
@@ -75,146 +77,21 @@
           </template>
 
           <template #promptsTags>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-              <div
-                v-for="prompt in filteredEditorPrompts"
-                :key="prompt.savedId"
-                class="flex flex-col p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl hover:shadow-md transition-all group animate-fade-in-up"
-              >
-                <div>
-                  <div class="flex items-center justify-between mb-2">
-                    <h3 class="font-semibold text-gray-900 dark:text-white">
-                      {{
-                        prompt.name
-                          ? locale === "pl"
-                            ? prompt.name.pl
-                            : prompt.name.en
-                          : prompt.result || "Prompt"
-                      }}
-                    </h3>
-                  </div>
-
-                  <p
-                    class="text-sm text-gray-600 dark:text-gray-400 line-clamp-3"
-                  >
-                    {{
-                      prompt.description
-                        ? locale === "pl"
-                          ? prompt.description.pl
-                          : prompt.description.en
-                        : prompt.result || ""
-                    }}
-                  </p>
-                </div>
-
-                <div
-                  class="flex items-center justify-between pt-3 border-t border-gray-200 dark:border-gray-700 mt-3"
-                >
-                  <span class="text-xs text-gray-500">{{
-                    formattedDateFor(prompt)
-                  }}</span>
-                  <div
-                    class="flex items-center gap-2 opacity-90 group-hover:opacity-100 transition-opacity"
-                  >
-                    <GlassButton
-                      size="xs"
-                      color="primary"
-                      variant="soft"
-                      icon="i-heroicons-play"
-                      @click="() => openLink(prompt.link)"
-                    >
-                      <span v-once>{{ $t("common.use") || "Użyj" }}</span>
-                    </GlassButton>
-                    <GlassButton
-                      size="xs"
-                      color="neutral"
-                      variant="outline"
-                      @click="() => shareLink(prompt.link)"
-                    >
-                      <span v-once>{{
-                        $t("common.share") || "Udostępnij"
-                      }}</span>
-                    </GlassButton>
-                    <GlassButton
-                      size="xs"
-                      color="neutral"
-                      variant="ghost"
-                      @click="() => openPreview(prompt)"
-                    >
-                      <span v-once>{{
-                        $t("common.preview") || "Podgląd"
-                      }}</span>
-                    </GlassButton>
-                    <GlassButton
-                      size="xs"
-                      color="error"
-                      variant="ghost"
-                      icon="i-heroicons-trash"
-                      title="Usuń prompt"
-                      aria-label="Usuń prompt"
-                      @click="() => requestDeleteEditorPrompt(prompt.savedId)"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+            <LibraryEditorPromptsTab
+              :prompts="filteredEditorPrompts"
+              @use="usePrompt"
+              @share="shareLink"
+              @preview="openPreview"
+              @delete="requestDeleteEditorPrompt"
+            />
           </template>
 
           <template #tagFavorites>
-            <div class="mt-4">
-              <h3
-                class="text-lg font-medium text-gray-900 dark:text-white mb-2"
-              >
-                Ulubione tagi
-              </h3>
-              <div class="space-y-4">
-                <template v-if="Object.keys(groupedTagFavorites).length">
-                  <div
-                    v-for="(items, category) in groupedTagFavorites"
-                    :key="category"
-                    class=""
-                  >
-                    <h4
-                      class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
-                    >
-                      {{
-                        category === "_uncategorized"
-                          ? $t("pages.library.tags.uncategorized") || "Inne"
-                          : category
-                      }}
-                    </h4>
-                    <div class="flex flex-wrap gap-2">
-                      <template v-for="(tagObj, i) in items" :key="tagObj.raw">
-                        <div
-                          class="inline-flex items-center bg-gray-100 dark:bg-gray-800 rounded-full px-3 py-1 text-sm text-gray-700 dark:text-gray-200"
-                        >
-                          <button
-                            class="mr-2 text-xs text-gray-500"
-                            @click="() => setTagFilter(tagObj.raw)"
-                          >
-                            {{
-                              locale === "pl"
-                                ? tagObj.pl || tagObj.en
-                                : tagObj.en || tagObj.pl
-                            }}
-                          </button>
-                          <GlassButton
-                            size="xs"
-                            variant="ghost"
-                            color="error"
-                            icon="i-heroicons-trash"
-                            @click="() => requestDeleteTag(tagObj.raw)"
-                          />
-                        </div>
-                      </template>
-                    </div>
-                  </div>
-                </template>
-                <template v-else>
-                  <p class="text-sm text-gray-500">Brak ulubionych tagów.</p>
-                </template>
-              </div>
-            </div>
+            <LibraryTagFavoritesTab
+              :grouped-favorites="groupedTagFavorites"
+              @filter="setTagFilter"
+              @delete="requestDeleteTag"
+            />
           </template>
 
           <template #history>
@@ -264,130 +141,22 @@
 
         <!-- Prompts Tags Tab -->
         <div v-show="activeTab === 2">
-          <div class="grid grid-cols-1 gap-3 mt-4">
-            <div
-              v-for="prompt in filteredEditorPrompts"
-              :key="prompt.savedId"
-              class="flex flex-col p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl transition-all group animate-fade-in-up"
-            >
-              <div>
-                <div class="flex items-center justify-between mb-2">
-                  <h3
-                    class="font-semibold text-sm text-gray-900 dark:text-white"
-                  >
-                    {{
-                      prompt.name
-                        ? locale === "pl"
-                          ? prompt.name.pl
-                          : prompt.name.en
-                        : prompt.result || "Prompt"
-                    }}
-                  </h3>
-                </div>
-
-                <p
-                  class="text-xs text-gray-600 dark:text-gray-400 line-clamp-2"
-                >
-                  {{
-                    prompt.description
-                      ? locale === "pl"
-                        ? prompt.description.pl
-                        : prompt.description.en
-                      : prompt.result || ""
-                  }}
-                </p>
-              </div>
-
-              <div
-                class="flex items-center justify-between pt-2 border-t border-gray-200 dark:border-gray-700 mt-2"
-              >
-                <span class="text-[10px] text-gray-500">{{
-                  formattedDateFor(prompt)
-                }}</span>
-                <div
-                  class="flex items-center gap-1.5 opacity-90 group-hover:opacity-100 transition-opacity"
-                >
-                  <GlassButton
-                    size="xs"
-                    color="primary"
-                    variant="soft"
-                    icon="i-heroicons-play"
-                    @click="() => openLink(prompt.link)"
-                  >
-                    <span class="text-[10px]" v-once>{{
-                      $t("common.use") || "Użyj"
-                    }}</span>
-                  </GlassButton>
-                  <GlassButton
-                    size="xs"
-                    color="error"
-                    variant="ghost"
-                    icon="i-heroicons-trash"
-                    title="Usuń prompt"
-                    aria-label="Usuń prompt"
-                    @click="() => requestDeleteEditorPrompt(prompt.savedId)"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+          <LibraryEditorPromptsTab
+            :prompts="filteredEditorPrompts"
+            @use="usePrompt"
+            @share="shareLink"
+            @preview="openPreview"
+            @delete="requestDeleteEditorPrompt"
+          />
         </div>
 
         <!-- Tag Favorites Tab -->
         <div v-show="activeTab === 3">
-          <div class="mt-4">
-            <h3
-              class="text-base font-medium text-gray-900 dark:text-white mb-3"
-            >
-              Ulubione tagi
-            </h3>
-            <div class="space-y-3">
-              <template v-if="Object.keys(groupedTagFavorites).length">
-                <div
-                  v-for="(items, category) in groupedTagFavorites"
-                  :key="category"
-                >
-                  <h4
-                    class="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2"
-                  >
-                    {{
-                      category === "_uncategorized"
-                        ? $t("pages.library.tags.uncategorized") || "Inne"
-                        : category
-                    }}
-                  </h4>
-                  <div class="flex flex-wrap gap-2">
-                    <template v-for="(tagObj, i) in items" :key="tagObj.raw">
-                      <div
-                        class="inline-flex items-center bg-gray-100 dark:bg-gray-800 rounded-full px-2.5 py-1 text-xs text-gray-700 dark:text-gray-200"
-                      >
-                        <button
-                          class="mr-1.5 text-[10px] text-gray-500"
-                          @click="() => setTagFilter(tagObj.raw)"
-                        >
-                          {{
-                            locale === "pl"
-                              ? tagObj.pl || tagObj.en
-                              : tagObj.en || tagObj.pl
-                          }}
-                        </button>
-                        <GlassButton
-                          size="xs"
-                          variant="ghost"
-                          color="error"
-                          icon="i-heroicons-trash"
-                          @click="() => requestDeleteTag(tagObj.raw)"
-                        />
-                      </div>
-                    </template>
-                  </div>
-                </div>
-              </template>
-              <template v-else>
-                <p class="text-xs text-gray-500">Brak ulubionych tagów.</p>
-              </template>
-            </div>
-          </div>
+          <LibraryTagFavoritesTab
+            :grouped-favorites="groupedTagFavorites"
+            @filter="setTagFilter"
+            @delete="requestDeleteTag"
+          />
         </div>
 
         <!-- History Tab -->
@@ -461,20 +230,23 @@
 
     <!-- Modals - Teleport to body ONLY on client -->
     <Teleport v-if="isMounted" to="body">
-      <ImportModal v-model:open="showImportModal" @import="handleImport" />
+      <LazyImportModal v-if="showImportModal" v-model:open="showImportModal" @import="handleImport" />
 
-      <CreateCollectionModal
+      <LazyCreateCollectionModal
+        v-if="showCreateCollectionModal"
         v-model:open="showCreateCollectionModal"
         @create="handleCreateCollection"
       />
 
-      <EditPromptModal
+      <LazyEditPromptModal
+        v-if="showEditModal"
         v-model:open="showEditModal"
         :prompt="editingPrompt"
         @save="handleSaveEdit"
       />
 
-      <AddToCollectionModal
+      <LazyAddToCollectionModal
+        v-if="showAddToCollectionModal"
         v-model:open="showAddToCollectionModal"
         :collection="selectedCollection"
         :available-prompts="availablePromptsForCollection"
@@ -561,7 +333,7 @@
       </div>
 
       <!-- Preview Modal component -->
-      <PreviewModal v-model:open="showPreviewModal" :prompt="previewPrompt" />
+      <LazyPreviewModal v-if="showPreviewModal" v-model:open="showPreviewModal" :prompt="previewPrompt" />
     </Teleport>
 
     <!-- Undo snackbar for soft-deletes -->
@@ -584,15 +356,13 @@
 </template>
 
 <script setup lang="ts">
-import EditPromptModal from "~/components/library/modals/EditPromptModal.vue";
-import AddToCollectionModal from "~/components/library/modals/AddToCollectionModal.vue";
-import CreateCollectionModal from "~/components/library/modals/CreateCollectionModal.vue";
-import ImportModal from "~/components/library/modals/ImportModal.vue";
-import PreviewModal from "~/components/library/PreviewModal.vue";
+
 import LibrarySavedTab from "~/components/library/LibrarySavedTab.vue";
 import LibraryCustomTab from "~/components/library/LibraryCustomTab.vue";
 import LibraryCollectionsTab from "~/components/library/LibraryCollectionsTab.vue";
 import LibraryHistoryTab from "~/components/library/LibraryHistoryTab.vue";
+import LibraryEditorPromptsTab from "~/components/library/LibraryEditorPromptsTab.vue";
+import LibraryTagFavoritesTab from "~/components/library/LibraryTagFavoritesTab.vue";
 import LibraryStats from "~/components/library/LibraryStats.vue";
 import { useLibrary } from "~/composables/useLibrary";
 import type { SavedPrompt, PromptCollection } from "~/composables/useLibrary";
@@ -1077,11 +847,18 @@ const openPreview = (prompt: SavedPrompt) => {
   showPreviewModal.value = true;
 
   // Toast to indicate preview opened
-  toast.add &&
-    toast.add({
-      title: t("pages.library.actions.previewOpened") || "Otworzono podgląd",
-      color: "info",
-    });
+  toast.add({
+    title: t("library.actions.previewOpened"),
+    color: "primary",
+  });
+};
+
+const handleMissingLink = (prompt: SavedPrompt) => {
+  toast.add({
+    title: t("common.no_link"),
+    description: t("library.actions.legacyPromptNoLink") || "Ten prompt nie ma zapisanego linku do edytora.",
+    color: "warning",
+  });
 };
 
 const handleImport = async (file: File, mode: "merge" | "replace") => {

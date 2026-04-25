@@ -3,15 +3,15 @@
     <!-- Glass card with hover effects -->
     <GlassCard
       variant="subtle"
-      padding="sm"
+      padding="md"
       hover
       shadow
       gradient
-      class="h-full transition-all duration-500 hover:-translate-y-2 overflow-hidden"
+      class="h-full transition-all duration-500 hover:-translate-y-2 rounded-2xl relative overflow-visible"
     >
       <!-- Content -->
       <div
-        class="relative space-y-2 md:space-y-3 lg:space-y-4 xl:space-y-6 text-center"
+        class="relative space-y-2 md:space-y-3 lg:space-y-4 xl:space-y-6 text-center pt-2"
       >
         <!-- Number badge with glow -->
         <div class="relative inline-flex">
@@ -33,7 +33,7 @@
 
         <!-- Title -->
         <h3
-          class="text-sm md:text-base lg:text-lg xl:text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300 leading-tight"
+          class="text-sm md:text-base lg:text-lg xl:text-xl font-bold text-gray-800 dark:text-gray-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300 leading-tight"
         >
           {{ title }}
         </h3>
@@ -47,9 +47,11 @@
       </div>
 
       <!-- Decorative corner accent -->
-      <div
-        class="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-primary-500/10 to-transparent rounded-tr-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-      ></div>
+      <div class="absolute inset-0 overflow-hidden rounded-2xl pointer-events-none">
+        <div
+          class="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-primary-500/10 to-transparent rounded-tr-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        ></div>
+      </div>
     </GlassCard>
   </div>
 </template>

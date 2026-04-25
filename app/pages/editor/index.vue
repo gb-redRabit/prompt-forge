@@ -673,7 +673,7 @@ useHead({
 const generateSharedUrl = (data: any) => {
   try {
     const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
-    return `${window.location.origin}/editor?shared=${encoded}`;
+    return `${window.location.origin}/editor?shared=${encodeURIComponent(encoded)}`;
   } catch (e) {
     console.error("Error generating shared URL:", e);
     return "";
