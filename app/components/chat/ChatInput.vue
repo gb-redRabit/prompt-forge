@@ -1,9 +1,9 @@
 <template>
-  <div class="border-t border-gray-200 dark:border-gray-700 p-2 sm:p-3 md:p-4">
+  <div class="border-t border-slate-200 dark:border-slate-700 p-2 sm:p-3 md:p-4">
     <!-- Model indicator -->
     <div
       v-if="currentModel"
-      class="mb-1.5 sm:mb-2 flex items-center justify-between text-[10px] sm:text-xs text-gray-500 dark:text-gray-400"
+      class="mb-1.5 sm:mb-2 flex items-center justify-between text-[10px] sm:text-xs text-slate-500 dark:text-slate-400"
     >
       <span class="flex items-center gap-1 truncate">
         <UIcon
@@ -34,7 +34,7 @@
                   ? $t('chat.placeholder_configure')
                   : $t('chat.placeholder_write')
               "
-              class="w-full px-3 py-2 sm:px-4 sm:py-3 pr-10 sm:pr-12 rounded-lg sm:rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 text-xs sm:text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              class="w-full px-3 py-2 sm:px-4 sm:py-3 pr-10 sm:pr-12 rounded-lg sm:rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-500 text-xs sm:text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               style="min-height: 44px; max-height: 200px"
               @keydown="handleKeydown"
               @input="autoResize"
@@ -43,7 +43,7 @@
             <!-- Character count -->
             <div
               v-if="input.length > 0"
-              class="absolute bottom-1.5 sm:bottom-2 right-1.5 sm:right-2 text-[10px] sm:text-xs text-gray-400 dark:text-gray-600"
+              class="absolute bottom-1.5 sm:bottom-2 right-1.5 sm:right-2 text-[10px] sm:text-xs text-slate-400 dark:text-slate-600"
               :title="$t('chat.input.character_count')"
             >
               {{ input.length }}
@@ -83,15 +83,15 @@
           </div>
 
           <div
-            class="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 hidden md:flex items-center gap-1 flex-shrink-0"
+            class="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 hidden md:flex items-center gap-1 flex-shrink-0"
           >
             <kbd
-              class="px-1.5 py-0.5 sm:px-2 bg-gray-100 dark:bg-gray-800 rounded text-[10px] sm:text-xs"
+              class="px-1.5 py-0.5 sm:px-2 bg-slate-100 dark:bg-slate-800 rounded text-[10px] sm:text-xs"
               >{{ $t("chat.input.key_shift") }}</kbd
             >
             <span>+</span>
             <kbd
-              class="px-1.5 py-0.5 sm:px-2 bg-gray-100 dark:bg-gray-800 rounded text-[10px] sm:text-xs"
+              class="px-1.5 py-0.5 sm:px-2 bg-slate-100 dark:bg-slate-800 rounded text-[10px] sm:text-xs"
               >{{ $t("chat.input.key_enter") }}</kbd
             >
             <span class="hidden lg:inline">{{

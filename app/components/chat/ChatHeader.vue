@@ -1,19 +1,19 @@
 <template>
   <div
-    class="flex items-center justify-between px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 border-b border-gray-200 dark:border-gray-700"
+    class="flex items-center justify-between px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 border-b border-slate-200 dark:border-slate-700"
   >
     <div class="flex items-center gap-2 sm:gap-3 md:gap-4 flex-1 min-w-0">
       <!-- Conversation title -->
       <div class="flex-1 min-w-0">
         <h2
           v-if="activeConversation"
-          class="text-sm sm:text-base md:text-lg font-semibold text-gray-900 dark:text-white truncate"
+          class="text-sm sm:text-base md:text-lg font-semibold text-slate-900 dark:text-white truncate"
         >
           {{ activeConversation.title }}
         </h2>
         <h2
           v-else
-          class="text-sm sm:text-base md:text-lg font-semibold text-gray-500 dark:text-gray-400"
+          class="text-sm sm:text-base md:text-lg font-semibold text-slate-500 dark:text-slate-400"
         >
           {{ $t("chat.select_start") }}
         </h2>
@@ -32,7 +32,7 @@
           >
             {{ currentModel }}
           </GlassBadge>
-          <span class="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400">
+          <span class="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400">
             |
             {{
               isConfigured

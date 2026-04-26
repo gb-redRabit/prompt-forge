@@ -14,7 +14,7 @@
         <!-- Sekcja: Podstawowe informacje -->
         <div class="space-y-4">
           <div
-            class="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white pb-2 border-b border-gray-200 dark:border-gray-700"
+            class="flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-white pb-2 border-b border-slate-200 dark:border-slate-700"
           >
             <UIcon
               name="i-heroicons-information-circle"
@@ -27,7 +27,7 @@
             <!-- Nazwa PL -->
             <div class="space-y-2">
               <label
-                class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+                class="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 <UIcon name="i-heroicons-language" class="w-4 h-4" />
                 <span v-once>{{
@@ -49,7 +49,7 @@
             <!-- Nazwa EN -->
             <div class="space-y-2">
               <label
-                class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+                class="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 <UIcon name="i-heroicons-language" class="w-4 h-4" />
                 <span v-once>{{
@@ -71,7 +71,7 @@
             <!-- Opis PL -->
             <div class="space-y-2">
               <label
-                class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+                class="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 <UIcon name="i-heroicons-document-text" class="w-4 h-4" />
                 <span v-once>{{
@@ -94,7 +94,7 @@
             <!-- Opis EN -->
             <div class="space-y-2">
               <label
-                class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+                class="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 <UIcon name="i-heroicons-document-text" class="w-4 h-4" />
                 <span v-once>{{
@@ -119,7 +119,7 @@
         <!-- Sekcja: Szablon -->
         <div class="space-y-4">
           <div
-            class="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white pb-2 border-b border-gray-200 dark:border-gray-700"
+            class="flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-white pb-2 border-b border-slate-200 dark:border-slate-700"
           >
             <UIcon
               name="i-heroicons-code-bracket"
@@ -132,7 +132,7 @@
             <!-- Template PL -->
             <div class="space-y-2">
               <label
-                class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+                class="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 <span v-once>{{
                   $t("library.modals.edit.fields.templatePL")
@@ -152,7 +152,7 @@
             <!-- Template EN -->
             <div class="space-y-2">
               <label
-                class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+                class="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 <span v-once>{{
                   $t("library.modals.edit.fields.templateEN")
@@ -174,7 +174,7 @@
         <!-- Sekcja: Kategorie i Tagi -->
         <div class="space-y-4">
           <div
-            class="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white pb-2 border-b border-gray-200 dark:border-gray-700"
+            class="flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-white pb-2 border-b border-slate-200 dark:border-slate-700"
           >
             <UIcon name="i-heroicons-tag" class="w-5 h-5 text-purple-500" />
             <span>{{ $t("library.modals.edit.sections.organization") }}</span>
@@ -184,13 +184,13 @@
             <!-- Kategorie -->
             <div class="space-y-3">
               <label
-                class="flex items-center justify-between text-sm font-medium text-gray-700 dark:text-gray-300"
+                class="flex items-center justify-between text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 <span class="flex items-center gap-2">
                   <UIcon name="i-heroicons-folder" class="w-4 h-4" />
                   {{ $t("library.modals.edit.fields.categories") }}
                 </span>
-                <span class="text-xs text-gray-400">
+                <span class="text-xs text-slate-400">
                   {{
                     $t("library.modals.edit.hints.categoryCount", {
                       count: editData.categories.length,
@@ -200,7 +200,7 @@
               </label>
 
               <div
-                class="flex flex-wrap gap-2 min-h-[2.5rem] p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900"
+                class="flex flex-wrap gap-2 min-h-[2.5rem] p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900"
               >
                 <template
                   v-for="(cat, i) in editData.categories"
@@ -257,18 +257,18 @@
                 <!-- Sugestie kategorii -->
                 <div
                   v-if="suggestedCategories.length > 0"
-                  class="absolute z-10 w-full mt-1 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 max-h-40 overflow-y-auto"
+                  class="absolute z-10 w-full mt-1 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 max-h-40 overflow-y-auto"
                 >
                   <button
                     v-for="cat in suggestedCategories"
                     :key="cat"
                     type="button"
-                    class="w-full px-3 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2 transition-colors"
+                    class="w-full px-3 py-2 text-left text-sm hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-2 transition-colors"
                     @click="addCategory(cat)"
                   >
                     <UIcon
                       name="i-heroicons-folder"
-                      class="w-4 h-4 text-gray-400"
+                      class="w-4 h-4 text-slate-400"
                     />
                     <span>{{ cat }}</span>
                   </button>
@@ -279,13 +279,13 @@
             <!-- Tagi -->
             <div class="space-y-3">
               <label
-                class="flex items-center justify-between text-sm font-medium text-gray-700 dark:text-gray-300"
+                class="flex items-center justify-between text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 <span class="flex items-center gap-2">
                   <UIcon name="i-heroicons-hashtag" class="w-4 h-4" />
                   {{ $t("library.modals.edit.fields.tags") }}
                 </span>
-                <span class="text-xs text-gray-400">
+                <span class="text-xs text-slate-400">
                   {{
                     $t("library.modals.edit.hints.tagCount", {
                       count: editData.tags.length,
@@ -295,7 +295,7 @@
               </label>
 
               <div
-                class="flex flex-wrap gap-2 min-h-[2.5rem] p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900"
+                class="flex flex-wrap gap-2 min-h-[2.5rem] p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900"
               >
                 <template v-for="(tag, i) in editData.tags" :key="`tag-${i}`">
                   <GlassBadge
@@ -347,18 +347,18 @@
                 <!-- Sugestie tagów -->
                 <div
                   v-if="suggestedTags.length > 0"
-                  class="absolute z-10 w-full mt-1 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 max-h-40 overflow-y-auto"
+                  class="absolute z-10 w-full mt-1 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 max-h-40 overflow-y-auto"
                 >
                   <button
                     v-for="tag in suggestedTags"
                     :key="tag"
                     type="button"
-                    class="w-full px-3 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2 transition-colors"
+                    class="w-full px-3 py-2 text-left text-sm hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-2 transition-colors"
                     @click="addTag(tag)"
                   >
                     <UIcon
                       name="i-heroicons-hashtag"
-                      class="w-4 h-4 text-gray-400"
+                      class="w-4 h-4 text-slate-400"
                     />
                     <span>{{ tag }}</span>
                   </button>
@@ -371,14 +371,14 @@
         <!-- Sekcja: Placeholders -->
         <div class="space-y-4">
           <div
-            class="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white pb-2 border-b border-gray-200 dark:border-gray-700"
+            class="flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-white pb-2 border-b border-slate-200 dark:border-slate-700"
           >
             <UIcon
               name="i-heroicons-variable"
               class="w-5 h-5 text-orange-500"
             />
             <span>{{ $t("library.modals.edit.sections.variables") }}</span>
-            <span class="text-xs text-gray-400 font-normal">
+            <span class="text-xs text-slate-400 font-normal">
               {{ $t("library.modals.edit.sections.variables_hint") }}
             </span>
           </div>
@@ -391,12 +391,12 @@
               <div
                 v-for="(ph, i) in editData.placeholderEntries"
                 :key="`ph-${i}`"
-                class="flex gap-3 items-start p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 hover:border-primary-400 transition-colors"
+                class="flex gap-3 items-start p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 hover:border-primary-400 transition-colors"
               >
                 <div class="flex-1 grid grid-cols-2 gap-3">
                   <div>
                     <label
-                      class="text-xs text-gray-500 dark:text-gray-400 mb-1 block"
+                      class="text-xs text-slate-500 dark:text-slate-400 mb-1 block"
                     >
                       {{ $t("library.modals.edit.labels.key") }}
                     </label>
@@ -414,7 +414,7 @@
                   </div>
                   <div>
                     <label
-                      class="text-xs text-gray-500 dark:text-gray-400 mb-1 block"
+                      class="text-xs text-slate-500 dark:text-slate-400 mb-1 block"
                     >
                       {{ $t("library.modals.edit.labels.value") }}
                     </label>
@@ -442,7 +442,7 @@
               </div>
             </div>
 
-            <div v-else class="text-center py-8 text-gray-400 text-sm">
+            <div v-else class="text-center py-8 text-slate-400 text-sm">
               <UIcon
                 name="i-heroicons-variable"
                 class="w-12 h-12 mx-auto mb-2 opacity-30"
@@ -452,7 +452,7 @@
 
             <!-- Dodaj nowy placeholder -->
             <div
-              class="flex gap-3 p-4 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-700 hover:border-primary-400 transition-colors"
+              class="flex gap-3 p-4 rounded-lg border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-primary-400 transition-colors"
             >
               <UInput
                 v-model="newPlaceholderKey"
@@ -509,7 +509,7 @@
         </div>
       </div>
 
-      <div v-else class="text-center py-16 text-gray-500">
+      <div v-else class="text-center py-16 text-slate-500">
         <UIcon
           name="i-heroicons-exclamation-circle"
           class="w-16 h-16 mx-auto mb-4 opacity-30"
@@ -519,7 +519,7 @@
     </template>
 
     <template #footer>
-      <div class="text-xs text-gray-500 flex items-center">
+      <div class="text-xs text-slate-500 flex items-center">
         <UIcon name="i-heroicons-information-circle" class="w-4 h-4 mr-1" />
         <span v-once>{{ $t("library.modals.edit.hints.saveNote") }}</span>
       </div>

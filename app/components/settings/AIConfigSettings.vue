@@ -20,7 +20,7 @@
       <!-- Configuration Form Card -->
       <GlassCard padding="sm">
         <h3
-          class="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3 flex items-center gap-1.5 sm:gap-2"
+          class="text-xs sm:text-sm font-semibold text-slate-900 dark:text-white mb-2 sm:mb-3 flex items-center gap-1.5 sm:gap-2"
         >
           <UIcon
             name="i-heroicons-cog-6-tooth"
@@ -32,7 +32,7 @@
         <!-- Server Endpoint -->
         <div class="space-y-1.5 sm:space-y-2">
           <label
-            class="text-[10px] sm:text-xs font-medium text-gray-700 dark:text-gray-300 flex items-center gap-1 sm:gap-1.5"
+            class="text-[10px] sm:text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1 sm:gap-1.5"
           >
             <UIcon
               name="i-heroicons-server"
@@ -70,7 +70,7 @@
         <div class="space-y-1.5 sm:space-y-2">
           <div class="flex items-center justify-between">
             <label
-              class="text-[10px] sm:text-xs font-medium text-gray-700 dark:text-gray-300 flex items-center gap-1 sm:gap-1.5"
+              class="text-[10px] sm:text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1 sm:gap-1.5"
             >
               <UIcon
                 name="i-heroicons-cpu-chip"
@@ -127,7 +127,7 @@
               <UTooltip text="Kliknij 'Odśwież' aby pobrać modele">
                 <UIcon
                   name="i-heroicons-information-circle"
-                  class="w-4 h-4 text-gray-400"
+                  class="w-4 h-4 text-slate-400"
                 />
               </UTooltip>
             </template>
@@ -135,7 +135,7 @@
 
           <p
             v-if="availableModels.length > 0"
-            class="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1"
+            class="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1"
           >
             <UIcon
               name="i-heroicons-check-circle"
@@ -150,7 +150,7 @@
           </p>
           <p
             v-else
-            class="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1"
+            class="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1"
           >
             <UIcon
               name="i-heroicons-information-circle"
@@ -213,7 +213,7 @@
         <!-- Last Connection Footer -->
         <div
           v-if="isConfigured && lastConnectionTime"
-          class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 pt-2 sm:pt-3 mt-2 sm:mt-3 border-t border-gray-200 dark:border-gray-700"
+          class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 pt-2 sm:pt-3 mt-2 sm:mt-3 border-t border-slate-200 dark:border-slate-700"
         >
           <span class="flex items-center gap-1.5">
             <UIcon name="i-heroicons-clock" class="w-3.5 h-3.5" />
@@ -250,7 +250,7 @@
             />
           </div>
           <h3
-            class="font-semibold text-xs sm:text-sm text-gray-900 dark:text-white"
+            class="font-semibold text-xs sm:text-sm text-slate-900 dark:text-white"
           >
             <span v-once>{{ $t("ai.status_card.title") }}</span>
           </h3>
@@ -258,15 +258,15 @@
 
         <div class="grid grid-cols-2 gap-2 sm:gap-3">
           <div
-            class="p-2 sm:p-3 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm"
+            class="p-2 sm:p-3 rounded-lg bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm"
           >
             <div
-              class="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 mb-0.5 sm:mb-1"
+              class="text-[10px] sm:text-xs text-slate-600 dark:text-slate-400 mb-0.5 sm:mb-1"
             >
               <span v-once>{{ $t("ai.status_card.endpoint") }}</span>
             </div>
             <div
-              class="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white truncate"
+              class="text-xs sm:text-sm font-semibold text-slate-900 dark:text-white truncate"
             >
               {{
                 config.endpoint
@@ -277,15 +277,15 @@
           </div>
 
           <div
-            class="p-2 sm:p-3 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm"
+            class="p-2 sm:p-3 rounded-lg bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm"
           >
             <div
-              class="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 mb-0.5 sm:mb-1"
+              class="text-[10px] sm:text-xs text-slate-600 dark:text-slate-400 mb-0.5 sm:mb-1"
             >
               <span v-once>{{ $t("ai.status_card.model") }}</span>
             </div>
             <div
-              class="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white truncate"
+              class="text-xs sm:text-sm font-semibold text-slate-900 dark:text-white truncate"
               :title="config.modelId"
             >
               {{
@@ -295,30 +295,30 @@
           </div>
 
           <div
-            class="p-2 sm:p-3 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm"
+            class="p-2 sm:p-3 rounded-lg bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm"
           >
             <div
-              class="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 mb-0.5 sm:mb-1"
+              class="text-[10px] sm:text-xs text-slate-600 dark:text-slate-400 mb-0.5 sm:mb-1"
             >
               <span v-once>{{ $t("ai.status_card.models_available") }}</span>
             </div>
             <div
-              class="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white"
+              class="text-xs sm:text-sm font-semibold text-slate-900 dark:text-white"
             >
               {{ availableModels.length || 0 }}
             </div>
           </div>
 
           <div
-            class="p-2 sm:p-3 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm"
+            class="p-2 sm:p-3 rounded-lg bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm"
           >
             <div
-              class="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 mb-0.5 sm:mb-1"
+              class="text-[10px] sm:text-xs text-slate-600 dark:text-slate-400 mb-0.5 sm:mb-1"
             >
               <span v-once>{{ $t("ai.status_card.status") }}</span>
             </div>
             <div
-              class="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white"
+              class="text-xs sm:text-sm font-semibold text-slate-900 dark:text-white"
             >
               {{
                 isConfigured

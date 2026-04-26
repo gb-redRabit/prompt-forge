@@ -13,7 +13,7 @@
 
       <!-- Main Content -->
       <main
-        class="flex-1 overflow-hidden flex flex-col h-screen w-full min-w-0 bg-gray-50/30 dark:bg-gray-900/10 relative z-10"
+        class="flex-1 overflow-hidden flex flex-col h-screen w-full min-w-0 bg-slate-50/30 dark:bg-slate-900/10 relative z-10"
       >
         <div class="flex-1 overflow-hidden h-full">
           <div class="w-full max-w-[1700px] h-full p-2 sm:p-4 lg:p-6 lg:py-8 mx-auto flex flex-col lg:flex-row gap-0 lg:gap-6">
@@ -21,8 +21,8 @@
             <!-- Left Side / Center: Tags Selection -->
             <div class="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
             <!-- Workspace Header -->
-            <div class="flex items-center justify-between mb-2 px-2 pb-3 border-b border-gray-100 dark:border-gray-800">
-              <h1 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight">
+            <div class="flex items-center justify-between mb-2 px-2 pb-3 border-b border-slate-100 dark:border-slate-800">
+              <h1 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
                 {{ getCategoryNameByLabel(currentCategory || '') }}
               </h1>
               <div class="flex items-center gap-2">
@@ -147,16 +147,16 @@
           <div
             v-for="(snapshot, index) in snapshots"
             :key="index"
-            class="p-3 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer"
+            class="p-3 border rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer"
             @click="restoreSnapshot(snapshot)"
           >
             <div class="flex justify-between items-start">
               <div>
                 <h4 class="font-semibold">{{ snapshot.name }}</h4>
-                <p class="text-sm text-gray-600 dark:text-gray-400">
+                <p class="text-sm text-slate-600 dark:text-slate-400">
                   {{ new Date(snapshot.createdAt).toLocaleString() }}
                 </p>
-                <p class="text-xs text-gray-500">
+                <p class="text-xs text-slate-500">
                   {{ snapshot.tagsCount }} tagów, {{ getCategoryNameByLabel(snapshot.category || 'Subject') }}
                 </p>
               </div>
@@ -172,9 +172,9 @@
           <div v-if="snapshots.length === 0" class="text-center py-8">
             <UIcon
               name="i-heroicons-clock"
-              class="w-12 h-12 mx-auto mb-2 text-gray-300"
+              class="w-12 h-12 mx-auto mb-2 text-slate-300"
             />
-            <p class="text-gray-500">{{ $t("prompt_creator.no_history") }}</p>
+            <p class="text-slate-500">{{ $t("prompt_creator.no_history") }}</p>
           </div>
         </div>
       </template>
@@ -654,7 +654,7 @@ const tagClasses = computed(() => {
     "border-2 hover:shadow-lg hover:brightness-110",
     tagObj.nsfw
       ? "bg-red-50 dark:bg-red-900/20 border-red-500 text-red-700 dark:text-red-300"
-      : "bg-white dark:bg-gray-800 border-primary-500 text-gray-900 dark:text-white",
+      : "bg-white dark:bg-slate-800 border-primary-500 text-slate-900 dark:text-white",
   ];
 });
 

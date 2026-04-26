@@ -16,9 +16,9 @@
   <div v-else class="text-center py-8 sm:py-12">
     <UIcon
       name="i-heroicons-bookmark"
-      class="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-gray-400 mb-3 sm:mb-4"
+      class="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-slate-400 mb-3 sm:mb-4"
     />
-    <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400 px-4">
+    <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400 px-4">
       <span v-once>{{ $t("library.saved.empty") }}</span>
     </p>
     <GlassButton

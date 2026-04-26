@@ -9,7 +9,7 @@
         :class="[
           locale === lang.code
             ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
-            : 'border-gray-200 dark:border-gray-700 hover:border-primary-300',
+            : 'border-slate-200 dark:border-slate-700 hover:border-primary-300',
         ]"
       >
         <div class="flex flex-col items-center gap-1.5 sm:gap-2">
@@ -18,19 +18,19 @@
             :class="[
               locale === lang.code
                 ? 'bg-primary-500 text-white'
-                : 'bg-gray-100 dark:bg-gray-800',
+                : 'bg-slate-100 dark:bg-slate-800',
             ]"
           >
             <span>{{ lang.flag }}</span>
           </div>
           <div class="text-center">
             <div
-              class="font-semibold text-sm sm:text-base text-gray-900 dark:text-white"
+              class="font-semibold text-sm sm:text-base text-slate-900 dark:text-white"
             >
               {{ lang.name }}
             </div>
             <div
-              class="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400"
+              class="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400"
             >
               {{ lang.nativeName }}
             </div>
@@ -80,9 +80,5 @@ const languages = [
 
 const changeLanguage = (code: string) => {
   setLocale(code as "pl" | "en");
-  if (import.meta.client) {
-    localStorage.setItem("locale", code);
-    useCookie("locale").value = code;
-  }
 };
 </script>

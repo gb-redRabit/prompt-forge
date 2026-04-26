@@ -10,7 +10,7 @@
         >
           {{ categoryName }}
         </h1>
-        <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
           {{ $t("prompt_creator.step") }} {{ currentStep }} / {{ totalSteps }}
         </p>
       </div>
@@ -21,7 +21,7 @@
 
     <!-- Progress Bar -->
     <div
-      class="relative h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden"
+      class="relative h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden"
     >
       <div
         class="absolute inset-y-0 left-0 bg-gradient-to-r from-primary-500 via-purple-500 to-pink-500 transition-all duration-500 rounded-full"

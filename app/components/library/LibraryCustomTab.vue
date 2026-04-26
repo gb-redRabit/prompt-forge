@@ -14,20 +14,20 @@
       />
 
     <GlassCard
-      class="hover:shadow-lg transition-all cursor-pointer border-2 border-dashed border-gray-300 dark:border-gray-700 hover:border-primary-500 dark:hover:border-primary-500 bg-gray-50 dark:bg-gray-900 flex items-center justify-center min-h-[150px] sm:min-h-[200px]"
+      class="hover:shadow-lg transition-all cursor-pointer border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-primary-500 dark:hover:border-primary-500 bg-slate-50 dark:bg-slate-900 flex items-center justify-center min-h-[150px] sm:min-h-[200px]"
       @click="$emit('create')"
     >
       <div class="text-center p-4 sm:p-6">
         <UIcon
           name="i-heroicons-plus-circle"
-          class="w-10 h-10 sm:w-12 sm:h-12 mx-auto text-gray-400 mb-2 sm:mb-3"
+          class="w-10 h-10 sm:w-12 sm:h-12 mx-auto text-slate-400 mb-2 sm:mb-3"
         />
         <p
-          class="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400"
+          class="text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400"
         >
           <span v-once>{{ $t("library.custom.addNew") }}</span>
         </p>
-        <p class="text-[10px] sm:text-xs text-gray-500 mt-1">
+        <p class="text-[10px] sm:text-xs text-slate-500 mt-1">
           <span v-once>{{ $t("library.custom.clickToCreate") }}</span>
         </p>
       </div>

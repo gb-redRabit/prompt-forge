@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 flex relative">
+  <div class="min-h-screen bg-slate-50 dark:bg-slate-900 flex relative">
     <!-- Background Effects -->
     <ClientOnly>
       <span>

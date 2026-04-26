@@ -8,7 +8,7 @@
             class="w-4 h-4 sm:w-5 sm:h-5 text-primary-600 flex-shrink-0"
           />
           <h3
-            class="font-semibold text-sm sm:text-base text-gray-900 dark:text-white truncate"
+            class="font-semibold text-sm sm:text-base text-slate-900 dark:text-white truncate"
           >
             {{ promptName }}
           </h3>
@@ -27,15 +27,15 @@
 
     <div class="space-y-2 sm:space-y-3">
       <p
-        class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 line-clamp-2"
+        class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 line-clamp-2"
       >
         {{ promptDescription }}
       </p>
 
       <div
-        class="flex items-center justify-between pt-2 border-t border-gray-200 dark:border-gray-700"
+        class="flex items-center justify-between pt-2 border-t border-slate-200 dark:border-slate-700"
       >
-        <span class="text-[10px] sm:text-xs text-gray-500">
+        <span class="text-[10px] sm:text-xs text-slate-500">
           {{ formattedDate }}
         </span>
 

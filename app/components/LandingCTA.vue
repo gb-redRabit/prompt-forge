@@ -1,9 +1,9 @@
 <template>
   <section class="relative">
     <!-- Animated gradient background -->
-    <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute inset-0 pointer-events-none ">
       <div
-        class="absolute inset-0 bg-gradient-to-br from-primary-500/10 via-purple-500/10 to-blue-500/10 rounded-3xl"
+        class="absolute inset-0 bg-gradient-to-br from-primary-500/10 via-purple-500/10 to-blue-500/10 rounded-2xl md:rounded-3xl"
       ></div>
       <div
         class="absolute -top-40 -right-40 w-96 h-96 bg-primary-500/20 rounded-full blur-3xl animate-pulse-slow"
@@ -20,15 +20,15 @@
       padding="lg"
       gradient
       shadow
-      class="rounded-2xl md:rounded-3xl"
+      rounded="rounded-2xl md:rounded-3xl"
     >
       <div
-        class="relative z-10 text-center space-y-4 md:space-y-6 lg:space-y-8 animate-fade-in-up"
+        class="relative  z-10 text-center space-y-4 md:space-y-6 lg:space-y-8 animate-fade-in-up "
       >
         <!-- Title with gradient -->
         <h2
           v-once
-          class="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-gray-900 dark:text-white"
+          class="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-slate-900 dark:text-white"
         >
           <span class="block mb-1.5 md:mb-2">{{ $t("app.cta_title") }}</span>
           <span
@@ -41,7 +41,7 @@
         <!-- Subtitle -->
         <p
           v-once
-          class="text-base md:text-lg lg:text-xl xl:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed"
+          class="text-base md:text-lg lg:text-xl xl:text-2xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed"
         >
           {{ $t("app.footer_note") }}
         </p>
@@ -76,7 +76,7 @@
 
         <!-- Trust indicators -->
         <div
-          class="flex flex-wrap items-center justify-center gap-4 md:gap-6 lg:gap-8 pt-6 md:pt-8 text-xs md:text-sm text-gray-500 dark:text-gray-400"
+          class="flex flex-wrap items-center justify-center gap-4 md:gap-6 lg:gap-8 pt-6 md:pt-8 text-xs md:text-sm text-slate-500 dark:text-slate-400"
         >
           <GlassBadge
             variant="soft"

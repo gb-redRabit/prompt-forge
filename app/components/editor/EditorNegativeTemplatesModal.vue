@@ -52,12 +52,12 @@
           <div
             v-for="group in groups"
             :key="group.label"
-            class="space-y-4 p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/30"
+            class="space-y-4 p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/30"
           >
             <!-- Group Header -->
-            <div class="flex items-center gap-2 pb-2 border-b border-gray-200 dark:border-gray-700">
+            <div class="flex items-center gap-2 pb-2 border-b border-slate-200 dark:border-slate-700">
               <UIcon name="i-heroicons-folder" class="w-5 h-5 text-primary-500" />
-              <h4 class="text-sm font-semibold text-gray-900 dark:text-white">
+              <h4 class="text-sm font-semibold text-slate-900 dark:text-white">
                 {{ group.label }}
               </h4>
               <GlassBadge color="neutral" variant="soft" size="xs">
@@ -94,21 +94,21 @@
 
         <!-- Preview -->
         <div v-if="activeTemplates.length > 0" class="space-y-3">
-          <div class="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white pb-2 border-b border-gray-200 dark:border-gray-700">
+          <div class="flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-white pb-2 border-b border-slate-200 dark:border-slate-700">
             <UIcon name="i-heroicons-eye" class="w-5 h-5 text-purple-500" />
             <span>{{ $t("prompt_creator.preview") }}</span>
           </div>
 
-          <div class="p-4 rounded-xl bg-gray-900 border border-gray-800">
-            <p class="text-sm text-gray-300 font-mono leading-relaxed">
+          <div class="p-4 rounded-xl bg-slate-900 border border-slate-800">
+            <p class="text-sm text-slate-300 font-mono leading-relaxed">
               {{ activeTemplates.join(", ") }}
             </p>
           </div>
         </div>
 
         <!-- Actions -->
-        <div class="flex justify-between items-center gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
-          <p class="text-xs text-gray-500 dark:text-gray-400">
+        <div class="flex justify-between items-center gap-3 pt-4 border-t border-slate-200 dark:border-slate-700">
+          <p class="text-xs text-slate-500 dark:text-slate-400">
             {{ $t("prompt_creator.templates_auto_apply") }}
           </p>
           <GlassButton

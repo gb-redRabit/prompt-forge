@@ -15,7 +15,7 @@
         <!-- Name -->
         <div class="space-y-2">
           <label
-            class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            class="block text-sm font-medium text-slate-700 dark:text-slate-300"
           >
             <span v-once>{{ $t("prompt_creator.prompt_name") }}</span>
             <span class="text-red-500">*</span>
@@ -30,7 +30,7 @@
         <!-- Description -->
         <div class="space-y-2">
           <label
-            class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            class="block text-sm font-medium text-slate-700 dark:text-slate-300"
           >
             <span v-once>{{ $t("prompt_creator.prompt_description") }}</span>
           </label>
@@ -51,7 +51,7 @@
           <div
             class="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3"
           >
-            <p class="text-sm text-gray-700 dark:text-gray-300 font-mono">
+            <p class="text-sm text-slate-700 dark:text-slate-300 font-mono">
               {{ positivePrompt.substring(0, 150)
               }}{{ positivePrompt.length > 150 ? "..." : "" }}
             </p>
@@ -68,7 +68,7 @@
           <div
             class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3"
           >
-            <p class="text-sm text-gray-700 dark:text-gray-300 font-mono">
+            <p class="text-sm text-slate-700 dark:text-slate-300 font-mono">
               {{ negativePrompt.substring(0, 150)
               }}{{ negativePrompt.length > 150 ? "..." : "" }}
             </p>
@@ -77,8 +77,8 @@
 
         <!-- Tags count -->
         <div class="flex items-center gap-2">
-          <UIcon name="i-heroicons-tag" class="w-4 h-4 text-gray-500" />
-          <span class="text-sm text-gray-600 dark:text-gray-400">
+          <UIcon name="i-heroicons-tag" class="w-4 h-4 text-slate-500" />
+          <span class="text-sm text-slate-600 dark:text-slate-400">
             {{ tags.length }}
             <span v-once>{{ $t("prompt_creator.tags_included") }}</span>
           </span>
@@ -86,7 +86,7 @@
 
         <!-- Actions -->
         <div
-          class="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700"
+          class="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-700"
         >
           <GlassButton color="neutral" variant="outline" @click="handleCancel">
             <span v-once>{{ $t("common.cancel") }}</span>

@@ -25,13 +25,13 @@
 
     <!-- Nazwa -->
     <h3
-      class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors"
+      class="text-lg font-semibold text-slate-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors"
     >
       {{ translatedName }}
     </h3>
 
     <!-- Opis -->
-    <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-3 mb-4">
+    <p class="text-sm text-slate-600 dark:text-slate-400 line-clamp-3 mb-4">
       {{ translatedDescription }}
     </p>
 
@@ -80,16 +80,16 @@
     <!-- Preview - dynamiczny, znika gdy brak template -->
     <div
       v-if="showPreview && hasTemplate"
-      class="bg-gray-50 dark:bg-gray-900/50 rounded p-3 mb-4 border border-gray-200 dark:border-gray-700"
+      class="bg-slate-50 dark:bg-slate-900/50 rounded p-3 mb-4 border border-slate-200 dark:border-slate-700"
     >
       <p
         v-once
-        class="text-xs text-gray-500 dark:text-gray-400 mb-1 font-medium"
+        class="text-xs text-slate-500 dark:text-slate-400 mb-1 font-medium"
       >
         {{ $t("pages.templates.preview") }}
       </p>
       <p
-        class="text-xs text-gray-600 dark:text-gray-300 line-clamp-2 font-mono whitespace-pre-wrap"
+        class="text-xs text-slate-600 dark:text-slate-300 line-clamp-2 font-mono whitespace-pre-wrap"
       >
         {{ previewText }}
       </p>
@@ -99,7 +99,7 @@
     <div v-if="visiblePlaceholders.length > 0" class="mb-4">
       <p
         v-once
-        class="text-xs text-gray-500 dark:text-gray-400 mb-1 font-medium"
+        class="text-xs text-slate-500 dark:text-slate-400 mb-1 font-medium"
       >
         {{ $t("pages.templates.placeholders") }}
       </p>
@@ -126,14 +126,14 @@
 
     <!-- Akcje -->
     <div
-      class="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700"
+      class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-700"
     >
-      <div v-once class="text-xs text-gray-500 dark:text-gray-500">
+      <div v-once class="text-xs text-slate-500 dark:text-slate-500">
         {{ $t("pages.templates.use_template") }}
       </div>
       <UIcon
         name="i-heroicons-arrow-right"
-        class="w-5 h-5 text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 group-hover:translate-x-1 transition-all"
+        class="w-5 h-5 text-slate-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 group-hover:translate-x-1 transition-all"
       />
     </div>
   </GlassCard>

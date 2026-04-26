@@ -2,7 +2,7 @@
   <ClientOnly>
     <div v-if="needRefresh" class="pwa-update-toast">
       <UCard
-        class="border-primary-500/50 bg-white/90 shadow-2xl backdrop-blur-xl dark:bg-gray-900/90"
+        class="border-primary-500/50 bg-white/90 shadow-2xl backdrop-blur-xl dark:bg-slate-900/90"
       >
         <div class="flex items-center gap-4">
           <div
@@ -14,10 +14,10 @@
             />
           </div>
           <div class="flex-1">
-            <h3 class="font-bold text-gray-900 dark:text-white">
+            <h3 class="font-bold text-slate-900 dark:text-white">
               {{ $t("pwa.update.title") }}
             </h3>
-            <p class="text-sm text-gray-500 dark:text-gray-400">
+            <p class="text-sm text-slate-500 dark:text-slate-400">
               {{ $t("pwa.update.description") }}
             </p>
           </div>

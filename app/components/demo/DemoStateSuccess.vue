@@ -18,11 +18,11 @@
 
     <!-- Typing Output -->
     <div
-      class="p-6 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200 dark:border-gray-700 min-h-[200px]"
+      class="p-6 rounded-xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 min-h-[200px]"
     >
       <div class="prose dark:prose-invert max-w-none">
         <div
-          class="typing-effect whitespace-pre-wrap text-gray-900 dark:text-white leading-relaxed"
+          class="typing-effect whitespace-pre-wrap text-slate-900 dark:text-white leading-relaxed"
         >
           {{ displayedText
           }}<span

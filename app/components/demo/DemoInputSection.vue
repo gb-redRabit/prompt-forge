@@ -8,7 +8,7 @@
   >
     <div class="flex items-center justify-between mb-4">
       <h3
-        class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2"
+        class="text-lg font-semibold text-slate-900 dark:text-white flex items-center gap-2"
       >
         <div
           class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-purple-600 flex items-center justify-center shadow-lg shadow-primary-500/30"
@@ -19,7 +19,7 @@
       </h3>
       <span
         v-if="modelValue.length > 0"
-        class="text-sm text-gray-500 dark:text-gray-400"
+        class="text-sm text-slate-500 dark:text-slate-400"
       >
         {{ modelValue.length }} {{ $t("app.demo.characters") }}
       </span>
@@ -50,13 +50,13 @@
       "
       :placeholder="$t('app.demo.input_placeholder')"
       rows="8"
-      class="w-full px-4 py-3 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none backdrop-blur-sm transition-all duration-200"
+      class="w-full px-4 py-3 rounded-lg bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none backdrop-blur-sm transition-all duration-200"
     />
 
     <!-- Footer -->
     <div class="flex items-center justify-between mt-4">
       <div class="flex items-center gap-3">
-        <span class="text-sm text-gray-500 dark:text-gray-400">
+        <span class="text-sm text-slate-500 dark:text-slate-400">
           {{ modelValue.length }} {{ $t("app.demo.characters") }}
         </span>
         <div v-if="modelValue.length > 0" class="flex items-center gap-1">

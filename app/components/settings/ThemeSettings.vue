@@ -9,7 +9,7 @@
         :class="[
           currentTheme === theme.value
             ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
-            : 'border-gray-200 dark:border-gray-700 hover:border-primary-300',
+            : 'border-slate-200 dark:border-slate-700 hover:border-primary-300',
         ]"
       >
         <div class="flex flex-col items-center gap-1.5 sm:gap-2">
@@ -18,19 +18,19 @@
             :class="[
               currentTheme === theme.value
                 ? 'bg-gradient-to-br from-primary-500 to-purple-500 text-white shadow-lg'
-                : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400',
+                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400',
             ]"
           >
             <UIcon :name="theme.icon" class="w-5 h-5 sm:w-6 sm:h-6" />
           </div>
           <div class="text-center">
             <div
-              class="font-semibold text-gray-900 dark:text-white text-xs sm:text-sm"
+              class="font-semibold text-slate-900 dark:text-white text-xs sm:text-sm"
             >
               {{ $t(theme.labelKey) }}
             </div>
             <div
-              class="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 leading-tight"
+              class="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 leading-tight"
             >
               {{ $t(theme.descKey) }}
             </div>
@@ -46,7 +46,7 @@
 
     <GlassCard padding="sm" variant="subtle">
       <p
-        class="text-[10px] sm:text-xs text-gray-700 dark:text-gray-300 flex items-start gap-1.5 sm:gap-2 leading-relaxed"
+        class="text-[10px] sm:text-xs text-slate-700 dark:text-slate-300 flex items-start gap-1.5 sm:gap-2 leading-relaxed"
       >
         <UIcon
           name="i-heroicons-information-circle"

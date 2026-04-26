@@ -32,7 +32,7 @@
           >
             PF
           </div>
-          <span class="text-lg font-semibold text-gray-900 dark:text-white">
+          <span class="text-lg font-semibold text-slate-900 dark:text-white">
             <span>{{ $t("app.name") }}</span>
           </span>
         </NuxtLink>
@@ -63,7 +63,7 @@
               :class="
                 isActive(item.href)
                   ? 'glass-card text-primary-600 dark:text-primary-400 font-semibold'
-                  : 'text-gray-700 dark:text-gray-300 hover:glass-button'
+                  : 'text-slate-700 dark:text-slate-300 hover:glass-button'
               "
             >
               <UIcon :name="item.icon" class="h-5 w-5" />
@@ -74,11 +74,11 @@
       </nav>
 
       <!-- mobile footer -->
-      <div class="px-4 py-3 border-t border-white/20 dark:border-gray-700/50">
+      <div class="px-4 py-3 border-t border-white/20 dark:border-slate-700/50">
         <!-- Theme toggle mobile -->
         <ClientOnly>
           <div class="flex items-center justify-between mb-3">
-            <div class="text-xs text-gray-500 dark:text-gray-400">
+            <div class="text-xs text-slate-500 dark:text-slate-400">
               <span>{{ $t("nav.theme") }}</span>
             </div>
             <GlassButton
@@ -94,7 +94,7 @@
 
         <!-- Language selector mobile -->
         <div class="flex items-center justify-between">
-          <div class="text-xs text-gray-500 dark:text-gray-400">
+          <div class="text-xs text-slate-500 dark:text-slate-400">
             <span>{{ $t("nav.language") }}</span>
           </div>
           <div class="flex gap-2">
@@ -130,7 +130,7 @@
   >
     <!-- desktop header -->
     <div
-      class="flex h-16 items-center border-b border-white/20 dark:border-gray-700/50"
+      class="flex h-16 items-center border-b border-white/20 dark:border-slate-700/50"
       :class="!sidebarOpen ? 'justify-center px-2' : 'justify-between px-4'"
     >
       <NuxtLink v-if="sidebarOpen" to="/" class="flex items-center gap-2 group">
@@ -139,7 +139,7 @@
         >
           PF
         </div>
-        <span class="text-lg font-semibold text-gray-900 dark:text-white">
+        <span class="text-lg font-semibold text-slate-900 dark:text-white">
           <span>{{ $t("app.name") }}</span>
         </span>
       </NuxtLink>
@@ -182,7 +182,7 @@
               !sidebarOpen ? 'justify-center' : 'gap-3',
               isActive(item.href)
                 ? 'glass-card text-primary-600 dark:text-primary-400 font-semibold'
-                : 'text-gray-700 dark:text-gray-300 hover:glass-button',
+                : 'text-slate-700 dark:text-slate-300 hover:glass-button',
             ]"
           >
             <div class="flex items-center justify-center w-6 h-6 flex-shrink-0">
@@ -208,7 +208,7 @@
 
     <!-- desktop footer -->
     <div
-      class="border-t border-white/20 dark:border-gray-700/50"
+      class="border-t border-white/20 dark:border-slate-700/50"
       :class="!sidebarOpen ? 'px-2 py-3' : 'px-4 py-3'"
     >
       <div v-if="!sidebarOpen" class="flex flex-col items-center gap-2">
@@ -262,7 +262,7 @@
         <!-- Theme toggle expanded -->
         <ClientOnly>
           <div class="flex items-center justify-between">
-            <div class="text-xs text-gray-500 dark:text-gray-400">
+            <div class="text-xs text-slate-500 dark:text-slate-400">
               <span>{{ $t("nav.theme") }}</span>
             </div>
             <GlassButton
@@ -282,7 +282,7 @@
 
         <!-- Language selector expanded -->
         <div class="flex items-center justify-between">
-          <div class="text-xs text-gray-500 dark:text-gray-400">
+          <div class="text-xs text-slate-500 dark:text-slate-400">
             <span>{{ $t("nav.language") }}</span>
           </div>
           <div class="flex gap-2">
@@ -387,10 +387,6 @@ const { locale, setLocale } = useI18n();
 
 const selectLang = (code: string) => {
   setLocale(code as "pl" | "en");
-  if (import.meta.client) {
-    localStorage.setItem("locale", code);
-    useCookie("locale").value = code;
-  }
 };
 </script>
 

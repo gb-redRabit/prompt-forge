@@ -29,6 +29,8 @@ export interface Prompt {
   name?: LocalizedText;
   /** Localized description */
   description?: LocalizedText;
+  /** Localized prompt text */
+  template?: LocalizedText;
   /** Legacy flat fields (older data) */
   title?: string;
   pl?: string;

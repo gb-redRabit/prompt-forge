@@ -1,7 +1,7 @@
 <template>
   <aside
     :class="[
-      'glass-panel border-r border-gray-200/50 dark:border-gray-700/50 transition-all duration-300 relative backdrop-blur-xl',
+      'glass-panel border-r border-slate-200/50 dark:border-slate-700/50 transition-all duration-300 relative backdrop-blur-xl',
       expanded ? 'w-72' : 'w-16',
     ]"
   >
@@ -69,7 +69,7 @@
     </svg>
 
     <!-- Główny układ panelu Bocznego -->
-    <div class="flex flex-col h-full overflow-hidden relative bg-white dark:bg-gray-900 z-10">
+    <div class="flex flex-col h-full overflow-hidden relative bg-white dark:bg-slate-900 z-10">
       <!-- Categories List (Przewijana część) -->
       <div class="overflow-y-auto flex-1 custom-scrollbar">
         <div
@@ -87,13 +87,13 @@
           <!-- Group Header -->
           <div
             v-if="expanded"
-            class="px-3 py-1.5 text-xs font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider bg-white/30 dark:bg-gray-800/30 rounded-lg backdrop-blur-sm"
+            class="px-3 py-1.5 text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider bg-white/30 dark:bg-slate-800/30 rounded-lg backdrop-blur-sm"
           >
             {{ group.title }}
           </div>
           <div
             v-else-if="group.key !== 'basics'"
-            class="px-2 border-b border-white/30 dark:border-gray-700/50 w-3/4 mx-auto"
+            class="px-2 border-b border-white/30 dark:border-slate-700/50 w-3/4 mx-auto"
           ></div>
 
           <!-- Category Buttons -->
@@ -118,7 +118,7 @@
                 expanded ? 'w-8 h-8' : 'w-9 h-9',
                 currentCategory === category
                   ? 'bg-gradient-to-br from-primary-500 to-purple-600 text-white shadow-sm shadow-primary-500/30'
-                  : 'bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm text-gray-600 dark:text-gray-400 group-hover:text-primary-500 group-hover:scale-110',
+                  : 'bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm text-slate-600 dark:text-slate-400 group-hover:text-primary-500 group-hover:scale-110',
               ]"
             >
               <UIcon
@@ -131,7 +131,7 @@
               <!-- Badge (collapsed) -->
               <div
                 v-if="getTagCount(category) && !expanded"
-                class="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-gradient-to-br from-primary-500 to-purple-600 text-white text-[10px] flex items-center justify-center font-bold shadow-sm shadow-primary-500/40 ring-1 ring-white dark:ring-gray-900"
+                class="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-gradient-to-br from-primary-500 to-purple-600 text-white text-[10px] flex items-center justify-center font-bold shadow-sm shadow-primary-500/40 ring-1 ring-white dark:ring-slate-900"
               >
                 {{ getTagCount(category) }}
               </div>
@@ -144,7 +144,7 @@
                   'text-sm font-semibold transition-colors duration-300 truncate',
                   currentCategory === category
                     ? 'text-primary-600 dark:text-primary-400'
-                    : 'text-gray-700 dark:text-gray-300 group-hover:text-primary-600',
+                    : 'text-slate-700 dark:text-slate-300 group-hover:text-primary-600',
                 ]"
               >
                 {{ getCategoryName(category) }}

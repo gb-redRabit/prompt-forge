@@ -14,7 +14,7 @@
       <form @submit.prevent="handleSubmit" class="space-y-6 p-6">
         <!-- Section: Basic Info -->
         <div class="space-y-4">
-          <div class="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white pb-2 border-b border-gray-200 dark:border-gray-700">
+          <div class="flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-white pb-2 border-b border-slate-200 dark:border-slate-700">
             <UIcon name="i-heroicons-tag" class="w-5 h-5 text-primary-500" />
             <span>{{ $t("prompt_creator.tag_names") }}</span>
           </div>
@@ -22,7 +22,7 @@
           <div class="grid md:grid-cols-2 gap-4">
             <!-- Name PL -->
             <div class="space-y-2">
-              <label class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label class="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
                 <UIcon name="i-heroicons-language" class="w-4 h-4" />
                 <span>{{ $t("prompt_creator.tag_name") }}</span>
                 <GlassBadge color="primary" variant="soft" size="xs">PL</GlassBadge>
@@ -40,7 +40,7 @@
 
             <!-- Name EN -->
             <div class="space-y-2">
-              <label class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label class="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
                 <UIcon name="i-heroicons-language" class="w-4 h-4" />
                 <span>{{ $t("prompt_creator.tag_name") }}</span>
                 <GlassBadge color="secondary" variant="soft" size="xs">EN</GlassBadge>
@@ -60,14 +60,14 @@
 
         <!-- Section: Negative Prompts -->
         <div class="space-y-4">
-          <div class="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white pb-2 border-b border-gray-200 dark:border-gray-700">
+          <div class="flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-white pb-2 border-b border-slate-200 dark:border-slate-700">
             <UIcon name="i-heroicons-exclamation-circle" class="w-5 h-5 text-red-500" />
             <span>{{ $t("prompt_creator.negative_prompts_optional") }}</span>
           </div>
 
           <div class="grid md:grid-cols-2 gap-4">
             <div class="space-y-2">
-              <label class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label class="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
                 <UIcon name="i-heroicons-x-circle" class="w-4 h-4" />
                 <span>{{ $t("prompt_creator.negative_prompt") }}</span>
                 <GlassBadge color="primary" variant="soft" size="xs">PL</GlassBadge>
@@ -82,7 +82,7 @@
             </div>
 
             <div class="space-y-2">
-              <label class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label class="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
                 <UIcon name="i-heroicons-x-circle" class="w-4 h-4" />
                 <span>{{ $t("prompt_creator.negative_prompt") }}</span>
                 <GlassBadge color="secondary" variant="soft" size="xs">EN</GlassBadge>
@@ -100,19 +100,19 @@
 
         <!-- Section: Settings -->
         <div class="space-y-4">
-          <div class="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white pb-2 border-b border-gray-200 dark:border-gray-700">
-            <UIcon name="i-heroicons-cog-6-tooth" class="w-5 h-5 text-gray-500" />
+          <div class="flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-white pb-2 border-b border-slate-200 dark:border-slate-700">
+            <UIcon name="i-heroicons-cog-6-tooth" class="w-5 h-5 text-slate-500" />
             <span>{{ $t("prompt_creator.additional_settings") }}</span>
           </div>
 
-          <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700">
+          <div class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700">
             <div class="flex items-center gap-3">
               <UIcon name="i-heroicons-eye-slash" class="w-5 h-5 text-red-500" />
               <div>
-                <p class="text-sm font-medium text-gray-900 dark:text-white">
+                <p class="text-sm font-medium text-slate-900 dark:text-white">
                   {{ $t("prompt_creator.mark_as_nsfw") }}
                 </p>
-                <p class="text-xs text-gray-500 dark:text-gray-400">
+                <p class="text-xs text-slate-500 dark:text-slate-400">
                   {{ $t("prompt_creator.nsfw_description") }}
                 </p>
               </div>
@@ -122,8 +122,8 @@
         </div>
 
         <!-- Actions -->
-        <div class="flex justify-between items-center gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
-          <p class="text-xs text-gray-500 dark:text-gray-400">
+        <div class="flex justify-between items-center gap-3 pt-4 border-t border-slate-200 dark:border-slate-700">
+          <p class="text-xs text-slate-500 dark:text-slate-400">
             {{ $t("prompt_creator.required_fields_note") }}
           </p>
             <div class="flex gap-3">

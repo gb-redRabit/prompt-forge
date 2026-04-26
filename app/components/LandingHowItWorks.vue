@@ -3,12 +3,12 @@
     <!-- Header -->
     <div class="text-center mb-4 md:mb-8 lg:mb-12 xl:mb-16 animate-fade-in-up">
       <h2
-        class="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-2 md:mb-3 lg:mb-4"
+        class="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-slate-800 dark:text-slate-100 mb-2 md:mb-3 lg:mb-4"
       >
         {{ $t("app.section_how_title") }}
       </h2>
       <p
-        class="text-sm md:text-base lg:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto"
+        class="text-sm md:text-base lg:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto"
       >
         {{ $t("app.section_how_subtitle") }}
       </p>
@@ -55,12 +55,12 @@
         {{ $t("app.how_cta_badge") }}
       </GlassBadge>
       <h3
-        class="text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold text-gray-800 dark:text-gray-100 mb-2 md:mb-3 lg:mb-4 hidden md:block"
+        class="text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold text-slate-800 dark:text-slate-100 mb-2 md:mb-3 lg:mb-4 hidden md:block"
       >
         {{ $t("app.how_cta_title") }}
       </h3>
       <p
-        class="text-sm md:text-base lg:text-lg text-gray-600 dark:text-gray-400 mb-3 md:mb-6 lg:mb-8 max-w-2xl mx-auto hidden md:block"
+        class="text-sm md:text-base lg:text-lg text-slate-600 dark:text-slate-400 mb-3 md:mb-6 lg:mb-8 max-w-2xl mx-auto hidden md:block"
       >
         {{ $t("app.how_cta_subtitle") }}
       </p>

@@ -30,11 +30,11 @@
             />
           </div>
           <h3
-            class="text-base sm:text-lg md:text-xl font-bold text-gray-900 dark:text-white"
+            class="text-base sm:text-lg md:text-xl font-bold text-slate-900 dark:text-white"
           >
             {{ $t("chat.window.start_title") }}
           </h3>
-          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400">
+          <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400">
             {{ $t("chat.window.start_description") }}
           </p>
 
@@ -60,7 +60,7 @@
         </div>
       </div>
 
-      <div v-else class="divide-y divide-gray-200 dark:divide-gray-800">
+      <div v-else class="divide-y divide-slate-200 dark:divide-slate-800">
         <ChatMessage
           v-for="message in activeConversation.messages"
           :key="message.id"
@@ -91,7 +91,7 @@
             <div class="flex-1 min-w-0 space-y-1.5 sm:space-y-2">
               <div class="flex items-center gap-1.5 sm:gap-2">
                 <span
-                  class="font-semibold text-gray-900 dark:text-white text-xs sm:text-sm"
+                  class="font-semibold text-slate-900 dark:text-white text-xs sm:text-sm"
                 >
                   {{ $t("chat.ai_label") }}
                 </span>

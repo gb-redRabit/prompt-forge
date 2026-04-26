@@ -26,11 +26,11 @@
           >
         </div>
         <h2
-          class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-primary-600 to-purple-600 dark:from-white dark:via-primary-400 dark:to-purple-400 bg-clip-text text-transparent mb-4"
+          class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-slate-900 via-primary-600 to-purple-600 dark:from-white dark:via-primary-400 dark:to-purple-400 bg-clip-text text-transparent mb-4"
         >
           {{ $t("app.demo.title") }}
         </h2>
-        <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
           {{ $t("app.demo.subtitle") }}
         </p>
       </div>
@@ -50,10 +50,10 @@
             />
           </div>
           <div class="flex-1">
-            <h3 class="font-bold text-gray-900 dark:text-white mb-2">
+            <h3 class="font-bold text-slate-900 dark:text-white mb-2">
               AI nie jest skonfigurowane
             </h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+            <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">
               Aby używać interaktywnego demo, musisz najpierw skonfigurować
               połączenie z lokalnym LM Studio.
             </p>
@@ -72,7 +72,7 @@
         >
           <div class="flex items-center justify-between mb-4">
             <h3
-              class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2"
+              class="text-lg font-semibold text-slate-900 dark:text-white flex items-center gap-2"
             >
               <div
                 class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-purple-500 flex items-center justify-center shadow-lg shadow-primary-500/30"
@@ -88,7 +88,7 @@
               <div
                 class="w-2 h-2 rounded-full bg-gradient-to-r from-primary-500 to-purple-500 animate-pulse"
               ></div>
-              <span class="text-xs font-medium text-gray-600 dark:text-gray-400"
+              <span class="text-xs font-medium text-slate-600 dark:text-slate-400"
                 >Na żywo</span
               >
             </div>
@@ -110,11 +110,11 @@
             v-model="inputText"
             placeholder="Wpisz swój prompt tutaj lub wybierz przykład powyżej..."
             rows="8"
-            class="w-full px-4 py-3 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none backdrop-blur-sm transition-all duration-200"
+            class="w-full px-4 py-3 rounded-lg bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none backdrop-blur-sm transition-all duration-200"
           />
           <div class="flex items-center justify-between mt-4">
             <div class="flex items-center gap-3">
-              <span class="text-sm text-gray-500 dark:text-gray-400">
+              <span class="text-sm text-slate-500 dark:text-slate-400">
                 {{ inputText.length }} znaków
               </span>
               <div v-if="inputText.length > 0" class="flex items-center gap-1">
@@ -149,7 +149,7 @@
         >
           <div class="flex items-center justify-between mb-4">
             <h3
-              class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2"
+              class="text-lg font-semibold text-slate-900 dark:text-white flex items-center gap-2"
             >
               <div
                 class="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/30"
@@ -194,18 +194,18 @@
                   class="absolute inset-0 bg-gradient-to-r from-primary-500/20 to-purple-500/20 rounded-full blur-2xl"
                 ></div>
                 <div
-                  class="relative w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 flex items-center justify-center shadow-lg"
+                  class="relative w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-700 flex items-center justify-center shadow-lg"
                 >
                   <UIcon
                     name="i-heroicons-arrow-left"
-                    class="w-10 h-10 text-gray-400 dark:text-gray-500 animate-pulse"
+                    class="w-10 h-10 text-slate-400 dark:text-slate-500 animate-pulse"
                   />
                 </div>
               </div>
-              <p class="text-gray-600 dark:text-gray-400 font-medium">
+              <p class="text-slate-600 dark:text-slate-400 font-medium">
                 Wprowadź prompt aby zobaczyć magię AI
               </p>
-              <p class="text-sm text-gray-500 dark:text-gray-500">
+              <p class="text-sm text-slate-500 dark:text-slate-500">
                 Wybierz przykład lub wpisz własny tekst
               </p>
             </div>
@@ -237,10 +237,10 @@
                 </div>
               </div>
               <div class="space-y-2">
-                <p class="text-lg font-semibold text-gray-900 dark:text-white">
+                <p class="text-lg font-semibold text-slate-900 dark:text-white">
                   AI analizuje Twój prompt...
                 </p>
-                <p class="text-sm text-gray-600 dark:text-gray-400">
+                <p class="text-sm text-slate-600 dark:text-slate-400">
                   To może potrwać kilka sekund
                 </p>
               </div>
@@ -300,11 +300,11 @@
             </div>
 
             <div
-              class="p-6 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200 dark:border-gray-700 min-h-[200px]"
+              class="p-6 rounded-xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 min-h-[200px]"
             >
               <div class="prose dark:prose-invert max-w-none">
                 <div
-                  class="typing-effect whitespace-pre-wrap text-gray-900 dark:text-white leading-relaxed"
+                  class="typing-effect whitespace-pre-wrap text-slate-900 dark:text-white leading-relaxed"
                 >
                   {{ displayedOutput }}
                   <span

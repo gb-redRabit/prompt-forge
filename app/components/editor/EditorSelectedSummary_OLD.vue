@@ -45,11 +45,11 @@
     <div class="glass-card flex-1 overflow-hidden flex flex-col shadow-lg">
       <!-- Header -->
       <div
-        class="bg-gradient-to-r from-primary-500/10 to-purple-600/10 dark:from-primary-500/20 dark:to-purple-600/20 backdrop-blur-sm px-5 py-3 border-b border-white/20 dark:border-gray-700/50 flex-shrink-0"
+        class="bg-gradient-to-r from-primary-500/10 to-purple-600/10 dark:from-primary-500/20 dark:to-purple-600/20 backdrop-blur-sm px-5 py-3 border-b border-white/20 dark:border-slate-700/50 flex-shrink-0"
       >
         <div class="flex justify-between items-center">
           <h3
-            class="font-bold text-gray-900 dark:text-white text-base flex items-center gap-2"
+            class="font-bold text-slate-900 dark:text-white text-base flex items-center gap-2"
           >
             <span
               class="w-2 h-2 rounded-full bg-gradient-to-r from-primary-500 to-purple-600 shadow-lg shadow-primary-500/50"
@@ -59,10 +59,10 @@
           <div class="flex gap-4">
             <!-- Categories Count -->
             <div
-              class="flex justify-center items-center gap-2 px-3 py-1 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm"
+              class="flex justify-center items-center gap-2 px-3 py-1 rounded-lg bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm"
             >
               <span
-                class="text-sm font-medium text-gray-600 dark:text-gray-400"
+                class="text-sm font-medium text-slate-600 dark:text-slate-400"
               >
                 {{ $t("prompt_creator.categories_name").slice(0, 1) }}:
               </span>
@@ -74,10 +74,10 @@
             </div>
             <!-- Tags Count -->
             <div
-              class="flex justify-center items-center gap-2 px-3 py-1 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm"
+              class="flex justify-center items-center gap-2 px-3 py-1 rounded-lg bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm"
             >
               <span
-                class="text-sm font-medium text-gray-600 dark:text-gray-400"
+                class="text-sm font-medium text-slate-600 dark:text-slate-400"
               >
                 {{ $t("prompt_creator.total_tags").slice(0, 1) }}:
               </span>
@@ -101,7 +101,7 @@
           >
             <div class="flex items-center justify-between">
               <h4
-                class="text-sm font-bold text-gray-700 dark:text-gray-300 flex items-center gap-2"
+                class="text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2"
               >
                 <UIcon :name="getCategoryIcon(category)" class="w-4 h-4" />
                 {{ getCategoryName(category) }}
@@ -146,11 +146,11 @@
         <div v-else class="flex items-center justify-center h-full">
           <div class="text-center">
             <div
-              class="w-16 h-16 mx-auto mb-3 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center"
+              class="w-16 h-16 mx-auto mb-3 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center"
             >
-              <UIcon name="i-heroicons-tag" class="w-8 h-8 text-gray-400" />
+              <UIcon name="i-heroicons-tag" class="w-8 h-8 text-slate-400" />
             </div>
-            <p class="text-gray-600 dark:text-gray-400 font-medium text-sm">
+            <p class="text-slate-600 dark:text-slate-400 font-medium text-sm">
               {{ $t("prompt_creator.no_selections_yet") }}
             </p>
           </div>
@@ -160,7 +160,7 @@
       <!-- Generated Prompts Preview -->
       <div
         v-if="hasSelectedTags"
-        class="flex-shrink-0 border-t border-gray-200/50 dark:border-gray-700/50 p-4 space-y-3"
+        class="flex-shrink-0 border-t border-slate-200/50 dark:border-slate-700/50 p-4 space-y-3"
       >
         <!-- Positive -->
         <div>
@@ -175,7 +175,7 @@
             </span>
             <button
               @click="$emit('copy-prompt', 'positive')"
-              class="px-3 py-1 rounded-lg text-xs font-medium bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm text-gray-600 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-400 hover:scale-105 transition-all duration-300"
+              class="px-3 py-1 rounded-lg text-xs font-medium bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm text-slate-600 dark:text-slate-400 hover:text-green-600 dark:hover:text-green-400 hover:scale-105 transition-all duration-300"
             >
               {{ copiedPositive ? "✓" : "📋" }}
             </button>
@@ -184,7 +184,7 @@
             class="bg-gradient-to-br from-green-50/50 to-emerald-50/50 dark:from-green-900/10 dark:to-emerald-900/10 border border-green-200/50 dark:border-green-800/50 rounded-xl p-3 backdrop-blur-sm"
           >
             <p
-              class="text-xs font-mono text-gray-700 dark:text-gray-300 line-clamp-2 leading-relaxed"
+              class="text-xs font-mono text-slate-700 dark:text-slate-300 line-clamp-2 leading-relaxed"
             >
               {{ positivePrompt }}
             </p>
@@ -204,7 +204,7 @@
             </span>
             <button
               @click="$emit('copy-prompt', 'negative')"
-              class="px-3 py-1 rounded-lg text-xs font-medium bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 hover:scale-105 transition-all duration-300"
+              class="px-3 py-1 rounded-lg text-xs font-medium bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm text-slate-600 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:scale-105 transition-all duration-300"
             >
               {{ copiedNegative ? "✓" : "📋" }}
             </button>
@@ -213,7 +213,7 @@
             class="bg-gradient-to-br from-red-50/50 to-pink-50/50 dark:from-red-900/10 dark:to-pink-900/10 border border-red-200/50 dark:border-red-800/50 rounded-xl p-3 backdrop-blur-sm"
           >
             <p
-              class="text-xs font-mono text-gray-700 dark:text-gray-300 line-clamp-2 leading-relaxed"
+              class="text-xs font-mono text-slate-700 dark:text-slate-300 line-clamp-2 leading-relaxed"
             >
               {{ negativePrompt }}
             </p>

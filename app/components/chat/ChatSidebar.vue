@@ -1,10 +1,10 @@
 <template>
   <div
-    class="w-full lg:w-64 border-r border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 flex flex-col h-auto lg:h-full max-h-48 lg:max-h-full mb-3 sm:mb-4 lg:mb-0"
+    class="w-full lg:w-64 border-r border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 flex flex-col h-auto lg:h-full max-h-48 lg:max-h-full mb-3 sm:mb-4 lg:mb-0"
   >
     <!-- Header -->
     <div
-      class="p-2 sm:p-3 md:p-4 border-b border-gray-200 dark:border-gray-800"
+      class="p-2 sm:p-3 md:p-4 border-b border-slate-200 dark:border-slate-800"
     >
       <GlassButton
         color="primary"
@@ -31,21 +31,21 @@
         class="w-full text-left p-2 sm:p-3 rounded-lg transition-all group"
         :class="[
           conv.id === activeConversationId
-            ? 'bg-white dark:bg-gray-800 shadow-sm'
-            : 'hover:bg-white/50 dark:hover:bg-gray-800/50',
+            ? 'bg-white dark:bg-slate-800 shadow-sm'
+            : 'hover:bg-white/50 dark:hover:bg-slate-800/50',
         ]"
         @click="selectConv(conv.id)"
       >
         <div class="flex items-start justify-between gap-1.5 sm:gap-2">
           <div class="flex-1 min-w-0">
             <h3
-              class="font-medium text-xs sm:text-sm text-gray-900 dark:text-white truncate"
+              class="font-medium text-xs sm:text-sm text-slate-900 dark:text-white truncate"
               :title="conv.title"
             >
               {{ conv.title }}
             </h3>
             <p
-              class="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 truncate"
+              class="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 truncate"
             >
               {{
                 $t("chat.sidebar.message_count", {
@@ -54,7 +54,7 @@
               }}
             </p>
             <p
-              class="text-[10px] sm:text-xs text-gray-400 dark:text-gray-600 mt-0.5 sm:mt-1"
+              class="text-[10px] sm:text-xs text-slate-400 dark:text-slate-600 mt-0.5 sm:mt-1"
             >
               {{ formatDate(conv.updatedAt) }}
             </p>
@@ -80,13 +80,13 @@
       >
         <UIcon
           name="i-heroicons-chat-bubble-left-right"
-          class="w-10 h-10 sm:w-12 sm:h-12 mx-auto text-gray-400 dark:text-gray-600 mb-2"
+          class="w-10 h-10 sm:w-12 sm:h-12 mx-auto text-slate-400 dark:text-slate-600 mb-2"
         />
-        <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
           {{ $t("chat.sidebar.no_conversations") }}
         </p>
         <p
-          class="text-[10px] sm:text-xs text-gray-400 dark:text-gray-600 mt-1 sm:mt-2"
+          class="text-[10px] sm:text-xs text-slate-400 dark:text-slate-600 mt-1 sm:mt-2"
         >
           {{ $t("chat.sidebar.start_conversation") }}
         </p>
@@ -96,10 +96,10 @@
     <!-- Footer with stats -->
     <div
       v-if="conversations.length > 0"
-      class="p-2 sm:p-3 md:p-4 border-t border-gray-200 dark:border-gray-800"
+      class="p-2 sm:p-3 md:p-4 border-t border-slate-200 dark:border-slate-800"
     >
       <div
-        class="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 space-y-0.5 sm:space-y-1"
+        class="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 space-y-0.5 sm:space-y-1"
       >
         <div class="flex items-center justify-between">
           <span>{{ $t("chat.sidebar.total_conversations") }}</span>

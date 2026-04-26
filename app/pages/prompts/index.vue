@@ -1,8 +1,6 @@
 <template>
-  <div class="space-y-4 p-3 sm:p-4 md:p-6 min-h-screen bg-gray-50 dark:bg-slate-950 relative overflow-hidden">
-    <!-- Background accents -->
-    <div class="absolute top-0 right-0 w-1/2 h-64 bg-gradient-to-l from-primary-500/5 to-transparent pointer-events-none"></div>
-    <div class="absolute bottom-0 left-0 w-1/2 h-64 bg-gradient-to-r from-purple-500/5 to-transparent pointer-events-none"></div>
+  <div class="space-y-4 p-3 sm:p-4 md:p-6 min-h-screen relative overflow-hidden">
+
     <!-- Loading State -->
     <div
       v-if="isLoading"
@@ -12,7 +10,7 @@
         <div
           class="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 border-primary-600 mx-auto mb-3 sm:mb-4"
         ></div>
-        <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400">
+        <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400">
           <span v-once>{{ $t("pages.shared.loading") }}</span>
         </p>
       </div>
@@ -25,12 +23,12 @@
         class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mx-auto text-red-500 mb-3 sm:mb-4"
       />
       <h3
-        class="text-base sm:text-lg font-medium text-gray-900 dark:text-white mb-2"
+        class="text-base sm:text-lg font-medium text-slate-900 dark:text-white mb-2"
       >
         <span v-once>{{ $t("pages.templates.error_loading") }}</span>
       </h3>
       <p
-        class="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-3 sm:mb-4"
+        class="text-sm sm:text-base text-slate-600 dark:text-slate-400 mb-3 sm:mb-4"
       >
         {{ error }}
       </p>
@@ -57,113 +55,119 @@
     />
 
     <!-- Empty State with Prompt Selection -->
-    <div v-else class="max-w-6xl mx-auto flex flex-col justify-center">
-      <!-- Header -->
-      <div class="text-center mb-4 sm:mb-6 md:mb-8 px-4">
-        <h2
-          class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2"
-        >
-          <span v-once>{{ $t("pages.prompts.choose_template") }}</span>
-        </h2>
-        <p
-          class="text-sm sm:text-base text-gray-600 dark:text-gray-400 max-w-2xl mx-auto"
-        >
-          <span v-once>{{
-            $t("pages.prompts.choose_template_description")
-          }}</span>
-        </p>
-      </div>
+    <div
+      v-else
+      class="max-w-7xl mx-auto w-full flex flex-col h-[calc(100vh-8rem)] overflow-hidden"
+    >
+      <!-- Header Area (Fixed) -->
+      <div class="flex-shrink-0">
+        <!-- Header -->
+        <div class="text-center mb-4 sm:mb-6 px-4">
+          <h2
+            class="text-xl sm:text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-2"
+          >
+            <span v-once>{{ $t("pages.prompts.choose_template") }}</span>
+          </h2>
+          <p
+            class="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-4xl mx-auto"
+          >
+            <span v-once>{{
+              $t("pages.prompts.choose_template_description")
+            }}</span>
+          </p>
+        </div>
 
-      <!-- Search Bar -->
-      <div class="mb-4 sm:mb-6 mx-auto w-full px-4 max-w-2xl">
-        <UInput
-          v-model="searchQuery"
-          :placeholder="$t('pages.prompts.search_templates')"
-          icon="i-heroicons-magnifying-glass"
-          size="lg"
-          class="w-full"
-        >
-          <template #trailing>
-            <GlassButton
-              v-if="searchQuery"
-              color="neutral"
-              variant="ghost"
-              size="xs"
-              icon="i-heroicons-x-mark"
-              @click="searchQuery = ''"
-            />
-          </template>
-        </UInput>
-      </div>
+        <!-- Search Bar -->
+        <div class="mb-4 sm:mb-6 mx-auto w-full px-4 max-w-4xl">
+          <UInput
+            v-model="searchQuery"
+            :placeholder="$t('pages.prompts.search_templates')"
+            icon="i-heroicons-magnifying-glass"
+            size="lg"
+            class="w-full"
+          >
+            <template #trailing>
+              <GlassButton
+                v-if="searchQuery"
+                color="neutral"
+                variant="ghost"
+                size="xs"
+                icon="i-heroicons-x-mark"
+                @click="searchQuery = ''"
+              />
+            </template>
+          </UInput>
+        </div>
 
-      <!-- Stats -->
-      <div
-        class="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4 mb-4 sm:mb-6 md:mb-8 max-w-2xl mx-auto px-4"
-      >
+        <!-- Stats -->
         <div
-          class="text-center p-2 sm:p-3 md:p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg"
+          class="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4 mb-4 sm:mb-6 max-w-4xl mx-auto px-4"
         >
           <div
-            class="text-lg sm:text-xl md:text-2xl font-bold text-primary-600 dark:text-primary-400"
+            class="text-center p-2 sm:p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg"
           >
-            {{ totalPrompts }}
+            <div
+              class="text-lg sm:text-xl md:text-2xl font-bold text-primary-600 dark:text-primary-400"
+            >
+              {{ totalPrompts }}
+            </div>
+            <div
+              class="text-[10px] sm:text-xs text-slate-600 dark:text-slate-400 mt-0.5"
+            >
+              <span v-once>{{ $t("pages.prompts.total_templates") }}</span>
+            </div>
           </div>
           <div
-            class="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 mt-0.5 sm:mt-1"
+            class="text-center p-2 sm:p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg"
           >
-            <span v-once>{{ $t("pages.prompts.total_templates") }}</span>
+            <div
+              class="text-lg sm:text-xl md:text-2xl font-bold text-success-600 dark:text-success-400"
+            >
+              {{ filteredPromptsCount }}
+            </div>
+            <div
+              class="text-[10px] sm:text-xs text-slate-600 dark:text-slate-400 mt-0.5"
+            >
+              <span v-once>{{ $t("pages.prompts.matching") }}</span>
+            </div>
+          </div>
+          <div
+            class="text-center p-2 sm:p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg"
+          >
+            <div
+              class="text-lg sm:text-xl md:text-2xl font-bold text-info-600 dark:text-info-400"
+            >
+              {{ uniqueCategories }}
+            </div>
+            <div
+              class="text-[10px] sm:text-xs text-slate-600 dark:text-slate-400 mt-0.5"
+            >
+              {{ $t("pages.prompts.categories") }}
+            </div>
           </div>
         </div>
-        <div
-          class="text-center p-2 sm:p-3 md:p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg"
-        >
-          <div
-            class="text-lg sm:text-xl md:text-2xl font-bold text-success-600 dark:text-success-400"
-          >
-            {{ filteredPromptsCount }}
-          </div>
-          <div
-            class="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 mt-0.5 sm:mt-1"
-          >
-            <span v-once>{{ $t("pages.prompts.matching") }}</span>
-          </div>
-        </div>
-        <div
-          class="text-center p-2 sm:p-3 md:p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg"
-        >
-          <div
-            class="text-lg sm:text-xl md:text-2xl font-bold text-info-600 dark:text-info-400"
-          >
-            {{ uniqueCategories }}
-          </div>
-          <div
-            class="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 mt-0.5 sm:mt-1"
-          >
-            {{ $t("pages.prompts.categories") }}
-          </div>
-        </div>
       </div>
 
-      <!-- Templates List -->
+      <!-- Templates List (Scrollable) -->
       <div
         v-if="filteredPrompts.length > 0"
-        class="grid gap-2 sm:gap-3 max-h-[400px] sm:max-h-[500px] overflow-y-auto pr-1 sm:pr-2 px-4"
+        class="flex-1 overflow-y-auto custom-scrollbar px-4 pb-12 space-y-3 sm:space-y-4"
       >
         <button
           v-for="prompt in filteredPrompts"
           :key="prompt.id"
-          class="text-left p-3 sm:p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary-500 dark:hover:border-primary-500 hover:shadow-lg transition-all group bg-white dark:bg-gray-800"
+          class="block w-full text-left p-4 sm:p-5 md:p-6 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-primary-500 dark:hover:border-primary-500 hover:shadow-xl transition-all group bg-white dark:bg-slate-800"
           @click="selectPrompt(prompt)"
         >
           <div class="flex items-start justify-between gap-2 sm:gap-4">
             <div class="flex-1 min-w-0">
               <h3
-                class="text-sm sm:text-base font-semibold text-gray-900 dark:text-white mb-1 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors"
+                class="text-sm sm:text-base font-semibold text-slate-900 dark:text-white mb-1 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors"
               >
                 {{ getTranslatedName(prompt) }}
               </h3>
               <p
-                class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 line-clamp-2"
+                class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 line-clamp-2"
               >
                 {{ getTranslatedDescription(prompt) }}
               </p>
@@ -191,7 +195,7 @@
             </div>
             <UIcon
               name="i-heroicons-arrow-right"
-              class="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 group-hover:translate-x-1 transition-all flex-shrink-0"
+              class="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 group-hover:translate-x-1 transition-all flex-shrink-0"
             />
           </div>
         </button>
@@ -200,19 +204,19 @@
       <!-- No Results -->
       <div
         v-else-if="searchQuery"
-        class="text-center py-8 md:py-12 bg-gray-50 dark:bg-gray-800/50 rounded-lg px-4"
+        class="text-center py-8 md:py-12 bg-slate-50 dark:bg-slate-800/50 rounded-lg px-4"
       >
         <UIcon
           name="i-heroicons-magnifying-glass"
-          class="w-10 h-10 sm:w-12 sm:h-12 mx-auto text-gray-400 dark:text-gray-600 mb-2 sm:mb-3"
+          class="w-10 h-10 sm:w-12 sm:h-12 mx-auto text-slate-400 dark:text-slate-600 mb-2 sm:mb-3"
         />
         <h3
-          class="text-base sm:text-lg font-medium text-gray-900 dark:text-white mb-2"
+          class="text-base sm:text-lg font-medium text-slate-900 dark:text-white mb-2"
         >
           <span v-once>{{ $t("pages.prompts.no_results") }}</span>
         </h3>
         <p
-          class="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-3 sm:mb-4"
+          class="text-sm sm:text-base text-slate-600 dark:text-slate-400 mb-3 sm:mb-4"
         >
           <span v-once>{{ $t("pages.prompts.try_different_search") }}</span>
         </p>
@@ -296,13 +300,21 @@ const uniqueCategories = computed(() => {
 });
 
 const getTranslatedName = (prompt: Prompt) => {
-  if (!prompt.name) return "Untitled";
-  return locale.value === "pl" ? prompt.name.pl : prompt.name.en;
+  if (prompt.name) {
+    return locale.value === "pl"
+      ? prompt.name.pl || prompt.name.en
+      : prompt.name.en || prompt.name.pl;
+  }
+  return prompt.title || "Untitled";
 };
 
 const getTranslatedDescription = (prompt: Prompt) => {
-  if (!prompt.description) return "";
-  return locale.value === "pl" ? prompt.description.pl : prompt.description.en;
+  if (prompt.description) {
+    return locale.value === "pl"
+      ? prompt.description.pl || prompt.description.en
+      : prompt.description.en || prompt.description.pl;
+  }
+  return "";
 };
 
 const selectPrompt = (prompt: Prompt) => {
@@ -322,6 +334,7 @@ const loadTemplate = async () => {
     const templateId = route.query.templateId as string;
 
     if (!templateId) {
+      selectedTemplate.value = null;
       isLoading.value = false;
       return;
     }

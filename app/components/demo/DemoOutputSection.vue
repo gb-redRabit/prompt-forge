@@ -9,7 +9,7 @@
     <!-- Header -->
     <div class="flex items-center justify-between mb-4">
       <h3
-        class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2"
+        class="text-lg font-semibold text-slate-900 dark:text-white flex items-center gap-2"
       >
         <div
           class="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/30"

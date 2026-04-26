@@ -2,10 +2,10 @@
   <div class="space-y-4 sm:space-y-6 lg:space-y-8 p-3 sm:p-4 lg:p-8">
     <!-- Header -->
     <div>
-      <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-1 sm:mb-2">
+      <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-1 sm:mb-2">
         <span v-once>{{ $t("settings.title") }}</span>
       </h1>
-      <p class="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400">
+      <p class="text-xs sm:text-sm lg:text-base text-slate-600 dark:text-slate-400">
         <span v-once>{{ $t("settings.subtitle") }}</span>
       </p>
     </div>
@@ -52,7 +52,7 @@
             <div
               class="animate-spin rounded-full h-10 w-10 border-b-2 border-primary-600 mx-auto mb-4"
             </div>
-            <p class="text-sm text-gray-600 dark:text-gray-400">
+            <p class="text-sm text-slate-600 dark:text-slate-400">
               <span v-once>{{ $t("pages.shared.loading") }}</span>
             </p>
           </div>

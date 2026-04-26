@@ -3,12 +3,12 @@
     <!-- Header -->
     <div class="text-center mb-8 md:mb-12 lg:mb-16 animate-fade-in-up">
       <h2
-        class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-3 md:mb-4"
+        class="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-3 md:mb-4"
       >
         {{ $t("app.faq.title") }}
       </h2>
       <p
-        class="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto"
+        class="text-base md:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto"
       >
         {{ $t("app.faq.subtitle") }}
       </p>
@@ -32,7 +32,7 @@
         <!-- Question Button -->
         <button
           @click="toggle(index)"
-          class="w-full p-4 md:p-5 lg:p-6 flex items-center justify-between text-left transition-all duration-300 hover:bg-white/50 dark:hover:bg-gray-800/50"
+          class="w-full p-4 md:p-5 lg:p-6 flex items-center justify-between text-left transition-all duration-300 hover:bg-white/50 dark:hover:bg-slate-800/50"
           :aria-expanded="openIndex === index"
           :aria-controls="`faq-answer-${index}`"
         >
@@ -45,7 +45,7 @@
               {{ index + 1 }}
             </div>
             <span
-              class="font-semibold text-base md:text-lg text-gray-900 dark:text-white pr-2 md:pr-4"
+              class="font-semibold text-base md:text-lg text-slate-900 dark:text-white pr-2 md:pr-4"
             >
               {{ $t(item.question) }}
             </span>
@@ -53,12 +53,12 @@
 
           <!-- Chevron -->
           <div
-            class="flex-shrink-0 w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center transition-all duration-300"
+            class="flex-shrink-0 w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center transition-all duration-300"
             :class="openIndex === index ? 'bg-primary-500/20' : ''"
           >
             <UIcon
               name="i-heroicons-chevron-down"
-              class="w-5 h-5 text-gray-600 dark:text-gray-400 transition-transform duration-300"
+              class="w-5 h-5 text-slate-600 dark:text-slate-400 transition-transform duration-300"
               :class="{ 'rotate-180 text-primary-500': openIndex === index }"
             />
           </div>
@@ -78,7 +78,7 @@
           >
             <div class="px-6 pb-6 pt-2">
               <div
-                class="pl-14 text-gray-600 dark:text-gray-400 leading-relaxed"
+                class="pl-14 text-slate-600 dark:text-slate-400 leading-relaxed"
               >
                 {{ $t(item.answer) }}
               </div>

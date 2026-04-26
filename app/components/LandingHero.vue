@@ -18,7 +18,7 @@
 
       <!-- Main heading -->
       <h1
-        class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight text-gray-900 dark:text-white leading-tight animate-fade-in-up animation-delay-100"
+        class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight text-slate-900 dark:text-white leading-tight animate-fade-in-up animation-delay-100"
       >
         <span
           class="bg-gradient-to-r from-primary-600 to-blue-600 dark:from-primary-400 dark:to-blue-400 bg-clip-text text-transparent"
@@ -29,7 +29,7 @@
 
       <!-- Subtitle -->
       <p
-        class="text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed animate-fade-in-up animation-delay-200"
+        class="text-lg md:text-xl lg:text-2xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed animate-fade-in-up animation-delay-200"
       >
         {{ $t("app.hero_sub") }}
       </p>
@@ -78,7 +78,7 @@
           >
             {{ stat.value }}
           </div>
-          <div class="text-xs md:text-sm text-gray-600 dark:text-gray-400">
+          <div class="text-xs md:text-sm text-slate-600 dark:text-slate-400">
             {{ stat.label }}
           </div>
         </GlassCard>

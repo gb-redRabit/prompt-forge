@@ -41,7 +41,7 @@
 
     <!-- Results & Clear -->
     <div class="mt-3 flex items-center justify-between text-sm">
-      <span class="text-gray-600 dark:text-gray-400 font-medium">
+      <span class="text-slate-600 dark:text-slate-400 font-medium">
         {{ resultsCount }}
         <span v-once>{{ $t("prompt_creator.results") }}</span>
       </span>

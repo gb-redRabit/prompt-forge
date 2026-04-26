@@ -6,7 +6,7 @@
       v-if="removable"
       type="button"
       @click="$emit('remove')"
-      class="ml-1 -mr-1 hover:bg-white/20 dark:hover:bg-gray-900/20 rounded-full p-0.5 transition-colors"
+      class="ml-1 -mr-1 hover:bg-white/20 dark:hover:bg-slate-900/20 rounded-full p-0.5 transition-colors"
     >
       <UIcon name="i-heroicons-x-mark-20-solid" class="w-3 h-3" />
     </button>
@@ -105,9 +105,9 @@ const badgeClasses = computed(() => {
       outline: "bg-transparent border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400",
     },
     neutral: {
-      solid: "bg-gray-800 text-white dark:bg-gray-100 dark:text-gray-900",
-      soft: "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300",
-      outline: "bg-transparent border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400",
+      solid: "bg-slate-800 text-white dark:bg-slate-100 dark:text-slate-900",
+      soft: "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300",
+      outline: "bg-transparent border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400",
     },
   };
  
@@ -121,7 +121,7 @@ const badgeClasses = computed(() => {
       success: "shadow-lg shadow-green-500/30",
       warning: "shadow-lg shadow-yellow-500/30",
       error: "shadow-lg shadow-red-500/30",
-      neutral: "shadow-lg shadow-gray-500/30",
+      neutral: "shadow-lg shadow-slate-500/30",
     };
     classes.push(glowMap[props.color]);
   }

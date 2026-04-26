@@ -32,31 +32,31 @@
             </div>
 
             <h3
-              class="text-xl font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors"
+              class="text-xl font-semibold text-slate-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors"
             >
               {{ translatedName }}
             </h3>
 
-            <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
+            <p class="text-sm text-slate-600 dark:text-slate-400 line-clamp-2">
               {{ translatedDescription }}
             </p>
           </div>
 
           <UIcon
             name="i-heroicons-arrow-right"
-            class="w-6 h-6 text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 group-hover:translate-x-1 transition-all flex-shrink-0"
+            class="w-6 h-6 text-slate-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 group-hover:translate-x-1 transition-all flex-shrink-0"
           />
         </div>
 
         <!-- Template Preview - PEŁNY TEKST -->
         <div
           v-if="hasTemplate"
-          class="bg-gray-50 dark:bg-gray-900/50 rounded-lg p-4 border border-gray-200 dark:border-gray-700"
+          class="bg-slate-50 dark:bg-slate-900/50 rounded-lg p-4 border border-slate-200 dark:border-slate-700"
         >
           <div class="flex items-center justify-between mb-2">
             <p
               v-once
-              class="text-xs text-gray-500 dark:text-gray-400 font-medium"
+              class="text-xs text-slate-500 dark:text-slate-400 font-medium"
             >
               {{ $t("pages.templates.preview") }}
             </p>
@@ -66,7 +66,7 @@
           </div>
           <div class="max-h-[400px] overflow-y-auto pr-2">
             <pre
-              class="text-xs text-gray-600 dark:text-gray-300 font-mono whitespace-pre-wrap break-words"
+              class="text-xs text-slate-600 dark:text-slate-300 font-mono whitespace-pre-wrap break-words"
               >{{ previewText }}</pre
             >
           </div>
@@ -74,7 +74,7 @@
 
         <!-- Metadata Row -->
         <div
-          class="flex flex-wrap items-center gap-4 text-xs text-gray-500 dark:text-gray-400"
+          class="flex flex-wrap items-center gap-4 text-xs text-slate-500 dark:text-slate-400"
         >
           <!-- Categories -->
           <div
@@ -116,7 +116,7 @@
         <div v-if="template.categories?.length">
           <p
             v-once
-            class="text-xs text-gray-500 dark:text-gray-400 mb-2 font-medium"
+            class="text-xs text-slate-500 dark:text-slate-400 mb-2 font-medium"
           >
             {{ $t("pages.templates.categories") }}
           </p>
@@ -145,7 +145,7 @@
         <div v-if="template.tags?.length">
           <p
             v-once
-            class="text-xs text-gray-500 dark:text-gray-400 mb-2 font-medium"
+            class="text-xs text-slate-500 dark:text-slate-400 mb-2 font-medium"
           >
             {{ $t("pages.templates.tags") }}
           </p>
@@ -174,7 +174,7 @@
         <div v-if="template.placeholder_keys?.length">
           <p
             v-once
-            class="text-xs text-gray-500 dark:text-gray-400 mb-2 font-medium"
+            class="text-xs text-slate-500 dark:text-slate-400 mb-2 font-medium"
           >
             {{ $t("pages.templates.placeholders") }}
           </p>

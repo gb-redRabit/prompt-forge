@@ -3,7 +3,7 @@
       class="fixed inset-0 flex items-center justify-center backdrop-blur-xl transition-all duration-500 z-[9999]"
       :class="[
         shown ? 'opacity-100' : 'opacity-0 pointer-events-none',
-        'dark:bg-gray-900 bg-gray-100',
+        'dark:bg-slate-900 bg-slate-100',
       ]"
     >
       <div class="flex flex-col items-center gap-8 animate-fade-in-up">
@@ -30,7 +30,7 @@
             {{ $t("common.loading") }}
           </h2>
           <p
-            class="text-sm text-gray-300/80 font-medium tracking-wide max-w-[250px] mx-auto animate-pulse"
+            class="text-sm text-slate-300/80 font-medium tracking-wide max-w-[250px] mx-auto animate-pulse"
           >
             {{ $t("common.loading_desc") || "Inicjalizacja..." }}
           </p>
@@ -38,7 +38,7 @@
 
         <!-- Progress Indicator -->
         <div
-          class="w-48 h-1.5 bg-gray-800/80 rounded-full overflow-hidden shadow-inner"
+          class="w-48 h-1.5 bg-slate-800/80 rounded-full overflow-hidden shadow-inner"
         >
           <div
             class="h-full bg-gradient-to-r from-primary-500 via-purple-500 to-pink-500"

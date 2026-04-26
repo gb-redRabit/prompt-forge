@@ -4,10 +4,10 @@
       class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0 mb-3 sm:mb-4"
     >
       <div>
-        <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
           <span v-once>{{ $t("library.history.title") }}</span>
         </p>
-        <p class="text-[10px] sm:text-xs text-gray-500 mt-0.5 sm:mt-1">
+        <p class="text-[10px] sm:text-xs text-slate-500 mt-0.5 sm:mt-1">
           <span v-once>{{ $t("library.history.description") }}</span>
         </p>
       </div>
@@ -38,14 +38,14 @@
   <div v-else class="text-center py-8 sm:py-12 px-4">
     <UIcon
       name="i-heroicons-clock"
-      class="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-gray-400 mb-3 sm:mb-4"
+      class="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-slate-400 mb-3 sm:mb-4"
     />
     <p
-      class="text-sm sm:text-base text-gray-600 dark:text-gray-400 font-medium mb-2"
+      class="text-sm sm:text-base text-slate-600 dark:text-slate-400 font-medium mb-2"
     >
       <span v-once>{{ $t("library.history.empty") }}</span>
     </p>
-    <div class="max-w-md mx-auto text-xs sm:text-sm text-gray-500 space-y-2">
+    <div class="max-w-md mx-auto text-xs sm:text-sm text-slate-500 space-y-2">
       <p>
         <strong
           ><span v-once>{{ $t("library.history.howItWorks") }}</span></strong

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative min-h-screen w-full overflow-hidden bg-gray-50 dark:bg-slate-900 transition-colors duration-500"
+    class="relative min-h-screen w-full overflow-hidden transition-colors duration-500"
     :class="{ 'disable-animations': !animateThisVisit }"
   >
     <!-- skip link for keyboard users -->
@@ -47,7 +47,7 @@
         <section
           id="demo"
           data-fullpage-section
-          class="fullpage-section hidden lg:flex items-center"
+          class="fullpage-section lg:flex items-center"
           role="region"
           aria-label="Demo"
         >

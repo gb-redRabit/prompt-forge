@@ -6,11 +6,11 @@
     >
       <div class="flex-1 min-w-0">
         <h2
-          class="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 dark:text-white truncate"
+          class="text-lg sm:text-xl md:text-2xl font-bold text-slate-900 dark:text-white truncate"
         >
           {{ translatedName }}
         </h2>
-        <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-1">
+        <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400 mt-1">
           {{ translatedDescription }}
         </p>
       </div>
@@ -121,7 +121,7 @@
           <template #header>
             <div class="flex items-center justify-between">
               <h3
-                class="text-base sm:text-lg font-semibold text-gray-900 dark:text-white"
+                class="text-base sm:text-lg font-semibold text-slate-900 dark:text-white"
               >
                 <span v-once>{{ $t("pages.templates.template_editor") }}</span>
               </h3>
@@ -144,13 +144,13 @@
           <textarea
             v-model="editedTemplate"
             :rows="8"
-            class="w-full px-3 py-2 sm:px-4 sm:py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent font-mono text-xs sm:text-sm resize-none"
+            class="w-full px-3 py-2 sm:px-4 sm:py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent font-mono text-xs sm:text-sm resize-none"
             :placeholder="$t('pages.templates.template_placeholder')"
           />
 
           <!-- Character count -->
           <div
-            class="flex items-center justify-between text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mt-1.5 sm:mt-2"
+            class="flex items-center justify-between text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 mt-1.5 sm:mt-2"
           >
             <span>
               {{ editedTemplate.length }}
@@ -170,7 +170,7 @@
           <template #header>
             <div class="flex items-center justify-between gap-2">
               <h3
-                class="text-base sm:text-lg font-semibold text-gray-900 dark:text-white"
+                class="text-base sm:text-lg font-semibold text-slate-900 dark:text-white"
               >
                 <span v-once>{{
                   $t("pages.templates.placeholder_values")
@@ -191,7 +191,7 @@
           <!-- Empty state -->
           <div
             v-if="detectedPlaceholders.length === 0"
-            class="text-center py-6 sm:py-8 text-gray-500 dark:text-gray-400"
+            class="text-center py-6 sm:py-8 text-slate-500 dark:text-slate-400"
           >
             <UIcon
               name="i-heroicons-variable"
@@ -206,7 +206,7 @@
           <div v-else class="space-y-3 sm:space-y-4">
             <!-- Tab Navigation -->
             <div
-              class="flex flex-wrap gap-1 sm:gap-1.5 md:gap-2 pb-2 sm:pb-3 border-b border-gray-200 dark:border-gray-700"
+              class="flex flex-wrap gap-1 sm:gap-1.5 md:gap-2 pb-2 sm:pb-3 border-b border-slate-200 dark:border-slate-700"
             >
               <button
                 v-for="(placeholderKey, index) in detectedPlaceholders"
@@ -216,16 +216,15 @@
                 :class="[
                   selectedPlaceholderIndex === index
                     ? 'bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 shadow-sm'
-                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700',
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700',
                 ]"
                 @click="selectedPlaceholderIndex = index"
               >
                 {{ placeholderKey }}
 
-                <!-- Filled indicator -->
                 <span
                   v-if="placeholderValues[placeholderKey]?.trim()"
-                  class="absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-success-500 rounded-full border-2 border-white dark:border-gray-900"
+                  class="absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-success-500 rounded-full border-2 border-white dark:border-slate-900"
                 />
               </button>
             </div>
@@ -239,13 +238,13 @@
               <div class="flex items-center justify-between gap-2">
                 <div class="min-w-0 flex-1">
                   <h4
-                    class="text-sm sm:text-base font-semibold text-gray-900 dark:text-white truncate"
+                    class="text-sm sm:text-base font-semibold text-slate-900 dark:text-white truncate"
                   >
                     {{ selectedPlaceholderKey }}
                   </h4>
                   <p
                     v-if="hasOptions(selectedPlaceholderKey)"
-                    class="text-[10px] sm:text-xs text-gray-500 mt-0.5 sm:mt-1"
+                    class="text-[10px] sm:text-xs text-slate-500 mt-0.5 sm:mt-1"
                   >
                     {{ getOptionsForKey(selectedPlaceholderKey).length }}
                     {{ $t("pages.templates.options_available") }}
@@ -306,7 +305,7 @@
               >
                 <div class="flex items-center justify-between gap-2">
                   <p
-                    class="text-[10px] sm:text-xs font-medium text-gray-600 dark:text-gray-400 truncate"
+                    class="text-[10px] sm:text-xs font-medium text-slate-600 dark:text-slate-400 truncate"
                   >
                     {{
                       showAllOptions[selectedPlaceholderKey]
@@ -315,7 +314,7 @@
                     }}
                   </p>
                   <span
-                    class="text-[10px] sm:text-xs text-gray-500 flex-shrink-0"
+                    class="text-[10px] sm:text-xs text-slate-500 flex-shrink-0"
                   >
                     {{
                       $t("pages.templates.options_count", {
@@ -349,7 +348,7 @@
                     "
                     size="xs"
                     class="flex-shrink-0 text-[10px] sm:text-xs"
-                    @click="selectOption(selectedPlaceholderKey, option.value)"
+                    @click="selectOption(selectedPlaceholderKey, option.id)"
                     :icon="
                       placeholderValues[selectedPlaceholderKey] ===
                       getOptionValueForTemplate(option)
@@ -407,7 +406,7 @@
                   {{ $t("pages.templates.preview") }}
                 </p>
                 <p
-                  class="text-xs sm:text-sm text-gray-900 dark:text-white font-mono break-words"
+                  class="text-xs sm:text-sm text-slate-900 dark:text-white font-mono break-words"
                 >
                   {{ placeholderValues[selectedPlaceholderKey] }}
                 </p>
@@ -416,7 +415,7 @@
 
             <!-- Navigation hints -->
             <div
-              class="flex items-center justify-between pt-2 sm:pt-3 border-t border-gray-200 dark:border-gray-700"
+              class="flex items-center justify-between pt-2 sm:pt-3 border-t border-slate-200 dark:border-slate-700"
             >
               <GlassButton
                 :disabled="selectedPlaceholderIndex === 0"
@@ -437,7 +436,7 @@
                 }}</span>
               </GlassButton>
 
-              <span class="text-[10px] sm:text-xs text-gray-500">
+              <span class="text-[10px] sm:text-xs text-slate-500">
                 {{ selectedPlaceholderIndex + 1 }} /
                 {{ detectedPlaceholders.length }}
               </span>
@@ -478,7 +477,7 @@
       <template #header>
         <div class="flex items-center justify-between gap-2">
           <h3
-            class="text-base sm:text-lg font-semibold text-gray-900 dark:text-white"
+            class="text-base sm:text-lg font-semibold text-slate-900 dark:text-white"
           >
             <span v-once>{{ $t("pages.templates.final_prompt") }}</span>
           </h3>
@@ -499,7 +498,7 @@
       <!-- Result text -->
       <div class="space-y-2 sm:space-y-3">
         <pre
-          class="whitespace-pre-wrap break-words text-gray-900 dark:text-white font-mono text-xs sm:text-sm p-3 sm:p-4 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700"
+          class="whitespace-pre-wrap break-words text-slate-900 dark:text-white font-mono text-xs sm:text-sm p-3 sm:p-4 rounded-lg bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700"
           >{{ resultPrompt }}</pre
         >
 
@@ -604,44 +603,48 @@ const translatedDescription = computed(() => {
 
 // Get translated template based on current locale
 const translatedTemplate = computed(() => {
-  if (!props.template.template) return "";
+  if (props.template.template) {
+    return locale.value === "pl"
+      ? props.template.template.pl || props.template.template.en
+      : props.template.template.en || props.template.template.pl;
+  }
+  // Fallback to legacy fields
   return locale.value === "pl"
-    ? props.template.template.pl || ""
-    : props.template.template.en || "";
+    ? props.template.pl || props.template.en || ""
+    : props.template.en || props.template.pl || "";
 });
 
 // Get translated label for option - używane do WYŚWIETLANIA w UI
 const getTranslatedLabel = (option: OptionItem): string => {
-  if (!option.label) return option.value;
   return locale.value === "pl"
-    ? option.label.pl || option.label.en || option.value
-    : option.label.en || option.label.pl || option.value;
+    ? option.pl || option.en || option.id
+    : option.en || option.pl || option.id;
 };
 
 // Get value to use in template (translated label, not value!)
 const getOptionValueForTemplate = (option: OptionItem): string => {
-  if (!option.label) return option.value;
-  return locale.value === "pl"
-    ? option.label.pl || option.label.en || option.value
-    : option.label.en || option.label.pl || option.value;
+  return option.value || (locale.value === "pl" ? option.pl : option.en);
 };
 
 // Initialize template
 const initializeTemplate = () => {
   editedTemplate.value = translatedTemplate.value;
 
-  // Initialize placeholder values
+  // Initialize placeholder values - RESET FIRST
+  const newValues: Record<string, string> = {};
   props.template.placeholder_keys?.forEach((key) => {
-    if (!placeholderValues.value[key]) {
-      placeholderValues.value[key] = "";
-    }
+    newValues[key] = "";
   });
+  placeholderValues.value = newValues;
 
   // Jeśli to zapisany prompt, załaduj zapisane wartości
-  if (props.template.placeholderValues) {
-    Object.entries(props.template.placeholderValues).forEach(([key, value]) => {
-      placeholderValues.value[key] = String(value ?? "");
-    });
+  const templateWithValues = props.template as any;
+  if (templateWithValues.placeholderValues) {
+    Object.entries(templateWithValues.placeholderValues).forEach(
+      ([key, value]) => {
+        placeholderValues.value[key] = String(value ?? "");
+      }
+    );
   }
 
   checkIfInLibrary();
@@ -697,7 +700,7 @@ const filteredVisibleOptions = (key: string): readonly OptionItem[] => {
       const label = getTranslatedLabel(opt).toLowerCase();
       return (
         label.includes(searchTerm) ||
-        opt.value.toLowerCase().includes(searchTerm)
+        (opt.value || "").toLowerCase().includes(searchTerm)
       );
     });
   }
@@ -813,8 +816,8 @@ watch(locale, () => {
     if (placeholderValues.value[key] && hasOptions(key)) {
       const currentValue = placeholderValues.value[key];
       const matchingOption = getOptionsForKey(key).find((opt) => {
-        const plLabel = opt.label?.pl || opt.value;
-        const enLabel = opt.label?.en || opt.value;
+        const plLabel = opt.pl || opt.id;
+        const enLabel = opt.en || opt.id;
         return currentValue === plLabel || currentValue === enLabel;
       });
 
@@ -827,6 +830,15 @@ watch(locale, () => {
 
   initializeTemplate();
 });
+
+watch(
+  () => props.template,
+  () => {
+    initializeTemplate();
+    checkIfInLibrary();
+  },
+  { immediate: true }
+);
 
 watch(
   savedPrompts,

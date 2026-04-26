@@ -3,7 +3,7 @@
     <div
       class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2"
     >
-      <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+      <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
         <span v-once>{{ $t("library.collections.organize") }}</span>
       </p>
       <GlassButton color="primary" size="xs" @click="$emit('create')">
@@ -31,7 +31,7 @@
                 class="w-4 h-4 sm:w-5 sm:h-5 text-primary-600 flex-shrink-0"
               />
               <h3
-                class="font-semibold text-sm sm:text-base text-gray-900 dark:text-white truncate"
+                class="font-semibold text-sm sm:text-base text-slate-900 dark:text-white truncate"
               >
                 {{ collection.name }}
               </h3>
@@ -58,12 +58,12 @@
         <div class="space-y-2">
           <p
             v-if="collection.description"
-            class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 line-clamp-2"
+            class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 line-clamp-2"
           >
             {{ collection.description }}
           </p>
           <div
-            class="flex items-center gap-1.5 text-[10px] sm:text-xs text-gray-500"
+            class="flex items-center gap-1.5 text-[10px] sm:text-xs text-slate-500"
           >
             <UIcon
               name="i-heroicons-document-text"
@@ -84,7 +84,7 @@
             <div
               v-for="prompt in getCollectionPrompts(collection.id).slice(0, 3)"
               :key="prompt.savedId"
-              class="flex items-center justify-between gap-2 p-1.5 sm:p-2 bg-gray-50 dark:bg-gray-800 rounded text-[10px] sm:text-xs"
+              class="flex items-center justify-between gap-2 p-1.5 sm:p-2 bg-slate-50 dark:bg-slate-800 rounded text-[10px] sm:text-xs"
             >
               <span class="truncate flex-1" :title="getPromptName(prompt)">
                 {{ getPromptName(prompt) }}
@@ -112,7 +112,7 @@
             </div>
             <p
               v-if="getCollectionPrompts(collection.id).length > 3"
-              class="text-[10px] sm:text-xs text-gray-500 text-center"
+              class="text-[10px] sm:text-xs text-slate-500 text-center"
             >
               {{
                 $t("library.collections.more", {
@@ -128,9 +128,9 @@
     <div v-else class="text-center py-8 sm:py-12 px-4">
       <UIcon
         name="i-heroicons-folder"
-        class="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-gray-400 mb-3 sm:mb-4"
+        class="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-slate-400 mb-3 sm:mb-4"
       />
-      <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400">
+      <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400">
         {{ $t("library.collections.empty") }}
       </p>
     </div>

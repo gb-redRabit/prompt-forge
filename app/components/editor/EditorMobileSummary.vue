@@ -4,7 +4,7 @@
     <!-- Summary Button - Fixed at bottom center -->
     <button
       @click="isOpen = true"
-      class="fixed bottom-6 lg:bottom-10 left-1/2 -translate-x-1/2 z-40 px-8 py-3.5 rounded-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 shadow-2xl hover:-translate-y-1 hover:shadow-xl transition-all duration-300 flex items-center gap-3 pointer-events-auto active:scale-95"
+      class="fixed bottom-6 lg:bottom-10 left-1/2 -translate-x-1/2 z-40 px-8 py-3.5 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-2xl hover:-translate-y-1 hover:shadow-xl transition-all duration-300 flex items-center gap-3 pointer-events-auto active:scale-95"
     >
       <UIcon name="i-heroicons-document-text" class="w-5 h-5 opacity-80" />
       <span class="font-bold text-sm tracking-wide">{{
@@ -12,7 +12,7 @@
       }}</span>
       <span
         v-if="totalTags > 0"
-        class="px-2.5 py-0.5 rounded-full bg-white/20 dark:bg-gray-900/20 text-xs font-black min-w-[28px] text-center"
+        class="px-2.5 py-0.5 rounded-full bg-white/20 dark:bg-slate-900/20 text-xs font-black min-w-[28px] text-center"
       >
         {{ totalTags }}
       </span>
@@ -34,11 +34,11 @@
 
           <!-- Panel Content -->
           <div
-            class="relative w-full max-w-4xl bg-white dark:bg-gray-900 md:rounded-t-3xl shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.3)] max-h-[85vh] flex flex-col overflow-hidden z-50 border-t border-x border-gray-200 dark:border-gray-800"
+            class="relative w-full max-w-4xl bg-white dark:bg-slate-900 md:rounded-t-3xl shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.3)] max-h-[85vh] flex flex-col overflow-hidden z-50 border-t border-x border-slate-200 dark:border-slate-800"
           >
             <!-- Header -->
             <div
-              class="flex-shrink-0 px-6 py-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50"
+              class="flex-shrink-0 px-6 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50"
             >
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
@@ -51,10 +51,10 @@
                     />
                   </div>
                   <div>
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white">
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">
                       {{ $t("prompt_creator.selected_tags") }}
                     </h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">
+                    <p class="text-xs text-slate-500 dark:text-slate-400">
                       {{ totalTags }}
                       {{ $t("prompt_creator.tags_selected") }}
                     </p>
@@ -62,11 +62,11 @@
                 </div>
                 <button
                   @click="isOpen = false"
-                  class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                 >
                   <UIcon
                     name="i-heroicons-x-mark"
-                    class="w-6 h-6 text-gray-500 dark:text-gray-400"
+                    class="w-6 h-6 text-slate-500 dark:text-slate-400"
                   />
                 </button>
               </div>
@@ -77,7 +77,7 @@
               <div class="p-4 space-y-4">
                 <!-- NSFW Toggle -->
                 <div
-                  class="flex items-center justify-between p-3 rounded-xl bg-gray-50 dark:bg-gray-800/50"
+                  class="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50"
                 >
                   <div class="flex items-center gap-2">
                     <UIcon
@@ -85,7 +85,7 @@
                       class="w-5 h-5 text-red-500"
                     />
                     <span
-                      class="text-sm font-medium text-gray-900 dark:text-white"
+                      class="text-sm font-medium text-slate-900 dark:text-white"
                     >
                       {{ $t("prompt_creator.show_nsfw") }}
                     </span>
@@ -94,7 +94,7 @@
                     @click="$emit('update:show-nsfw', !showNsfw)"
                     :class="[
                       'relative inline-flex h-6 w-11 items-center rounded-full transition-colors',
-                      showNsfw ? 'bg-red-500' : 'bg-gray-200 dark:bg-gray-700',
+                      showNsfw ? 'bg-red-500' : 'bg-slate-200 dark:bg-slate-700',
                     ]"
                   >
                     <span
@@ -118,7 +118,7 @@
                   >
                     <!-- Category Header -->
                     <div
-                      class="flex items-center justify-between mb-2 pb-2 border-b border-gray-200 dark:border-gray-700"
+                      class="flex items-center justify-between mb-2 pb-2 border-b border-slate-200 dark:border-slate-700"
                     >
                       <div class="flex items-center gap-2">
                         <UIcon
@@ -126,11 +126,11 @@
                           class="w-4 h-4 text-primary-500"
                         />
                         <span
-                          class="text-sm font-semibold text-gray-900 dark:text-white"
+                          class="text-sm font-semibold text-slate-900 dark:text-white"
                         >
                           {{ getCategoryName(category) }}
                         </span>
-                        <span class="text-xs text-gray-500 dark:text-gray-400">
+                        <span class="text-xs text-slate-500 dark:text-slate-400">
                           ({{ tagObjs.length }})
                         </span>
                       </div>
@@ -150,12 +150,12 @@
                       <div
                         v-for="(tagObj, idx) in tagObjs"
                         :key="idx"
-                        class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-gray-800/50"
+                        class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-slate-800/50"
                       >
                         <div class="flex-1 min-w-0">
                           <div class="flex items-center gap-2 mb-1">
                             <span
-                              class="text-sm font-medium text-gray-900 dark:text-white truncate"
+                              class="text-sm font-medium text-slate-900 dark:text-white truncate"
                             >
                               {{ getTagText(tagObj) }}
                             </span>
@@ -177,7 +177,7 @@
                           <div class="space-y-1">
                             <div class="flex items-center justify-between">
                               <label
-                                class="text-xs text-gray-600 dark:text-gray-400"
+                                class="text-xs text-slate-600 dark:text-slate-400"
                               >
                                 {{ $t("prompt_creator.weight") }}
                               </label>
@@ -207,7 +207,7 @@
                           <!-- Emphasis Buttons -->
                           <div class="mt-2">
                             <label
-                              class="text-xs text-gray-600 dark:text-gray-400 block mb-1"
+                              class="text-xs text-slate-600 dark:text-slate-400 block mb-1"
                             >
                               {{ $t("prompt_creator.emphasis") }}
                             </label>
@@ -225,7 +225,7 @@
                                   'flex-1 px-2 py-1 text-xs rounded-lg font-medium transition-all',
                                   (tagObj.emphasis || 0) === n
                                     ? 'bg-primary-500 text-white'
-                                    : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300',
+                                    : 'bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300',
                                 ]"
                               >
                                 {{ n === 0 ? "0" : "(".repeat(n) }}
@@ -252,7 +252,7 @@
                 <!-- Empty State -->
                 <div
                   v-else
-                  class="text-center py-8 text-gray-500 dark:text-gray-400"
+                  class="text-center py-8 text-slate-500 dark:text-slate-400"
                 >
                   <UIcon
                     name="i-heroicons-tag"
@@ -264,7 +264,7 @@
                 <!-- Prompts Preview -->
                 <div v-if="positivePrompt || negativePrompt" class="space-y-4">
                   <!-- Positive Prompt -->
-                  <div v-if="positivePrompt" class="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm">
+                  <div v-if="positivePrompt" class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
                     <div class="flex items-center justify-between mb-2">
                       <div class="flex items-center gap-2">
                         <UIcon
@@ -272,14 +272,14 @@
                           class="w-4 h-4 text-green-500"
                         />
                         <span
-                          class="text-sm font-semibold text-gray-900 dark:text-white"
+                          class="text-sm font-semibold text-slate-900 dark:text-white"
                         >
                           {{ $t("prompt_creator.positive_prompt") }}
                         </span>
                       </div>
                       <button
                         @click="$emit('copy-prompt', 'positive')"
-                        class="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                        class="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                       >
                         <UIcon
                           :name="
@@ -291,20 +291,20 @@
                             'w-4 h-4',
                             copiedPositive
                               ? 'text-green-500'
-                              : 'text-gray-500 dark:text-gray-400',
+                              : 'text-slate-500 dark:text-slate-400',
                           ]"
                         />
                       </button>
                     </div>
                     <p
-                      class="text-xs text-gray-700 dark:text-gray-300 font-mono leading-relaxed break-words"
+                      class="text-xs text-slate-700 dark:text-slate-300 font-mono leading-relaxed break-words"
                     >
                       {{ positivePrompt }}
                     </p>
                   </div>
 
                   <!-- Negative Prompt -->
-                  <div v-if="negativePrompt" class="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm">
+                  <div v-if="negativePrompt" class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
                     <div class="flex items-center justify-between mb-2">
                       <div class="flex items-center gap-2">
                         <UIcon
@@ -312,14 +312,14 @@
                           class="w-4 h-4 text-red-500"
                         />
                         <span
-                          class="text-sm font-semibold text-gray-900 dark:text-white"
+                          class="text-sm font-semibold text-slate-900 dark:text-white"
                         >
                           {{ $t("prompt_creator.negative_prompt") }}
                         </span>
                       </div>
                       <button
                         @click="$emit('copy-prompt', 'negative')"
-                        class="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                        class="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                       >
                         <UIcon
                           :name="
@@ -331,13 +331,13 @@
                             'w-4 h-4',
                             copiedNegative
                               ? 'text-green-500'
-                              : 'text-gray-500 dark:text-gray-400',
+                              : 'text-slate-500 dark:text-slate-400',
                           ]"
                         />
                       </button>
                     </div>
                     <p
-                      class="text-xs text-gray-700 dark:text-gray-300 font-mono leading-relaxed break-words"
+                      class="text-xs text-slate-700 dark:text-slate-300 font-mono leading-relaxed break-words"
                     >
                       {{ negativePrompt }}
                     </p>
@@ -348,7 +348,7 @@
 
             <!-- Footer Actions -->
             <div
-              class="flex-shrink-0 p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50 safe-area-bottom"
+              class="flex-shrink-0 p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 safe-area-bottom"
             >
               <div class="grid grid-cols-2 gap-2 mb-3">
                 <GlassButton

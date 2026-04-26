@@ -1,9 +1,9 @@
 <template>
   <div
-    class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-md transition-shadow duration-200"
+    class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden hover:shadow-md transition-shadow duration-200"
   >
     <!-- Header -->
-    <div class="p-4 sm:p-6 border-b border-gray-200 dark:border-gray-700">
+    <div class="p-4 sm:p-6 border-b border-slate-200 dark:border-slate-700">
       <div class="flex items-start gap-3 sm:gap-4">
         <!-- Icon -->
         <div
@@ -21,11 +21,11 @@
         <!-- Title & Description -->
         <div class="flex-1 min-w-0">
           <h3
-            class="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-1"
+            class="text-base sm:text-lg font-semibold text-slate-900 dark:text-white mb-1"
           >
             {{ title }}
           </h3>
-          <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+          <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
             {{ description }}
           </p>
         </div>

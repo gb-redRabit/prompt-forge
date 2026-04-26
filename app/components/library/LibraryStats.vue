@@ -18,7 +18,7 @@
                 {{ stat.value }}
               </div>
               <div
-                class="text-[8px] text-gray-600 dark:text-gray-400 leading-tight mt-0.5 px-1"
+                class="text-[8px] text-slate-600 dark:text-slate-400 leading-tight mt-0.5 px-1"
               >
                 {{ stat.label }}
               </div>
@@ -66,7 +66,7 @@
           >
             {{ stats.totalSaved }}
           </div>
-          <div class="text-xs lg:text-sm text-gray-600 dark:text-gray-400 mt-1">
+          <div class="text-xs lg:text-sm text-slate-600 dark:text-slate-400 mt-1">
             <span v-once>{{ $t("library.stats.saved") }}</span>
           </div>
         </div>
@@ -84,7 +84,7 @@
           >
             {{ stats.totalCustom }}
           </div>
-          <div class="text-xs lg:text-sm text-gray-600 dark:text-gray-400 mt-1">
+          <div class="text-xs lg:text-sm text-slate-600 dark:text-slate-400 mt-1">
             <span v-once>{{ $t("library.stats.custom") }}</span>
           </div>
         </div>
@@ -102,7 +102,7 @@
           >
             {{ stats.totalEditorPrompts }}
           </div>
-          <div class="text-xs lg:text-sm text-gray-600 dark:text-gray-400 mt-1">
+          <div class="text-xs lg:text-sm text-slate-600 dark:text-slate-400 mt-1">
             <span v-once>{{ $t("library.stats.editorPrompts") }}</span>
           </div>
         </div>
@@ -120,7 +120,7 @@
           >
             {{ stats.totalTagFavorites }}
           </div>
-          <div class="text-xs lg:text-sm text-gray-600 dark:text-gray-400 mt-1">
+          <div class="text-xs lg:text-sm text-slate-600 dark:text-slate-400 mt-1">
             <span v-once>{{ $t("library.stats.tagFavorites") }}</span>
           </div>
         </div>
@@ -138,7 +138,7 @@
           >
             {{ stats.totalHistory }}
           </div>
-          <div class="text-xs lg:text-sm text-gray-600 dark:text-gray-400 mt-1">
+          <div class="text-xs lg:text-sm text-slate-600 dark:text-slate-400 mt-1">
             <span v-once>{{ $t("library.stats.history") }}</span>
           </div>
         </div>
@@ -156,7 +156,7 @@
           >
             {{ stats.totalCollections }}
           </div>
-          <div class="text-xs lg:text-sm text-gray-600 dark:text-gray-400 mt-1">
+          <div class="text-xs lg:text-sm text-slate-600 dark:text-slate-400 mt-1">
             <span v-once>{{ $t("library.stats.collections") }}</span>
           </div>
         </div>

@@ -628,7 +628,11 @@
       "badge": "Własny",
       "addNew": "Dodaj Nowy Prompt",
       "clickToCreate": "Kliknij, aby utworzyć własny prompt",
+      "no_prompts": "Brak własnych promptów",
       "no_favorite_tags": "Brak ulubionych tagów."
+    },
+    "tags": {
+      "favorites_title": "Ulubione tagi"
     },
     "history": {
       "title": "Ostatnio używane prompty",

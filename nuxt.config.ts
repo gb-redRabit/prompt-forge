@@ -44,7 +44,7 @@ export default defineNuxtConfig({
       { code: "en", iso: "en-US", file: "en.json", name: "English" },
     ],
     vueI18n: "./i18n/i18n.config.ts",
-    detectBrowserLanguage: false, // WAŻNE
+    detectBrowserLanguage: false,
   },
 
   // @nuxt/image
@@ -127,7 +127,7 @@ export default defineNuxtConfig({
       ],
     },
     workbox: {
-      navigateFallback: "/",
+      navigateFallback: process.env.NODE_ENV === "production" ? "/" : null,
       // Tylko dla production - dev nie potrzebuje precache
       globPatterns:
         process.env.NODE_ENV === "production"

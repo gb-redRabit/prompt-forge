@@ -29,27 +29,25 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const cardClasses = computed(() => {
-  const classes = [props.rounded];
-
-  // Base effect (solid instead of glass)
+  const classes = [props.rounded, "overflow-hidden"];
 
   // Variant styles
   switch (props.variant) {
     case "subtle":
       classes.push(
-        "bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800"
+        "bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800"
       );
       break;
     case "strong":
       classes.push(
-        "bg-slate-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700"
+        "bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700"
       );
       break;
     case "default":
     default:
       classes.push(
         "bg-white dark:bg-slate-900",
-        props.border ? "border border-gray-200 dark:border-slate-800" : ""
+        props.border ? "border border-slate-200 dark:border-slate-800" : ""
       );
       break;
   }
@@ -74,14 +72,14 @@ const cardClasses = computed(() => {
 
   // Shadow
   if (props.shadow) {
-    classes.push("shadow-lg shadow-gray-200/50 dark:shadow-slate-900/50");
+    classes.push("shadow-lg shadow-slate-200/50 dark:shadow-slate-900/50");
   }
 
   // Gradient overlay (optional decorative effect)
   if (props.gradient) {
     classes.push(
       "relative",
-      "before:absolute before:inset-0 before:rounded-inherit",
+      "before:absolute before:inset-0 before:rounded-[inherit]",
       "before:bg-gradient-to-br before:from-primary-500/10 before:to-purple-500/10",
       "before:pointer-events-none"
     );

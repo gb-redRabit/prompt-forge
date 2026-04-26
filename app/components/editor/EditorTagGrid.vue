@@ -50,7 +50,7 @@ useIntersectionObserver(loadMoreTrigger, ([{ isIntersecting }]) => {
 </script>
 
 <template>
-  <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-3 sm:p-5 overflow-hidden shadow-sm flex flex-col">
+  <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-3 sm:p-5 overflow-hidden shadow-sm flex flex-col">
     <div
       v-if="tags.length > 0"
       class="flex flex-wrap justify-start items-start gap-1 sm:gap-1.5 overflow-y-auto pr-1 sm:pr-2 custom-scrollbar h-full"
@@ -68,7 +68,7 @@ useIntersectionObserver(loadMoreTrigger, ([{ isIntersecting }]) => {
               ? 'bg-primary-600 border-primary-500 text-white shadow-md'
               : tagObj.nsfw
                 ? 'bg-red-50 dark:bg-red-900/15 text-red-900 dark:text-red-100 hover:bg-red-100 dark:hover:bg-red-900/30 border-red-100 dark:border-red-900/30'
-                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 border-gray-200/60 dark:border-gray-700'
+                : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 border-slate-200/60 dark:border-slate-700'
         ]"
       >
         <div class="flex items-center gap-1">
@@ -83,7 +83,7 @@ useIntersectionObserver(loadMoreTrigger, ([{ isIntersecting }]) => {
                 ? 'text-yellow-400'
                 : isTagSelected(tagObj)
                   ? 'text-white/50 hover:text-white'
-                  : 'text-gray-400 hover:text-yellow-400',
+                  : 'text-slate-400 hover:text-yellow-400',
             ]"
           >
             <UIcon
@@ -101,10 +101,10 @@ useIntersectionObserver(loadMoreTrigger, ([{ isIntersecting }]) => {
     <!-- Empty State -->
     <div v-else class="flex items-center justify-center h-full min-h-[200px]">
       <div class="text-center">
-        <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-          <UIcon name="i-heroicons-magnifying-glass" class="w-8 h-8 text-gray-400" />
+        <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+          <UIcon name="i-heroicons-magnifying-glass" class="w-8 h-8 text-slate-400" />
         </div>
-        <p class="text-gray-600 dark:text-gray-400 font-medium text-sm">
+        <p class="text-slate-600 dark:text-slate-400 font-medium text-sm">
           {{ $t("prompt_creator.no_results") }}
         </p>
       </div>

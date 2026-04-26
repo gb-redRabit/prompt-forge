@@ -61,29 +61,29 @@ const panelClasses = computed(() => {
   // Variant styles
   switch (props.variant) {
     case "subtle":
-      classes.push("bg-white/30 dark:bg-gray-800/30");
+      classes.push("bg-white/30 dark:bg-slate-800/30");
       break;
     case "strong":
-      classes.push("bg-white/70 dark:bg-gray-800/70");
+      classes.push("bg-white/70 dark:bg-slate-800/70");
       break;
     case "bordered":
       classes.push(
-        "bg-white/40 dark:bg-gray-800/40",
+        "bg-white/40 dark:bg-slate-800/40",
         "border-2 border-primary-500/30 dark:border-primary-500/40"
       );
       break;
     case "default":
     default:
       classes.push(
-        "bg-white/50 dark:bg-gray-800/50",
-        "border border-white/30 dark:border-gray-700/40"
+        "bg-white/50 dark:bg-slate-800/50",
+        "border border-white/30 dark:border-slate-700/40"
       );
       break;
   }
 
   // Shadow
   if (props.shadow) {
-    classes.push("shadow-xl shadow-gray-200/50 dark:shadow-gray-900/50");
+    classes.push("shadow-xl shadow-slate-200/50 dark:shadow-slate-900/50");
   }
 
   // Gradient overlay
@@ -104,7 +104,7 @@ const headerClasses = computed(() => {
 
   if (props.divided) {
     classes.push(
-      "border-b border-white/30 dark:border-gray-700/40",
+      "border-b border-white/30 dark:border-slate-700/40",
       "bg-gradient-to-r from-primary-500/5 to-purple-500/5"
     );
   }
@@ -121,8 +121,8 @@ const footerClasses = computed(() => {
 
   if (props.divided) {
     classes.push(
-      "border-t border-white/30 dark:border-gray-700/40",
-      "bg-white/20 dark:bg-gray-800/20"
+      "border-t border-white/30 dark:border-slate-700/40",
+      "bg-white/20 dark:bg-slate-800/20"
     );
   }
 

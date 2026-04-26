@@ -11,7 +11,7 @@
         <template #header>
           <h3
             v-once
-            class="text-sm font-semibold text-gray-900 dark:text-white"
+            class="text-sm font-semibold text-slate-900 dark:text-white"
           >
             {{ t("pages.templates.types") }}
           </h3>
@@ -130,7 +130,7 @@
 
           <p
             v-if="hiddenTagsCount > 0"
-            class="text-xs text-gray-500 dark:text-gray-400 text-center pt-2"
+            class="text-xs text-slate-500 dark:text-slate-400 text-center pt-2"
           >
             {{ t("pages.templates.hidden_tags", { count: hiddenTagsCount }) }}
           </p>
@@ -155,7 +155,7 @@
     <main class="flex-1 flex flex-col min-w-0">
       <!-- Toolbar -->
       <div
-        class="flex flex-col gap-2 sm:gap-3 mb-3 sm:mb-4 pb-3 sm:pb-4 border-b border-gray-200 dark:border-gray-700"
+        class="flex flex-col gap-2 sm:gap-3 mb-3 sm:mb-4 pb-3 sm:pb-4 border-b border-slate-200 dark:border-slate-700"
       >
         <!-- Top row: Search -->
         <UInput
@@ -233,7 +233,7 @@
 
             <!-- Count -->
             <div
-              class="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 truncate"
+              class="text-[10px] sm:text-xs text-slate-600 dark:text-slate-400 truncate"
             >
               <span class="font-medium">{{ displayedPrompts.length }}</span>
               <span class="hidden sm:inline">
@@ -328,14 +328,14 @@
         >
           <UIcon
             name="i-heroicons-document-text"
-            class="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-gray-400 dark:text-gray-600 mb-3 sm:mb-4"
+            class="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-slate-400 dark:text-slate-600 mb-3 sm:mb-4"
           />
           <h3
-            class="text-base sm:text-lg font-medium text-gray-900 dark:text-white mb-2"
+            class="text-base sm:text-lg font-medium text-slate-900 dark:text-white mb-2"
           >
             {{ t("pages.templates.empty.title") }}
           </h3>
-          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400">
+          <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400">
             {{ t("pages.templates.empty.description") }}
           </p>
         </div>
@@ -352,7 +352,7 @@
         <!-- End -->
         <div
           v-if="!hasMore && displayedPrompts.length > 0"
-          class="text-center py-6 sm:py-8 text-sm sm:text-base text-gray-500 dark:text-gray-400"
+          class="text-center py-6 sm:py-8 text-sm sm:text-base text-slate-500 dark:text-slate-400"
         >
           {{ t("pages.templates.no_more") }}
         </div>
@@ -368,18 +368,18 @@
     >
       <template #content>
         <div
-          class="flex flex-col h-full bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800"
+          class="flex flex-col h-full bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-800"
         >
           <!-- Compact Header -->
           <div
-            class="flex items-center justify-between px-4 py-3 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-10"
+            class="flex items-center justify-between px-4 py-3 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-b border-slate-200 dark:border-slate-700 sticky top-0 z-10"
           >
             <div class="flex items-center gap-3">
               <UIcon
                 name="i-heroicons-adjustments-horizontal"
                 class="w-5 h-5 text-primary-500"
               />
-              <h2 class="text-lg font-bold text-gray-900 dark:text-white">
+              <h2 class="text-lg font-bold text-slate-900 dark:text-white">
                 {{ t("pages.templates.filters") }}
               </h2>
               <GlassBadge
@@ -407,7 +407,7 @@
               <div class="space-y-2">
                 <div class="flex items-center justify-between">
                   <h3
-                    class="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide"
+                    class="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide"
                   >
                     {{ t("pages.templates.types") }}
                   </h3>
@@ -445,19 +445,19 @@
               </div>
 
               <!-- Divider -->
-              <div class="border-t border-gray-200 dark:border-gray-700"></div>
+              <div class="border-t border-slate-200 dark:border-slate-700"></div>
 
               <!-- Category/Tags Toggle -->
               <div
-                class="flex gap-2 p-1 bg-gray-100 dark:bg-gray-800 rounded-lg"
+                class="flex gap-2 p-1 bg-slate-100 dark:bg-slate-800 rounded-lg"
               >
                 <button
                   @click="filterMode = 'categories'"
                   class="flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all"
                   :class="
                     filterMode === 'categories'
-                      ? 'bg-white dark:bg-gray-700 text-primary-600 dark:text-primary-400 shadow-sm'
-                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
+                      ? 'bg-white dark:bg-slate-700 text-primary-600 dark:text-primary-400 shadow-sm'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                   "
                 >
                   {{ t("pages.templates.categories") }}
@@ -467,8 +467,8 @@
                   class="flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all"
                   :class="
                     filterMode === 'tags'
-                      ? 'bg-white dark:bg-gray-700 text-primary-600 dark:text-primary-400 shadow-sm'
-                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
+                      ? 'bg-white dark:bg-slate-700 text-primary-600 dark:text-primary-400 shadow-sm'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                   "
                 >
                   {{ t("pages.templates.tags") }}
@@ -479,11 +479,11 @@
               <div v-if="filterMode === 'categories'" class="space-y-3">
                 <div class="flex items-center justify-between">
                   <h3
-                    class="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide"
+                    class="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide"
                   >
                     {{ t("pages.templates.categories") }}
                   </h3>
-                  <span class="text-xs text-gray-500 dark:text-gray-400">
+                  <span class="text-xs text-slate-500 dark:text-slate-400">
                     {{ selectedCategories.length }}
                     {{ t("pages.templates.selected") }}
                   </span>
@@ -514,11 +514,11 @@
               <div v-else class="space-y-3">
                 <div class="flex items-center justify-between">
                   <h3
-                    class="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide"
+                    class="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide"
                   >
                     {{ t("pages.templates.tags") }}
                   </h3>
-                  <span class="text-xs text-gray-500 dark:text-gray-400">
+                  <span class="text-xs text-slate-500 dark:text-slate-400">
                     {{ selectedTags.length }}
                     {{ t("pages.templates.selected") }}
                   </span>
@@ -536,7 +536,7 @@
                 <!-- Selected Tags (if any) -->
                 <div v-if="selectedTags.length > 0" class="space-y-2">
                   <p
-                    class="text-xs font-medium text-gray-600 dark:text-gray-400"
+                    class="text-xs font-medium text-slate-600 dark:text-slate-400"
                   >
                     {{ t("pages.templates.selected") }}:
                   </p>
@@ -559,7 +559,7 @@
                 <!-- Available Tags -->
                 <div class="space-y-2">
                   <p
-                    class="text-xs font-medium text-gray-600 dark:text-gray-400"
+                    class="text-xs font-medium text-slate-600 dark:text-slate-400"
                   >
                     {{ t("pages.templates.available") }}:
                   </p>
@@ -584,7 +584,7 @@
 
                 <p
                   v-if="hiddenTagsCount > 0"
-                  class="text-xs text-gray-500 dark:text-gray-400 text-center italic"
+                  class="text-xs text-slate-500 dark:text-slate-400 text-center italic"
                 >
                   {{
                     t("pages.templates.hidden_tags", { count: hiddenTagsCount })
@@ -596,7 +596,7 @@
 
           <!-- Sticky Footer with Actions -->
           <div
-            class="px-4 py-3 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-t border-gray-200 dark:border-gray-700 sticky bottom-0 z-10"
+            class="px-4 py-3 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-t border-slate-200 dark:border-slate-700 sticky bottom-0 z-10"
           >
             <div class="max-w-2xl mx-auto flex gap-2">
               <GlassButton

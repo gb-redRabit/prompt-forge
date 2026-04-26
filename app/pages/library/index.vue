@@ -1,7 +1,6 @@
 <template>
-  <div class="space-y-6 p-4 sm:p-6 lg:p-8 relative bg-gray-50 dark:bg-slate-950 min-h-screen">
-    <!-- Background accents -->
-    <div class="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-primary-500/5 to-transparent pointer-events-none"></div>
+  <div class="space-y-6 p-4 sm:p-6 lg:p-8 relative min-h-screen">
+
     <!-- Content with higher z-index -->
     <div class="relative z-10 max-w-7xl mx-auto">
       <!-- Header -->
@@ -15,7 +14,7 @@
             <span v-once>{{ $t("library.title") }}</span>
           </h1>
           <p
-            class="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400"
+            class="text-xs sm:text-sm lg:text-base text-slate-600 dark:text-slate-400"
           >
             <span v-once>{{ $t("library.subtitle") }}</span>
           </p>
@@ -187,7 +186,7 @@
     <!-- Mobile Bottom Navigation -->
     <div class="sm:hidden fixed bottom-0 left-0 right-0 z-40 safe-area-bottom">
       <div
-        class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 px-2 pt-2 pb-safe shadow-[0_-4px_10px_rgba(0,0,0,0.05)] dark:shadow-[0_-4px_10px_rgba(0,0,0,0.4)]"
+        class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 px-2 pt-2 pb-safe shadow-[0_-4px_10px_rgba(0,0,0,0.05)] dark:shadow-[0_-4px_10px_rgba(0,0,0,0.4)]"
       >
         <div class="flex items-center justify-around relative">
           <!-- Active indicator -->
@@ -207,7 +206,7 @@
             :class="
               activeTab === index
                 ? 'text-primary-600 dark:text-primary-400'
-                : 'text-gray-600 dark:text-gray-400'
+                : 'text-slate-600 dark:text-slate-400'
             "
           >
             <UIcon
@@ -271,7 +270,7 @@
                 t("pages.library.actions.confirmRemoveTagTitle") || "Usuń tag"
               }}
             </h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+            <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">
               {{
                 t("pages.library.actions.confirmRemoveTag") ||
                 `Czy na pewno chcesz usunąć tag "${tagToDelete}"?`
@@ -306,7 +305,7 @@
             <h3 class="text-lg font-semibold mb-2">
               {{ t("library.actions.confirmDelete") || "Usuń prompt" }}
             </h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+            <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">
               {{
                 t("pages.library.actions.confirmDeletePrompt") ||
                 `Czy na pewno chcesz usunąć prompt "${editorPromptToDeleteName || ""}"?`

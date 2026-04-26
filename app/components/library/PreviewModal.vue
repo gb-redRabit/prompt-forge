@@ -11,11 +11,11 @@
 
       <GlassCard class="z-50 max-w-3xl w-full p-0 overflow-hidden">
         <div
-          class="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-800"
+          class="flex items-center justify-between px-4 py-3 border-b border-slate-100 dark:border-slate-800"
         >
           <div>
             <h3 class="text-lg font-semibold">{{ title }}</h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+            <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">
               {{ subtitle }}
             </p>
           </div>
@@ -47,7 +47,7 @@
               }}</span>
             </h4>
             <div
-              class="max-h-64 overflow-auto bg-gray-50 dark:bg-gray-900 p-3 rounded text-sm whitespace-pre-wrap"
+              class="max-h-64 overflow-auto bg-slate-50 dark:bg-slate-900 p-3 rounded text-sm whitespace-pre-wrap"
             >
               {{
                 prompt?.template?.[locale] ||
@@ -60,7 +60,7 @@
               <div class="flex flex-wrap gap-2">
                 <template v-for="tag in prompt?.tags || []" :key="tag">
                   <span
-                    class="px-2 py-1 text-xs rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200"
+                    class="px-2 py-1 text-xs rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200"
                     >{{ tag }}</span
                   >
                 </template>
@@ -76,7 +76,7 @@
             </h4>
             <div class="relative">
               <pre
-                class="max-h-64 overflow-auto bg-white dark:bg-gray-900 p-3 rounded text-sm whitespace-pre-wrap border border-gray-100 dark:border-gray-800"
+                class="max-h-64 overflow-auto bg-white dark:bg-slate-900 p-3 rounded text-sm whitespace-pre-wrap border border-slate-100 dark:border-slate-800"
                 >{{ prompt?.result || "" }}</pre
               >
               <div class="absolute top-2 right-2">
@@ -93,7 +93,7 @@
         </div>
 
         <div
-          class="px-4 py-3 border-t border-gray-100 dark:border-gray-800 flex justify-end gap-2"
+          class="px-4 py-3 border-t border-slate-100 dark:border-slate-800 flex justify-end gap-2"
         >
           <GlassButton
             size="sm"

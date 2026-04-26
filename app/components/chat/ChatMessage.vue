@@ -1,6 +1,6 @@
 <template>
   <div
-    class="group px-3 sm:px-4 md:px-6 py-3 sm:py-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
+    class="group px-3 sm:px-4 md:px-6 py-3 sm:py-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
     :class="{
       'bg-blue-50/50 dark:bg-blue-900/10': message.role === 'user',
     }"
@@ -31,7 +31,7 @@
       <div class="flex-1 min-w-0 space-y-1.5 sm:space-y-2">
         <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
           <span
-            class="font-semibold text-gray-900 dark:text-white text-xs sm:text-sm"
+            class="font-semibold text-slate-900 dark:text-white text-xs sm:text-sm"
           >
             {{ message.role === "user" ? $t("chat.you") : $t("chat.ai_label") }}
           </span>
@@ -48,14 +48,14 @@
             {{ message.model }}
           </GlassBadge>
 
-          <span class="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400">
+          <span class="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400">
             {{ formatTime(message.timestamp) }}
           </span>
         </div>
 
         <!-- Message text with markdown support -->
         <div
-          class="prose prose-sm sm:prose dark:prose-invert max-w-none prose-pre:bg-gray-900 prose-pre:text-gray-100"
+          class="prose prose-sm sm:prose dark:prose-invert max-w-none prose-pre:bg-slate-900 prose-pre:text-slate-100"
         >
           <div class="whitespace-pre-wrap break-words text-xs sm:text-sm">
             {{ message.content }}

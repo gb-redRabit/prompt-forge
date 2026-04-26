@@ -8,7 +8,7 @@
       {{ progressPercent }}%
     </div>
     <div
-      class="text-xs font-medium text-gray-600 dark:text-gray-400 hidden sm:block"
+      class="text-xs font-medium text-slate-600 dark:text-slate-400 hidden sm:block"
     >
       {{ $t("prompt_creator.completed") }}
     </div>

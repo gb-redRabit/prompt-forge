@@ -540,7 +540,7 @@ onBeforeUnmount(() => {
   width: 0.625rem;
   height: 0.625rem;
   border-radius: 50%;
-  background: rgba(156, 163, 175, 0.6); /* gray-400 with opacity */
+  background: rgba(156, 163, 175, 0.6); /* slate-400 with opacity */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   backdrop-filter: blur(4px);
 }
@@ -589,7 +589,7 @@ onBeforeUnmount(() => {
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  color: #1f2937; /* gray-800 */
+  color: #1f2937; /* slate-800 */
 }
 
 .group:hover .dot-tooltip {
@@ -601,11 +601,11 @@ onBeforeUnmount(() => {
 :global(.dark) .dot-tooltip {
   background: rgba(17, 24, 39, 0.95);
   border-color: rgba(255, 255, 255, 0.1);
-  color: #f9fafb; /* gray-50 */
+  color: #f9fafb; /* slate-50 */
 }
 
 :global(.dark) .dot-btn.inactive::before {
-  background: rgba(107, 114, 128, 0.5); /* gray-500 in dark */
+  background: rgba(107, 114, 128, 0.5); /* slate-500 in dark */
 }
 
 :global(.dark) .dot-btn.inactive:hover::before {

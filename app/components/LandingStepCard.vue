@@ -33,14 +33,14 @@
 
         <!-- Title -->
         <h3
-          class="text-sm md:text-base lg:text-lg xl:text-xl font-bold text-gray-800 dark:text-gray-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300 leading-tight"
+          class="text-sm md:text-base lg:text-lg xl:text-xl font-bold text-slate-800 dark:text-slate-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300 leading-tight"
         >
           {{ title }}
         </h3>
 
         <!-- Description -->
         <p
-          class="text-xs md:text-sm lg:text-base text-gray-600 dark:text-gray-400 leading-relaxed"
+          class="text-xs md:text-sm lg:text-base text-slate-600 dark:text-slate-400 leading-relaxed"
         >
           {{ description }}
         </p>

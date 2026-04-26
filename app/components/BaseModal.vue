@@ -13,16 +13,16 @@
     <!-- Header -->
     <div
       v-if="$slots.header || title"
-      class="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700"
+      class="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-700"
     >
       <div class="flex-1">
         <slot name="header">
-          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+          <h3 class="text-xl font-semibold text-slate-900 dark:text-white">
             {{ title }}
           </h3>
           <p
             v-if="description"
-            class="mt-1 text-sm text-gray-500 dark:text-gray-400"
+            class="mt-1 text-sm text-slate-500 dark:text-slate-400"
           >
             {{ description }}
           </p>
@@ -46,7 +46,7 @@
     <!-- Footer -->
     <div
       v-if="$slots.footer"
-      class="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-200 dark:border-gray-700"
+      class="flex items-center justify-end gap-3 px-6 py-4 border-t border-slate-200 dark:border-slate-700"
     >
       <slot name="footer" :close="closeModal" />
     </div>

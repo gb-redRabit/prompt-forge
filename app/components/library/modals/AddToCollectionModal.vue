@@ -14,20 +14,20 @@
         <div
           v-for="prompt in availablePrompts"
           :key="prompt.savedId"
-          class="flex items-center gap-3 p-3 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg cursor-pointer transition-colors"
+          class="flex items-center gap-3 p-3 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg cursor-pointer transition-colors"
           @click="togglePrompt(prompt.savedId)"
         >
           <input
             type="checkbox"
             :checked="selectedIds.includes(prompt.savedId)"
-            class="w-4 h-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+            class="w-4 h-4 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
             @click.stop
           />
           <div class="flex-1 min-w-0">
             <p class="font-medium text-sm truncate">
               {{ getPromptName(prompt) }}
             </p>
-            <p class="text-xs text-gray-500 truncate">
+            <p class="text-xs text-slate-500 truncate">
               {{ getPromptDescription(prompt) }}
             </p>
           </div>
@@ -35,11 +35,11 @@
 
         <div
           v-if="availablePrompts.length === 0"
-          class="text-center py-8 text-gray-500"
+          class="text-center py-8 text-slate-500"
         >
           <UIcon
             name="i-heroicons-check-circle"
-            class="w-12 h-12 mx-auto mb-2 text-gray-400"
+            class="w-12 h-12 mx-auto mb-2 text-slate-400"
           />
           <p>
             <span v-once>{{ $t("library.modals.addToCollection.empty") }}</span>

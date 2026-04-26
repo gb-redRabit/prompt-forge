@@ -12,7 +12,7 @@
           color="error"
           size="sm"
         />
-        <span class="text-xs text-gray-700 dark:text-gray-300">
+        <span class="text-xs text-slate-700 dark:text-slate-300">
           {{ $t("prompt_creator.show_nsfw") }}
         </span>
       </div>
@@ -52,13 +52,13 @@
     <div class="glass-card flex-1 overflow-hidden flex flex-col shadow-lg">
       <!-- Header -->
       <div
-        class="bg-gradient-to-r from-primary-500/10 to-purple-600/10 dark:from-primary-500/20 dark:to-purple-600/20 backdrop-blur-sm px-3 sm:px-5 py-3 border-b border-white/20 dark:border-gray-700/50 flex-shrink-0"
+        class="bg-gradient-to-r from-primary-500/10 to-purple-600/10 dark:from-primary-500/20 dark:to-purple-600/20 backdrop-blur-sm px-3 sm:px-5 py-3 border-b border-white/20 dark:border-slate-700/50 flex-shrink-0"
       >
         <div
           class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2"
         >
           <h3
-            class="font-bold text-gray-900 dark:text-white text-sm sm:text-base flex items-center gap-2"
+            class="font-bold text-slate-900 dark:text-white text-sm sm:text-base flex items-center gap-2"
           >
             <span
               class="w-2 h-2 rounded-full bg-gradient-to-r from-primary-500 to-purple-600 shadow-lg shadow-primary-500/50"
@@ -72,9 +72,9 @@
                 name="i-heroicons-folder"
                 class="text-primary-500 dark:text-primary-400"
               />
-              <span class="text-gray-700 dark:text-gray-300 font-medium">
+              <span class="text-slate-700 dark:text-slate-300 font-medium">
                 {{ Object.keys(selectedTags).length }}
-                <span v-once class="text-gray-500 dark:text-gray-400 ml-0.5">{{
+                <span v-once class="text-slate-500 dark:text-slate-400 ml-0.5">{{
                   $t("prompt_creator.categories_name")
                 }}</span>
               </span>
@@ -85,9 +85,9 @@
                 name="i-heroicons-tag"
                 class="text-purple-500 dark:text-purple-400"
               />
-              <span class="text-gray-700 dark:text-gray-300 font-medium">
+              <span class="text-slate-700 dark:text-slate-300 font-medium">
                 {{ totalTags }}
-                <span v-once class="text-gray-500 dark:text-gray-400 ml-0.5">{{
+                <span v-once class="text-slate-500 dark:text-slate-400 ml-0.5">{{
                   $t("prompt_creator.tags_selected")
                 }}</span>
               </span>
@@ -102,7 +102,7 @@
         <div v-if="totalTags > 0" class="space-y-3">
           <div class="flex items-center justify-between">
             <h4
-              class="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider flex items-center gap-2"
+              class="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider flex items-center gap-2"
             >
               <UIcon name="i-heroicons-squares-2x2" class="text-primary-500" />
               <span v-once>{{
@@ -121,7 +121,7 @@
               v-for="[category, tags] in validCategories"
               :key="category"
               @click="openCategoryModal(category, tags)"
-              class="group relative flex items-center gap-2 px-3 py-2.5 bg-gradient-to-r from-white/60 to-white/40 dark:from-gray-800/60 dark:to-gray-800/40 hover:from-primary-50 hover:to-purple-50 dark:hover:from-primary-900/30 dark:hover:to-purple-900/30 rounded-xl backdrop-blur-sm border border-white/50 dark:border-gray-700/50 hover:border-primary-300 dark:hover:border-primary-700 shadow-sm hover:shadow-lg transition-all duration-300"
+              class="group relative flex items-center gap-2 px-3 py-2.5 bg-gradient-to-r from-white/60 to-white/40 dark:from-slate-800/60 dark:to-slate-800/40 hover:from-primary-50 hover:to-purple-50 dark:hover:from-primary-900/30 dark:hover:to-purple-900/30 rounded-xl backdrop-blur-sm border border-white/50 dark:border-slate-700/50 hover:border-primary-300 dark:hover:border-primary-700 shadow-sm hover:shadow-lg transition-all duration-300"
             >
               <!-- Icon Container -->
               <div class="flex items-center gap-2">
@@ -167,12 +167,12 @@
         >
           <UIcon
             name="i-heroicons-squares-plus"
-            class="w-16 h-16 text-gray-300 dark:text-gray-600 mb-4"
+            class="w-16 h-16 text-slate-300 dark:text-slate-600 mb-4"
           />
-          <p class="text-gray-500 dark:text-gray-400 text-sm">
+          <p class="text-slate-500 dark:text-slate-400 text-sm">
             <span v-once>{{ $t("prompt_creator.no_tags_selected") }}</span>
           </p>
-          <p class="text-gray-400 dark:text-gray-500 text-xs mt-2">
+          <p class="text-slate-400 dark:text-slate-500 text-xs mt-2">
             <span v-once>{{ $t("prompt_creator.select_tags_hint") }}</span>
           </p>
         </div>
@@ -180,7 +180,7 @@
         <!-- Generated Prompts Preview -->
         <div v-if="totalTags > 0" class="space-y-3">
           <h4
-            class="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider flex items-center gap-2"
+            class="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider flex items-center gap-2"
           >
             <UIcon name="i-heroicons-sparkles" class="text-purple-500" />
             <span v-once>{{ $t("prompt_creator.generated_prompts") }}</span>
@@ -235,7 +235,7 @@
             <div class="relative">
               <p
                 :class="[
-                  'text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-mono transition-all',
+                  'text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-mono transition-all',
                   positivePrompt.length > 200 ? 'line-clamp-3' : '',
                 ]"
               >
@@ -305,7 +305,7 @@
             <div class="relative">
               <p
                 :class="[
-                  'text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-mono transition-all',
+                  'text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-mono transition-all',
                   negativePrompt.length > 200 ? 'line-clamp-3' : '',
                 ]"
               >
@@ -333,7 +333,7 @@
       <!-- Action Buttons (Footer) -->
       <div
         v-if="totalTags > 0"
-        class="flex-shrink-0 p-3 sm:p-4 bg-white/40 dark:bg-gray-800/40 backdrop-blur-sm border-t border-white/20 dark:border-gray-700/50"
+        class="flex-shrink-0 p-3 sm:p-4 bg-white/40 dark:bg-slate-800/40 backdrop-blur-sm border-t border-white/20 dark:border-slate-700/50"
       >
         <div
           class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 sm:gap-3"
@@ -393,7 +393,7 @@
         <div class="space-y-4 p-4 sm:p-6">
           <!-- Stats -->
           <div
-            class="flex items-center gap-4 pb-4 border-b border-gray-200 dark:border-gray-700"
+            class="flex items-center gap-4 pb-4 border-b border-slate-200 dark:border-slate-700"
           >
             <GlassBadge color="primary" variant="soft" size="md">
               <UIcon name="i-heroicons-document-text" class="w-4 h-4" />
@@ -412,7 +412,7 @@
           <!-- Full Prompt -->
           <GlassCard variant="strong" padding="lg">
             <p
-              class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-mono whitespace-pre-wrap break-words"
+              class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-mono whitespace-pre-wrap break-words"
             >
               {{ positivePrompt }}
             </p>
@@ -420,7 +420,7 @@
 
           <!-- Actions -->
           <div
-            class="flex justify-between items-center pt-4 border-t border-gray-200 dark:border-gray-700"
+            class="flex justify-between items-center pt-4 border-t border-slate-200 dark:border-slate-700"
           >
             <GlassButton
               color="primary"
@@ -459,7 +459,7 @@
         <div class="space-y-4 p-6">
           <!-- Stats -->
           <div
-            class="flex items-center gap-4 pb-4 border-b border-gray-200 dark:border-gray-700"
+            class="flex items-center gap-4 pb-4 border-b border-slate-200 dark:border-slate-700"
           >
             <GlassBadge color="error" variant="soft" size="md">
               <UIcon name="i-heroicons-document-text" class="w-4 h-4" />
@@ -478,7 +478,7 @@
           <!-- Full Prompt -->
           <GlassCard variant="strong" padding="lg">
             <p
-              class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-mono whitespace-pre-wrap break-words"
+              class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-mono whitespace-pre-wrap break-words"
             >
               {{ negativePrompt }}
             </p>
@@ -486,7 +486,7 @@
 
           <!-- Actions -->
           <div
-            class="flex justify-between items-center pt-4 border-t border-gray-200 dark:border-gray-700"
+            class="flex justify-between items-center pt-4 border-t border-slate-200 dark:border-slate-700"
           >
             <GlassButton
               color="error"
@@ -525,7 +525,7 @@
         <div class="space-y-4 p-6">
           <!-- Header Stats -->
           <div
-            class="flex items-center justify-between pb-4 border-b border-gray-200 dark:border-gray-700"
+            class="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-700"
           >
             <div class="flex items-center gap-3">
               <div
@@ -537,10 +537,10 @@
                 />
               </div>
               <div>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                <h3 class="text-lg font-semibold text-slate-900 dark:text-white">
                   {{ getCategoryName(selectedCategory) }}
                 </h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400">
+                <p class="text-sm text-slate-500 dark:text-slate-400">
                   {{ categoryTags.length }} {{ $t("prompt_creator.tags") }}
                 </p>
               </div>
@@ -566,13 +566,13 @@
                 'glass-card rounded-lg p-2 text-left transition-all hover:shadow-md relative group',
                 editingTagIndex === idx
                   ? 'ring-2 ring-primary-500 shadow-lg bg-primary-50/50 dark:bg-primary-900/20'
-                  : 'hover:ring-1 hover:ring-gray-300 dark:hover:ring-gray-600',
+                  : 'hover:ring-1 hover:ring-slate-300 dark:hover:ring-slate-600',
               ]"
             >
               <div class="flex flex-col gap-1">
                 <div class="flex items-start justify-between gap-1">
                   <span
-                    class="text-sm font-medium text-gray-900 dark:text-white line-clamp-2 flex-1"
+                    class="text-sm font-medium text-slate-900 dark:text-white line-clamp-2 flex-1"
                   >
                     {{ getTagText(tag) }}
                   </span>
@@ -615,14 +615,14 @@
           >
             <!-- Edit Header -->
             <div
-              class="flex items-center justify-between pb-3 border-b border-gray-200 dark:border-gray-700"
+              class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-700"
             >
               <div class="flex items-center gap-2">
                 <UIcon
                   name="i-heroicons-pencil-square"
                   class="w-5 h-5 text-primary-500"
                 />
-                <span class="font-semibold text-gray-900 dark:text-white">
+                <span class="font-semibold text-slate-900 dark:text-white">
                   {{ $t("prompt_creator.editing") }}:
                 </span>
                 <GlassBadge color="primary" variant="soft" size="md">
@@ -631,11 +631,11 @@
               </div>
               <button
                 @click="editingTagIndex = null"
-                class="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors"
+                class="p-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded transition-colors"
               >
                 <UIcon
                   name="i-heroicons-x-mark"
-                  class="w-5 h-5 text-gray-500"
+                  class="w-5 h-5 text-slate-500"
                 />
               </button>
             </div>
@@ -644,7 +644,7 @@
             <div>
               <div class="flex items-center justify-between mb-2">
                 <label
-                  class="text-sm font-medium text-gray-700 dark:text-gray-300"
+                  class="text-sm font-medium text-slate-700 dark:text-slate-300"
                 >
                   {{ $t("prompt_creator.weight") }}
                 </label>
@@ -665,7 +665,7 @@
                 color="primary"
                 size="md"
               />
-              <div class="flex justify-between text-xs text-gray-500 mt-1">
+              <div class="flex justify-between text-xs text-slate-500 mt-1">
                 <span>0.0</span>
                 <span>1.5</span>
                 <span>3.0</span>
@@ -675,7 +675,7 @@
             <!-- Emphasis Buttons -->
             <div>
               <label
-                class="text-sm font-medium text-gray-700 dark:text-gray-300 block mb-2"
+                class="text-sm font-medium text-slate-700 dark:text-slate-300 block mb-2"
               >
                 {{ $t("prompt_creator.emphasis") }}
               </label>
@@ -688,7 +688,7 @@
                     'px-3 py-2 text-sm rounded-lg font-medium transition-all',
                     (editingTag.emphasis || 0) === n
                       ? 'bg-primary-500 text-white shadow-lg ring-2 ring-primary-400'
-                      : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 hover:shadow-md',
+                      : 'bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 hover:shadow-md',
                   ]"
                 >
                   {{ n === 0 ? "None" : "(".repeat(n) }}
@@ -699,7 +699,7 @@
 
           <!-- Actions -->
           <div
-            class="flex justify-end items-center gap-3 pt-4 border-t border-gray-200 dark:border-gray-700"
+            class="flex justify-end items-center gap-3 pt-4 border-t border-slate-200 dark:border-slate-700"
           >
             <GlassButton
               color="neutral"

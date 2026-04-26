@@ -4,11 +4,11 @@
       <div
         v-for="prompt in displayedPrompts"
         :key="prompt.savedId"
-        class="flex flex-col p-4 bg-white dark:bg-slate-800/50 border border-gray-200 dark:border-slate-700 rounded-xl hover:shadow-md transition-all group animate-fade-in-up"
+        class="flex flex-col p-4 bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl hover:shadow-md transition-all group animate-fade-in-up"
       >
         <div class="flex-1">
           <div class="flex items-center justify-between mb-2">
-            <h3 class="font-semibold text-gray-900 dark:text-slate-100">
+            <h3 class="font-semibold text-slate-900 dark:text-slate-100">
               {{
                 prompt.name
                   ? locale === "pl"
@@ -19,7 +19,7 @@
             </h3>
           </div>
 
-          <p class="text-sm text-gray-600 dark:text-slate-400 line-clamp-3">
+          <p class="text-sm text-slate-600 dark:text-slate-400 line-clamp-3">
             {{
               prompt.description
                 ? locale === "pl"
@@ -31,9 +31,9 @@
         </div>
 
         <div
-          class="flex items-center justify-between pt-3 border-t border-gray-200 dark:border-slate-700 mt-3"
+          class="flex items-center justify-between pt-3 border-t border-slate-200 dark:border-slate-700 mt-3"
         >
-          <span class="text-xs text-gray-500">{{ formattedDateFor(prompt) }}</span>
+          <span class="text-xs text-slate-500">{{ formattedDateFor(prompt) }}</span>
           <div
             class="flex items-center gap-2 opacity-90 group-hover:opacity-100 transition-opacity"
           >
@@ -77,8 +77,8 @@
     <div ref="loadMoreTrigger" class="w-full h-4 mt-4"></div>
   </div>
   <div v-else class="text-center py-12">
-    <UIcon name="i-heroicons-sparkles" class="w-16 h-16 mx-auto text-gray-400 mb-4" />
-    <p class="text-gray-500">{{ $t("library.custom.no_prompts") || "Brak promptów z edytora." }}</p>
+    <UIcon name="i-heroicons-sparkles" class="w-16 h-16 mx-auto text-slate-400 mb-4" />
+    <p class="text-slate-500">{{ $t("library.custom.no_prompts") || "Brak promptów z edytora." }}</p>
   </div>
 </template>
 

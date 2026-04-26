@@ -18,7 +18,7 @@
         <p class="text-red-600 dark:text-red-400 font-semibold">
           {{ $t("app.demo.error") }}
         </p>
-        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2 max-w-md">
+        <p class="text-sm text-slate-600 dark:text-slate-400 mt-2 max-w-md">
           {{ error }}
         </p>
       </div>
