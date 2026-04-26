@@ -8,7 +8,7 @@ AI Prompt Editor & Library · Nuxt 4 · Vue 3 · TypeScript · PWA
 
 ## 🇵🇱 Opis
 
-Prompt Forge to aplikacja do tworzenia, optymalizacji i organizowania promptów dla modeli AI (OpenAI‑compatible / LM Studio). Edytor tagów (waga 0.1–2.0, emfaza nawiasami), biblioteka (saved/custom/history/collections + import/export JSON), szablony, czat AI, pełne i18n (PL/EN), PWA oraz responsywny design.
+Prompt Forge to profesjonalna platforma do tworzenia, optymalizacji i organizacji promptów dla modeli AI. Aplikacja oferuje zaawansowany katalog szablonów z filtrowaniem, dynamiczny edytor z systemem zmiennych (placeholders), precyzyjną kontrolę wag tagów oraz rozbudowaną bibliotekę kolekcji. Całość oparta na Nuxt 4, z nowoczesnym designem Glassmorphism, pełnym wsparciem i18n (PL/EN) oraz trybem PWA.
 
 ## 🇬🇧 Summary
 
@@ -18,15 +18,15 @@ Prompt Forge is a Nuxt 4 app for crafting, optimizing and organizing prompts for
 
 ## ✨ Features / Funkcje
 
-- Tag editor: weight, emphasis parentheses, positive & negative segments
-- Library: saved, custom, history, collections (CRUD, JSON import/export)
-- Templates: filtering (type, categories, tags), infinite scroll preview
-- AI Chat: multi conversation, retry failed, rename threads
-- State Management: Fully reactive Pinia stores with persisted state
-- Settings: endpoint + model ID fetch, theme (light/dark/system), language persistence
-- PWA: manifest, icons, runtime caching (@vite-pwa/nuxt)
-- Accessibility: ARIA, reduced motion, keyboard nav
-- Mobile-first components
+- **Advanced Template Catalog**: Search, sort, and filter by multiple categories/tags/types with infinite scroll and real-time preview.
+- **Dynamic Prompt Editor**: Placeholder system for variables, localized templates, and instant preview of generated prompts.
+- **Weighted Tag System**: Precision control over prompt emphasis (weights 0.1-2.0) with SD-compatible syntax.
+- **Robust Prompt Library**: Organize in collections, track history, and import/export via JSON.
+- **Premium Glassmorphism UI**: High-end aesthetic with responsive layouts, smooth animations, and dark/light mode support.
+- **AI-Powered Optimization**: Connect to local LLMs (LM Studio) or OpenAI to refine and expand your prompts.
+- **SSR & SEO Optimized**: Full server-side rendering support with consistent locale hydration and meta tag management.
+- **PWA & Offline Support**: Installable application with runtime caching for seamless performance.
+- **Accessibility & Performance**: ARIA support, optimized bundle size, and reduced motion considerations.
 
 ## 🧱 Tech Stack / Stos
 

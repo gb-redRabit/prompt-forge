@@ -1,17 +1,4 @@
 <template>
-  <!-- mobile toggle button (floating) -->
-  <GlassButton
-    v-if="!isSidebarOpen"
-    @click="() => open()"
-    icon="i-heroicons-bars-3"
-    size="lg"
-    color="primary"
-    variant="solid"
-    class="fixed bottom-4 right-4 lg:hidden glass-button shadow-lg"
-    :style="zIndexStyle('SIDEBAR')"
-    aria-label="Open menu"
-  />
-
   <!-- mobile overlay -->
   <div
     v-show="isSidebarOpen"
@@ -34,6 +21,7 @@
           </div>
           <span class="text-lg font-semibold text-slate-900 dark:text-white">
             <span>{{ $t("app.name") }}</span>
+            <span class="ml-1.5 text-[10px] font-mono opacity-50">v{{ version }}</span>
           </span>
         </NuxtLink>
         <GlassButton
@@ -141,6 +129,7 @@
         </div>
         <span class="text-lg font-semibold text-slate-900 dark:text-white">
           <span>{{ $t("app.name") }}</span>
+          <span class="ml-1.5 text-[10px] font-mono opacity-50">v{{ version }}</span>
         </span>
       </NuxtLink>
 
@@ -312,6 +301,9 @@
 <script setup lang="ts">
 import { useSidebar } from "~/composables/useSidebar";
 import { useI18n } from "vue-i18n";
+import pkg from "~~/package.json";
+
+const version = pkg.version;
 
 const { isSidebarOpen, close, open } = useSidebar();
 const isOpen = defineModel<boolean>("open", { default: true });

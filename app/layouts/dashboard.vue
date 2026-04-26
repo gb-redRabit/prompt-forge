@@ -18,6 +18,7 @@
       ]"
       :style="zIndexStyle('CONTENT')"
     >
+      <AppHeader />
       <main class="flex-1 overflow-auto w-full">
         <slot />
       </main>
